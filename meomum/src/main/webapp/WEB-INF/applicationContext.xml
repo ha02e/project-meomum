@@ -39,5 +39,9 @@
 			<ref bean="sqlSessionTemplate" />
 		</constructor-arg>
 	</bean>
-
+	<bean id="ntcDAO" class="com.mm.ntc.model.NtcDAOImple">
+		<constructor-arg>
+			<ref bean="sqlSessionTemplate" />
+		</constructor-arg>
+	</bean>
 </beans>

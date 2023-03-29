@@ -10,4 +10,10 @@ public class IndexController {
 	public String index() {
 		return "index";
 	}
+	
+	@RequestMapping("/admin.do")
+	public String admin() {
+		return "admin";
+	}
+	
 }
