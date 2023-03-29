@@ -1,0 +1,39 @@
+@charset "UTF-8";
+
+/* --------------------------- 헤더 --------------------------- */
+.app-utilities{
+	margin:6px 2em;
+}
+.admin-name{
+	font-weight: bold;
+	vertical-align: center;
+}
+.app-branding {
+    height: 100px;
+    padding:0;
+    margin-bottom: 1rem;
+}
+.app-branding .logo-icon {
+    width: 100%;
+    height: 100%;
+}
+.app-logo{
+    text-align: center;
+    display:block;
+    margin:auto;
+    width: 44%;
+}
+
+/* --------------------------- 푸터 --------------------------- */
+.link-none{
+	text-decoration: none;
+	color:#bbbbbb;
+}
+.link-none:hover{
+	text-decoration: none;
+	color:#bbbbbb;
+}
+.temp-copyright{
+	font-size:9px;
+	color:#bbbbbb;
+}
