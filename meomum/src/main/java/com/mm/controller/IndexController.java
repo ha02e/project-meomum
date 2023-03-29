@@ -11,4 +11,9 @@ public class IndexController {
 		return "index";
 	}
 	
+	@RequestMapping("/admin.do")
+	public String admin() {
+		return "admin";
+	}
+	
 }
