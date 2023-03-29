@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mm.ntc">
+	<insert id="ntcInsert" parameterType="com.mm.ntc.model.NtcDTO">
+		insert into notice values(
+		notice_idx.nextval, #{ntc_title}, #{ntc_content}, #{ntc_img},
+		sysdate, #{ntc_ctg}, 0
+		)
+	</insert>
+</mapper> 
