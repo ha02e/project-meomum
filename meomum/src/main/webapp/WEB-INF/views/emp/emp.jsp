@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<%@include file = "/WEB-INF/views/header.jsp" %>
+
 	<h1>사원 관리 프로그램</h1>
 	<form name="empAdd" action="empAdd.do">
 		<fieldset>
