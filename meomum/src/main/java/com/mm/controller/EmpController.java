@@ -47,7 +47,7 @@ public class EmpController {
 		List<EmpDTO> list = empDao.empAllList();
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("dtos", list);
-		mav.setViewName("yongJson");
+		mav.setViewName("mmJson");
 		return mav;
 	}	
 	
