@@ -71,7 +71,7 @@
 					</div>
 					<div class="tab-pane fade show active" id="myreview-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
 						<!-- 내가 작성한 후기  -->
-						<%@include file="reviewList_user.jsp"%> 
+						<%@include file="myReviewList.jsp"%> 
 					</div>
 				</div>
 			
