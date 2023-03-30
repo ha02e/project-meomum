@@ -39,10 +39,13 @@
 			<ref bean="sqlSessionTemplate" />
 		</constructor-arg>
 	</bean>
+
 	<bean id="memberDAO" class="com.mm.member.model.MemberDAOImple">
+
+	<bean id="proDAO" class="com.mm.pro.model.ProDAOImple">
 		<constructor-arg>
 			<ref bean="sqlSessionTemplate" />
 		</constructor-arg>
 	</bean>
-	
+
 </beans>

@@ -5,8 +5,12 @@
 <mapper namespace="com.mm.ntc">
 	<insert id="ntcInsert" parameterType="com.mm.ntc.model.NtcDTO">
 		insert into notice values(
-		notice_idx.nextval, #{ntc_title}, #{ntc_content}, #{ntc_img},
-		sysdate, #{ntc_ctg}, 0
-		)
+		notice_idx.nextval,#{ntc_title},#{ntc_content},#{ntc_img},sysdate,#{ntc_ctg},0)
 	</insert>
+	<select id="ntcList" parameterType="Map" resultType="com.mm.ntc.model.NtcDTO">
+		select ntc_idx,ntc_title,ntc_date,ntc_viewCnt from notice order by ntc_idx desc
+	</select>
+	<select id="ntcContent" parameterType="Integer" resultType="com.mm.ntc.model.NtcDTO">
+		select * from notice where ntc_idx = #{ntc_idx}
+	</select>
 </mapper> 
