@@ -16,10 +16,18 @@ function calPrice(){
 </head>
 <body>
 	<h2>상품 등록하기</h2>
-	<form name="addProduct" action="addProduct.do">
+	<form name="addPro" action="addPro.do" enctype="multipart/form-data">
 		<ul>
 			<li>대표 사진
+			<input type="file" name="thumb">
+			</li>
 			
+			<li>이미지 1
+			<input type="file" name="img1">
+			</li>
+			
+			<li>이미지 2
+			<input type="file" name="img2">
 			</li>
 			
 			<li>카테고리
@@ -52,10 +60,14 @@ function calPrice(){
 			<input type="radio" name="subMonth" value="6" onclick="calPrice()">6
 			<input type="radio" name="subMonth" value="12" onclick="calPrice()">12
 			</li>
+			
 			<li>월 구독 가격
 			<input type="text" id="subprice" name="subprice">
 			</li>
-			<li>상세 내용</li>
+			
+			<li>상세 내용
+			<textarea name="content"></textarea>
+			</li>
 			<li><input type="reset" value="다시 작성"><input type="submit" value="등록하기"></li>
 		</ul>
 	</form>
