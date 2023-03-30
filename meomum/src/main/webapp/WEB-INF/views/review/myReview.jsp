@@ -36,6 +36,15 @@
 .app-btn-secondary{
 
 }
+
+.nav-tabs{
+    border-bottom: none;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 20px;
+}
 </style>
 </head>
 <body>
@@ -47,29 +56,24 @@
 		<div class="col-xl-9 col-md-9">
 		<!-- ---------- 마이페이지 작업한 파일 페이지 여기에 넣어주세요!!(include) ---------- -->
 			<div class="row">
-			<!-- 탭메뉴  -->
-						<ul class="nav nav-tabs">
-							<li class="nav-item">
-								<a class="nav-link active" aria-current="page" href="#">Active</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">Link</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">Link</a>
-							</li>
-							<li class="nav-item">
-						    	<a class="nav-link disabled">Disabled</a>
-							</li>
-						</ul>
-						<div class="tab-content" id="myTabContent">
-							<div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-								<%@include file="reviewList_user.jsp"%> 
-							</div>
-							<div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">...</div>
-							<div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">...</div>
-							<div class="tab-pane fade" id="disabled-tab-pane" role="tabpanel" aria-labelledby="disabled-tab" tabindex="0">...</div>
-						</div>
+				<!-- 탭메뉴  -->
+				<ul class="nav nav-tabs">
+					<li class="nav-item">
+						<a class="nav-link" data-toggle="tab" href="#reviewable-tab-pane">작성 가능한 후기</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" data-toggle="tab"  href="#myreview-tab-pane">내가 쓴 후기</a>
+					</li>
+				</ul>
+				<div class="tab-content" id="myTabContent">
+					<div class="tab-pane fade show" id="reviewable-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+						<%@include file="../myMenu.jsp"%> 
+					</div>
+					<div class="tab-pane fade show active" id="myreview-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+						<!-- 내가 작성한 후기  -->
+						<%@include file="reviewList_user.jsp"%> 
+					</div>
+				</div>
 			
 			
 				
@@ -85,7 +89,6 @@
 </section>
 
 <%@include file="../footer.jsp"%> 
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 
