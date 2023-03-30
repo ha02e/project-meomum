@@ -19,7 +19,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Dokdo&family=East+Sea+Dokdo&family=Hi+Melody&family=Nanum+Myeongjo:wght@400;800&family=Poor+Story&family=Single+Day&family=Song+Myung&family=Stylish&family=Sunflower:wght@300&display=swap" rel="stylesheet">
 
 
-<!-- 
+<!-- 고르기
 font-family: 'Black Han Sans', sans-serif;
 font-family: 'Dokdo', cursive;
 font-family: 'East Sea Dokdo', cursive;
@@ -148,7 +148,7 @@ font-family: 'Stylish', sans-serif;
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link click-scroll" href="#">공지</a>
+                        <a class="nav-link click-scroll" href="ntcList.do">공지</a>
                     </li>
 
                     <li class="nav-item ms-3">
@@ -156,8 +156,8 @@ font-family: 'Stylish', sans-serif;
 		                      <a class="bi bi-person-circle display-6 bs-warning-bg-subtle" href="donate.html"></a>
 		
 		                        <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
-		                            <li><a class="dropdown-item " href="#">로그인 <span class="material-symbols-outlined">login</span></a>
-                      <li><a class="dropdown-item" href="#">회원가입</a></li>
+		                            <li><a class="dropdown-item " href="login.do">로그인 <span class="material-symbols-outlined">login</span></a>
+                 				     <li><a class="dropdown-item" href="memberJoin.do">회원가입</a></li>
 		                        </ul>
 		                    </li>
  

@@ -7,5 +7,6 @@
   <configuration>
   	<mappers>
   		<mapper resource="sqlMap/ntcSQL.xml"/>
+  		<mapper resource="sqlMap/memberSQL.xml"/>
   	</mappers>
   </configuration>
