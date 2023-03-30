@@ -39,13 +39,13 @@
 		</select>
 	</li>
 	
-	<li>가구수
+<%-- 	<li>가구수
 		<select name="svc_people">
 			<c:forEach var="i" begin="1" end="10">
 			<option value="${i}">${i}</option>
 			</c:forEach>
 		</select>
-	</li>
+	</li> --%>
 	
 	<li>서비스 영역
 		<input type="checkbox" name="svc_area" value="전체">전체
@@ -57,7 +57,7 @@
 		<input type="checkbox" name="svc_area" value="기타">기타
 	</li>
 	
-	<li>거주 평수
+	<li>거주 평수(공급면적)
 		<input type="text" name="svc_py">
 	</li>
 	
@@ -85,6 +85,13 @@
 	
 	<li>요청사항<br>
 		<textarea name="svc_req" rows="5" cols="35" placeholder="요청사항을 입력해주세요"></textarea>
+	</li>
+	
+	<li>서비스 인지 경로
+		<input type="radio" name="svc_know" value="블로그">블로그
+		<input type="radio" name="svc_know" value="인터넷 카페">인터넷 카페
+		<input type="radio" name="svc_know" value="지인추천">지인추천
+		<input type="radio" name="svc_know" value="검색">검색
 	</li>
 	
 	<li>개인정보 수집 및 이용에 대한 안내
