@@ -36,7 +36,17 @@ private SqlSessionTemplate sqlMap;
 			return count;
 		}
 
+	@Override
+		public int proDelete(int pro_idx) {
+			int count=sqlMap.delete("proDelete",pro_idx);
+			return count;
+		}
 
+	@Override
+		public ArrayList<ProDTO> proFind(String proF) {
+			//ArrayList<ProDTO> lists=sqlMap.selectList(proF);
+			return null;
+		}
 	
 	
 }

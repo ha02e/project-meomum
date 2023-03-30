@@ -8,10 +8,10 @@
 
 <script>
 function calPrice(){
-	const proprice = Number(document.getElementById("pro_price").value);
-    //const subMonth = Number(document.querySelector('input[name="subMonth"]:checked').value);
-    const subprice = Math.floor(proprice / 15);
-    document.getElementById("pro_subprice").value = subprice;
+	 const proprice = Number(document.getElementById("pro_price").value);
+	    const subMonth = Number(document.querySelector('input[name="pro_month"]:checked').value);
+	    const subprice = Math.floor(proprice / (15 * subMonth)) * subMonth;
+	    document.getElementById("pro_subprice").value = subprice;
 }
 
 function addConfirm() {

@@ -31,7 +31,7 @@ public class ProController {
 	
 	//파일 저장 실행
 	@RequestMapping("/addPro.do")
-	public String fileUpload(
+	public ModelAndView fileUpload(
 			@RequestParam("pro_thumb") MultipartFile pro_thumb,
 	        @RequestParam("pro_img1") MultipartFile pro_img1, 
 	        @RequestParam("pro_img2") MultipartFile pro_img2,
@@ -65,14 +65,14 @@ public class ProController {
 		copyInto(pro_content);
 		
 		//정보 저장
-		int count=proDao.proInsert(dto);
+		int result=proDao.proInsert(dto);
 				
-				
-		if(count>0) {
-		return "pro/proOk";
-		}else {
-		return "pro/proForm";
-		}
+		String msg=result>=0?"등록 성공":"등록 실패";
+		ModelAndView mav=new ModelAndView();
+		mav.addObject("msg", msg);
+		mav.setViewName("pro/proMsg");
+		return mav;		
+		
 	}
 	
 	
@@ -97,6 +97,7 @@ public class ProController {
 	}
 	
 	
+	//페이징 모듈
 	public List<ProDTO> proPage(int cp,int ls) {
 		int start=(cp-1)*ls+1;
 		int end=cp*ls;
@@ -108,6 +109,7 @@ public class ProController {
 	}
 	
 	
+	//상품 관리 페이지
 	@RequestMapping("/proList.do")
 	public ModelAndView bbsList(@RequestParam(value="cp",defaultValue="1")int cp) {
 		
@@ -128,5 +130,15 @@ public class ProController {
 		return mav;
 	}
 	
+	//상품 삭제
+	@RequestMapping("/proDel.do")
+	public ModelAndView proDel(@RequestParam("pro_idx") int pro_idx) {
+		int result = proDao.proDelete(pro_idx);
+		String msg=result>=0?"삭제 성공":"삭제 실패";
+		ModelAndView mav=new ModelAndView();
+		mav.addObject("msg", msg);
+		mav.setViewName("pro/proMsg");
+		return mav;
+		}
 	
 }

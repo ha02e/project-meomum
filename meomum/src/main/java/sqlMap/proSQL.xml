@@ -35,6 +35,10 @@
  	<select id="proTotalCnt" resultType="integer">
 	 select count(*) from product
  	</select>
-	
+ 	
+ 	<delete id="proDelete" parameterType="integer">
+ 	 delete from product  
+ 	 where pro_idx=#{pro_idx}
+ 	</delete>
 	
 </mapper> 
