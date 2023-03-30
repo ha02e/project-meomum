@@ -9,6 +9,8 @@ public class ProController {
 
 	@RequestMapping("/product.do")
 	public String product() {
-		return "/pro/addProduct";
+		return "/pro/proForm";
 	}
+	
+	
 }
