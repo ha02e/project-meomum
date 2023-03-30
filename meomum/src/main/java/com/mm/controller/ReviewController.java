@@ -11,4 +11,10 @@ public class ReviewController {
 		return "review/myReview";
 	}
 	
+	//리뷰작성 테스트
+	@RequestMapping("/reviewWrite.do")
+	public String reviewForm() {
+		return "review/reviewWrite";
+	}
+	
 }
