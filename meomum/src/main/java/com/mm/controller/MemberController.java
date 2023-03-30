@@ -35,7 +35,7 @@ public class MemberController {
 		ModelAndView mav = new ModelAndView();
 		String msg = result>0?"회원가입이 완료되었습니다.":"회원가입에 실패하였습니다.문의1234-1234";
 		mav.addObject("msg", msg);
-		mav.setViewName("member/memberJoin");
+		mav.setViewName("ntc/ntcMsg");
 		
 		return mav;
 	}
@@ -63,22 +63,43 @@ public class MemberController {
 				ck.setMaxAge(60*60*24*30);
 				res.addCookie(ck);
 			}
+		
+			MemberDTO dto = mdao.getUserInfo(input_id);
 			
-			
-				MemberDTO dto = mdao.getUserInfo(input_id);
-				
-				session.setAttribute("dto", dto);
-			mav.addObject("msg",dto.getUser_id()+"님 환영합니다.");
+			session.setAttribute("userinfo", dto);
+			if(dto.getUser_info().equals("회원")) {
+				mav.addObject("msg",dto.getUser_id()+"님 환영합니다.");
+				mav.addObject("gopage","location.href='index.do';");
+				mav.setViewName("mainMsg");
+			}else {
+				mav.addObject("msg",dto.getUser_id()+"님 오늘도 하루도 힘내세요");
+				mav.addObject("gopage","location.href='admin.do';");
+				mav.setViewName("mainMsg");
+			}
 			
 		}else if(result==mdao.NOT_ID||result==mdao.NOT_PWD) {
 			mav.addObject("msg", "아이디 또는 비밀번호가 일치하지 않습니다.");
-			mav.addObject("gopage","login");
+			mav.addObject("gopage","history.back();");
+
+			mav.setViewName("mainMsg");
 		}else {
 			mav.addObject("msg", "고객센터로 연락바랍니다.");
-			mav.addObject("gopage","index");
+			mav.addObject("gopage","location.href='index.do';");
+			mav.setViewName("mainMsg");
 		}
 		
 		return mav;
+	}
+	
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/index.do";
+	}
+	
+	@RequestMapping("/infoEdit")
+	public String infoEditForm() {
+		return "member/infoEdit";
 	}
 
 }

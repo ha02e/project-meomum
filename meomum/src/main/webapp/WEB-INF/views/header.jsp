@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -153,12 +154,20 @@ font-family: 'Stylish', sans-serif;
 
                     <li class="nav-item ms-3">
 		                  <li class="nav-item dropdown">
-		                      <a class="bi bi-person-circle display-6 bs-warning-bg-subtle" href="donate.html"></a>
-		
+							<c:if test="${!empty sessionScope.userinfo}">
+		                      <a class="bi bi-person-circle display-6 bs-warning-bg-subtle" href="infoEdit.do"></a>
 		                        <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
-		                            <li><a class="dropdown-item " href="login.do">로그인 <span class="material-symbols-outlined">login</span></a>
+		                            <li><a class="dropdown-item " href="logout.do">로그아웃 <span class="material-symbols-outlined">login</span></a>
+                 				     <li><a class="dropdown-item" href="#">장바구니</a></li>
+		                        </ul>
+		                        </c:if>
+		                        <c:if test="${empty sessionScope.userinfo}">
+		                        <a class="bi bi-person-circle display-6 bs-warning-bg-subtle" href="#"></a>
+		                        <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
+		                            <li><a class="dropdown-item " href="login.do">로그인안됨 <span class="material-symbols-outlined">login</span></a>
                  				     <li><a class="dropdown-item" href="memberJoin.do">회원가입</a></li>
 		                        </ul>
+		                        </c:if>
 		                    </li>
  
                 </ul>

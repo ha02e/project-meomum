@@ -21,10 +21,10 @@
 									''
 									)
 	</insert>
-	<select id="mmLogin" parameterType="String" resultType="com.mm.model.MemberDTO">
+	<select id="mmLogin" parameterType="String" resultType="com.mm.member.model.MemberDTO">
 		select * from member where user_id = #{user_id }	
 	</select>
-	<select id="getUserInfo" parameterType="String" resultType="com.mm.model.MemberDTO">
+	<select id="getUserInfo" parameterType="String" resultType="com.mm.member.model.MemberDTO">
 		select * from member where user_id = #{user_id }
 	</select>
 </mapper> 

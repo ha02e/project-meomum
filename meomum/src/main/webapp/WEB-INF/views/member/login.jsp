@@ -17,8 +17,8 @@
 					<h4 class="mb-3 text-center">로그인</h4>
 					<form name="login" action="login.do" method="post">
 						<ul>
-							<li><input type="text" name="user_id" id="user_id" placeholder="이메일"></li>
-							<li><input type="text" name="user_pwd" id="user_pwd" placeholder="비밀번호"></li>
+							<li><input type="text" name="input_id" id="user_id" placeholder="이메일"></li>
+							<li><input type="password" name="input_pwd" id="user_pwd" placeholder="비밀번호"></li>
 
 						</ul>
 							<div><input type="submit" value="로그인"></div>

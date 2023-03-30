@@ -23,7 +23,7 @@
 				<form name="memberJoin" action="memberJoin.do" method="post">
 					<ul>
 						<li><input type="text" name="user_id" id="user_id" placeholder="이메일"></li>
-						<li><input type="text" name="user_pwd" id="user_pwd" placeholder="비밀번호"></li>
+						<li><input type="password" name="user_pwd" id="user_pwd" placeholder="비밀번호"></li>
 						<li><input type="text" name="user_name" id="user_name" placeholder="이름"></li>
 						<li><input type="text" name="user_pcode" id="user_pcode"placeholder="우편번호" onclick="findaddr()">
 							<input type="button" value="우편번호 검색" onclick="findaddr()"></li>
