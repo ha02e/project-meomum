@@ -99,7 +99,7 @@
 							<div class="card-body">
 								<ul>
 									<li><a href="#">작성 가능한 후기</a></li>
-									<li><a href="#">내가 쓴 후기</a></li>
+									<li><a href="myReview.do">내가 쓴 후기</a></li>
 								</ul>
 							</div>
 						</div>
