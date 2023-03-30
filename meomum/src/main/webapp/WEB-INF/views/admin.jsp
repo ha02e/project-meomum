@@ -8,11 +8,6 @@
 <title>머뭄 관리자 페이지</title>
 <link href="/docs/5.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     
-<!--<link rel="shortcut icon" href="favicon.ico">-->
-    
-<!-- FontAwesome JS
-<script defer src="assets/plugins/fontawesome/js/all.min.js"></script>-->
-    
 <!-- App CSS -->  
 <link id="theme-style" rel="stylesheet" href="assets/css/portal_a.css">
 <link rel="stylesheet" type="text/css" href="css/mainLayout_a.css">
