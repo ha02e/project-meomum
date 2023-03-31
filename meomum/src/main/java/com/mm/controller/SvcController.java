@@ -45,12 +45,14 @@ public class SvcController {
 	}
 	
 	@RequestMapping(value = "/svcTimeSelect.do", method = RequestMethod.GET)
-	
-	public @ResponseBody List<SvcDateDTO> test(@RequestParam("svc_date")String days){
+	@ResponseBody 
+	public ModelAndView test(@RequestParam("svc_date")String days){
 		System.out.println(days);
 		List<SvcDateDTO> times = svcDao.svcTimeSelect(days);
-
-		return times; 
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("times", times);
+		mav.setViewName("mmJson");
+		return mav; 
 	}
 	
 

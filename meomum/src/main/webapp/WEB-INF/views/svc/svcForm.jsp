@@ -38,22 +38,20 @@ textarea {
 
 <script>
 $(function() {
-  $("#userdate").change(function() {
-    $.ajax({
-      url : "svcTimeSelect.do",
-      data : {
-        svc_date : $("#userdate").val()
-      },
-      method : "get"
-    }).done(function(result) {
-      var times = JSON.parse(result); // JSON 배열을 자바스크립트 배열로 변환
-      for (var i = 0; i < times.length; i++) {
-        var time = times[i];
-        console.log(time.time); // 각 원소의 time 속성 출력
-      }
-    })
-  });
-});
+	  $("#userdate").change(function() {
+	    $.ajax({
+	      url : "svcTimeSelect.do",
+	      data : {
+	        svc_date : $("#userdate").val()
+	      },
+	      dataType:'json',
+	      method : "get"
+	    }).done(function(result) {
+	      console.log(result);
+	    });
+	  });
+	});
+
 </script>
 </head>
 
