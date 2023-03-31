@@ -36,9 +36,43 @@
 	 select count(*) from product
  	</select>
  	
+ 	
  	<delete id="proDelete" parameterType="integer">
  	 delete from product  
  	 where pro_idx=#{pro_idx}
  	</delete>
+ 	
+ 	
+ 	<select id="proFind1" parameterType="int" resultType="com.mm.pro.model.ProDTO">
+ 	select * from product 
+ 	where pro_cate=#{proF}
+ 	order by pro_idx desc
+ 	</select>
+ 	
+ 	
+ 	<select id="proFind2" parameterType="String" resultType="com.mm.pro.model.ProDTO">
+ 	SELECT *
+	from product 
+	where pro_name like '%' || #{proF} || '%'
+	order by pro_idx desc
+ 	</select>
+ 	
+ 	
+ 	<select id="proUpdateList" parameterType="integer" resultType="com.mm.pro.model.ProDTO">
+	 select * from product
+	 where pro_idx=#{pro_idx}
+ 	</select>
+ 	
+ 	<update id="proUpdate" parameterType="com.mm.pro.model.ProDTO">
+ 	update product 
+ 	set
+ 	pro_name=#{pro_name},
+ 	pro_price=#{pro_price},
+ 	pro_state=#{pro_state},
+ 	pro_month=#{pro_month},
+ 	pro_subprice=#{pro_subprice}
+ 	where pro_idx=#{pro_idx}
+ 	</update>
+ 	
 	
 </mapper> 

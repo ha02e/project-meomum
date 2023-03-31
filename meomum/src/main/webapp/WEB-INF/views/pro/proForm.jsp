@@ -10,7 +10,7 @@
 function calPrice(){
 	 const proprice = Number(document.getElementById("pro_price").value);
 	    const subMonth = Number(document.querySelector('input[name="pro_month"]:checked').value);
-	    const subprice = Math.floor(proprice / (15 * subMonth)) * subMonth;
+	    const subprice = Math.ceil(proprice / (15 * subMonth)) * subMonth;
 	    document.getElementById("pro_subprice").value = subprice;
 }
 
@@ -74,7 +74,7 @@ function addConfirm() {
 			<li>상세 내용
 			<input type="file" name="pro_content">
 			</li>
-			<li><input type="reset" value="다시 작성"><input type="submit" value="등록하기"></li>
+			<li><input type="submit" value="등록하기"><input type="reset" value="다시 작성"></li>
 		</ul>
 	</form>
 <%@include file="../footer_a.jsp"%>    

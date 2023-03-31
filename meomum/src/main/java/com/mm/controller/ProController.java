@@ -3,6 +3,8 @@ package com.mm.controller;
 import java.io.*;
 import java.util.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.Mapping;
@@ -97,6 +99,7 @@ public class ProController {
 	}
 	
 	
+	
 	//페이징 모듈
 	public List<ProDTO> proPage(int cp,int ls) {
 		int start=(cp-1)*ls+1;
@@ -109,9 +112,10 @@ public class ProController {
 	}
 	
 	
+	
 	//상품 관리 페이지
 	@RequestMapping("/proList.do")
-	public ModelAndView bbsList(@RequestParam(value="cp",defaultValue="1")int cp) {
+	public ModelAndView proList(@RequestParam(value="cp",defaultValue="1")int cp) {
 		
 		int totalCnt=proDao.getTotalCnt();
 		int listSize=5;
@@ -130,6 +134,7 @@ public class ProController {
 		return mav;
 	}
 	
+	
 	//상품 삭제
 	@RequestMapping("/proDel.do")
 	public ModelAndView proDel(@RequestParam("pro_idx") int pro_idx) {
@@ -140,5 +145,66 @@ public class ProController {
 		mav.setViewName("pro/proMsg");
 		return mav;
 		}
+	
+	
+	
+	//상품 검색
+	@RequestMapping("/proFind.do")
+	public ModelAndView proFind(
+			@RequestParam(value="proF",required=false)String proF) {
+		ModelAndView mav=new ModelAndView();
+		int usernum=0;
+		
+		if(proF.equals("침대")) {
+			usernum=1;
+			List<ProDTO> lists=proDao.proFind1(usernum);
+			mav.addObject("lists", lists);
+		} else if(proF.equals("테이블")) {
+			usernum=2;
+			List<ProDTO> lists=proDao.proFind1(usernum);
+			mav.addObject("lists", lists);
+		} else if(proF.equals("의자")) {
+			usernum=3;
+			List<ProDTO> lists=proDao.proFind1(usernum);
+			mav.addObject("lists", lists);
+		} else if(proF.equals("소파")) {
+			usernum=4;
+			List<ProDTO> lists=proDao.proFind1(usernum);
+			mav.addObject("lists", lists);
+		} else if(proF.equals("조명")) {
+			usernum=5;
+			List<ProDTO> lists=proDao.proFind1(usernum);
+			mav.addObject("lists", lists);
+		} else {
+		List<ProDTO> lists=proDao.proFind2(proF);
+		mav.addObject("lists", lists);
+		}
+		mav.setViewName("pro/proList");
+		return mav;
+	}
+	
+	
+	//상품 수정 페이지 이동+현재 등록한 정보 출력
+	@RequestMapping("/proUpdateForm.do")
+	public ModelAndView proUpdateForm(
+			@RequestParam("pro_idx") int pro_idx) {
+		ModelAndView mav=new ModelAndView();
+		List<ProDTO> lists=proDao.proUpdateList(pro_idx);
+		mav.addObject("lists", lists);
+		mav.setViewName("pro/proUpdateForm");
+		return mav;
+	}
+	
+	
+	//상품 수정
+	@RequestMapping("/proUpdate.do")
+	public ModelAndView proUpdate(ProDTO dto) {
+		ModelAndView mav=new ModelAndView();
+		int result = proDao.proUpdate(dto);
+		String msg=result>=0?"수정 성공":"수정 실패";
+		mav.addObject("msg", msg);
+		mav.setViewName("pro/proMsg");
+		return mav;
+	}
 	
 }

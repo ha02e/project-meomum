@@ -20,6 +20,7 @@ function confirmDel(pro_idx){
 	<input type="text" name="proF">
 	<input type="submit" value="검색">
 	</form>
+	
 	<a href="proForm.do">상품 등록</a>
 	</div>
 
@@ -38,6 +39,14 @@ function confirmDel(pro_idx){
 				<th>등록일</th>
 				<th></th>
 			</tr>
+			
+			<c:if test="${empty lists }">
+				<tr>
+				<td colspan="11" align="center">
+				등록된 게시글이 없습니다
+				</td>
+				</tr>
+			</c:if>
 			
 			<c:forEach var="dto" items="${lists }">
 			<tr>
@@ -86,7 +95,7 @@ function confirmDel(pro_idx){
 				<td>${dto.pro_month }</td>
 				<td>${dto.pro_subprice }</td>
 				<td>${dto.pro_date }</td>	
-				<td>수정 | <a href="#" onclick="confirmDel(${dto.pro_idx})">삭제</a></td>
+				<td><a href="proUpdateForm.do?pro_idx=${dto.pro_idx}">수정</a> | <a href="#" onclick="confirmDel(${dto.pro_idx})">삭제</a></td>
 			</tr>
 			</c:forEach>
 			
