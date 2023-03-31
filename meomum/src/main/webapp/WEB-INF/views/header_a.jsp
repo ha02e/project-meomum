@@ -105,7 +105,7 @@
 			<a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
 			<div class="app-branding">
 				<a class="app-logo" href="#">
-					<img class="logo-icon me-2" src="images/meomum_logo.png" alt="logo">
+					<img class="logo-icon me-2" src="images/meomum_logo(bold).png" alt="logo">
 				</a>
 			</div><!--//app-branding-->  
 		        
