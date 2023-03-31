@@ -20,7 +20,7 @@
 			<li><label>이미지 파일 첨부</label> 
             <input type="file" name="ntc_img"></li>
 			
-			<li>본문:<textarea name="ntc_content" rows="50" cols="50">내용을 입력해주세요.</textarea></li>
+			<li>본문:<textarea name="ntc_content" rows="50" cols="50" placeholder="내용을 입력해주세요."></textarea></li>
 		</ul>
 		<div>
 			<input type="submit" value="등록하기"> <input type="reset"

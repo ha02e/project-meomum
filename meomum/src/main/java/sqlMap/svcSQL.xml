@@ -2,6 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 테이블 이름 변경 -->
 
 <mapper namespace="com.mm.svc">
 	<insert id="svcInsert" parameterType="com.mm.svc.model.SvcDTO"> 
@@ -14,5 +15,9 @@
 	values(('S'||TO_CHAR(SYSDATE, 'YYYYMMDD-')||svc2_idx.currval),1,#{svc_date},#{svc_time})
 	</insert>
 
+
+	<select id="svcTimeSelect" parameterType="String" resultType="com.mm.svc.model.SvcDateDTO">
+		select svc_time from svc2_date where svc_date = #{svc_date}
+	</select>
 </mapper>
   

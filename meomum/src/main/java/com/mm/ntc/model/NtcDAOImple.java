@@ -22,14 +22,42 @@ public class NtcDAOImple implements NtcDAO {
 	@Override
 	public List<NtcDTO> ntcList() {
 		List<NtcDTO> list = sqlMap.selectList("ntcList");
+		
+		if(list == null) {
+			return null;
+		}
+		
 		return list;
 	}
 
 	@Override
-	public NtcDTO ntcContent(int idx) {
-		NtcDTO dto=sqlMap.selectOne("ntcContent",idx);
-		dto.setNtc_content(dto.getNtc_content().replaceAll("\n", "<br>"));
-		return dto;
+	public NtcDTO ntcContent(Integer idx) {
+		if (idx == null) {
+	        return null; // or throw an exception
+	    }
+	    NtcDTO dto = sqlMap.selectOne("ntcContent", idx);
+	    if (dto == null) {
+	        return null; // or throw an exception
+	    }
+	    dto.setNtc_content(dto.getNtc_content().replaceAll("\n", "<br>"));
+	    return dto;
 	}
 
+	@Override
+	public int ntcDelete(int idx) {
+		int count=sqlMap.delete("ntcDelete", idx);
+		return count;
+	}
+	
+	@Override
+	public int ntcViewCnt(int idx) {
+		int count=sqlMap.update("ntcViewCnt",idx);
+		return count;
+	}
+	
+	@Override
+	public int ntcUpdate(int idx) {
+		int count=sqlMap.update("ntcUpdate",idx);
+		return count;
+	}
 }
