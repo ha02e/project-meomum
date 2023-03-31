@@ -35,11 +35,8 @@
             </div>
         </div>
     </div>
-	<div class="jumbotron bg-transparent text-dark text-center mb-4">
-		<h1 class="mb-0">공지사항</h1>
-	</div>
 
-	<div class="container">
+	<div class="container my-5"> <!-- 여백 추가 -->
 		<div class="row justify-content-center">
 			<div class="col-md-8">
 				<table class="table table-bordered table-hover">
