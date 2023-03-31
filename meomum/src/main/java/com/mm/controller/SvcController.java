@@ -1,9 +1,15 @@
 package com.mm.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mm.svc.model.SvcDAO;
@@ -38,6 +44,14 @@ public class SvcController {
 		return mav;
 	}
 	
+	@RequestMapping(value = "/svcTimeSelect.do", method = RequestMethod.GET)
+	
+	public @ResponseBody List<SvcDateDTO> test(@RequestParam("svc_date")String days){
+		System.out.println(days);
+		List<SvcDateDTO> times = svcDao.svcTimeSelect(days);
+
+		return times; 
+	}
 	
 
 }
