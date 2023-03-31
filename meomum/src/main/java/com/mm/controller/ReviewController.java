@@ -1,20 +1,13 @@
 package com.mm.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
-import com.mm.review.model.ReviewDAO;
-import com.mm.review.model.ReviewDTO;
-import com.mm.review.service.ReviewService;
 
 @Controller
 public class ReviewController {
 
-	@Autowired
-	private ReviewService reviewService;
 	
 	@RequestMapping("/myReview.do")
 	public String myReview() {
