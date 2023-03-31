@@ -1,5 +1,8 @@
 package com.mm.svc.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 
 public class SvcDAOImple implements SvcDAO {
@@ -24,4 +27,9 @@ public class SvcDAOImple implements SvcDAO {
 		return count;
 	}
 	
+	@Override
+	public List<SvcDateDTO> svcTimeSelect(String days) {
+		List<SvcDateDTO> times = sqlMap.selectList("svcTimeSelect", days);
+		return times;
+	}
 }
