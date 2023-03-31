@@ -2,10 +2,15 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 	http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/context 
-	http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+	http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd"
+>
+
 
 <!-- configs -->
 	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"></bean>
@@ -13,6 +18,9 @@
     <property name="maxUploadSize" value="10485760"></property>
    </bean>
    <context:component-scan base-package="com.mm"></context:component-scan>
+   
+<!-- add annotation-driven --> 
+   <mvc:annotation-driven/>
 
 <!-- service -->
 	<bean id="reviewService" class="com.mm.review.service.ReviewServiceImple">
