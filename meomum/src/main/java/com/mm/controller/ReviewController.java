@@ -27,6 +27,7 @@ public class ReviewController {
 		return "review/reviewWrite";
 	}
 	
+	/*
 	@RequestMapping(value="/reviewWrite.do", method = RequestMethod.POST)
 	public ModelAndView reviewWriteSubmit(ReviewDTO dto) {
 		int result=reviewService.reviewWrite(dto);
@@ -38,5 +39,5 @@ public class ReviewController {
 		
 		return mav;
 	}
-	
+	*/
 }
