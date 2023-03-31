@@ -15,7 +15,11 @@
    <context:component-scan base-package="com.mm"></context:component-scan>
 
 <!-- service -->
-
+	<bean id="reviewService" class="com.mm.review.service.ReviewServiceImple">
+		<constructor-arg>
+			<ref bean="reviewDao"/>
+		</constructor-arg>
+	</bean>
 
 
 <!-- viewResolver &view-->

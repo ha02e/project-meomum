@@ -6,12 +6,9 @@ import com.mm.review.model.ReviewDTO;
 public class ReviewServiceImple implements ReviewService {
 	
 	private ReviewDAO reviewDao;
-	
-	public ReviewDAO getReviewDao() {
-		return reviewDao;
-	}
-	
-	public void setReviewDao(ReviewDAO reviewDao) {
+
+	public ReviewServiceImple(ReviewDAO reviewDao) {
+		super();
 		this.reviewDao = reviewDao;
 	}
 
