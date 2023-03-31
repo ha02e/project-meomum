@@ -83,7 +83,7 @@
 				<!-- 테스트 리뷰게시판 -->
 					<div class="review-form">
 						<h1>후기 작성하기</h1>
-						<form action="reviewWrite.do" name="star" id="myform" method="post">
+						<form action="reviewWrite.do" name="reviewWrite" id="myform" method="post" enctype="multipart/form-data">
 							<div class="container-xl">
 								<div class="position-relative mb-3">
 								<div class="row g-3 justify-content">
@@ -111,7 +111,7 @@
 							</div>
 							
 							<div id="container">
-							  <textarea class="summernote" name="content"></textarea>    
+							  <textarea id="summernote" name="content"></textarea>    
 							</div>
 	
 							<br>
@@ -123,15 +123,15 @@
 							<div class="mb-3" id="review-star">
 								<fieldset>
 									<span class="text-bold">별점을 선택해주세요</span>
-									<input type="radio" name="reviewStar" value="5" id="rate1"><label
+									<input type="radio" name="star" value="5" id="rate1"><label
 										for="rate1">★</label>
-									<input type="radio" name="reviewStar" value="4" id="rate2"><label
+									<input type="radio" name="star" value="4" id="rate2"><label
 										for="rate2">★</label>
-									<input type="radio" name="reviewStar" value="3" id="rate3"><label
+									<input type="radio" name="star" value="3" id="rate3"><label
 										for="rate3">★</label>
-									<input type="radio" name="reviewStar" value="2" id="rate4"><label
+									<input type="radio" name="star" value="2" id="rate4"><label
 										for="rate4">★</label>
-									<input type="radio" name="reviewStar" value="1" id="rate5"><label
+									<input type="radio" name="star" value="1" id="rate5"><label
 										for="rate5">★</label>
 								</fieldset>
 							</div>		
@@ -152,11 +152,40 @@
 
 <!-- summernote js  -->
 <script>
-$('.summernote').summernote({
+$('#summernote').summernote({
 	placeholder: '후기 내용을 작성해주세요.',
-	height: 300,
-	lang: "ko-KR"
+	minHeight:500,
+	maxHeight:null,
+	focus:true,
+	lang: "ko-KR",
+	spellCheck:false,
+	callbacks:{
+		onImageUpload:function(files, editor, welEditable){
+			for (var i = files.length - 1; i >= 0; i--) {
+	              sendFile(files[i], this);
+			}
+		}
+	}
 });
+
+function sendFile(file, el) {
+    var form_data = new FormData();
+    form_data.append('file', file);
+    $.ajax({
+      data: form_data,
+      type: "POST",
+      url: '/image',
+      cache: false,
+      contentType: false,
+      enctype: 'multipart/form-data',
+      processData: false,
+      success: function(url) {
+        $(el).summernote('editor.insertImage', url); 
+        $('#imageBoard > ul').append('<li><img src="'+url+'" width="480" height="auto"/></li>');
+      }
+    });
+}
+
 </script>
 
 <%@include file="../footer.jsp"%> 

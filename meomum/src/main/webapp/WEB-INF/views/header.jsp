@@ -20,6 +20,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Dokdo&family=East+Sea+Dokdo&family=Hi+Melody&family=Nanum+Myeongjo:wght@400;800&family=Poor+Story&family=Single+Day&family=Song+Myung&family=Stylish&family=Sunflower:wght@300&display=swap" rel="stylesheet">
 
 
+
 <!-- 고르기
 font-family: 'Black Han Sans', sans-serif;
 font-family: 'Dokdo', cursive;
@@ -50,11 +51,10 @@ font-family: 'Stylish', sans-serif;
 </style>
 
 </head>
-<body>
-	
+
 <body>
 
-    <header class="site-header">
+    <header class="site-header" id="top">
         <div class="container">
             <div class="row">
 
@@ -119,15 +119,15 @@ font-family: 'Stylish', sans-serif;
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link click-scroll" href="#">머뭄</a>
+                        <a class="nav-link" href="#">머뭄</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link click-scroll" href="#">후기</a>
+                        <a class="nav-link" href="#">후기</a>
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link click-scroll dropdown-toggle" href="#"
+                        <a class="nav-link dropdown-toggle" href="#"
                             id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">정리일상</a>
 
@@ -138,7 +138,7 @@ font-family: 'Stylish', sans-serif;
                         </ul>
                     </li>
  					<li class="nav-item dropdown">
-                        <a class="nav-link click-scroll dropdown-toggle" href="#"
+                        <a class="nav-link dropdown-toggle" href="#"
                             id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">구독일상</a>
 
@@ -149,7 +149,7 @@ font-family: 'Stylish', sans-serif;
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link click-scroll" href="ntcList.do">공지</a>
+                        <a class="nav-link" href="ntcList.do">공지</a>
                     </li>
 
                     <li class="nav-item ms-3">
@@ -162,11 +162,7 @@ font-family: 'Stylish', sans-serif;
 		                        </ul>
 		                        </c:if>
 		                        <c:if test="${empty sessionScope.userinfo}">
-		                        <a class="bi bi-person-circle display-6 bs-warning-bg-subtle" href="#"></a>
-		                        <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
-		                            <li><a class="dropdown-item " href="login.do">로그인안됨 <span class="material-symbols-outlined">login</span></a>
-                 				     <li><a class="dropdown-item" href="memberJoin.do">회원가입</a></li>
-		                        </ul>
+		                        <a class="bi bi-person-circle display-6 bs-warning-bg-subtle" href="login.do"></a>
 		                        </c:if>
 		                    </li>
  
