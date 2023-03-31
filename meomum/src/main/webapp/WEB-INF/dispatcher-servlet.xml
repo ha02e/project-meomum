@@ -17,7 +17,6 @@
 <!-- service -->
 
 
-
 <!-- viewResolver &view-->
 		<bean id="mmJson" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"></bean>
 		<bean id="mmDown" class="com.mm.view.DownloadView"></bean>

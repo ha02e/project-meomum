@@ -7,6 +7,8 @@
   <configuration>
   	<mappers>
   		<mapper resource="sqlMap/ntcSQL.xml"/>
+  		<mapper resource="sqlMap/svcSQL.xml"/>
+  		<mapper resource="sqlMap/memberSQL.xml"/>
   		<mapper resource="sqlMap/proSQL.xml"/>
   	</mappers>
   </configuration>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mm.svc">
+	<insert id="svcInsert" parameterType="com.mm.svc.model.SvcDTO"> 
+	insert into svc2
+	values(('S'||TO_CHAR(SYSDATE, 'YYYYMMDD-')||svc2_idx.nextval), 1,#{user_name},#{user_tel},#{svc_type},#{svc_py},#{svc_area},#{svc_local},nvl(#{svc_req},'없음'),#{svc_know},#{svc_pia},sysdate,'-','예약확정') 
+	</insert> 
+	
+	<insert id="svcDateInsert" parameterType="com.mm.svc.model.SvcDateDTO"> 
+	insert into svc2_date 
+	values(('S'||TO_CHAR(SYSDATE, 'YYYYMMDD-')||svc2_idx.currval),1,#{svc_date},#{svc_time})
+	</insert>
+
+</mapper>
+  
