@@ -23,7 +23,11 @@
    <mvc:annotation-driven/>
 
 <!-- service -->
-
+	<bean id="reviewService" class="com.mm.review.service.ReviewServiceImple">
+		<constructor-arg>
+			<ref bean="reviewDAO"/>
+		</constructor-arg>
+	</bean>
 
 
 <!-- viewResolver &view-->

@@ -34,30 +34,29 @@
 	
 	
 	<!-- DAOs -->
-	<!-- DAOs -->
 	<bean id="ntcDAO" class="com.mm.ntc.model.NtcDAOImple">
 		<constructor-arg>
 			<ref bean="sqlSessionTemplate" />
 		</constructor-arg>
 	</bean>
-	
 	<bean id="svcDAO" class="com.mm.svc.model.SvcDAOImple">
 		<constructor-arg>
 			<ref bean="sqlSessionTemplate" />
 		</constructor-arg>
 	</bean>
-	
-
 	<bean id="memberDAO" class="com.mm.member.model.MemberDAOImple">
-	<constructor-arg>
+		<constructor-arg>
 			<ref bean="sqlSessionTemplate" />
 		</constructor-arg>
 	</bean>
-	
 	<bean id="proDAO" class="com.mm.pro.model.ProDAOImple">
 		<constructor-arg>
 			<ref bean="sqlSessionTemplate" />
 		</constructor-arg>
 	</bean>
-
+	<bean id="reviewDAO" class="com.mm.review.model.ReviewDAOImple">
+		<constructor-arg>
+			<ref bean="sqlSessionTemplate"/>
+		</constructor-arg>
+	</bean>
 </beans>

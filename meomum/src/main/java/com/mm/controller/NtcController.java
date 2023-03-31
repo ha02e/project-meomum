@@ -24,9 +24,19 @@ public class NtcController {
 	@Autowired
 	private NtcDAO ntcDao;
 	
+	
+	@RequestMapping("/ntcList_a.do")//관리자 공지사항
+	public ModelAndView ntcList_a() {
+		List<NtcDTO> list=ntcDao.ntcList();
+		ModelAndView mav=new ModelAndView();
+		mav.addObject("lists", list);
+		mav.setViewName("ntc/ntcList_a");
+		return mav;
+	}
+	
 	@RequestMapping(value = "/ntcWrite.do", method = RequestMethod.GET )
 	public String ntcForm() {
-		return "ntc/ntcForm";
+		return "ntc/ntcForm_a";
 	}
 	
 	@RequestMapping(value = "/ntcWrite.do", method =RequestMethod.POST )
@@ -56,6 +66,7 @@ public class NtcController {
 		String msg=result>0?"게시글 작성 성공!":"게시글 작성 실패!";
 		ModelAndView mav=new ModelAndView();
 		mav.addObject("msg", msg);
+		mav.addObject("goUrl", "/meomum/ntcList_a.do");
 		mav.setViewName("ntc/ntcMsg");
 		return mav;
 	}
@@ -72,10 +83,51 @@ public class NtcController {
 	@RequestMapping("/ntcContent.do")
 	public ModelAndView ntcContent(@RequestParam("ntc_idx") int idx) {
 		NtcDTO dto=ntcDao.ntcContent(idx);
+		ntcDao.ntcViewCnt(idx);
 		ModelAndView mav=new ModelAndView();
 		mav.addObject("list", dto);
 		mav.setViewName("ntc/ntcContent");
 		return mav;
 	}
+	
+	
+	@RequestMapping("/ntcContent_a.do")//관리자 공지사항 본문
+	public ModelAndView ntcContent_a(@RequestParam("ntc_idx") int idx) {
+		NtcDTO dto=ntcDao.ntcContent(idx);
+		ModelAndView mav=new ModelAndView();
+		mav.addObject("list", dto);
+		mav.setViewName("ntc/ntcContent_a");
+		return mav;
+	}
+	
+	@RequestMapping("/ntcContentDel.do")
+	public ModelAndView ntcDelete(@RequestParam("ntc_idx") int idx) {
+		int result=ntcDao.ntcDelete(idx);
+		ModelAndView mav=new ModelAndView();
+		String msg=result>0?"글삭제 성공!":"글삭제 실패!";
+		mav.addObject("msg", msg);
+		mav.addObject("goUrl", "/meomum/ntcList_a.do");
+		mav.setViewName("ntc/ntcMsg");
+		
+		return mav;
+	}
+	
+	@RequestMapping(value = "/ntcUpdateForm.do", method = RequestMethod.POST)
+	public String ntcUpdateForm() {		
+		return "ntc/ntcUpdateForm";
+	}
+	
+	@RequestMapping("/ntcUpdate.do")
+	public ModelAndView ntcUpdate(@RequestParam("ntc_idx") int idx) {
+		int result=ntcDao.ntcUpdate(idx);
+		ModelAndView mav=new ModelAndView();
+		String msg=result>0?"글수정 성공!":"글수정 실패!";
+		mav.addObject("msg", msg);
+		mav.addObject("goUrl", "/meomum/ntcList_a.do");
+		mav.setViewName("ntc/ntcMsg");
+		
+		return mav;
+	}
+	
 	
 }
