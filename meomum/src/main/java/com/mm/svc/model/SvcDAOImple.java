@@ -28,8 +28,8 @@ public class SvcDAOImple implements SvcDAO {
 	}
 	
 	@Override
-	public List<SvcDateDTO> svcTimeSelect(String days) {
-		List<SvcDateDTO> times = sqlMap.selectList("svcTimeSelect", days);
+	public List<String> svcTimeSelect(String userdate) {
+		List<String> times = sqlMap.selectList("svcTimeSelect", userdate);
 		return times;
 	}
 }
