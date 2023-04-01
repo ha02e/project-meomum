@@ -6,6 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>[관리자] 상품 관리</title>
+<link href="/docs/5.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    
+<!-- App CSS -->  
+<link id="theme-style" rel="stylesheet" href="assets/css/portal_a.css">
+<link rel="stylesheet" type="text/css" href="css/mainLayout_a.css">
 <script>
 function confirmDel(pro_idx){
 	if (confirm("정말 삭제하시겠습니까?")) {
@@ -14,7 +19,7 @@ function confirmDel(pro_idx){
 }
 </script>
 </head>
-<body>
+<body class="app">
 	<div>
 	<form name="proFind" action="proFind.do">
 	<input type="text" name="proF">
@@ -48,41 +53,41 @@ function confirmDel(pro_idx){
 				</tr>
 			</c:if>
 			
-			<c:forEach var="dto" items="${lists }">
+			<c:forEach var="list" items="${lists }">
 			<tr>
 				<td>
-				<img alt="thumbnail" src="/meomum/items/${dto.pro_thumb}" style="width:40px; height:40px;">
+				<img alt="thumbnail" src="/meomum/items/${list.pro_thumb}" style="width:40px; height:40px;">
 				</td>
 				
-				<td>${dto.pro_idx }</td>
+				<td>${list.pro_idx }</td>
 				
 				<td>
 					<c:choose> 
-						<c:when test="${dto.pro_cate == 1}">
+						<c:when test="${list.pro_cate == 1}">
 							침대
 						</c:when>
-						<c:when test="${dto.pro_cate == 2}">
+						<c:when test="${list.pro_cate == 2}">
 							테이블
 						</c:when>
-						<c:when test="${dto.pro_cate == 3}">
+						<c:when test="${list.pro_cate == 3}">
 							의자
 						</c:when>
-						<c:when test="${dto.pro_cate == 4}">
+						<c:when test="${list.pro_cate == 4}">
 							소파
 						</c:when>
-						<c:when test="${dto.pro_cate == 5}">
+						<c:when test="${list.pro_cate == 5}">
 							조명
 						</c:when>
 					</c:choose>
 				</td>
 			
-				<td>${dto.pro_name }</td>	
+				<td>${list.pro_name }</td>	
 				
-				<td>${dto.pro_amount }</td>
+				<td>${list.pro_amount }</td>
 			
 				<td>
 					<c:choose> 
-						<c:when test="${dto.pro_state == 0}">
+						<c:when test="${list.pro_state == 0}">
 						 판매 중
 						</c:when>
 					 	<c:otherwise>
@@ -91,11 +96,11 @@ function confirmDel(pro_idx){
 					</c:choose>
 				</td>
 				
-				<td>${dto.pro_price }</td>
-				<td>${dto.pro_month }</td>
-				<td>${dto.pro_subprice }</td>
-				<td>${dto.pro_date }</td>	
-				<td><a href="proUpdateForm.do?pro_idx=${dto.pro_idx}">수정</a> | <a href="#" onclick="confirmDel(${dto.pro_idx})">삭제</a></td>
+				<td>${list.pro_price }</td>
+				<td>${list.pro_month }</td>
+				<td>${list.pro_subprice }</td>
+				<td>${list.pro_date }</td>	
+				<td><a href="proUpdateForm.do?pro_idx=${list.pro_idx}">수정</a> | <a href="#" onclick="confirmDel(${list.pro_idx})">삭제</a></td>
 			</tr>
 			</c:forEach>
 			
@@ -108,5 +113,6 @@ function confirmDel(pro_idx){
 			</tfoot>
 			
 		</table>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </body>
 </html>

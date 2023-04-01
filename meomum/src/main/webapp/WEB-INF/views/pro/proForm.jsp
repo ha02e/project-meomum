@@ -5,7 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title>[관리자] 상품 등록</title>
-
+<link href="/docs/5.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    
+<!-- App CSS -->  
+<link id="theme-style" rel="stylesheet" href="assets/css/portal_a.css">
+<link rel="stylesheet" type="text/css" href="css/mainLayout_a.css">
 <script>
 function calPrice(){
 	 const proprice = Number(document.getElementById("pro_price").value);
@@ -19,8 +23,10 @@ function addConfirm() {
 }
 </script>
 </head>
-<body>
+<body class="app">
 <%@include file="../header_a.jsp"%>  
+<div class="app-wrapper">
+
 	<h2>상품 등록하기</h2>
 	<form name="addPro" action="addPro.do" enctype="multipart/form-data" method="post" onsubmit="return addConfirm();">
 		<ul>
@@ -77,6 +83,7 @@ function addConfirm() {
 			<li><input type="submit" value="등록하기"><input type="reset" value="다시 작성"></li>
 		</ul>
 	</form>
+</div>
 <%@include file="../footer_a.jsp"%>    
 </body>
 </html>

@@ -24,11 +24,39 @@ public class ProController {
 	private ProDAO proDao;
 
 	
-	//상품 등록으로 이동
+	//관리자 상품 등록으로 이동
 	@RequestMapping("/proForm.do")
 	public String addProduct() {
 		return "/pro/proForm";
 	}
+	
+	//사용자 상품 상세 이동
+	@RequestMapping("/proDetail.do")
+	public String itemDetail() {
+		return "/pro/proDetail";
+	}
+	
+	//사용자 상품 리스트로 이동
+	@RequestMapping("/proList.do")
+	public ModelAndView itemList(
+			@RequestParam(value="cp",defaultValue="1")int cp) {
+		int totalCnt=proDao.getTotalCnt();
+		int listSize=5;
+		int pageSize=5;
+		
+		String pageStr=com.mm.module.PageModule.makePage("proList.do", totalCnt, listSize, pageSize, cp);
+		
+		
+		List<ProDTO> lists=proPage(cp,listSize);
+		
+		ModelAndView mav=new ModelAndView();
+		mav.setViewName("pro/proItemList");
+		mav.addObject("lists", lists);
+		mav.addObject("pageStr", pageStr);
+		
+		return mav;
+	}
+	
 	
 	
 	//파일 저장 실행
@@ -113,8 +141,8 @@ public class ProController {
 	
 	
 	
-	//상품 관리 페이지
-	@RequestMapping("/proList.do")
+	//관리자 상품 관리 페이지
+	@RequestMapping("/proItemList.do")
 	public ModelAndView proList(@RequestParam(value="cp",defaultValue="1")int cp) {
 		
 		int totalCnt=proDao.getTotalCnt();
@@ -196,7 +224,7 @@ public class ProController {
 	}
 	
 	
-	//상품 수정
+	//상품 수정 기능
 	@RequestMapping("/proUpdate.do")
 	public ModelAndView proUpdate(ProDTO dto) {
 		ModelAndView mav=new ModelAndView();
