@@ -102,7 +102,7 @@ public class MemberDTO {
 		this.user_tel = user_tel;
 	}
 	public String getJoindate() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd, HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return sdf.format(this.joindate);
 	}
 

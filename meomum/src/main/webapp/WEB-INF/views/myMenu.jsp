@@ -44,19 +44,7 @@
 				<div class="accordion" id="accordionExample">
 					<div class="card">
 						<div class="card-heading active one">
-							<a data-toggle="collapse" data-target="#collapseOne">나의 정보 수정</a>
-						</div>
-						<div id="collapseOne" class="collapse" data-parent="#accordionExample">
-							<div class="card-body">
-								<ul>
-									<li><a href="#">Coats</a></li>
-									<li><a href="#">Jackets</a></li>
-									<li><a href="#">Dresses</a></li>
-									<li><a href="#">Shirts</a></li>
-									<li><a href="#">T-shirts</a></li>
-									<li><a href="#">Jeans</a></li>
-								</ul>
-							</div>
+							<a data-toggle="collapse" href="infoEdit.do">나의 정보 수정</a>
 						</div>
 					</div>
 					
@@ -107,19 +95,7 @@
 					
 					<div class="card">
 						<div class="card-heading one">
-							<a data-toggle="collapse" data-target="#collapseFive">나의 포인트 내역</a>
-						</div>
-						<div id="collapseFive" class="collapse" data-parent="#accordionExample">
-							<div class="card-body">
-								<ul>
-									<li><a href="#">Coats</a></li>
-									<li><a href="#">Jackets</a></li>
-									<li><a href="#">Dresses</a></li>
-									<li><a href="#">Shirts</a></li>
-									<li><a href="#">T-shirts</a></li>
-									<li><a href="#">Jeans</a></li>
-								</ul>
-							</div>
+							<a data-toggle="collapse" href="#">나의 포인트 내역</a>
 						</div>
 					</div>
 					

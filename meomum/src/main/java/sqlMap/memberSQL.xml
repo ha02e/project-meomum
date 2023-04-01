@@ -7,8 +7,8 @@
 		insert into member values(
 									member_user_idx.nextval,
 									#{user_id},
-									'머뭄',
-									'회원',
+									#{user_jointype},
+									#{user_info},
 									#{user_pwd},
 									#{user_name},
 									#{user_pcode},
@@ -16,15 +16,53 @@
 									#{addr_detail},
 									#{user_tel},
 									sysdate,
-									'Y',
-									'Y',
+									#{tos},
+									#{user_pia},
 									''
 									)
 	</insert>
+	
+	
 	<select id="login" parameterType="String" resultType="com.mm.member.model.MemberDTO">
 		select * from member where user_id = #{user_id }	
 	</select>
-	<select id="getUserInfo" parameterType="String" resultType="com.mm.member.model.MemberDTO">
+	
+	
+	<select id="getsessionInfo" parameterType="String" resultType="com.mm.member.model.MemberDTO">
 		select * from member where user_id = #{user_id }
 	</select>
+	
+	
+	<update id="updateUserInfo" parameterType="com.mm.member.model.MemberDTO">
+		update member set user_name = #{user_name},
+						user_pcode = #{user_pcode},
+						user_addr = #{user_addr},
+						addr_detail = #{addr_detail},
+						user_tel = #{user_tel}
+					where user_idx = #{user_idx}
+	</update>
+	
+	
+	<select id="getuserInfo" parameterType="Integer" resultType="com.mm.member.model.MemberDTO">
+		select * from member where user_idx = #{user_idx}
+	</select>
+	
+	
+	<update id="updatePWD" parameterType="Map">
+		update member set user_pwd = #{newPwd} where user_idx =#{user_idx} 
+	</update>
+	
+	<select id="getuserTTCnt" resultType="Integer">
+  		select count(*) from member
+  	</select>
+	
+	<select id="memberList" parameterType="Map" resultType="com.mm.member.model.MemberDTO">
+			select * from 
+  			(select rownum as rnum,a.* from
+				(select * from member order by user_idx desc)a
+			)b
+		where rnum <![CDATA[>=]]> #{start} and rnum <![CDATA[<=]]>#{end}
+	</select>
+	
+	
 </mapper> 
