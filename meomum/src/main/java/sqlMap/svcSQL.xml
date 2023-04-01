@@ -16,7 +16,7 @@
 	</insert>
 
 
-	<select id="svcTimeSelect" parameterType="String" resultType="com.mm.svc.model.SvcDateDTO">
+	<select id="svcTimeSelect" parameterType="String" resultType="String">
 		select svc_time from svc2_date where svc_date = #{svc_date}
 	</select>
 </mapper>
