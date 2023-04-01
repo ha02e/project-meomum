@@ -46,9 +46,9 @@ public class SvcController {
 	
 	@RequestMapping(value = "/svcTimeSelect.do", method = RequestMethod.GET)
 	@ResponseBody 
-	public ModelAndView test(@RequestParam("svc_date")String days){
-		System.out.println(days);
-		List<SvcDateDTO> times = svcDao.svcTimeSelect(days);
+	public ModelAndView test(@RequestParam("svc_date")String userdate){
+		System.out.println(userdate);
+		List<String> times = svcDao.svcTimeSelect(userdate);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("times", times);
 		mav.setViewName("mmJson");
