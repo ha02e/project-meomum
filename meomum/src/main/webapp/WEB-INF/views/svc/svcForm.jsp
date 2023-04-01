@@ -18,41 +18,46 @@ textarea {
 
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
-<!-- <script>
-	$(function() {
-		$("#userdate").change(function() {
-			$.ajax({
-				url : "svcTimeSelect.do",
-				data : {
-					svc_date : $("#userdate").val()
-				},
-				method : "get"
-			}).done(function(result) {
-
-				}
-
-			})
-		})
-	});
-</script> -->
-
 <script>
 $(function() {
-	  $("#userdate").change(function() {
+	  $("#userdate").change(function() {// 값이 바뀌면 모든 요소를 활성화
+	    
+		 //시간 선택 버튼 모두 활성화
+	    $('#timeA, #timeB, #timeC').prop('disabled', false);
+		
+	  //컨트롤러로 사용자가 선택한 날짜 전송
 	    $.ajax({
-	      url : "svcTimeSelect.do",
-	      data : {
-	        svc_date : $("#userdate").val()
+	      url: "svcTimeSelect.do",
+	      data: {
+	        svc_date: $("#userdate").val()
 	      },
-	      dataType:'json',
-	      method : "get"
-	    }).done(function(result) {
-	      console.log(result);
+	      dataType: 'json',
+	      method: "get"
+	    }).done(function(data) 
+	      console.log(data);
+			
+	    //컨트롤러에서 전달받은 값이 timeA,B,C와 같으면 버튼 비활성화
+	      if (data != null) {
+	        for (let i = 0; i < data.times.length; i++) {
+	          if (data.times[i] == $("#timeA").val()) {
+	            $('#timeA').prop('disabled', true);
+	            break;
+	          } else if (data.times[i] == $("#timeB").val()) {
+	            $('#timeB').prop('disabled', true);
+	          } else {
+	            $('#timeC').prop('disabled', true);
+	          }
+	        }
+	      }
+	    }).fail(function() {
+	      alert('다시 시도해주세요');
 	    });
 	  });
 	});
 
+
 </script>
+
 </head>
 
 <body>
@@ -99,9 +104,9 @@ $(function() {
 			</li>
 			
 			<li>시간 
-				<input type="radio" name="svc_time" value="10:00">10:00
-				<input type="radio" name="svc_time" value="13:00">13:00 
-				<input type="radio" name="svc_time" value="16:00">16:00
+				<input id="timeA" type="radio" name="svc_time" value="10:00">10:00
+				<input id="timeB" type="radio" name="svc_time" value="13:00">13:00 
+				<input id="timeC" type="radio" name="svc_time" value="16:00">16:00
 			</li>
 			
 			<li>요청사항<br> 

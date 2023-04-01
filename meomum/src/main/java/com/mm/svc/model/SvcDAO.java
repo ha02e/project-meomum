@@ -5,6 +5,6 @@ import java.util.List;
 public interface SvcDAO {
 	public int svcInsert(SvcDTO dto);
 	public int svcDateInsert(SvcDateDTO dto);
-	public List<SvcDateDTO> svcTimeSelect(String days);
+	public List<String> svcTimeSelect(String userdate);
 	
 }
