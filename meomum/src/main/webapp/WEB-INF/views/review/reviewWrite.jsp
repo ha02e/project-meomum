@@ -35,14 +35,9 @@
 	margin: 0 auto;
 	border:1px solid blue;
 }
-button#submit{
-	margin:30px auto;
-	display:block;
-}
-
-/* ck에디터 */
-.ck-content {
-    height: 500px;
+.review-form input[type=submit]{
+	margin: auto;
+	display: block;
 }
 
 
@@ -75,8 +70,8 @@ button#submit{
 </style>
 </head>
 <body>
-
 <%@include file="../header.jsp"%> 
+
 <section class="shop spad">
 	<div class="container">
 	<div class="row">
@@ -88,20 +83,20 @@ button#submit{
 				<!-- 테스트 리뷰게시판 -->
 					<div class="review-form">
 						<h1>후기 작성하기</h1>
-						<form action="reviewWrite.do" name="myform" id="myform" method="post">
+						<form action="reviewWrite.do" name="star" id="myform" method="post">
 							<div class="container-xl">
 								<div class="position-relative mb-3">
 								<div class="row g-3 justify-content">
 									<div class="col-auto">
 										<div class="input-group mb-3">
 										  <span class="input-group-text" id="inputGroup-sizing-default">작성자</span>
-										  <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+										  <input type="text" name="writer" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
 										</div>
 									</div>
 									<div class="col-auto">
 										<div class="input-group mb-3">
 										  <span class="input-group-text" id="inputGroup-sizing-default">카테고리</span>
-										  <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+										  <input type="text" name="category" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
 										</div>
 									</div>
 					   			</div>
@@ -112,17 +107,17 @@ button#submit{
 							</div>
 							
 							<div class="title">
-								<input type="text" class="form-control form-control-lg" placeholder="제목">
+								<input type="text" name="subject" class="form-control form-control-lg" placeholder="제목">
 							</div>
 							
 							<div id="container">
-							  <textarea class="summernote" name="editordata"></textarea>    
+							  <textarea class="summernote" name="content"></textarea>    
 							</div>
 	
 							<br>
 							<div class="mb-3">
 								<label for="formFileMultiple" class="form-label">대표이미지</label>
-								<input class="form-control" type="file" id="formFileMultiple" multiple>
+								<input class="form-control" type="file" name="thumb" id="formFileMultiple" multiple>
 							</div>
 							
 							<div class="mb-3" id="review-star">
@@ -140,8 +135,9 @@ button#submit{
 										for="rate5">★</label>
 								</fieldset>
 							</div>		
-							
-							<button type="button" class="btn btn-outline-primary mb-2" id="submit">작성하기</button>	
+							<div class="mb-3">
+								<input type="submit" class="btn btn-outline-primary mb-2" value="작성하기">	
+							</div>
 						</div>
 					</form>
 
@@ -164,9 +160,6 @@ $('.summernote').summernote({
 </script>
 
 <%@include file="../footer.jsp"%> 
-
-
-
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
