@@ -18,12 +18,19 @@
     	<property name="maxUploadSize" value="10485760"></property>
 	</bean>
    <context:component-scan base-package="com.mm"></context:component-scan>
-   
 
    
 <!-- add annotation-driven --> 
    <mvc:annotation-driven/>
 
+<!-- ckeditor -->
+<!-- fileupload -->
+	<bean id="uploadPath" class="java.lang.String">
+		<constructor-arg value="/meomum/src/main/webapp/resources"></constructor-arg>
+	</bean>
+<!-- resources -->
+	<mvc:resources location="/resources/ckUpload/" mapping="/ckUpload/**"></mvc:resources>
+	
 <!-- service -->
 	<bean id="reviewService" class="com.mm.review.service.ReviewServiceImple">
 		<constructor-arg>
