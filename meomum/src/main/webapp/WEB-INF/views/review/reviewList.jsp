@@ -9,152 +9,180 @@
 
 <!-- <link rel="stylesheet" href="assets/css/theme_reviewList.css"> -->
 <style>
-.tabmenu{
+.reviewList{
 	margin: 60px 0 30px 0; 
+}
+.tab-content{
+	margin-top: 30px; 
+}
+
+
+.card-body.img{
+	position: relative;
+	overflow: hidden;
+	width: 100%;
+	height:240px;
+	padding:16px 0;
+}
+.card-body img{
+	position: absolute;
+  	width: 100%;
+  	top: 50%; 
+  	left: 50%;
+  	transform: translate(-50%, -50%);
+}
+.entry-meta ul{
+	padding:0;
 }
 </style>
 </head>
 <body>
 <%@include file="../header.jsp"%> 
-<div class="container tabmenu">
 
-<ul class="nav nav-tabs">
-  <li class="nav-item">
-    <a class="nav-link active" aria-current="page" href="#">정리일상</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">구독일상</a>
-  </li>
-</ul>
-
-</div>
-<!-- Grid Card -->
+<section class="reviewList">
 <div class="container">
-	<div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
-		<div class="col">
-			<div class="card h-100">
-				<img class="card-img-top" src="images/reviewImg/product-1.jpg" alt="Card image cap" />
-				<div class="card-body">
-					<h5 class="card-title">후기 제목</h5>
-					<p class="card-text">이렇게 넓은 거실이라면 좀 더 색다르게 거실을 꾸며보아도 좋습니다.
-						소파를 재배치하니 가족과 방문하는 모두를 품을 것만 같은 따뜻하고 훤한 거실이 됐습니다.
-					</p>
-				</div>
-				<ul class="list-group list-group-flush">
-					<li class="list-group-item">Cras justo odio</li>
-					<li class="list-group-item">Vestibulum at eros</li>
-				</ul>
-				<div class="card-body">
-					<a href="javascript:void(0)" class="card-link">Card link</a>
-					<a href="javascript:void(0)" class="card-link">Another link</a>
+
+<!-- 탭메뉴  -->
+	<ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
+		<li class="nav-item flex-fill" role="presentation">
+			<button class="nav-link w-100 active" id="home-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-home" type="button" role="tab" aria-controls="home" aria-selected="false" tabindex="-1">정리일상</button>
+		</li>
+		<li class="nav-item flex-fill" role="presentation">
+			<button class="nav-link w-100" id="profile-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-profile" type="button" role="tab" aria-controls="profile" aria-selected="true">구독일상</button>
+		</li>
+	</ul>
+	
+	<div class="tab-content pt-2" id="borderedTabJustifiedContent">
+		<div class="tab-pane fade active show" id="bordered-justified-home" role="tabpanel" aria-labelledby="home-tab">
+			<!-- 정리일상 후기 -->
+			
+			<div class="container">
+				<div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
+					<div class="col">
+						<div class="card h-100">
+						<div class="card-body img">
+							<img class="card-img-top" src="images/reviewImg/product-1.jpg" alt="Card image cap" />
+						</div>
+						<div class="card-body">
+							<h5 class="card-title">후기 제목</h5>
+							<p class="card-text">이렇게 넓은 거실이라면 좀 더 색다르게 거실을 꾸며보아도 좋습니다.
+								소파를 재배치하니 가족과 방문하는 모두를 품을 것만 같은 따뜻하고 훤한 거실이 됐습니다.
+							</p>
+						</div>
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item">
+              					<div class="entry-meta">
+									<ul class="d-flex justify-content-between">
+										<li class="d-flex align-items-center"><i class="bi bi-person"></i>&nbsp;홍길동</li>
+					                  	<li class="d-flex align-items-center">
+						                  	<i class="bi bi-star-fill"></i>
+						                  	<i class="bi bi-star-fill"></i>
+						                  	<i class="bi bi-star-fill"></i>
+						                  	<i class="bi bi-star-fill"></i>
+						                  	<i class="bi bi-star-fill"></i>
+					                  	</li>
+					                  	<li class="d-flex align-items-center"><i class="bi bi-clock"></i>&nbsp;2023-04-03</li>
+					                </ul>
+					            </div>
+							</li>
+							<li class="list-group-item">
+								<div class="read-more text-center">
+				                  <a href="#">
+									<i class="bi bi-plus-circle"></i>&nbsp;자세히 보기</a>
+				                </div>
+							</li>
+						</ul>
+              			</div>
+              		</div>
+              			
+              		<div class="col">
+              			<div class="card h-100">
+						<div class="card-body img">
+							<img class="card-img-top" src="images/reviewImg/product-1.jpg" alt="Card image cap" />
+						</div>
+						<div class="card-body">
+							<h5 class="card-title">후기 제목</h5>
+							<p class="card-text">이렇게 넓은 거실이라면 좀 더 색다르게 거실을 꾸며보아도 좋습니다.
+								소파를 재배치하니 가족과 방문하는 모두를 품을 것만 같은 따뜻하고 훤한 거실이 됐습니다.
+							</p>
+						</div>
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item">
+              					<div class="entry-meta">
+									<ul class="d-flex justify-content-between">
+										<li class="d-flex align-items-center"><i class="bi bi-person"></i>&nbsp;홍길동</li>
+					                  	<li class="d-flex align-items-center">
+						                  	<i class="bi bi-star-fill"></i>
+						                  	<i class="bi bi-star-fill"></i>
+						                  	<i class="bi bi-star-fill"></i>
+						                  	<i class="bi bi-star-fill"></i>
+						                  	<i class="bi bi-star-fill"></i>
+					                  	</li>
+					                  	<li class="d-flex align-items-center"><i class="bi bi-clock"></i>&nbsp;2023-04-03</li>
+					                </ul>
+					            </div>
+							</li>
+							<li class="list-group-item">
+								<div class="read-more text-center">
+				                  <a href="#">
+									<i class="bi bi-plus-circle"></i>&nbsp;자세히 보기</a>
+				                </div>
+							</li>
+						</ul>
+              			</div>
+              		</div>
+              		
+              		<div class="col">	
+              			<div class="card h-100">
+						<div class="card-body img">
+							<img class="card-img-top" src="images/reviewImg/product-1.jpg" alt="Card image cap" />
+						</div>
+						<div class="card-body">
+							<h5 class="card-title">후기 제목</h5>
+							<p class="card-text">이렇게 넓은 거실이라면 좀 더 색다르게 거실을 꾸며보아도 좋습니다.
+								소파를 재배치하니 가족과 방문하는 모두를 품을 것만 같은 따뜻하고 훤한 거실이 됐습니다.
+							</p>
+						</div>
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item">
+              					<div class="entry-meta">
+									<ul class="d-flex justify-content-between">
+										<li class="d-flex align-items-center"><i class="bi bi-person"></i>&nbsp;홍길동</li>
+					                  	<li class="d-flex align-items-center">
+						                  	<i class="bi bi-star-fill"></i>
+						                  	<i class="bi bi-star-fill"></i>
+						                  	<i class="bi bi-star-fill"></i>
+						                  	<i class="bi bi-star-fill"></i>
+						                  	<i class="bi bi-star-fill"></i>
+					                  	</li>
+					                  	<li class="d-flex align-items-center"><i class="bi bi-clock"></i>&nbsp;2023-04-03</li>
+					                </ul>
+					            </div>
+							</li>
+							<li class="list-group-item">
+								<div class="read-more text-center">
+				                  <a href="#">
+									<i class="bi bi-plus-circle"></i>&nbsp;자세히 보기</a>
+				                </div>
+							</li>
+						</ul>
+              			</div>
+              		</div>
+              		
 				</div>
 			</div>
 		</div>
-		
-		<div class="col">
-			<div class="card h-100">
-				<img class="card-img-top" src="images/reviewImg/product-1.jpg" alt="Card image cap" />
-				<div class="card-body">
-					<h5 class="card-title">후기 제목</h5>
-					<p class="card-text">이렇게 넓은 거실이라면 좀 더 색다르게 거실을 꾸며보아도 좋습니다.
-						소파를 재배치하니 가족과 방문하는 모두를 품을 것만 같은 따뜻하고 훤한 거실이 됐습니다.
-					</p>
-				</div>
-				<ul class="list-group list-group-flush">
-					<li class="list-group-item">Cras justo odio</li>
-					<li class="list-group-item">Vestibulum at eros</li>
-				</ul>
-				<div class="card-body">
-					<a href="javascript:void(0)" class="card-link">Card link</a>
-					<a href="javascript:void(0)" class="card-link">Another link</a>
-				</div>
-			</div>
+		<div class="tab-pane fade" id="bordered-justified-profile" role="tabpanel" aria-labelledby="profile-tab">
+			<!-- 구독일상 후기 -->
+			<div class="container">
+			
+			</div>		
 		</div>
-		
-		<div class="col">
-			<div class="card h-100">
-				<img class="card-img-top" src="images/reviewImg/product-1.jpg" alt="Card image cap" />
-				<div class="card-body">
-					<h5 class="card-title">후기 제목</h5>
-					<p class="card-text">이렇게 넓은 거실이라면 좀 더 색다르게 거실을 꾸며보아도 좋습니다.
-						소파를 재배치하니 가족과 방문하는 모두를 품을 것만 같은 따뜻하고 훤한 거실이 됐습니다.
-					</p>
-				</div>
-				<ul class="list-group list-group-flush">
-					<li class="list-group-item">작성자ㅣ작성날짜</li>
-					<li class="list-group-item">Vestibulum at eros</li>
-				</ul>
-				<div class="card-body">
-					<a href="javascript:void(0)" class="card-link">Card link</a>
-					<a href="javascript:void(0)" class="card-link">Another link</a>
-				</div>
-			</div>
-		</div>
-		
-	</div>
-	<div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
-		<div class="col">
-			<div class="card h-100">
-				<img class="card-img-top" src="images/reviewImg/product-1.jpg" alt="Card image cap" />
-				<div class="card-body">
-					<h5 class="card-title">후기 제목</h5>
-					<p class="card-text">이렇게 넓은 거실이라면 좀 더 색다르게 거실을 꾸며보아도 좋습니다.
-						소파를 재배치하니 가족과 방문하는 모두를 품을 것만 같은 따뜻하고 훤한 거실이 됐습니다.
-					</p>
-				</div>
-				<ul class="list-group list-group-flush">
-					<li class="list-group-item">Cras justo odio</li>
-					<li class="list-group-item">Vestibulum at eros</li>
-				</ul>
-				<div class="card-body">
-					<a href="javascript:void(0)" class="card-link">Card link</a>
-					<a href="javascript:void(0)" class="card-link">Another link</a>
-				</div>
-			</div>
-		</div>
-		
-		<div class="col">
-			<div class="card h-100">
-				<img class="card-img-top" src="images/reviewImg/product-1.jpg" alt="Card image cap" />
-				<div class="card-body">
-					<h5 class="card-title">후기 제목</h5>
-					<p class="card-text">이렇게 넓은 거실이라면 좀 더 색다르게 거실을 꾸며보아도 좋습니다.
-						소파를 재배치하니 가족과 방문하는 모두를 품을 것만 같은 따뜻하고 훤한 거실이 됐습니다.
-					</p>
-				</div>
-				<ul class="list-group list-group-flush">
-					<li class="list-group-item">Cras justo odio</li>
-					<li class="list-group-item">Vestibulum at eros</li>
-				</ul>
-				<div class="card-body">
-					<a href="javascript:void(0)" class="card-link">Card link</a>
-					<a href="javascript:void(0)" class="card-link">Another link</a>
-				</div>
-			</div>
-		</div>
-		
-		<div class="col">
-			<div class="card h-100">
-				<img class="card-img-top" src="images/reviewImg/product-1.jpg" alt="Card image cap" />
-				<div class="card-body">
-					<h5 class="card-title">후기 제목</h5>
-					<p class="card-text">이렇게 넓은 거실이라면 좀 더 색다르게 거실을 꾸며보아도 좋습니다.
-						소파를 재배치하니 가족과 방문하는 모두를 품을 것만 같은 따뜻하고 훤한 거실이 됐습니다.
-					</p>
-				</div>
-				<ul class="list-group list-group-flush">
-					<li class="list-group-item">Cras justo odio</li>
-					<li class="list-group-item">Vestibulum at eros</li>
-				</ul>
-				<div class="card-body">
-					<a href="javascript:void(0)" class="card-link">Card link</a>
-					<a href="javascript:void(0)" class="card-link">Another link</a>
-				</div>
-			</div>
-		</div>
-		
 	</div>
 </div>
+</section>
+
+
 <div class="container-xl">
 	
 	<nav aria-label="Page navigation example">
