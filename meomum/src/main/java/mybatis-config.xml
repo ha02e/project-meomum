@@ -11,5 +11,6 @@
   		<mapper resource="sqlMap/memberSQL.xml"/>
   		<mapper resource="sqlMap/proSQL.xml"/>
   		<mapper resource="sqlMap/reviewSQL.xml"/>
+  		<mapper resource="sqlMap/askSQL.xml"/>
   	</mappers>
   </configuration>

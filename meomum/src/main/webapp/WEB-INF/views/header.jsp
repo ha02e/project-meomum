@@ -132,7 +132,7 @@ font-family: 'Stylish', sans-serif;
                             aria-expanded="false">정리일상</a>
 
                         <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
-                            <li><a class="dropdown-item" href="#">간단 견적</a></li>
+                            <li><a class="dropdown-item" href="askList.do">간단 견적</a></li>
 
                             <li><a class="dropdown-item" href="svc.do">방문 견적</a></li>
                         </ul>
