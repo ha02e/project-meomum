@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,6 +37,11 @@ public class ReviewController {
 	public String myReview() {
 		return "review/myReview";
 	}
+	@RequestMapping("/reviewable.do")
+	public String reviewable() {
+		return "review/reviewable";
+	}
+	
 	
 	//리뷰작성 테스트
 	@RequestMapping(value="/reviewWrite.do", method = RequestMethod.GET)
@@ -43,7 +49,7 @@ public class ReviewController {
 		return "review/reviewWrite";
 	}
 	
-	/*
+	
 	@RequestMapping(value="/reviewWrite.do", method = RequestMethod.POST)
 	public ModelAndView reviewWriteSubmit(ReviewDTO dto) {
 		int result=reviewService.reviewInsert(dto);
@@ -57,8 +63,8 @@ public class ReviewController {
 		
 		return mav;
 	}
-	*/
 	
+	/*
 	@RequestMapping(value="/reviewWrite.do", method = RequestMethod.POST)
     public ModelAndView reviewWriteSubmit(ReviewDTO dto) {
 		int result=reviewService.reviewInsert(dto);
@@ -80,6 +86,20 @@ public class ReviewController {
 		System.out.println(jsonObject);
 		return jsonObject;
 	}
+
 	
 
+	@PostMapping("/review/article")
+	public ReviewDTO<> saveReview(@RequestBody @Valid Board board, @PrincipalDetail principal) { 
+		boardService.글쓰기(board, principal.getUser());
+		return new ResponseDto(HttpStatus.OK.value(), "글쓰기가 완료되었습니다.");
+	}
+	 */
+
+	
+	@RequestMapping("/reviewList.do")
+	public String reviewList() {
+		return "review/reviewList";
+	}
+	
 }

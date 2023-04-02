@@ -9,9 +9,12 @@
 
 <!-- 리뷰관련 css -->
 <link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
+<link id="theme-style" rel="stylesheet" href="assets/css/style_reviewable.css">
+
 
 <!-- 아이콘 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 <style>
 .col-auto {
 	margin:0 0 10px 0;
@@ -41,6 +44,7 @@
 
 }
 
+<!-- 탭메뉴 -->
 .nav-tabs{
     border-bottom: none;
     -webkit-box-pack: center;
@@ -49,7 +53,29 @@
     position: relative;
     margin-bottom: 20px;
 }
+
+<!-- 작성 가능한 후기 -->
+.reviewable-img img{
+	width:60%;
+	border:1px solid red;
+}
+.thumb{
+	width:10%;
+}
+.num{
+	width:25%;
+}
+.service{
+	width:32%;
+}
+.category{
+	width:13%;
+}
+.button{
+	width:20%;
+}
 </style>
+
 </head>
 <body>
 <%@include file="../header.jsp"%> 
@@ -71,7 +97,7 @@
 				</ul>
 				<div class="tab-content" id="myTabContent">
 					<div class="tab-pane fade show" id="reviewable-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-						작성 가능한 후기내역~
+						<%@include file="reviewable.jsp"%> 
 					</div>
 					<div class="tab-pane fade show active" id="myreview-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
 						<!-- 내가 작성한 후기  -->
