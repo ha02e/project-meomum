@@ -5,7 +5,7 @@
 	<div class="container-xl text-center">
 	
 		<table class="table reviewable-table">
-			<thead>
+			<thead class="table-light">
 				<tr class="table-borderless">
 					<th scope="col" class="thumb">Preview</th>
 					<th scope="col" class="num">서비스/주문번호</th>
