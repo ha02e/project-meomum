@@ -2,6 +2,7 @@ package com.mm.controller;
 
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -75,9 +76,9 @@ public class MemberController {
 				res.addCookie(ck);
 			}
 		
-			MemberDTO dto = mdao.getUserInfo(input_id);
+			MemberDTO dto = mdao.getsessionInfo(input_id);
 			
-			session.setAttribute("userinfo", dto);
+			session.setAttribute("ssInfo", dto);
 			
 			if(dto.getUser_info().equals("회원")) {
 				mav.addObject("msg",dto.getUser_name()+"님 환영합니다.");
@@ -105,33 +106,32 @@ public class MemberController {
 	
 	/*로그아웃*/
 
-	@RequestMapping("/logout")
+	@RequestMapping("/logout.do")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "redirect:/index.do";
 	}
 	
 	
-	/*회원 정보 수정*/
-	@RequestMapping("/infoEdit")
+	/*회원 정보 수정 페이지 이동*/
+	@RequestMapping(value="/infoEdit",method = RequestMethod.GET)
 	public ModelAndView infoEditForm(HttpSession session) {
 		
 		ModelAndView mav = new ModelAndView();
 		
-		if(session.getAttribute("userinfo")==null) {
+		if(session.getAttribute("ssInfo")==null) {
 			mav.addObject("msg", "잘못된 접근입니다.");
 			mav.addObject("gopage","location.href='index.do';");
 			mav.setViewName("mainMsg");
 		}else {
-			MemberDTO dto = (MemberDTO) session.getAttribute("userinfo");
+			MemberDTO sdto =(MemberDTO) session.getAttribute("ssInfo");
+			int user_idx = sdto.getUser_idx();
 			
-			if(dto.getUser_info().equals("관리자")) {
-				mav.addObject("msg", "잘못된 접근입니다.");
-				mav.addObject("gopage","location.href='index.do';");
-				mav.setViewName("mainMsg");
-			}else {
+			MemberDTO userInfo = mdao.getuserInfo(user_idx);
+					
+			mav.addObject("info",userInfo);
 			mav.setViewName("member/infoEdit");
-			}
+			
 		}
 		return mav;
 	}
@@ -148,16 +148,16 @@ public class MemberController {
 		ModelAndView mav = new ModelAndView();
 
 		
-		if(mdao.getUserInfo((String)userInfo.get("email"))==null){
+		if(mdao.getsessionInfo((String)userInfo.get("email"))==null){
 
-			mav.addObject("msg", "회원 정보가 없습니다. <br>추가 정보 입력 후에 회원가입 가능합니다.");
+			mav.addObject("msg", "회원 정보가 없습니다. 추가 정보 입력 후에 회원가입 가능합니다.");
 			mav.addObject("gopage", "location.href='memberJoin.do?user_id="+userInfo.get("email")+"&user_name="+userInfo.get("nickname")+"';");
 			mav.setViewName("mainMsg");
 
 		}else {
-			MemberDTO dto = mdao.getUserInfo((String)userInfo.get("email"));
+			MemberDTO dto = mdao.getsessionInfo((String)userInfo.get("email"));
 			
-			session.setAttribute("userinfo", dto);
+			session.setAttribute("ssInfo", dto);
 			
 			if(dto.getUser_info().equals("회원")) {
 				mav.addObject("msg",dto.getUser_name()+"님 환영합니다.");
@@ -174,7 +174,51 @@ public class MemberController {
 
 	}
 	
-	
-	
+	@RequestMapping(value="/infoEdit.do",method = RequestMethod.POST)
+	public ModelAndView infoEditSubmit(MemberDTO dto) {
+		int result = mdao.updateUserInfo(dto);
+		
+		ModelAndView mav = new ModelAndView();
+		String msg = result>0?"회원정보가 수정되었습니다.":"회원정보 수정에 실패하였습니다. 다시 시도해주세요.";
+		mav.addObject("msg", msg);
+		mav.addObject("link", "index.do");
+		mav.setViewName("msg");
+		return mav;
+	}
+	/*비밀번호 변경*/
+	@RequestMapping(value="/pwdChange.do",method = RequestMethod.POST)
+	public ModelAndView pwdChange(@RequestParam("user_idx")String user_idx,@RequestParam("newPwd")String newPwd ) {
+
+		System.out.println("pwd="+newPwd);
+		System.out.println("idx="+user_idx);
+	    /*int result = mdao.updatePWD(pwd,Integer.parseInt(user_idx));
+		String msg = result>0?"비밀번호가 수정되었습니다.":"비밀번호 수정에 실패하였습니다. 다시 시도해주세요.";
+
+	    
+	    mav.addObject("msg", msg);*/
+		ModelAndView mav = new ModelAndView();
+	    mav.addObject("msg", "성공");
+
+	    return mav;
+	}
+	/**관리자 회원정보 수정*/
+	@RequestMapping(value="/menMan.do",method = RequestMethod.GET)
+	public ModelAndView memManList(@RequestParam(value="cp",defaultValue = "1")int cp) {
+		int rtotalCnt = mdao.getuserTTCnt();
+		int totalCnt = rtotalCnt==0?1:rtotalCnt;
+		int listSize = 10;
+		int pageSize = 5;
+		String pageStr = com.mm.module.PageModule.makePage("menMan.do", totalCnt, listSize, pageSize, cp);
+		
+		List<MemberDTO> lists = mdao.memberList(cp, listSize);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("member/memManList");
+		
+		mav.addObject("totalCnt",rtotalCnt);
+		mav.addObject("lists",lists);
+		mav.addObject("pageStr",pageStr);
+		return mav;
+	}
 	
 }

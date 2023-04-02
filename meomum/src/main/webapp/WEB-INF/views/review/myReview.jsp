@@ -6,8 +6,10 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-<link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
+
+<!-- 아이콘 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 <style>
 .col-auto {
 	margin:0 0 10px 0;
@@ -33,50 +35,60 @@
 .action-link:hover{
     color: #000000;
 }
-.app-btn-secondary{
 
+
+<!-- 작성 가능한 후기 -->
+.reviewable-img img{
+	width:60%;
+	border:1px solid red;
 }
-
-.nav-tabs{
-    border-bottom: none;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    position: relative;
-    margin-bottom: 20px;
+.thumb{
+	width:10%;
+}
+.num{
+	width:25%;
+}
+.service{
+	width:32%;
+}
+.category{
+	width:13%;
+}
+.button{
+	width:20%;
 }
 </style>
+
 </head>
 <body>
 <%@include file="../header.jsp"%> 
 <section class="shop spad">
-	<div class="container">
-	<div class="row">
+<div class="container">
+<div class="row"> 
 		<%@include file="../myMenu.jsp"%> 
-		<div class="col-xl-9 col-md-9">
+	<div class="col-xl-9 col-md-9">	
 		<!-- ---------- 마이페이지 작업한 파일 페이지 여기에 넣어주세요!!(include) ---------- -->
 			<div class="row">
 				<!-- 탭메뉴  -->
-				<ul class="nav nav-tabs">
-					<li class="nav-item">
-						<a class="nav-link" data-toggle="tab" href="#reviewable-tab-pane">작성 가능한 후기</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link active" data-toggle="tab"  href="#myreview-tab-pane">내가 쓴 후기</a>
-					</li>
-				</ul>
-				<div class="tab-content" id="myTabContent">
-					<div class="tab-pane fade show" id="reviewable-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-						<%@include file="../myMenu.jsp"%> 
-					</div>
-					<div class="tab-pane fade show active" id="myreview-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-						<!-- 내가 작성한 후기  -->
-						<%@include file="myReviewList.jsp"%> 
-					</div>
-				</div>
-			
-			
-				
+				<ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
+                <li class="nav-item flex-fill" role="presentation">
+                  <button class="nav-link w-100" id="home-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-home" type="button" role="tab" aria-controls="home" aria-selected="false" tabindex="-1">Home</button>
+                </li>
+                <li class="nav-item flex-fill" role="presentation">
+                  <button class="nav-link w-100 active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-profile" type="button" role="tab" aria-controls="profile" aria-selected="true">Profile</button>
+                </li>
+
+              </ul>
+              <div class="tab-content pt-2" id="borderedTabJustifiedContent">
+                <div class="tab-pane fade" id="bordered-justified-home" role="tabpanel" aria-labelledby="home-tab">
+					<%@include file="reviewable.jsp"%> 
+                </div>
+                <div class="tab-pane fade active show" id="bordered-justified-profile" role="tabpanel" aria-labelledby="profile-tab">
+					<%@include file="myReviewList.jsp"%>
+                </div>
+
+              </div>
+              
 
 			
 		</div>
