@@ -5,13 +5,21 @@
 <head>
 <meta charset="UTF-8">
 <title>[관리자] 상품 등록</title>
-
+<link href="/docs/5.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    
+<!-- App CSS -->  
+<link id="theme-style" rel="stylesheet" href="assets/css/portal_a.css">
+<link rel="stylesheet" type="text/css" href="css/mainLayout_a.css">
 <script>
 function calPrice(){
 	 const proprice = Number(document.getElementById("pro_price").value);
 	    const subMonth = Number(document.querySelector('input[name="pro_month"]:checked').value);
-	    const subprice = Math.floor(proprice / (15 * subMonth)) * subMonth;
+	    const subprice = Math.ceil(proprice / (15 * subMonth)) * subMonth;
 	    document.getElementById("pro_subprice").value = subprice;
+	    
+	    const allprice = subprice*subMonth;
+	    document.getElementById("pro_allprice").value = allprice;
+	    
 }
 
 function addConfirm() {
@@ -19,8 +27,10 @@ function addConfirm() {
 }
 </script>
 </head>
-<body>
+<body class="app">
 <%@include file="../header_a.jsp"%>  
+<div class="app-wrapper">
+
 	<h2>상품 등록하기</h2>
 	<form name="addPro" action="addPro.do" enctype="multipart/form-data" method="post" onsubmit="return addConfirm();">
 		<ul>
@@ -71,12 +81,17 @@ function addConfirm() {
 			<input type="text" id="pro_subprice" name="pro_subprice">
 			</li>
 			
+			<li>총 구독 가격
+			<input type="text" id="pro_allprice" name="pro_allprice">
+			</li>
+			
 			<li>상세 내용
 			<input type="file" name="pro_content">
 			</li>
-			<li><input type="reset" value="다시 작성"><input type="submit" value="등록하기"></li>
+			<li><input type="submit" value="등록하기"><input type="reset" value="다시 작성"></li>
 		</ul>
 	</form>
+</div>
 <%@include file="../footer_a.jsp"%>    
 </body>
 </html>

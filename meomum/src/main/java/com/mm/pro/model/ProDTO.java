@@ -18,6 +18,7 @@ public class ProDTO {
 	private String pro_img2;
 	private String pro_content;
 	private int pro_month;
+	private int pro_allprice;
 	
 	public ProDTO() {
 		super();
@@ -25,7 +26,7 @@ public class ProDTO {
 
 	public ProDTO(int pro_idx, Date pro_date, String pro_name, int pro_cate, int pro_amount, int pro_state,
 			int pro_price, int pro_subprice, int pro_delprice, String pro_thumb, String pro_img1, String pro_img2,
-			String pro_content, int pro_month) {
+			String pro_content, int pro_month, int pro_allprice) {
 		super();
 		this.pro_idx = pro_idx;
 		this.pro_date = pro_date;
@@ -41,6 +42,7 @@ public class ProDTO {
 		this.pro_img2 = pro_img2;
 		this.pro_content = pro_content;
 		this.pro_month = pro_month;
+		this.pro_allprice = pro_allprice;
 	}
 
 	public int getPro_idx() {
@@ -154,7 +156,14 @@ public class ProDTO {
 	public void setPro_month(int pro_month) {
 		this.pro_month = pro_month;
 	}
-	
+
+	public int getPro_allprice() {
+		return pro_allprice;
+	}
+
+	public void setPro_allprice(int pro_allprice) {
+		this.pro_allprice = pro_allprice;
+	}
 	
 	
 	

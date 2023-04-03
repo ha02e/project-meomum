@@ -7,5 +7,8 @@ import java.util.*;
 	public List<ProDTO> proList(Map map);
 	public int getTotalCnt();
 	public int proDelete(int pro_idx);
-	public ArrayList<ProDTO> proFind(String proF);
+	public List<ProDTO> proFind1(int proF);
+	public List<ProDTO> proFind2(String proF);
+	public List<ProDTO> proUpdateList(int pro_idx);
+	public int proUpdate(ProDTO dto);
 }
