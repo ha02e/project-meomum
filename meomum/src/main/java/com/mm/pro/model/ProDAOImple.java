@@ -22,15 +22,6 @@ private SqlSessionTemplate sqlMap;
 		return count;
 	}
 	
-	
-	//상품 리스트 출력
-	@Override
-		public List<ProDTO> proList(Map map) {
-			List<ProDTO> lists=sqlMap.selectList("proList", map);
-			return lists;
-		}
-	
-	
 	//페이징
 	@Override
 		public int getTotalCnt() {
@@ -45,6 +36,15 @@ private SqlSessionTemplate sqlMap;
 			return count;
 		}
 
+	
+	//상품 리스트 출력
+		@Override
+			public List<ProDTO> proList(Map map) {
+				List<ProDTO> lists=sqlMap.selectList("proList", map);
+				return lists;
+			}
+		
+	
 	//상품 검색
 	@Override
 		public List<ProDTO> proFind1(int proF) {
@@ -67,11 +67,14 @@ private SqlSessionTemplate sqlMap;
 			return lists;
 		}
 
+	
 	//상품 수정
 	@Override
 		public int proUpdate(ProDTO dto) {
 		int count=sqlMap.update("proUpdate",dto);
 		return count;
 		}
+	
+	
 	
 }

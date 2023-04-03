@@ -30,18 +30,34 @@ public class ProController {
 		return "/pro/proForm";
 	}
 	
-	//사용자 상품 상세 이동
-	@RequestMapping("/proDetail.do")
-	public String itemDetail() {
-		return "/pro/proDetail";
+	
+	
+	//사용자 카트 이동
+		@RequestMapping("/proCart.do")
+		public String proCartDetail() {
+			return "/pro/proCart";
 	}
 	
-	//사용자 상품 리스트로 이동
+		
+	//사용자 상품 상세 페이지 (인덱스 필요)
+	@RequestMapping("/proDetail.do")
+	public ModelAndView itemDetail(
+			@RequestParam("pro_idx") int pro_idx) {
+		ModelAndView mav=new ModelAndView();
+		List<ProDTO> lists=proDao.proUpdateList(pro_idx);
+		mav.addObject("lists", lists);
+		mav.setViewName("pro/proDetail");
+		
+		return mav;
+	}
+	
+	
+	//사용자 상품 리스트
 	@RequestMapping("/proList.do")
-	public ModelAndView itemList(
-			@RequestParam(value="cp",defaultValue="1")int cp) {
+	public ModelAndView itemList(@RequestParam(value="cp",defaultValue="1")int cp) {
+		
 		int totalCnt=proDao.getTotalCnt();
-		int listSize=5;
+		int listSize=9;
 		int pageSize=5;
 		
 		String pageStr=com.mm.module.PageModule.makePage("proList.do", totalCnt, listSize, pageSize, cp);
@@ -50,7 +66,7 @@ public class ProController {
 		List<ProDTO> lists=proPage(cp,listSize);
 		
 		ModelAndView mav=new ModelAndView();
-		mav.setViewName("pro/proItemList");
+		mav.setViewName("pro/proList");
 		mav.addObject("lists", lists);
 		mav.addObject("pageStr", pageStr);
 		
@@ -98,8 +114,10 @@ public class ProController {
 		int result=proDao.proInsert(dto);
 				
 		String msg=result>=0?"등록 성공":"등록 실패";
+		String link=result>0?"proAdmin.do":"proForm.do";
 		ModelAndView mav=new ModelAndView();
 		mav.addObject("msg", msg);
+		mav.addObject("link", link);
 		mav.setViewName("pro/proMsg");
 		return mav;		
 		
@@ -142,20 +160,20 @@ public class ProController {
 	
 	
 	//관리자 상품 관리 페이지
-	@RequestMapping("/proItemList.do")
-	public ModelAndView proList(@RequestParam(value="cp",defaultValue="1")int cp) {
+	@RequestMapping("/proAdmin.do")
+	public ModelAndView proAdminList(@RequestParam(value="cp",defaultValue="1")int cp) {
 		
 		int totalCnt=proDao.getTotalCnt();
 		int listSize=5;
 		int pageSize=5;
 		
-		String pageStr=com.mm.module.PageModule.makePage("proList.do", totalCnt, listSize, pageSize, cp);
+		String pageStr=com.mm.module.PageModule.makePage("proAdmin.do", totalCnt, listSize, pageSize, cp);
 		
 		
 		List<ProDTO> lists=proPage(cp,listSize);
 		
 		ModelAndView mav=new ModelAndView();
-		mav.setViewName("pro/proList");
+		mav.setViewName("pro/proAdmin");
 		mav.addObject("lists", lists);
 		mav.addObject("pageStr", pageStr);
 		
@@ -168,8 +186,10 @@ public class ProController {
 	public ModelAndView proDel(@RequestParam("pro_idx") int pro_idx) {
 		int result = proDao.proDelete(pro_idx);
 		String msg=result>=0?"삭제 성공":"삭제 실패";
+		String link ="proAdmin.do";
 		ModelAndView mav=new ModelAndView();
 		mav.addObject("msg", msg);
+		mav.addObject("msg", link);
 		mav.setViewName("pro/proMsg");
 		return mav;
 		}
