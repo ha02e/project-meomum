@@ -21,5 +21,23 @@
 			'테스트'
 		)
 	</insert>
+	
+	<select id="reviewList" parameterType="Map" resultType="com.mm.review.model.ReviewDTO">
+		select * from
+		(select rownum as rnum, a.*from(
+			select * from review order by review_idx desc
+		)a )b
+		where rnum<![CDATA[>=]]>#{start} and rnum<![CDATA[<=]]>#{end}
+	</select>
+	
+	<select id="reviewTotalCnt" resultType="Integer">
+		select count(*) from
+			review
+	</select>
 
+
+	<select id="reviewContent" parameterType="Integer" resultType="com.mm.review.model.ReviewDTO">
+		select * from review
+		where review_idx=#{review_idx}
+	</select>
 </mapper>

@@ -45,6 +45,7 @@
 	<div>
 		<a href="ntcWrite.do">글쓰기</a>
 	</div>
+	<div>${pageStr }</div>
 	<%@include file="/WEB-INF/views/footer_a.jsp"%>
 </body>
 </html>

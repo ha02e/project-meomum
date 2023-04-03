@@ -2,22 +2,47 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!-- 테이블 이름 변경 -->
+
 
 <mapper namespace="com.mm.svc">
-	<insert id="svcInsert" parameterType="com.mm.svc.model.SvcDTO"> 
-	insert into svc2
-	values(('S'||TO_CHAR(SYSDATE, 'YYYYMMDD-')||svc2_idx.nextval), 1,#{user_name},#{user_tel},#{svc_type},#{svc_py},#{svc_area},#{svc_local},nvl(#{svc_req},'없음'),#{svc_know},#{svc_pia},sysdate,'-','예약확정') 
+	<!-- 방문예약 신청시 실행 -->
+	<insert id="svcMemInsert" parameterType="com.mm.svc.model.SvcMemDTO"> 
+	insert into svc_member
+	values(('S'||TO_CHAR(SYSDATE, 'YYYYMMDD-')||svc_member_idx.nextval), 1,#{user_name},#{user_tel},#{user_pcode},#{user_addr},nvl(#{user_detail},'-'),'예약확정') 
 	</insert> 
 	
+	<insert id="svcDetailInsert" parameterType="com.mm.svc.model.SvcDetailDTO">
+	insert into svc_detail
+	values(svc_detail_idx.nextval,('S'||TO_CHAR(SYSDATE, 'YYYYMMDD-')||svc_member_idx.currval),1,#{svc_type},#{svc_py},#{svc_area},nvl(#{svc_req},'없음'),#{svc_know},#{svc_pia},sysdate,'-')
+	</insert>
+	
 	<insert id="svcDateInsert" parameterType="com.mm.svc.model.SvcDateDTO"> 
-	insert into svc2_date 
-	values(('S'||TO_CHAR(SYSDATE, 'YYYYMMDD-')||svc2_idx.currval),1,#{svc_date},#{svc_time})
+	insert into svc_date 
+	values(svc_date_idx.nextval,('S'||TO_CHAR(SYSDATE, 'YYYYMMDD-')||svc_member_idx.currval),1,#{svc_days},#{svc_time})
 	</insert>
 
 
 	<select id="svcTimeSelect" parameterType="String" resultType="String">
-		select svc_time from svc2_date where svc_date = #{svc_date}
+		select svc_time from svc_date where svc_days = #{svc_days}
 	</select>
+	
+	<select id="svcList" resultType="com.mm.svc.model.SvcSelectAllDTO">
+	SELECT a.svc_idx, a.user_name, a.user_tel, b.svc_regdate,a.svc_state 
+	from svc_member a, svc_detail b
+	where a.svc_idx = b.svc_idx
+	order by a.svc_idx desc
+	</select>
+	
+	<select id="svcContent" parameterType="String" resultType="com.mm.svc.model.SvcContentDTO">
+	select a.*, 
+	b.user_name, b.user_tel,b.user_pcode,b.user_addr,b.user_detail,b.svc_state,
+	c.svc_days,c.svc_time
+	from svc_detail a
+	LEFT JOIN svc_member b ON a.svc_idx = b.svc_idx
+	LEFT JOIN svc_date c ON b.svc_idx = c.svc_idx
+	where b.svc_idx='${svc_idx}'
+	</select>
+	
+	
+	
 </mapper>
-  
