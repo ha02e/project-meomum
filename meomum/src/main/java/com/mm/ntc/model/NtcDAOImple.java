@@ -56,9 +56,8 @@ public class NtcDAOImple implements NtcDAO {
 	}
 	
 	@Override
-	public List<NtcDTO> ntcFind(int idx) {
-		
-		List<NtcDTO> dto=sqlMap.selectList("ntcFind",idx);
+	public NtcDTO ntcFind(Integer idx) {
+		NtcDTO dto=sqlMap.selectOne("ntcFind", idx);
 		return dto;
 	}
 	
@@ -66,5 +65,11 @@ public class NtcDAOImple implements NtcDAO {
 	public int ntcUpdate(NtcDTO dto) {
 	    int count = sqlMap.update("ntcUpdate", dto);
 	    return count;
+	}
+	
+	@Override
+	public List<NtcDTO> ntcSearch(String keyword) {
+	    List<NtcDTO> list = sqlMap.selectList("ntcSearch", keyword);
+	    return list;
 	}
 }

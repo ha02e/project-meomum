@@ -8,7 +8,8 @@ public interface NtcDAO {
 	public NtcDTO ntcContent(Integer idx);
 	public int ntcDelete(int idx);
 	public int ntcViewCnt(int idx);
-	public List<NtcDTO> ntcFind(int idx);
+	public NtcDTO ntcFind(Integer idx);
 	public int ntcUpdate(NtcDTO dto);
+	public List<NtcDTO> ntcSearch(String keyword);
 }
 

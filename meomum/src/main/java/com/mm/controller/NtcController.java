@@ -111,18 +111,51 @@ public class NtcController {
 		return mav;
 	}
 
-	@RequestMapping(value = "/ntcUpdateForm.do", method = RequestMethod.POST)
+	@RequestMapping("/ntcUpdateForm.do")
 	public ModelAndView ntcUpdateForm(@RequestParam("ntc_idx") int idx) {
-	    List<NtcDTO> dto = ntcDao.ntcFind(idx);
-	    ModelAndView mav = new ModelAndView();
-	    mav.addObject("dto", dto);
-	    mav.setViewName("ntc/ntcUpdateForm");
-	    return mav;
+		
+		NtcDTO dto=ntcDao.ntcFind(idx);
+		ModelAndView mav=new ModelAndView();
+		mav.addObject("dto", dto);
+		mav.setViewName("ntc/ntcUpdateForm");
+		return mav;
 	}
 
 
 	@RequestMapping(value = "/ntcUpdate.do", method = RequestMethod.POST)
-	public ModelAndView ntcUpdate(NtcDTO dto) {
+	public ModelAndView ntcUpdate(NtcDTO dto, MultipartHttpServletRequest req) {
+	    dto.setNtc_title(req.getParameter("ntc_title"));
+	    dto.setNtc_content(req.getParameter("ntc_content"));
+	    dto.setNtc_ctg(req.getParameter("ntc_ctg"));
+
+	    // 파일 업로드
+	    MultipartFile mf = req.getFile("ntc_img");// 업로드 파라미터
+
+	    if (mf != null && !mf.isEmpty()) { // 파일이 있는 경우에만 업로드
+	        String path = req.getRealPath("/ntcImages");// 저장될 위치
+	        String fileName = mf.getOriginalFilename(); // 업로드 파일 이름
+	        File uploadFile = new File(path + "/" + fileName);// 복사될 위치
+
+	        try {
+	            mf.transferTo(uploadFile); // 업로드
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+
+	        // 새로운 이미지로 업데이트
+	        String oldFileName = dto.getNtc_img(); // 기존 이미지 파일 이름
+	        if (oldFileName != null) { // 기존 이미지 파일이 존재하는 경우 삭제
+	            File oldFile = new File(path + "/" + oldFileName);
+	            if (oldFile.exists()) {
+	                oldFile.delete();
+	            }
+	        }
+
+	        dto.setNtc_img(fileName);
+	    } else { // 파일이 없는 경우 기존 이미지 파일 사용
+	        dto.setNtc_img(req.getParameter("old_ntc_img"));
+	    }
+
 	    int result = ntcDao.ntcUpdate(dto);
 	    ModelAndView mav = new ModelAndView();
 	    String msg = result > 0 ? "글수정 성공!" : "글수정 실패!";
@@ -132,5 +165,17 @@ public class NtcController {
 
 	    return mav;
 	}
+	
+	@RequestMapping("/ntcSerch.do")
+	public ModelAndView ntcSerch(@RequestParam("keyword") String keyword) {
+	    List<NtcDTO> list = ntcDao.ntcSearch(keyword);
+	    ModelAndView mav = new ModelAndView();
+	    mav.addObject("lists", list);
+	    mav.setViewName("ntc/ntcList");
+	    return mav;
+	}
+
+
+
 
 }
