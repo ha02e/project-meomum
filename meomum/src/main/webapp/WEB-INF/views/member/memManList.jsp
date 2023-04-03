@@ -65,7 +65,7 @@
 					<tbody id="user-list">
 						<c:if test="${empty lists }">
 							<tr>
-								<td colspan="4" align="center">회원이 없습니다.</td>
+								<td colspan="9" align="center">회원이 없습니다.</td>
 							</tr>
 						</c:if>
 						<c:forEach var="ul" items="${lists}">
