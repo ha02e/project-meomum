@@ -37,49 +37,65 @@
         </div>
     </div>
 <!-- 본문 시작 -->
-		<div class="container">
-		  <div class="row">
-		    <div class="col-9 mx-auto">
-		      <div class="table-responsive">
-		        <table class="table table-striped table-hover table-sm text-center">
-		          <thead>
-		            <tr>
-		              <th scope="col" style="width: 10%;">No.</th>
-		              <th scope="col" style="width: 45%;">제목</th>
-		              <th scope="col" style="width: 15%;">진행상태</th>
-		              <th scope="col" style="width: 15%;">작성자</th>
-		              <th scope="col" style="width: 15%;">작성일</th>
-		            </tr>
-		          </thead>
-		          <tbody>
-		            <c:if test="${empty e}">
-		              <tr>
-		                <td colspan="5" class="text-center">등록된 글이 없습니다.</td>
-		              </tr>
-		            </c:if>
-		            <c:forEach var="ul" items="${e}">
-		              <tr>
-		                <td>${ul.user_idx}</td>
-		                <td>${ul.user_id}</td>
-		                <td>${ul.user_name}</td>
-		                <td>${ul.user_tel}</td>
-		                <td>${ul.joindate}</td>
-		              </tr>
-		            </c:forEach>
-		          </tbody>
-		        </table>
-					<nav class="d-flex justify-content-between align-items-center">
-					  <ul class="pagination justify-content-center">
-					    ${empty pageStr}
-					  </ul>
-					  <div>
-					    <a href="askWrite.do" class="btn btn-primary">글쓰기</a>
-					  </div>
-					</nav>
-		      </div>
-		    </div>
-		  </div>
-		</div>
+<div class="container">
+  <div class="row">
+    <div class="col-9 mx-auto">
+   		 <p>
+			전체 글 수 :<span id="total-users">${totalCnt}</span>개
+		</p>
+		<div class="table-responsive">
+		
+      <table class="table table-striped table-hover table-sm text-center">
+        <thead>
+          <tr>
+            <th scope="col" style="width: 10%;">No.</th>
+            <th scope="col" style="width: 45%;">제목</th>
+            <th scope="col" style="width: 15%;">작성자</th>
+            <th scope="col" style="width: 15%;">진행상태</th>
+            <th scope="col" style="width: 15%;">작성일</th>
+          </tr>
+        </thead>
+        <tbody>
+          <c:if test="${empty lists}">
+            <tr>
+              <td colspan="5" class="text-center">등록된 글이 없습니다.</td>
+            </tr>
+          </c:if>
+          <c:forEach var="ask" items="${lists}">
+            <tr>
+              <td>${ask.ask_idx}</td>
+              <c:url var = "askContentUrl" value="askContent.do">
+                <c:param name="ask_idx">${ask.ask_idx }</c:param>
+              </c:url>
+              <td><a href="${askContentUrl}">${ask.ask_title}</a></td>
+              <td>${ask.ask_writer}</td>
+              <td>
+                <c:if test="${ask.ask_ask==1}">
+                  <button type="button" class="btn btn-success btn-sm align-middle">답변완료</button>
+                </c:if>
+                <c:if test="${ask.ask_ask==0}">
+                  <button type="button" class="btn btn-outline-danger btn-sm align-middle">진행중</button>
+                </c:if>
+              </td>
+
+              <td>${ask.ask_date}</td>
+
+            </tr>
+          </c:forEach>
+        </tbody>
+      </table>
+      </div>
+			<nav class="d-flex justify-content-between align-items-center">
+			  <div class="col-12 justify-content-center align-items-start text-center">
+			    ${pageStr}
+			  </div>
+			  <div class="col-auto">
+			    <a href="askWrite.do" class="btn btn-primary">글쓰기</a>
+			  </div>
+			</nav>
+    </div>
+  </div>
+</div>
 <%@include file="/WEB-INF/views/footer.jsp" %>
 </body>
 </html>

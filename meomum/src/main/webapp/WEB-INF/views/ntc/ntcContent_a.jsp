@@ -14,12 +14,6 @@
 		<a href="/meomum/ntcList_a.do">공지사항></a>
 	</div>
 	<form action="ntcUpdateForm.do" method="post">
-		<!--- 수정버튼 클릭 시 전달되는 파라미터 ---> 
-		<input type="hidden" name="ntc_title" value="${list.ntc_title}">
-		<input type="hidden" name="ntc_content" value="${list.ntc_content}">
-		<input type="hidden" name="ntc_ctg" value="${list.ntc_ctg}"> 
-		<input type="hidden" name="ntc_img" value="${list.ntc_img}">
-		<!--- 수정버튼 클릭 시 전달되는 파라미터 끝 --->
 		<c:choose>
 			<c:when test="${empty list}">
 				<div>삭제되었거나 존재하지 않는 게시글입니다.</div>
@@ -29,6 +23,9 @@
 					<tr>
 						<th>번호</th>
 						<td>${list.ntc_idx}</td>
+						<!--- 수정버튼 클릭 시 전달되는 파라미터 --->
+						<input type="hidden" name="ntc_idx" value="${list.ntc_idx}">
+						<!--- 수정버튼 클릭 시 전달되는 파라미터 끝 --->
 						<th>작성일</th>
 						<td>${list.ntc_date}</td>
 					</tr>
