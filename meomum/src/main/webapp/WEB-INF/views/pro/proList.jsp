@@ -17,7 +17,7 @@
 }
 </style>
 <!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="images/icons/favicon.png"/>
+	<link rel="icon" type="image/png" href="images/icon/favicon.png"/>
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
 <!--===============================================================================================-->
@@ -197,7 +197,7 @@
 
                 <div class="block2-txt flex-w flex-t p-t-14">
                     <div class="block2-txt-child1 flex-col-l ">
-                        <a href="proDetail.do?pro_idx=${list.pro_idx}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+                        <a href="proContent.do?pro_idx=${list.pro_idx}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
                             ${list.pro_name}
                         </a>
 
@@ -208,8 +208,8 @@
 
                     <div class="block2-txt-child2 flex-r p-t-3">
                         <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-                            <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON">
-                            <img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON">
+                            <img class="icon-heart1 dis-block trans-04" src="images/icon/icon-heart-01.png" alt="ICON">
+                            <img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icon/icon-heart-02.png" alt="ICON">
                         </a>
                     </div>
                 </div>

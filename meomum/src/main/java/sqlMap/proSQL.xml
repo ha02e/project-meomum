@@ -18,7 +18,8 @@
 		#{pro_img1}, 
 		#{pro_img2}, 
 		#{pro_content}, 
-		#{pro_month}
+		#{pro_month},
+		#{pro_allprice}
 		)
 	</insert>
 	

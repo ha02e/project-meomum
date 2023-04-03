@@ -16,6 +16,10 @@ function calPrice(){
 	    const subMonth = Number(document.querySelector('input[name="pro_month"]:checked').value);
 	    const subprice = Math.ceil(proprice / (15 * subMonth)) * subMonth;
 	    document.getElementById("pro_subprice").value = subprice;
+	    
+	    const allprice = subprice*subMonth;
+	    document.getElementById("pro_allprice").value = allprice;
+	    
 }
 
 function addConfirm() {
@@ -75,6 +79,10 @@ function addConfirm() {
 			
 			<li>월 구독 가격
 			<input type="text" id="pro_subprice" name="pro_subprice">
+			</li>
+			
+			<li>총 구독 가격
+			<input type="text" id="pro_allprice" name="pro_allprice">
 			</li>
 			
 			<li>상세 내용

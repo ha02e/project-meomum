@@ -32,17 +32,9 @@ public class ProController {
 		return "/pro/proForm";
 	}
 	
-	
-	
-	//사용자 카트 이동
-		@RequestMapping("/proCart.do")
-		public String proCartDetail() {
-			return "/pro/proCart";
-	}
-	
 		
 	//사용자 상품 상세 페이지 (인덱스 필요)
-	@RequestMapping("/proDetail.do")
+	@RequestMapping("/proContent.do")
 	public ModelAndView itemDetail(
 			@RequestParam("pro_idx") int pro_idx,
 			HttpSession session)
@@ -55,16 +47,16 @@ public class ProController {
 		List<ProDTO> lists=proDao.proUpdateList(pro_idx);
 		mav.addObject("lists", lists);
 		mav.addObject("user_idx",user_idx);
-		mav.setViewName("pro/proDetail");
+		mav.setViewName("pro/proContent");
 		
 		return mav;
 	}
 	
 	
-	//확인용
+	/*확인용
 	@RequestMapping("/purchase.do")
 	public ModelAndView test(@RequestParam(value="cp",defaultValue="1")int cp,
-			@RequestParam(value="pro_buyNum",defaultValue="1")int pro_buyNum,
+			@RequestParam(value="cart_amount",defaultValue="1")int cart_amount,
 			@RequestParam("pro_idx") int pro_idx,
 			HttpSession session) {
 		
@@ -76,14 +68,14 @@ public class ProController {
 		
 		ModelAndView mav=new ModelAndView();
 		mav.addObject("lists", lists);
-		mav.addObject("pro_buyNum", pro_buyNum);
+		mav.addObject("pro_buyNum", cart_amount);
 		mav.addObject("user_idx", user_idx);
 		
 		mav.setViewName("pro/purchase");
 		
 		return mav;
 	}
-	
+	*/
 	
 	//사용자 상품 리스트
 	@RequestMapping("/proList.do")
@@ -121,7 +113,8 @@ public class ProController {
 	        @RequestParam("pro_amount") int pro_amount,
 	        @RequestParam("pro_state") int pro_state,
 	        @RequestParam("pro_month") int pro_month,
-	        @RequestParam("pro_content") MultipartFile pro_content)
+	        @RequestParam("pro_content") MultipartFile pro_content,
+	        @RequestParam("pro_allprice") int pro_allprice)
 		{
 		
 		 ProDTO dto = new ProDTO();
@@ -136,6 +129,7 @@ public class ProController {
 		    dto.setPro_month(pro_month);
 		    dto.setPro_content(pro_content.getOriginalFilename());
 		    dto.setPro_subprice(pro_subprice);
+		    dto.setPro_allprice(pro_allprice);
 	
 		//사진 물리 저장
 		copyInto(pro_thumb);

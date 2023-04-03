@@ -95,7 +95,7 @@
 										<i class="fs-16 zmdi zmdi-minus"></i>
 									</div>
 
-									<input class="mtext-104 cl3 txt-center num-product" type="number" name="pro_buyNum" value="1">
+									<input class="mtext-104 cl3 txt-center num-product" type="number" name="cart_amount" value="1">
 
 									<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
 										<i class="fs-16 zmdi zmdi-plus"></i>
@@ -104,7 +104,7 @@
 							</div>
 						</div>	
 							<div id="cartbtn">
-							<button type="submit" formaction="addCart.do">장바구니</button><br>
+							<button type="submit" formaction="cartInsert.do">장바구니</button><br>
 							 <button type="submit" formaction="purchase.do">구매하기</button>
 							</div>
 							 

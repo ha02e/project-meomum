@@ -12,5 +12,6 @@
   		<mapper resource="sqlMap/proSQL.xml"/>
   		<mapper resource="sqlMap/reviewSQL.xml"/>
   		<mapper resource="sqlMap/askSQL.xml"/>
+  		<mapper resource="sqlMap/cartSQL.xml"/>
   	</mappers>
   </configuration>

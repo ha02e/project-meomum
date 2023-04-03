@@ -59,7 +59,12 @@
 			<ref bean="sqlSessionTemplate"/>
 		</constructor-arg>
 	</bean>
-		<bean id="askDAO" class="com.mm.ask.model.AskDAOImple">
+	<bean id="askDAO" class="com.mm.ask.model.AskDAOImple">
+		<constructor-arg>
+			<ref bean="sqlSessionTemplate"/>
+		</constructor-arg>
+	</bean>
+	<bean id="cartDAO" class="com.mm.cart.model.CartDAOImple">
 		<constructor-arg>
 			<ref bean="sqlSessionTemplate"/>
 		</constructor-arg>

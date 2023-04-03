@@ -10,10 +10,10 @@
 
 
 	<!-- Shoping Cart -->
-	<input type="checkbox" name="selectAll"> 전체 선택
-	<table style="width : 800; border:1px">
+	
+	<table style="width:800px; border:1px solid black; margin:auto;">
 	<tr>
-		<td><input type="checkbox" name="selectOne"></td>
+		<td><input type="checkbox" name="selectAll"> 전체 선택</td>
 		
 		<td>썸네일</td>
 		
@@ -21,6 +21,18 @@
 		
 		<td>구독 월 수</td>
 		
+		<td>개수 조절</td>
+		
+		<td>구독 월 금액</td>
+		<td>구독 총 금액</td>
+		<td>삭제</td>
+	</tr>
+	
+	<tr>
+		<td><input type="checkbox" name="selectOne"></td>
+		<td>이미지란</td>
+		<td>이름란</td>
+		<td>구독 개월란</td>
 		<td>
 		<div class="wrap-num-product flex-w m-l-auto m-r-0">
 			<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
@@ -32,11 +44,11 @@
 			</div>
 		</div>
 		</td>
-		
-		<td>구독 월 금액</td>
-		<td>구독 총 금액</td>
+		<td>구독 월 금액란</td>
+		<td>구독 총 금액란</td>
 		<td><img src="images/icons/icon-close2.png" alt="CLOSE"></td>
 	</tr>
+	
 	</table>
 		
 
