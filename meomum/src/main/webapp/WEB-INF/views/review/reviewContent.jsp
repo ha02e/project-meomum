@@ -18,9 +18,12 @@
 }
 .entry-content{
 	margin:20px 0 40px 0;
+	max-width:100%;
+	height:auto !important;
 }
-.entry-content img{
-	width: 100%;
+element.style {
+    height: auto;
+    width: 100%;
 }
 .blog .entry .entry-meta .review-star i {
     margin-right: 0;
@@ -76,8 +79,6 @@
 
            
           </div>
-
-          
 
         </div>
 

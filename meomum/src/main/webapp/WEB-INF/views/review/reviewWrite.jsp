@@ -15,6 +15,11 @@
 
 
 <style>
+.title{
+	font-weight: bold;
+	margin-bottom: 40px; 
+}
+
 /* ck에디터 */
 .ck-editor__editable[role="textbox"] {
 	/* editing area */
@@ -64,7 +69,7 @@
 		<div class="col-xl-9 col-md-9">
 		<!-- ---------- 마이페이지 작업한 파일 페이지 여기에 넣어주세요!!(include) ---------- -->
 			<div class="row">
-			
+				<h3 class="title text-center">후기 작성하기</h3>
 				<!-- 테스트 리뷰게시판 -->
 				<form action="reviewWrite.do" name="reviewWrite" method="post" enctype="multipart/form-data">
 				<div class="container-xl">
@@ -98,6 +103,7 @@
 								filebrowserUploadUrl : '${pageContext.request.contextPath}/review/ckUpload.do'
 							};
 							CKEDITOR.replace("content",ckeditor_config);
+							var reviewContent=CKEDITOR.instances.content.getData();
 						</script>
 					</div>
 							
@@ -119,7 +125,7 @@
 					</div>		
 				</div>
 				
-				<div class="mb-3">
+				<div class="mb-3 text-center">
 					<input type="submit" class="btn btn-outline-primary mb-2" value="작성하기">	
 				</div>
 			</form>
