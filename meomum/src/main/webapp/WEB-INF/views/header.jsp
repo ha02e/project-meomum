@@ -143,7 +143,7 @@ font-family: 'Stylish', sans-serif;
                             aria-expanded="false">구독일상</a>
 
                         <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
-                            <li><a class="dropdown-item" href="#">가구 구독</a></li>
+                            <li><a class="dropdown-item" href="proList.do">가구 구독</a></li>
 
                             <li><a class="dropdown-item" href="#">이용 방법</a></li>
                         </ul>
