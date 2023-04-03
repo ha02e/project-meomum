@@ -24,12 +24,16 @@
 		update notice set
 		ntc_viewCnt = ntc_viewCnt+1 where ntc_idx= #{ntc_idx}
 	</update>
+	<select id="ntcFind" resultType="com.mm.ntc.model.NtcDTO">
+		select * from notice where
+		ntc_idx= ${ntc_idx}
+	</select>
 	<update id="ntcUpdate" parameterType="com.mm.ntc.model.NtcDTO">
 		update notice set
 		ntc_title = #{ntc_title},
 		ntc_content = #{ntc_content},
 		ntc_img = #{ntc_img},
-		ntc_ctg = #{ntc_ctg},
+		ntc_ctg = #{ntc_ctg}
 		where ntc_idx = #{ntc_idx}
 	</update>
 </mapper> 

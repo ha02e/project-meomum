@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,111 +24,113 @@ public class NtcController {
 
 	@Autowired
 	private NtcDAO ntcDao;
-	
-	
-	@RequestMapping("/ntcList_a.do")//관리자 공지사항
+
+	@RequestMapping("/ntcList_a.do") // 관리자 공지사항
 	public ModelAndView ntcList_a() {
-		List<NtcDTO> list=ntcDao.ntcList();
-		ModelAndView mav=new ModelAndView();
+		List<NtcDTO> list = ntcDao.ntcList();
+		ModelAndView mav = new ModelAndView();
 		mav.addObject("lists", list);
 		mav.setViewName("ntc/ntcList_a");
 		return mav;
 	}
-	
-	@RequestMapping(value = "/ntcWrite.do", method = RequestMethod.GET )
+
+	@RequestMapping(value = "/ntcWrite.do", method = RequestMethod.GET)
 	public String ntcForm() {
 		return "ntc/ntcForm_a";
 	}
-	
-	@RequestMapping(value = "/ntcWrite.do", method =RequestMethod.POST )
+
+	@RequestMapping(value = "/ntcWrite.do", method = RequestMethod.POST)
 	public ModelAndView ntcWrite(MultipartHttpServletRequest req) {
-		
-		NtcDTO dto=new NtcDTO();
-		
+
+		NtcDTO dto = new NtcDTO();
+
 		dto.setNtc_title(req.getParameter("ntc_title"));
 		dto.setNtc_content(req.getParameter("ntc_content"));
 		dto.setNtc_ctg(req.getParameter("ntc_ctg"));
-		
-		//파일 업로드
-		MultipartFile mf=req.getFile("ntc_img");//업로드 파라미터
-		String path=req.getRealPath("/ntcImages");//저장될 위치
-		String fileName=mf.getOriginalFilename(); //업로드 파일 이름
-		File uploadFile= new File(path+"/"+fileName);//복사될 위치
-		
+
+		// 파일 업로드
+		MultipartFile mf = req.getFile("ntc_img");// 업로드 파라미터
+		String path = req.getRealPath("/ntcImages");// 저장될 위치
+		String fileName = mf.getOriginalFilename(); // 업로드 파일 이름
+		File uploadFile = new File(path + "/" + fileName);// 복사될 위치
+
 		try {
-			mf.transferTo(uploadFile); //업로드
-			
+			mf.transferTo(uploadFile); // 업로드
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		dto.setNtc_img(fileName);
-		
-		int result=ntcDao.ntcInsert(dto);
-		String msg=result>0?"게시글 작성 성공!":"게시글 작성 실패!";
-		ModelAndView mav=new ModelAndView();
+
+		int result = ntcDao.ntcInsert(dto);
+		String msg = result > 0 ? "게시글 작성 성공!" : "게시글 작성 실패!";
+		ModelAndView mav = new ModelAndView();
 		mav.addObject("msg", msg);
 		mav.addObject("goUrl", "/meomum/ntcList_a.do");
 		mav.setViewName("ntc/ntcMsg");
 		return mav;
 	}
-	
+
 	@RequestMapping("/ntcList.do")
 	public ModelAndView ntcList() {
-		List<NtcDTO> list=ntcDao.ntcList();
-		ModelAndView mav=new ModelAndView();
+		List<NtcDTO> list = ntcDao.ntcList();
+		ModelAndView mav = new ModelAndView();
 		mav.addObject("lists", list);
 		mav.setViewName("ntc/ntcList");
 		return mav;
 	}
-	
+
 	@RequestMapping("/ntcContent.do")
 	public ModelAndView ntcContent(@RequestParam("ntc_idx") int idx) {
-		NtcDTO dto=ntcDao.ntcContent(idx);
+		NtcDTO dto = ntcDao.ntcContent(idx);
 		ntcDao.ntcViewCnt(idx);
-		ModelAndView mav=new ModelAndView();
+		ModelAndView mav = new ModelAndView();
 		mav.addObject("list", dto);
 		mav.setViewName("ntc/ntcContent");
 		return mav;
 	}
-	
-	
-	@RequestMapping("/ntcContent_a.do")//관리자 공지사항 본문
+
+	@RequestMapping("/ntcContent_a.do") // 관리자 공지사항 본문
 	public ModelAndView ntcContent_a(@RequestParam("ntc_idx") int idx) {
-		NtcDTO dto=ntcDao.ntcContent(idx);
-		ModelAndView mav=new ModelAndView();
+		NtcDTO dto = ntcDao.ntcContent(idx);
+		ModelAndView mav = new ModelAndView();
 		mav.addObject("list", dto);
 		mav.setViewName("ntc/ntcContent_a");
 		return mav;
 	}
-	
+
 	@RequestMapping("/ntcContentDel.do")
 	public ModelAndView ntcDelete(@RequestParam("ntc_idx") int idx) {
-		int result=ntcDao.ntcDelete(idx);
-		ModelAndView mav=new ModelAndView();
-		String msg=result>0?"글삭제 성공!":"글삭제 실패!";
+		int result = ntcDao.ntcDelete(idx);
+		ModelAndView mav = new ModelAndView();
+		String msg = result > 0 ? "글삭제 성공!" : "글삭제 실패!";
 		mav.addObject("msg", msg);
 		mav.addObject("goUrl", "/meomum/ntcList_a.do");
 		mav.setViewName("ntc/ntcMsg");
-		
+
 		return mav;
 	}
-	
+
 	@RequestMapping(value = "/ntcUpdateForm.do", method = RequestMethod.POST)
-	public String ntcUpdateForm() {		
-		return "ntc/ntcUpdateForm";
+	public ModelAndView ntcUpdateForm(@RequestParam("ntc_idx") int idx) {
+	    List<NtcDTO> dto = ntcDao.ntcFind(idx);
+	    ModelAndView mav = new ModelAndView();
+	    mav.addObject("dto", dto);
+	    mav.setViewName("ntc/ntcUpdateForm");
+	    return mav;
 	}
-	
-	@RequestMapping("/ntcUpdate.do")
-	public ModelAndView ntcUpdate(@RequestParam("ntc_idx") int idx) {
-		int result=ntcDao.ntcUpdate(idx);
-		ModelAndView mav=new ModelAndView();
-		String msg=result>0?"글수정 성공!":"글수정 실패!";
-		mav.addObject("msg", msg);
-		mav.addObject("goUrl", "/meomum/ntcList_a.do");
-		mav.setViewName("ntc/ntcMsg");
-		
-		return mav;
+
+
+	@RequestMapping(value = "/ntcUpdate.do", method = RequestMethod.POST)
+	public ModelAndView ntcUpdate(NtcDTO dto) {
+	    int result = ntcDao.ntcUpdate(dto);
+	    ModelAndView mav = new ModelAndView();
+	    String msg = result > 0 ? "글수정 성공!" : "글수정 실패!";
+	    mav.addObject("msg", msg);
+	    mav.addObject("goUrl", "/meomum/ntcList_a.do");
+	    mav.setViewName("ntc/ntcMsg");
+
+	    return mav;
 	}
-	
-	
+
 }

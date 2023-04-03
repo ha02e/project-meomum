@@ -56,8 +56,15 @@ public class NtcDAOImple implements NtcDAO {
 	}
 	
 	@Override
-	public int ntcUpdate(int idx) {
-		int count=sqlMap.update("ntcUpdate",idx);
-		return count;
+	public List<NtcDTO> ntcFind(int idx) {
+		
+		List<NtcDTO> dto=sqlMap.selectList("ntcFind",idx);
+		return dto;
+	}
+	
+	@Override
+	public int ntcUpdate(NtcDTO dto) {
+	    int count = sqlMap.update("ntcUpdate", dto);
+	    return count;
 	}
 }
