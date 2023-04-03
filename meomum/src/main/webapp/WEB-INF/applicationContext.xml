@@ -60,7 +60,6 @@
 		</constructor-arg>
 	</bean>
 	<bean id="askDAO" class="com.mm.ask.model.AskDAOImple">
-
 		<constructor-arg>
 			<ref bean="sqlSessionTemplate"/>
 		</constructor-arg>
