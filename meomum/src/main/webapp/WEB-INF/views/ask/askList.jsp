@@ -85,9 +85,12 @@
         </tbody>
       </table>
       </div>
+      
 			<nav class="d-flex justify-content-between align-items-center">
 			  <div class="col-12 justify-content-center align-items-start text-center">
-			    ${pageStr}
+			    	<span class="pagination pagination-sm justify-content-center">
+			${pageStr}
+			</span>
 			  </div>
 			  <div class="col-auto">
 			    <a href="askWrite.do" class="btn btn-primary">글쓰기</a>
