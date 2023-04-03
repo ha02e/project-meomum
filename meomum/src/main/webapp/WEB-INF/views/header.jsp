@@ -123,7 +123,7 @@ font-family: 'Stylish', sans-serif;
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="#">후기</a>
+                        <a class="nav-link" href="reviewList.do">후기</a>
                     </li>
 
                     <li class="nav-item dropdown">
