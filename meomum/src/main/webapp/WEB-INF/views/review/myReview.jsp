@@ -65,20 +65,20 @@
 <section class="shop spad">
 <div class="container">
 <div class="row"> 
-		<%@include file="../myMenu.jsp"%> 
+	<%@include file="../myMenu.jsp"%> 
 	<div class="col-xl-9 col-md-9">	
 		<!-- ---------- 마이페이지 작업한 파일 페이지 여기에 넣어주세요!!(include) ---------- -->
 			<div class="row">
 				<!-- 탭메뉴  -->
 				<ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
                 <li class="nav-item flex-fill" role="presentation">
-                  <button class="nav-link w-100" id="home-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-home" type="button" role="tab" aria-controls="home" aria-selected="false" tabindex="-1">Home</button>
+                  <button class="nav-link w-100" id="home-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-home" type="button" role="tab" aria-controls="home" aria-selected="false" tabindex="-1">작성 가능한 후기</button>
                 </li>
                 <li class="nav-item flex-fill" role="presentation">
-                  <button class="nav-link w-100 active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-profile" type="button" role="tab" aria-controls="profile" aria-selected="true">Profile</button>
+                  <button class="nav-link w-100 active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-profile" type="button" role="tab" aria-controls="profile" aria-selected="true">내가 쓴 후기</button>
                 </li>
-
               </ul>
+              
               <div class="tab-content pt-2" id="borderedTabJustifiedContent">
                 <div class="tab-pane fade" id="bordered-justified-home" role="tabpanel" aria-labelledby="home-tab">
 					<%@include file="reviewable.jsp"%> 
@@ -86,18 +86,13 @@
                 <div class="tab-pane fade active show" id="bordered-justified-profile" role="tabpanel" aria-labelledby="profile-tab">
 					<%@include file="myReviewList.jsp"%>
                 </div>
-
               </div>
-              
-
-			
-		</div>
-		
+			</div>
 		<!-- ---------- 마이페이지 각 페이지 여기에 넣어주세요!! 끝 지점 ---------- -->
-		</div>
+	</div>
 		
-	</div>
-	</div>
+</div>
+</div>
 </section>
 
 <%@include file="../footer.jsp"%> 

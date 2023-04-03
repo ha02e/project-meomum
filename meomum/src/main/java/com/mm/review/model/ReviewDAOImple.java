@@ -1,5 +1,8 @@
 package com.mm.review.model;
 
+import java.util.List;
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -18,4 +21,23 @@ public class ReviewDAOImple implements ReviewDAO {
 		return count;
 	}
 
+	
+	@Override
+	public List<ReviewDTO> reviewList(Map map) {
+		List<ReviewDTO> lists=sqlMap.selectList("reviewList",map);
+		return lists;
+	}
+	
+	@Override
+	public int getTotalCnt() {
+		int count=sqlMap.selectOne("reviewTotalCnt");
+		return count;
+	}
+	
+	
+	@Override
+	public ReviewDTO reviewContent(int review_idx) {
+		ReviewDTO dto=sqlMap.selectOne("reviewContent",review_idx);
+		return dto;
+	}
 }

@@ -11,10 +11,26 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <!-- ckeditor -->
-<script src="resources/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/ckeditor/ckeditor.js"></script>
 
 
 <style>
+.title{
+	font-weight: bold;
+	margin-bottom: 40px; 
+}
+
+/* ck에디터 */
+.ck-editor__editable[role="textbox"] {
+	/* editing area */
+	min-height: 500px;
+}
+.ck-content .image {
+	/* block images */
+	max-width: 80%;
+	margin: 20px auto;
+}
+
 /* 별점 */
 #review-star fieldset{
     display: inline-block;
@@ -53,7 +69,7 @@
 		<div class="col-xl-9 col-md-9">
 		<!-- ---------- 마이페이지 작업한 파일 페이지 여기에 넣어주세요!!(include) ---------- -->
 			<div class="row">
-			
+				<h3 class="title text-center">후기 작성하기</h3>
 				<!-- 테스트 리뷰게시판 -->
 				<form action="reviewWrite.do" name="reviewWrite" method="post" enctype="multipart/form-data">
 				<div class="container-xl">
@@ -84,10 +100,10 @@
 								resize_enaleb : false,
 								enterMode : CKEDITOR.ENTER_BR,
 								shiftEnterMode : CKEDITOR.ENTER_P,
-								filebrowserUploadUrl : "/review/ckUpload"
+								filebrowserUploadUrl : '${pageContext.request.contextPath}/review/ckUpload.do'
 							};
-							
 							CKEDITOR.replace("content",ckeditor_config);
+							var reviewContent=CKEDITOR.instances.content.getData();
 						</script>
 					</div>
 							
@@ -109,7 +125,7 @@
 					</div>		
 				</div>
 				
-				<div class="mb-3">
+				<div class="mb-3 text-center">
 					<input type="submit" class="btn btn-outline-primary mb-2" value="작성하기">	
 				</div>
 			</form>
