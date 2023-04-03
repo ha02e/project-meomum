@@ -3,20 +3,12 @@ package com.mm.controller;
 import java.io.*;
 import java.util.*;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,11 +27,6 @@ public class ReviewController {
 	
 	@Autowired
 	private ReviewService reviewService;
-
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
-	
-	@Resource(name="uploadPath")
-	private String uploadPath;
 	
 	
 	@RequestMapping("/myReview.do")
@@ -207,13 +194,34 @@ public class ReviewController {
 	
 	
 	@RequestMapping("/reviewList.do")
-	public String reviewList() {
-		return "review/reviewList";
+	public ModelAndView reviewList(@RequestParam(value="cp",defaultValue = "1")int cp) {
+		int totalCnt=reviewService.getTotalCnt();
+		int listSize=6;
+		int pageSize=5;
+		
+		String pageStr=com.mm.module.PageModule
+				.makePage("reviewList.do", totalCnt, listSize, pageSize, cp);
+		
+		List<ReviewDTO> lists=reviewService.reviewList(cp, listSize);
+		
+		ModelAndView mav=new ModelAndView();
+		mav.setViewName("review/reviewList");
+		mav.addObject("lists", lists);
+		mav.addObject("pageStr",pageStr);
+		
+		return mav;
 	}
 	
+	
 	@RequestMapping("/reviewContent.do")
-	public String reviewContent() {
-		return "review/reviewContent";
+	public ModelAndView reviewContent(@RequestParam("review_idx")int review_idx) {
+		
+		ReviewDTO dto=reviewService.reviewContent(review_idx);
+		
+		ModelAndView mav= new ModelAndView();
+		mav.addObject("dto",dto);
+		mav.setViewName("review/reviewContent");
+		return mav;
 	}
 	
 }
