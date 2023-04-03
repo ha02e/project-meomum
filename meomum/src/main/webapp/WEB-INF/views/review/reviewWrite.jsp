@@ -11,10 +11,21 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <!-- ckeditor -->
-<script src="resources/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/ckeditor/ckeditor.js"></script>
 
 
 <style>
+/* ck에디터 */
+.ck-editor__editable[role="textbox"] {
+	/* editing area */
+	min-height: 500px;
+}
+.ck-content .image {
+	/* block images */
+	max-width: 80%;
+	margin: 20px auto;
+}
+
 /* 별점 */
 #review-star fieldset{
     display: inline-block;
@@ -84,9 +95,8 @@
 								resize_enaleb : false,
 								enterMode : CKEDITOR.ENTER_BR,
 								shiftEnterMode : CKEDITOR.ENTER_P,
-								filebrowserUploadUrl : "/review/ckUpload"
+								filebrowserUploadUrl : '${pageContext.request.contextPath}/review/ckUpload.do'
 							};
-							
 							CKEDITOR.replace("content",ckeditor_config);
 						</script>
 					</div>

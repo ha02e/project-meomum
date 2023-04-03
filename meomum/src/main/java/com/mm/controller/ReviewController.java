@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.JsonObject;
 import com.mm.review.model.ReviewDTO;
 import com.mm.review.service.ReviewService;
 
@@ -71,6 +74,7 @@ public class ReviewController {
 	}
 	
 	/** ckeditor 파일업로드 */
+	/**
 	@RequestMapping(value="/review/ckUpload", method=RequestMethod.POST)
 	public void ckeditorUpload(HttpServletRequest req,
 	          				HttpServletResponse res,
@@ -123,11 +127,93 @@ public class ReviewController {
 	       	return;
 	       	
 	}
+	*/
+	
+	/** ck에디터 json이용 */
+	@RequestMapping(value="/review/ckUpload.do")
+	@ResponseBody
+	public String ckfileUpload(HttpServletRequest req, HttpServletResponse resp,
+								MultipartHttpServletRequest multiFile) throws IOException {
+		
+		//json 객체 생성
+		JsonObject json=new JsonObject();
+		
+		//json 객체 출력하기 위해 PrintWriter 생성
+		PrintWriter printWriter=null;
+		OutputStream out=null;
+		
+		//파일을 가져오기
+		MultipartFile file=multiFile.getFile("upload");
+		
+		//파일이 비어있지 않고
+		if(file != null) {
+			//파일 사이즈가 0보다 크고, 파일이름이 공백이 아닐 때
+			if(file.getSize()>0 && StringUtils.isNotBlank(file.getName())) {
+				if(file.getContentType().toLowerCase().startsWith("image/")) {
+					
+					try {
+						
+						String fileName=file.getName(); //파일 이름 설정
+						byte[] bytes; //바이트 타입 설정
+						bytes=file.getBytes(); //파일을 바이트 타입으로 변경
+						
+						//파일이 실제로 저장되는 경로
+						String uploadPath=req.getSession().getServletContext().getRealPath("/resources/ckimage/");
+						
+						//저장되는 파일에 경로 설정
+						File uploadFile=new File(uploadPath);
+						if(!uploadFile.exists()) {
+							uploadFile.mkdirs(); //mkdirs() : 파일 저장 시 디렉토리 생성하는 함수
+						}
+						
+						//파일 이름 랜덤으로 생성
+						fileName=UUID.randomUUID().toString(); //UUID:클래스 고유식별자
+						
+						//업로드경로 + 파일이름 -> 데이터를 서버에 전송
+						uploadPath=uploadPath+"/"+fileName;
+						out=new FileOutputStream(new File(uploadPath));
+						out.write(bytes);
+						
+						//이벤트 추가
+						printWriter=resp.getWriter();
+						resp.setContentType("text/html");
+						
+						//파일 연결되는 url 설정
+						String fileUrl=req.getContextPath()+"/resources/ckimage/"+fileName;
+						
+						//생성한 json 객체를 이용해 ckeditor에 전송
+						json.addProperty("uploaded", 1);
+						json.addProperty("fileName", fileName);
+						json.addProperty("url", fileUrl);
+						printWriter.println(json);
+						
+					}catch (IOException e) {
+						e.printStackTrace();
+					}finally {
+						if(out != null) {
+							out.close();
+						}
+						if(printWriter != null) {
+							printWriter.close();
+						}
+					}
+					
+				}
+			}
+		}
+		return null;
+	}
 
+	
 	
 	@RequestMapping("/reviewList.do")
 	public String reviewList() {
 		return "review/reviewList";
+	}
+	
+	@RequestMapping("/reviewContent.do")
+	public String reviewContent() {
+		return "review/reviewContent";
 	}
 	
 }
