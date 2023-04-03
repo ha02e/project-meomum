@@ -18,22 +18,23 @@ textarea {
 
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
+<!-- 예약 완료된 시간 비활성화 -->
 <script>
 $(function() {
-	  $("#userdate").change(function() {// 값이 바뀌면 모든 요소를 활성화
+	function timeSelect(){
 	    
-		 //시간 선택 버튼 모두 활성화
+		//시간 선택 버튼 모두 활성화
 	    $('#timeA, #timeB, #timeC').prop('disabled', false);
 		
 	  //컨트롤러로 사용자가 선택한 날짜 전송
 	    $.ajax({
 	      url: "svcTimeSelect.do",
 	      data: {
-	        svc_date: $("#userdate").val()
+	        svc_days: $("#svc_days").val()
 	      },
 	      dataType: 'json',
 	      method: "get"
-	    }).done(function(data) 
+	    }).done(function(data) {
 	      console.log(data);
 			
 	    //컨트롤러에서 전달받은 값이 timeA,B,C와 같으면 버튼 비활성화
@@ -41,7 +42,6 @@ $(function() {
 	        for (let i = 0; i < data.times.length; i++) {
 	          if (data.times[i] == $("#timeA").val()) {
 	            $('#timeA').prop('disabled', true);
-	            break;
 	          } else if (data.times[i] == $("#timeB").val()) {
 	            $('#timeB').prop('disabled', true);
 	          } else {
@@ -52,15 +52,20 @@ $(function() {
 	    }).fail(function() {
 	      alert('다시 시도해주세요');
 	    });
-	  });
+	};
+
+	timeSelect();
+
+	$("#svc_days").change(function(){
+		timeSelect();
 	});
-
-
+});
 </script>
 
 </head>
 
 <body>
+<%@include file="/WEB-INF/views/header.jsp"%>
 	<h1>방문 견적 예약</h1>
 	<form name="svcForm" action="svcFormSubmit.do" method="post">
 		<ul>
@@ -96,16 +101,20 @@ $(function() {
 			</li>
 
 			<li>지역 
-				<input type="text" name="svc_local">
+				<input id="user_pcode"  type="text" name="user_pcode" placeholder="우편번호" readonly><br>
+				<div onclick="findAddr()">우편번호찾기 </div>
+				<input id="user_addr" type="text" name="user_addr" readonly> <br>
+  				<input type="text" name="user_detail" placeholder="상세 주소">
 			</li>
 			
 			<li>방문 희망 일자 
-				<input id="userdate" type="date" name="svc_date" onclick="setMinDate()">
+				<input id="svc_days" type="date" name="svc_days" onclick="setMinDate()">
 			</li>
+			
 			
 			<li>시간 
 				<input id="timeA" type="radio" name="svc_time" value="10:00">10:00
-				<input id="timeB" type="radio" name="svc_time" value="13:00">13:00 
+				<input id="timeB" type="radio" name="svc_time" value="13:00">13:00
 				<input id="timeC" type="radio" name="svc_time" value="16:00">16:00
 			</li>
 			
@@ -138,15 +147,13 @@ $(function() {
 		<div>
 			<input type="submit" value="예약">
 		</div>
-		<div id="a"></div>
 	</form>
 	
+	<!-- 현재 시간보다 이전 시간 선택 불가 제약 -->
 	<script>
-		/* 	현재 시간보다 이전 시간 선택 불가 제약 */
-		var dateElement = document.getElementById('userdate');
+		var dateElement = document.getElementById('svc_days');
 		var now = new Date();
-		var date = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
-				.toISOString().split("T")[0];
+		var date = new Date(now.getTime()+24*60*60*1000 - now.getTimezoneOffset() * 60000).toISOString().split("T")[0];
 		dateElement.value = date;
 		dateElement.setAttribute("min", date);
 
@@ -156,6 +163,38 @@ $(function() {
 			}
 		}
 	</script>
+	
+	<!-- 카카오 주소 API -->
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script>
+		function findAddr(){
+			var width = 500; //팝업의 너비
+			var height = 600; //팝업의 높이
+	
+			new daum.Postcode({
+		 		width: width,
+		 		height: height,
+        		oncomplete: function(data) {
+            		var zonecode = data.zonecode;
+            		var roadAddr = data.roadAddress; // 도로명 주소 변수
+            		var jibunAddr = data.jibunAddress; // 지번 주소 변수
+
+            		document.getElementById('user_pcode').value = zonecode;
+            		
+            		if(roadAddr !== ''){
+                		document.getElementById('user_addr').value = roadAddr;
+            		} 
+            		else if(jibunAddr !== ''){
+                		document.getElementById('user_addr').value = jibunAddr;
+            		}
+        		}
+    		}).open({
+        		left: (window.screen.width / 2) - (width / 2),
+        		top: (window.screen.height / 2) - (height / 2)
+    	});
+	}
+</script>
+<%@include file="/WEB-INF/views/footer.jsp"%>
 </body>
 
 </html>
