@@ -11,7 +11,7 @@
 <%@include file="/WEB-INF/views/header.jsp" %>
 
 
-<!-- 본문 시작 -->
+
 	<!-- 본문 시작 -->
 <div class="container">
   <div class="row">
@@ -19,7 +19,7 @@
     <br><br>
     
     <h4 class="text-center">간단문의글 작성</h4>
-      <form name="askWrite" action= "askWrite.do" method="post">
+      <form name="askWrite" action= "askWrite.do" method="post" enctype="multipart/form-data">
       <input type="hidden" name="user_idx" value="${sessionScope.ssInfo.user_idx}">
 		 <div class="input-group mb-3">
 		  <label class="input-group-text col-3 text-center" for="inputGroupSelect01">공간유형</label>
@@ -52,7 +52,7 @@
 
         <div class="input-group mb-3">
           <label class="input-group-text col-3 text-center" for="inputGroupFile01">첨부 파일</label>
-          <input type="file" class="form-control" id="inputGroupFile01" name="ask_file">
+          <input type="file" class="form-control" id="inputGroupFile01" name="file">
         </div>
 		<div class="input-group mb-3" style="max-height: 600px; overflow-y: auto;">
 		  <label for="question" class="input-group-text col-3 text-center">문의사항<br>(2000자이내)*</label>
@@ -63,6 +63,9 @@
           <label for="password" class="input-group-text col-3 text-center">비밀번호</label>
           <input type="password" class="form-control input-group-text-fixed" id="password" name="ask_pwd">
         </div>
+        </c:if>
+        <c:if test="${!empty sessionScope.ssInfo}">
+          <input type="hidden" class="form-control input-group-text-fixed" id="password" name="ask_pwd" value=" ">
         </c:if>
          <div class="input-group mb-3">
           <label for="password" class="input-group-text col-3 text-center">보안방지</label>

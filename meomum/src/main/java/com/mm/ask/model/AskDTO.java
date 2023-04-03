@@ -17,6 +17,11 @@ public class AskDTO {
 	private String ask_tos;
 	private java.sql.Timestamp ask_wdate;
 	private int ask_ask;
+	
+	
+	/**날짜 변환 */
+    private String ask_date; // yyyy-MM-dd 형식의 문자열 저장
+    
 	public AskDTO() {
 		super();
 	}
@@ -134,6 +139,7 @@ public class AskDTO {
 		return sdf.format(this.ask_wdate);
 	}
 
+
 	public void setAsk_wdate(java.sql.Timestamp ask_wdate) {
 		this.ask_wdate = ask_wdate;
 	}
@@ -145,9 +151,29 @@ public class AskDTO {
 	public void setAsk_ask(int ask_ask) {
 		this.ask_ask = ask_ask;
 	}
+
+
 	
 	
+	public String getAsk_date() {
+		return ask_date;
+	}
+
+	public void setAsk_date(String ask_date) {
+		this.ask_date = ask_date;
+	}
+
+	public String getAsk_wdateYMD() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+		return sdf.format(this.ask_wdate);
+	}
 	
+	public String getAsk_wdateTime() {
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+
+		return sdf.format(this.ask_wdate);
+	}
 	
 }
 
