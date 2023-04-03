@@ -10,15 +10,15 @@
 		values(
 			review_idx.nextval,
 			1,
+			'svc_idx',
 			1,
-			#{category},
 			#{writer},
 			#{star},
 			#{subject},
 			#{content},
 			sysdate,
 			0,
-			#{thumb}
+			'테스트'
 		)
 	</insert>
 

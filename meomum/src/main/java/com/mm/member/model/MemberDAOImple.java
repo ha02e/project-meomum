@@ -43,7 +43,7 @@ public class MemberDAOImple implements MemberDAO {
 	}
 	 
 	 @Override
-	public MemberDTO getUserInfo(String input_id) {
+	public MemberDTO getsessionInfo(String input_id) {
 		MemberDTO dto = sqlMap.selectOne("login", input_id);
 		return dto;
 	}
@@ -170,5 +170,49 @@ public class MemberDAOImple implements MemberDAO {
 		}
 		return userInfo;
 	}
-
+	
+	/*회원 정보 가져오기**/
+	@Override
+	public MemberDTO getuserInfo(int user_idx) {
+		MemberDTO dto = sqlMap.selectOne("getuserInfo", user_idx);
+		return dto;
+	}
+	
+	/**회원 정보 수정*/
+	@Override
+	public int updateUserInfo(MemberDTO dto) {
+		int count = sqlMap.update("updateUserInfo",dto);
+		
+		return count;
+	}
+	/**회원정보 비밀번호 수정 _ 수정해야함*/
+	@Override
+	public int updatePWD(String newPwd,int user_idx) {
+		Map map = new HashMap();
+		map.put("user_idx", user_idx);
+		map.put("newPwd", newPwd);
+		
+		int count = sqlMap.update("updatePWD",map);
+		return count;
+	}
+	
+	/**회원 정보 리스트 불러오기*/
+	@Override
+	public List<MemberDTO> memberList(int cp, int ls) {
+		int start = (cp-1)*ls+1;
+		int end = cp*ls;
+		
+		Map map = new HashMap();
+		map.put("start", start);
+		map.put("end", end);
+		
+		List<MemberDTO> lists = sqlMap.selectList("memberList",map);
+		return lists;
+	}
+	
+	@Override
+	public int getuserTTCnt() {
+		int count = sqlMap.selectOne("getuserTTCnt");
+		return count;
+	}
 }

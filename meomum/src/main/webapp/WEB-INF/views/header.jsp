@@ -132,9 +132,9 @@ font-family: 'Stylish', sans-serif;
                             aria-expanded="false">정리일상</a>
 
                         <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
-                            <li><a class="dropdown-item" href="#">간단 견적</a></li>
+                            <li><a class="dropdown-item" href="askList.do">간단 견적</a></li>
 
-                            <li><a class="dropdown-item" href="#">방문 견적</a></li>
+                            <li><a class="dropdown-item" href="svc.do">방문 견적</a></li>
                         </ul>
                     </li>
  					<li class="nav-item dropdown">
@@ -154,14 +154,14 @@ font-family: 'Stylish', sans-serif;
 
                     <li class="nav-item ms-3">
 		                  <li class="nav-item dropdown">
-							<c:if test="${!empty sessionScope.userinfo}">
+							<c:if test="${!empty sessionScope.ssInfo}">
 		                      <a class="bi bi-person-circle display-6 bs-warning-bg-subtle" href="infoEdit.do"></a>
 		                        <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
 		                            <li><a class="dropdown-item " href="logout.do">로그아웃 <span class="material-symbols-outlined">login</span></a>
                  				     <li><a class="dropdown-item" href="#">장바구니</a></li>
 		                        </ul>
 		                        </c:if>
-		                        <c:if test="${empty sessionScope.userinfo}">
+		                        <c:if test="${empty sessionScope.ssInfo}">
 		                        <a class="bi bi-person-circle display-6 bs-warning-bg-subtle" href="login.do"></a>
 		                        </c:if>
 		                    </li>
