@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.mm.ask">
+  	<insert id="askInsert">
+  		insert into ask values(
+  								ask_ask_idx.nextval,
+  								#{user_idx},
+								#{ask_title},
+								#{ask_writer},
+								#{ask_tel},
+								#{rsd_type},
+								#{rsd_py},
+								#{ask_file},
+								#{ask_content},
+								#{ask_pwd},
+								#{ask_tos},
+								sysdate,
+								0
+  		
+  		)
+  	</insert>
+  </mapper>
