@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mm.member.model.MemberDTO;
 import com.mm.pro.model.ProDAO;
 import com.mm.pro.model.ProDAOImple;
 import com.mm.pro.model.ProDTO;
@@ -42,11 +44,42 @@ public class ProController {
 	//사용자 상품 상세 페이지 (인덱스 필요)
 	@RequestMapping("/proDetail.do")
 	public ModelAndView itemDetail(
-			@RequestParam("pro_idx") int pro_idx) {
+			@RequestParam("pro_idx") int pro_idx,
+			HttpSession session)
+	 {
+		session.getAttribute("ssInfo");
+		MemberDTO sdto =(MemberDTO) session.getAttribute("ssInfo");
+		int user_idx = sdto != null ? sdto.getUser_idx() : 0;
+		
 		ModelAndView mav=new ModelAndView();
 		List<ProDTO> lists=proDao.proUpdateList(pro_idx);
 		mav.addObject("lists", lists);
+		mav.addObject("user_idx",user_idx);
 		mav.setViewName("pro/proDetail");
+		
+		return mav;
+	}
+	
+	
+	//확인용
+	@RequestMapping("/purchase.do")
+	public ModelAndView test(@RequestParam(value="cp",defaultValue="1")int cp,
+			@RequestParam(value="pro_buyNum",defaultValue="1")int pro_buyNum,
+			@RequestParam("pro_idx") int pro_idx,
+			HttpSession session) {
+		
+		session.getAttribute("ssInfo");
+		MemberDTO sdto =(MemberDTO) session.getAttribute("ssInfo");
+		int user_idx = sdto != null ? sdto.getUser_idx() : 0;
+		
+		List<ProDTO> lists=proDao.proUpdateList(pro_idx);
+		
+		ModelAndView mav=new ModelAndView();
+		mav.addObject("lists", lists);
+		mav.addObject("pro_buyNum", pro_buyNum);
+		mav.addObject("user_idx", user_idx);
+		
+		mav.setViewName("pro/purchase");
 		
 		return mav;
 	}
