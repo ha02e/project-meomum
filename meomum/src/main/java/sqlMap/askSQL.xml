@@ -21,4 +21,20 @@
   		
   		)
   	</insert>
+	<select id="askList" parameterType="Map" resultType="com.mm.ask.model.AskDTO">
+			select * from 
+  			(select rownum as rnum,a.* from
+				(select * from ask order by ask_idx desc)a
+			)b
+		where rnum <![CDATA[>=]]> #{start} and rnum <![CDATA[<=]]>#{end}
+	</select>
+		<select id="askCnt" resultType="Integer">
+  		select count(*) from ask
+  	</select>
+  	<select id="askSelectContent" parameterType="Integer" resultType="com.mm.ask.model.AskDTO">
+  		select * from ask where ask_idx = #{ask_idx}
+  	</select>
+   <select id="existsFile" parameterType="String" resultType="Integer">
+        SELECT COUNT(*) FROM ASK WHERE ask_file = #{fileName}
+    </select>
   </mapper>
