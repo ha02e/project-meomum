@@ -77,7 +77,7 @@
               <td>${ask.ask_writer}
               </td>
               <td>
-                <c:if test="${ask.ask_ask==1}">
+                <c:if test="${ask.ask_ask>0}">
                   <button type="button" class="btn btn-success btn-sm align-middle disabled">답변완료</button>
                 </c:if>
                 <c:if test="${ask.ask_ask==0}">

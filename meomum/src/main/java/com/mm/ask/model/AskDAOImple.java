@@ -67,7 +67,7 @@ public class AskDAOImple implements AskDAO {
 	 @Override
 	public int commentsInsert(CommentsDTO dto) {
 			int result = sqlMap.insert("commentsInsert",dto);
-			sqlMap.update("askaskUpdate",dto.getAsk_idx());
+			sqlMap.update("updateAskPlusOne",dto.getAsk_idx());
 		return result;
 	}
 	 
@@ -77,4 +77,23 @@ public class AskDAOImple implements AskDAO {
 		CommentsDTO dto = sqlMap.selectOne("commList", ask_idx);
 		return dto;
 	}
+	 
+	 /**간단문의 본문 글 삭제*/
+ 	@Override
+	public int deleteAsk(int ask_idx) {
+		int result = sqlMap.delete("deleteAsk",ask_idx);
+		if(result>0) {
+			sqlMap.delete("deleteComm",ask_idx);
+		}
+		return result;
+	}
+ 	@Override
+ 	public int deleteComm(int ask_idx) {
+ 		int result = sqlMap.delete("deleteComm",ask_idx);
+ 		if(result>0) {
+			sqlMap.update("updateAskMinusOne",ask_idx);
+
+ 		}
+ 		return result;
+ 	}
 }

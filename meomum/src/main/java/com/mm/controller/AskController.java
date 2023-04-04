@@ -6,29 +6,43 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import java.util.Calendar;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mm.ask.model.AskDAO;
 import com.mm.ask.model.AskDTO;
 import com.mm.ask.model.CommentsDTO;
+import com.mm.member.model.MemberDAO;
+import com.mm.member.model.MemberDAOImple;
+import com.mm.member.model.MemberDTO;
 
 @Controller
 public class AskController {
 	
 	@Autowired
 	private AskDAO adao;
+	@Autowired
+	private MemberDAO mdao;
 	
 	/**간단문의 리스트*/
 	@RequestMapping("/askList.do")
@@ -94,13 +108,13 @@ public class AskController {
 	
 	/**간단문의 글작성 submit*/
 	@RequestMapping(value="/askWrite.do", method = RequestMethod.POST)
-	public ModelAndView askWriteSubmit(AskDTO dto,@RequestParam("file")MultipartFile file,HttpServletRequest request) {
+	public ModelAndView askWriteSubmit(AskDTO dto,@RequestParam(value="file",required = false)MultipartFile file,HttpServletRequest request) {
 		
+		
+		if(file != null&& !file.isEmpty()) {
 		Calendar calendar = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		String today = sdf.format(calendar.getTime());
-		
-
 		
 		String originalFileName = today+"_"+file.getOriginalFilename();
 		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
@@ -110,15 +124,20 @@ public class AskController {
 		int num = 0;
 		String fileName = originalFileName;
 		
-		while (adao.existsFile(fileName)) {
-		    num++;
-		    fileName = fileNameWithoutExtension + "_" + num + extension;
-		}
-		System.out.println(fileName);
+			while (adao.existsFile(fileName)) {
+			    num++;
+			    fileName = fileNameWithoutExtension + "_" + num + extension;
+			}
 		dto.setAsk_file(fileName);
-		int result = adao.askInsert(dto);
 		
-		copyInto(file, request,fileName);		
+		copyInto(file, request,fileName);
+		
+		
+		}else{
+			dto.setAsk_file("");
+		}
+		
+		int result = adao.askInsert(dto);
 		ModelAndView mav = new ModelAndView();
 		
 		if(result>0){
@@ -164,6 +183,8 @@ public class AskController {
 	        e.printStackTrace();
 	    }
 	}
+	
+	/**파일 다운로드 경로*/
 	@RequestMapping("/filedown.do")
 	public ModelAndView filedown(@RequestParam("filename")String filename,HttpServletRequest req) {
 		
@@ -181,8 +202,15 @@ public class AskController {
 	
 	/**관리자 간단문의 관리 이동*/
 	@RequestMapping("/askList_a.do")
-	public ModelAndView askList_a(@RequestParam(value="cp",defaultValue = "1")int cp) {
-
+	public ModelAndView askList_a(@RequestParam(value="cp",defaultValue = "1")int cp,HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		MemberDTO ssInfo = (MemberDTO) session.getAttribute("ssInfo");
+		if(ssInfo==null||!ssInfo.getUser_info().equals("관리자")) {
+			mav.addObject("msg", "잘못된 접근입니다.");
+			mav.addObject("gopage","location.href='index.do';");
+			mav.setViewName("mainMsg");
+			return mav;
+		}
 		
 		//페이징
 		int rtotalCnt = adao.askCnt();
@@ -206,8 +234,6 @@ public class AskController {
 		    }
 		    dto.setAsk_date(askDate);
 		}
-
-		ModelAndView mav = new ModelAndView();
 		mav.setViewName("ask/askList_a");
 		
 		mav.addObject("totalCnt",rtotalCnt);
@@ -217,11 +243,25 @@ public class AskController {
 	}
 	/**관리자 간단문의 본문 보기*/
 	@RequestMapping("/askContent_a.do")
-	public ModelAndView askContent_a(@RequestParam("ask_idx")int ask_idx) {
+	public ModelAndView askContent_a(@RequestParam("ask_idx")int ask_idx,HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		MemberDTO ssInfo = (MemberDTO) session.getAttribute("ssInfo");
+		
+		if(ssInfo==null||!ssInfo.getUser_info().equals("관리자")) {
+			mav.addObject("msg", "잘못된 접근입니다.");
+			mav.addObject("gopage","location.href='index.do';");
+			mav.setViewName("mainMsg");
+			return mav;
+		}
+		
+		
 		AskDTO dto = adao.askContent(ask_idx);
 		CommentsDTO comm = adao.commList(ask_idx);
-		
-		ModelAndView mav = new ModelAndView();
+
+		if(comm!=null) {
+			MemberDTO mdto = mdao.getuserInfo(comm.getUser_idx());
+			mav.addObject("mInfo",mdto);
+		}
 		mav.addObject("ask",dto);
 		mav.addObject("comm", comm);
 		mav.setViewName("ask/askContent_a");
@@ -236,7 +276,7 @@ public class AskController {
 		
 		if(result>0) {
 			mav.addObject("msg", "댓글 작성을 완료하였습니다.");
-			mav.addObject("link","askList_a.do");
+			mav.addObject("link","askContent_a.do?ask_idx="+dto.getAsk_idx());
 			mav.setViewName("msg");
 
 		}else {
@@ -246,5 +286,43 @@ public class AskController {
 		}
 		return mav;
 	}
+	
+	/**글 삭제*/
+	@RequestMapping(value="/askDelete.do", method = RequestMethod.POST)
+    public ModelAndView deleteAsk(@RequestBody AskDTO askDto, HttpServletRequest req) {
+       
+		int result = adao.deleteAsk(askDto.getAsk_idx());
+		
+		//글삭제시 파일까지 같이 삭제
+		String rootPath = req.getSession().getServletContext().getRealPath("/");
+		String filePath = rootPath + "/images/askFile/" + askDto.getAsk_file();
+		File f = new File(filePath);
+		if (f.exists()) {
+			f.delete();
+		}
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("msg","성공");
+		mav.setViewName("mmJson");
+		
+		
+		return mav;
+    }
+	
+	/**관리자 댓글 삭제*/
+	@RequestMapping(value="/askCommDel.do",method = RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView askCommDel(@RequestParam("ask_idx")int ask_idx) {
+		
+		int result = adao.deleteComm(ask_idx);
+		ModelAndView mav = new ModelAndView();
+		String msg = result>0?"댓글이 삭제 되었습니다.":"댓글 삭제에 실패하였습니다.";
+		mav.addObject("msg", msg);
+		mav.setViewName("mmJson");
+		
+	  return mav;
+	}
+	
+
+	
 	
 }
