@@ -68,6 +68,7 @@ $(function() {
 <%@include file="/WEB-INF/views/header.jsp"%>
 	<h1>방문 견적 예약</h1>
 	<form name="svcForm" action="svcFormSubmit.do" method="post">
+	<input type="hidden" name="user_idx" value="${sessionScope.ssInfo.user_idx}">
 		<ul>
 			<li>거주형태 <select name="svc_type">
 					<option value="아파트">아파트</option>
