@@ -1,6 +1,7 @@
 package com.mm.controller;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,22 +42,39 @@ public class CartController {
 				dto.setCart_amount(cart_amount);
 				dto.setUser_idx(user_idx);
 				
+				List<CartDTO> cartList = cartDao.cartCheck(pro_idx);
+				
+				if(!cartList.isEmpty()) {
+					msg="이미 장바구니에 있는 물건입니다. 추가하시겠습니까?";
+					
+				}
+				
 				int result=cartDao.cartInsert(dto);
-				msg=result>=0?"장바구니에 추가되었습니다. 확인하시겠습니까?":"장바구니에 추가하지 못했습니다.";
-				link="pro/proCart";
-				mav.addObject("msg", msg);
-				mav.addObject("link", link);
-				mav.setViewName("pro/proMsg");
+				
+				if (result > 0) {
+				    msg = "장바구니에 추가되었습니다. 확인하시겠습니까?";
+				    link = "proCart.do";
+				    mav.addObject("msg", msg);
+				    mav.addObject("link", link);
+				    mav.addObject("pro_idx", pro_idx);
+				    mav.addObject("confirm", true); // confirm 속성 추가
+				    mav.setViewName("pro/proMsg");
+				} 
 				
 			} else {
 				msg="로그인 후 이용해 주세요.";
 				mav.addObject("msg", msg);
-				mav.setViewName("pro/proMsg");
 				mav.addObject("gopage","location.href='login.do';");
 				mav.setViewName("mainMsg");
 			}
 			return mav;
-			
+		}
+		
+		
+		//장바구니로 이동
+		@RequestMapping("/proCart.do")
+		public String CartList() {
+			return "/pro/proCart";
 		}
 	
 }

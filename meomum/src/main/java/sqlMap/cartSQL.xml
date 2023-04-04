@@ -5,10 +5,20 @@
   <mapper namespace="com.mm.cart">
   	<insert id="cartInsert" parameterType="com.mm.cart.model.CartDTO">
 		insert into cart values(
-		cart_idx.nextval, 
+		cart_num_idx.nextval, 
 		#{pro_idx},
 		#{user_idx},
 		#{cart_amount}
 		)
 	</insert>
+	
+	<select id="cartCheck" parameterType="integer" resultType="com.mm.pro.model.ProDTO">
+	select * from cart
+	where pro_idx=#{pro_idx}
+	</select>
+	
+	<update id="cartMoreInsert" parameterType="integer">
+	update
+	</update>
+	
   </mapper>
