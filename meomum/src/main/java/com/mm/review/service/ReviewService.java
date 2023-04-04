@@ -15,6 +15,8 @@ public interface ReviewService {
 	public int myreviewTotalCnt();
 	
 	public ReviewDTO reviewContent(int review_idx);
+	public int reviewReadnum(int review_idx);
+	
 	public int reviewDelete(int review_idx);
 
 }

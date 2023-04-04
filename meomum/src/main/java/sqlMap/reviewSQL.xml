@@ -56,6 +56,12 @@
 		where review_idx=#{review_idx}
 	</select>
 	
+	<update id="reviewReadnum" parameterType="Integer" >
+		update review
+		set readnum=readnum+1
+		where review_idx=#{review_idx}
+	</update>
+	
 	
 	<delete id="reviewDelete" parameterType="Integer">
 		delete from review where review_idx=#{review_idx}

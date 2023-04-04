@@ -55,6 +55,13 @@ public class ReviewDAOImple implements ReviewDAO {
 	}
 	
 	@Override
+	public int reviewReadnum(int review_idx) {
+		int count=sqlMap.update("reviewReadnum", review_idx);
+		return count;
+	}
+	
+	
+	@Override
 	public int reviewDelete(int review_idx) {
 		int count=sqlMap.delete("reviewDelete",review_idx);
 		return count;

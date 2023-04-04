@@ -210,6 +210,7 @@ public class ReviewController {
 	
 	@RequestMapping("/reviewContent.do")
 	public ModelAndView reviewContent(@RequestParam("review_idx")int review_idx) {
+		reviewService.reviewReadnum(review_idx);
 		
 		ReviewDTO dto=reviewService.reviewContent(review_idx);
 		

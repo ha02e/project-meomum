@@ -71,6 +71,12 @@ public class ReviewServiceImple implements ReviewService {
 		dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
 		return dto;
 	}
+	
+	@Override
+	public int reviewReadnum(int review_idx) {
+		int count=reviewDao.reviewReadnum(review_idx);
+		return count;
+	}
 
 	
 	@Override
