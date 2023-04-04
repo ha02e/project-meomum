@@ -62,4 +62,19 @@ public class AskDAOImple implements AskDAO {
 		 
 		return result>0?true:false;
 	}
+	 
+	 /**관리자 댓글 달기 */
+	 @Override
+	public int commentsInsert(CommentsDTO dto) {
+			int result = sqlMap.insert("commentsInsert",dto);
+			sqlMap.update("askaskUpdate",dto.getAsk_idx());
+		return result;
+	}
+	 
+	 /**댓글 출력*/
+	 @Override
+	public CommentsDTO commList(int ask_idx) {
+		CommentsDTO dto = sqlMap.selectOne("commList", ask_idx);
+		return dto;
+	}
 }
