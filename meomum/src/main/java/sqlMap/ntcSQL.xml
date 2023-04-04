@@ -6,7 +6,7 @@
 	<!-- 게시글 작성 -->
 	<insert id="ntcInsert" parameterType="com.mm.ntc.model.NtcDTO">
 		insert into notice values(
-		notice_idx.nextval,#{ntc_title},#{ntc_content},#{ntc_img},sysdate,#{ntc_ctg},#{ntc_viewCnt})
+		notice_idx.nextval,#{ntc_title},#{ntc_content},sysdate,#{ntc_ctg},#{ntc_viewCnt})
 	</insert>
 	
 	<!-- 게시글 목록출력 -->
@@ -50,7 +50,6 @@
 		ntc_title
 		= #{ntc_title},
 		ntc_content = #{ntc_content},
-		ntc_img = #{ntc_img},
 		ntc_ctg = #{ntc_ctg}
 		where ntc_idx = #{ntc_idx}
 	</update>
