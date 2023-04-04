@@ -7,13 +7,13 @@
 <title>[관리자] 상품 수정</title>
 <script>
 function calPrice(){
-	 const proprice = Number(document.getElementById("pro_price").value);
-	    const subMonth = Number(document.querySelector('input[name="pro_month"]:checked').value);
-	    const subprice = Math.ceil(proprice / (15 * subMonth)) * subMonth;
-	    document.getElementById("pro_subprice").value = subprice;
-	    
-	    const allprice = subprice*subMonth;
-	    document.getElementById("pro_allprice").value = allprice;
+	const proprice = Number(document.getElementById("pro_price").value);
+    const subMonth = Number(document.querySelector('input[name="pro_month"]:checked').value);
+    const subprice = Math.ceil(proprice / (15 * subMonth)) * subMonth;
+    document.getElementById("pro_subprice").value = subprice;
+    
+    const allprice = subprice*subMonth;
+    document.getElementById("pro_allprice").value = allprice;   
 }
 </script>
 </head>
@@ -54,10 +54,10 @@ function calPrice(){
 			</li>
 			
 			<li>상품명
-				<input type="text" name="pro_name" value="${lists[0].pro_name}">
+				<input type="text" name="pro_name" id="pro_name" value="${lists[0].pro_name}">
 			</li>
 			<li>정가
-				<input type="text" name="pro_price" value="${lists[0].pro_price}">
+				<input type="text" name="pro_price" id="pro_price" value="${lists[0].pro_price}">
 			</li>
 			<li>재고 수량
 				${lists[0].pro_amount}
