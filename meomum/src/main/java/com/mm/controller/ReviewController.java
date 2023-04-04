@@ -234,4 +234,26 @@ public class ReviewController {
 		return mav;
 	}
 	
+	
+	/** 관리자 리뷰 관리 */
+	
+	@RequestMapping("/reviewList_a.do")
+	public ModelAndView reviewList_a(@RequestParam(value="cp",defaultValue = "1")int cp) {
+		int totalCnt=reviewService.getTotalCnt();
+		int listSize=4;
+		int pageSize=5;
+		
+		String pageStr=com.mm.module.PageModule
+				.makePage("reviewList_a.do", totalCnt, listSize, pageSize, cp);
+		
+		List<ReviewDTO> lists=reviewService.reviewList(cp, listSize);
+		
+		ModelAndView mav=new ModelAndView();
+		mav.setViewName("review/reviewList_a");
+		mav.addObject("lists", lists);
+		mav.addObject("pageStr",pageStr);
+		
+		return mav;
+	}
+	
 }
