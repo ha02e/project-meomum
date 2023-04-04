@@ -9,7 +9,7 @@
 </head>
 <body>
 	<%@include file="/WEB-INF/views/header.jsp"%>
-	<div class="container mt-4">
+	<div class="container mt-4 text-center">
 		<h1 class="text-center mb-4">공지사항 본문</h1>
 		<div class="text-right">
 			<a href="/meomum/ntcList.do" class="btn btn-secondary">목록</a>

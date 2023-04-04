@@ -213,7 +213,7 @@
 						<div id="submenu-3" class="collapse submenu submenu-3" data-bs-parent="#menu-accordion">
 							<ul class="submenu-list list-unstyled">
 								<li class="submenu-item"><a class="submenu-link" href="#">공지사항/FAQ 관리</a></li>
-								<li class="submenu-item"><a class="submenu-link" href="#">후기 관리</a></li>
+								<li class="submenu-item"><a class="submenu-link" href="reviewList_a.do">후기 관리</a></li>
 							</ul>
 						</div>
 					</li><!--//nav-item-->
