@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.JsonObject;
+import com.mm.member.model.MemberDTO;
 import com.mm.review.model.ReviewDTO;
 import com.mm.review.service.ReviewService;
 
@@ -29,11 +30,34 @@ public class ReviewController {
 	@Autowired
 	private ReviewService reviewService;
 	
-	
 	@RequestMapping("/myReview.do")
 	public String myReview() {
 		return "review/myReview";
 	}
+	
+	@RequestMapping("/myReviewList.do")
+	public ModelAndView myreviewList(@RequestParam(value="cp",defaultValue = "1")int cp,
+									HttpSession session) {
+		MemberDTO mdto=(MemberDTO)session.getAttribute("ssInfo");
+		
+		int totalCnt=reviewService.getTotalCnt();
+		int listSize=3;
+		int pageSize=5;
+		int user_idx=mdto.getUser_idx();
+		
+		String pageStr=com.mm.module.PageModule
+				.makePage("myReviewList.do", totalCnt, listSize, pageSize, cp);
+		
+		List<ReviewDTO> lists=reviewService.myreviewList(cp, listSize,user_idx);
+		
+		ModelAndView mav=new ModelAndView();
+		mav.setViewName("review/myReviewList");
+		mav.addObject("lists", lists);
+		mav.addObject("pageStr",pageStr);
+		
+		return mav;
+	}
+	
 	@RequestMapping("/reviewable.do")
 	public String reviewable() {
 		return "review/reviewable";
@@ -49,7 +73,9 @@ public class ReviewController {
 	@RequestMapping(value="/reviewWrite.do", method = RequestMethod.POST)
 	public ModelAndView reviewWrite(MultipartHttpServletRequest req, HttpSession session) {
 		ReviewDTO dto=new ReviewDTO();
+		MemberDTO mdto=(MemberDTO)session.getAttribute("ssInfo");
 		
+		dto.setUser_idx(mdto.getUser_idx());
 		dto.setWriter(req.getParameter("writer"));
 		int category=Integer.parseInt(req.getParameter("category"));
 		dto.setCategory(category);
@@ -180,6 +206,8 @@ public class ReviewController {
 	}
 	
 	
+	
+	
 	@RequestMapping("/reviewContent.do")
 	public ModelAndView reviewContent(@RequestParam("review_idx")int review_idx) {
 		
@@ -188,6 +216,21 @@ public class ReviewController {
 		ModelAndView mav= new ModelAndView();
 		mav.addObject("dto",dto);
 		mav.setViewName("review/reviewContent");
+		return mav;
+	}
+	
+	
+	@RequestMapping("/reviewDel.do")
+	public ModelAndView reviewDelete(@RequestParam("review_idx")int review_idx) {
+		int result=reviewService.reviewDelete(review_idx);
+		
+		String msg=result>0?"리뷰 삭제가 완료되었습니다.":"리뷰 삭제에 실패하였습니다.";
+		
+		ModelAndView mav=new ModelAndView();
+		mav.addObject("msg", msg);
+		mav.addObject("link", "review/myReviewList");
+		mav.setViewName("/msg");
+		
 		return mav;
 	}
 	

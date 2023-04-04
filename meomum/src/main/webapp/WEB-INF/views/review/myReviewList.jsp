@@ -1,99 +1,143 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
-<div class="app-content pt-3 p-md-3 p-lg-4">
-				
-	<div class="container-xl">
-			    
-		<div class="app-card app-card-notification shadow-sm mb-4">
-			
-			<div class="app-card-header px-4 py-3">
-				<div class="row g-3 align-items-center">
-					<div class="col-12 col-lg-auto text-center text-lg-start">						        
-						<img class="profile-image" src="assets/images/profiles/profile-1.png" alt="">
+<!-- 아이콘 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<style>
+.col-auto {
+	margin:0 0 10px 0;
+}
+.app-content {
+	margin: 0 20px;
+	padding: 0 20px;
+}
+.app-card{
+	border:1px solid #eeeeee;
+}
+.notification-title{
+	font-weight: bold;
+}
+.app-card-notification .app-card-footer {
+    background: #E3DBD6;
+}
+.action-link {
+    color: #3d2217;
+    text-decoration: none;
+    background-color: transparent;
+}
+.action-link:hover{
+    color: #000000;
+}
+
+.reviewThumb{
+	position: relative;
+	overflow: hidden;
+	width: 100%;
+	height:240px;
+	padding:16px 0;
+}
+.card-img-top{
+	position: absolute;
+  	width: 100%;
+  	top: 50%; 
+  	left: 50%;
+  	transform: translate(-50%, -50%);
+}
+
+<!-- 작성 가능한 후기 -->
+.reviewable-img img{
+	width:60%;
+	border:1px solid red;
+}
+.thumb{
+	width:10%;
+}
+.num{
+	width:25%;
+}
+.service{
+	width:32%;
+}
+.category{
+	width:13%;
+}
+.button{
+	width:20%;
+}
+.review-star i {
+    color:#FFD400;
+}
+</style>
+
+</head>
+<body>
+<%@include file="../header.jsp"%> 
+<section class="shop spad">
+<div class="container">
+<div class="row"> 
+	<%@include file="../myMenu.jsp"%> 
+	<div class="col-xl-9 col-md-9">	
+		<!-- ---------- 마이페이지 작업한 파일 페이지 여기에 넣어주세요!!(include) ---------- -->	
+		<div class="container-xl">
+			<div class="row row-cols-1 row-cols-md-2 g-4 mb-5">
+				<c:if test="${empty lists}">
+					<h5 class="text-center">등록된 후기가 없습니다.</h5>
+				</c:if>
+				<c:forEach var="dto" items="${lists}">
+					<div class="col">
+						<div class="card">
+						<div class="reviewThumb">
+							<img class="img-fluid card-img-top" src="/meomum/images/reviewImg/${dto.thumb}" alt="review thumb">
+						</div>
+						<div class="card-body">
+							<h4 class="card-title">${dto.subject}</h4>
+							<div class="entry-meta">
+								<ul class="d-flex justify-content-between">
+									<li class="d-flex align-items-center"><i class="bi bi-person"></i>&nbsp;${dto.writer}</li>
+									<li class="d-flex align-items-center review-star">
+										<c:forEach var="i" begin="1" end="${dto.star}" step="1">
+											<i class="bi bi-star-fill"></i>&nbsp;
+										</c:forEach>
+					                  	</li>
+					                  	<li class="d-flex align-items-center"><i class="bi bi-clock"></i>&nbsp;${dto.writedate}</li>
+					                </ul>
+							</div>	
+						</div>
+						<div class="card-footer text-center">
+							<input type="hidden" name="review_idx" value="${dto.review_idx}">
+							<c:url var="contentUrl" value="reviewContent.do">
+								<c:param name="review_idx">${dto.review_idx}</c:param>
+							</c:url>
+							<button class="btn btn-primary btn-sm" onclick="location.href='${contentUrl}'">자세히 보기</button>
+							<button class="btn btn-primary btn-sm">수정</button>
+							<button class="btn btn-danger btn-sm" onclick="location.href='reviewDel.do'">삭제</button>
+						</div>
 					</div>
-					<div class="col-12 col-lg-auto text-lg-start">
-						<div class="notification-type mb-2"><span class="badge text-bg-success">가구구독</span></div>
-						<h4 class="notification-title mb-1">후기 제목~~</h4>
-						<ul class="notification-meta list-inline mb-0">
-							<li class="list-inline-item">작성자</li>
-							<li class="list-inline-item">
-								<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
-									<path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-								</svg>
-								<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
-									<path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-								</svg>
-								<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
-									<path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-								</svg>
-								<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
-									<path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-								</svg>
-								<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
-									<path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-								</svg>
-							</li>
-							<li class="list-inline-item">2023.03.30</li>
-						</ul>
-					</div><!--//col-->
-				</div><!--//row-->
-				
-			</div><!--//app-card-header-->
-			
-			<div class="app-card-body p-4">
-				<div class="notification-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sed ultrices dolor, ac maximus ligula. Donec ex orci, mollis ac purus vel, tempor pulvinar justo. Praesent nibh massa, posuere non mollis vel, molestie non mauris. Aenean consequat facilisis orci, sed sagittis mauris interdum at.</div>
-			</div><!--//app-card-body-->
-			
-			<div class="app-card-footer px-4 py-3">
-				<a class="action-link" href="#">자세히 보기
-					<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-right ms-2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-						<path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"></path>
-					</svg>
-				</a>
-			</div><!--//app-card-footer-->
-			
-		</div><!--//app-card-->
-				
-		<div class="app-card app-card-notification shadow-sm mb-4">
-		
-			<div class="app-card-header px-4 py-3">
-				<div class="row g-3 align-items-center">
-					<div class="col-12 col-lg-auto text-center text-lg-start">						        
-						<img class="profile-image" src="assets/images/profiles/profile-1.png" alt="">
-					</div>
-					<div class="col-12 col-lg-auto text-lg-start">
-						<div class="notification-type mb-2"><span class="badge text-bg-primary">정리일상</span></div>
-						<h4 class="notification-title mb-1">Notification Heading Lorem Ipsum</h4>
-						<ul class="notification-meta list-inline mb-0">
-							<li class="list-inline-item">작성자</li>
-							<li class="list-inline-item">별점</li>
-							<li class="list-inline-item">2023.03.30</li>
-						</ul>
-					</div><!--//col-->
-				</div><!--//row-->
-			</div><!--//app-card-header-->
-			
-			<div class="app-card-body p-4">
-				<div class="notification-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sed ultrices dolor, ac maximus ligula. Donec ex orci, mollis ac purus vel, tempor pulvinar justo. Praesent nibh massa, posuere non mollis vel, molestie non mauris. Aenean consequat facilisis orci, sed sagittis mauris interdum at.</div>
-			</div><!--//app-card-body-->
-			
-			<div class="app-card-footer px-4 py-3">
-				<a class="action-link" href="#">자세히 보기
-					<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-right ms-2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-						<path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"></path>
-					</svg>
-				</a>
-			</div><!--//app-card-footer-->
-			
-		</div><!--//app-card-->
-				
-				
-				
-		<div class="text-center mt-4">
-			<a class="btn btn-light app-btn-secondary" href="#">리뷰 더보기</a>
+              		</div>
+				</c:forEach>
+				</div>
+					    
 		</div>
-				    
 	</div>
-	
+
+		<!-- ---------- 마이페이지 각 페이지 여기에 넣어주세요!! 끝 지점 ---------- -->
+	</div>
+		
 </div>
+</div>
+</section>
+
+<%@include file="../footer.jsp"%> 
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+</body>
+</html>

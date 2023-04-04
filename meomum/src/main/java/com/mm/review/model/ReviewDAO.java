@@ -6,8 +6,14 @@ import java.util.Map;
 public interface ReviewDAO {
 	
 	public int reviewInsert(ReviewDTO dto);
+	
 	public List<ReviewDTO> reviewList(Map map);
 	public int getTotalCnt();
+	
+	public List<ReviewDTO> myreviewList(Map map);
+	public int myreviewTotalCnt();
+	
 	public ReviewDTO reviewContent(int review_idx);
+	public int reviewDelete(int review_idx);
 
 }
