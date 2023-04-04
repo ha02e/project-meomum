@@ -132,6 +132,15 @@ public class NtcController {
 
 	@RequestMapping("/ntcContentDel.do")
 	public ModelAndView ntcDelete(@RequestParam("ntc_idx") int idx) {
+		 // 이미지 파일 삭제
+	    String imageName = ntcDao.getNtcImageName(idx); // 이미지 파일명 가져오기
+	    String imagePath = "/meomum/ntcImages/" + imageName; // 가져온 이미지 파일 경로와 파일명
+	    File imageFile = new File(imagePath);
+	    if (imageFile.exists()) {
+	        imageFile.delete();
+	    }
+		
+	 // 게시글 삭제
 		int result = ntcDao.ntcDelete(idx);
 		ModelAndView mav = new ModelAndView();
 		String msg = result > 0 ? "글삭제 성공!" : "글삭제 실패!";

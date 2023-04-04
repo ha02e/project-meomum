@@ -80,4 +80,10 @@ public class NtcDAOImple implements NtcDAO {
 		List<NtcDTO> list = sqlMap.selectList("ntcSearch", keyword);
 		return list;
 	}
+	
+	@Override
+	public String getNtcImageName(Integer idx) {
+		String dto=sqlMap.selectOne("getNtcImageName", idx);
+		return dto;
+	}
 }

@@ -28,7 +28,10 @@
 		delete from notice where
 		ntc_idx = #{ntc_idx}
 	</delete>
-	
+	<!-- 게시글 삭제시 함께 삭제할 이미지 불러오기 -->
+	<select id="getNtcImageName" resultType="String">
+		select ntc_img from notice where ntc_idx= #{ntc_idx}
+	</select>
 	<!-- 조회수 증가 -->
 	<update id="ntcViewCnt" parameterType="com.mm.ntc.model.NtcDTO">
 		update notice set

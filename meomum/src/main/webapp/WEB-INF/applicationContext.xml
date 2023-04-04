@@ -65,12 +65,13 @@
 		</constructor-arg>
 	</bean>
 	<bean id="cartDAO" class="com.mm.cart.model.CartDAOImple">
-<<<<<<< HEAD
-
-=======
->>>>>>> 0c496a39855737ea77a3a2854ae6995a570802ac
 		<constructor-arg>
 			<ref bean="sqlSessionTemplate" />
+		</constructor-arg>
+	</bean>
+	<bean id="orderDAO" class="com.mm.order.model.OrderDAOImple">
+		<constructor-arg>
+			<ref bean="sqlSessionTemplate"/>
 		</constructor-arg>
 	</bean>
 </beans>
