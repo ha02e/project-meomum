@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.mm.ask.model.AskDAO;
 import com.mm.ask.model.AskDTO;
+import com.mm.ask.model.CommentsDTO;
 
 @Controller
 public class AskController {
@@ -48,8 +49,11 @@ public class AskController {
 		    String askDate;
 		    if (dto.getAsk_wdateYMD().equals(LocalDate.now().toString())) {
 		        askDate = dto.getAsk_wdateTime();
+		        dto.setNewicon(true);
 		    } else {
 		        askDate = dto.getAsk_wdateYMD();
+		        dto.setNewicon(false);
+
 		    }
 		    dto.setAsk_date(askDate);
 		}
@@ -134,8 +138,11 @@ public class AskController {
 	@RequestMapping("/askContent.do")
 	public ModelAndView askContent(@RequestParam("ask_idx")int ask_idx) {
 		AskDTO dto = adao.askContent(ask_idx);
+		CommentsDTO comm = adao.commList(ask_idx);
+
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("ask",dto);
+		mav.addObject("comm",comm);
 		mav.setViewName("ask/askContent");
 		return mav;
 	}
@@ -170,6 +177,74 @@ public class AskController {
 		mav.setViewName("mmDown");
 		return mav;
 		
+	}
+	
+	/**관리자 간단문의 관리 이동*/
+	@RequestMapping("/askList_a.do")
+	public ModelAndView askList_a(@RequestParam(value="cp",defaultValue = "1")int cp) {
+
+		
+		//페이징
+		int rtotalCnt = adao.askCnt();
+		int totalCnt = rtotalCnt==0?1:rtotalCnt;
+		int listSize = 10;
+		int pageSize = 5;
+
+		String pageStr = com.mm.module.PageModule.makePage("askList.do", totalCnt, listSize, pageSize, cp);
+
+		List<AskDTO> lists = adao.askList(cp, listSize);
+		
+		for (AskDTO dto : lists) {
+		    String askDate;
+		    if (dto.getAsk_wdateYMD().equals(LocalDate.now().toString())) {
+		        askDate = dto.getAsk_wdateTime();
+		        dto.setNewicon(true);
+		    } else {
+		        askDate = dto.getAsk_wdateYMD();
+		        dto.setNewicon(false);
+
+		    }
+		    dto.setAsk_date(askDate);
+		}
+
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("ask/askList_a");
+		
+		mav.addObject("totalCnt",rtotalCnt);
+		mav.addObject("lists",lists);
+		mav.addObject("pageStr",pageStr);
+		return mav;
+	}
+	/**관리자 간단문의 본문 보기*/
+	@RequestMapping("/askContent_a.do")
+	public ModelAndView askContent_a(@RequestParam("ask_idx")int ask_idx) {
+		AskDTO dto = adao.askContent(ask_idx);
+		CommentsDTO comm = adao.commList(ask_idx);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("ask",dto);
+		mav.addObject("comm", comm);
+		mav.setViewName("ask/askContent_a");
+		return mav;
+	}
+	
+	/**관리자 댓글 쓰기*/
+	@RequestMapping(value="/aksComm.do",method = RequestMethod.POST)
+	public ModelAndView askCommWrite(CommentsDTO dto) {
+		int result = adao.commentsInsert(dto);
+		ModelAndView mav = new ModelAndView();
+		
+		if(result>0) {
+			mav.addObject("msg", "댓글 작성을 완료하였습니다.");
+			mav.addObject("link","askList_a.do");
+			mav.setViewName("msg");
+
+		}else {
+			mav.addObject("msg", "댓글 작성에 실패하였습니다.");
+			mav.addObject("gopage","history.back()");
+			mav.setViewName("mainMsg");
+		}
+		return mav;
 	}
 	
 }

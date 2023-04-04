@@ -84,11 +84,15 @@
 					</tbody>
 				</table>
 				</div>
-				<div class="container-fluid text-center">
-					<div class="row justify-content-center align-items-start">
-						<div class="col-auto">${pageStr}</div>
-					</div>
-				</div>
+
+<div class="container-xl">
+	<nav aria-label="Page navigation example">
+		<span class="pagination pagination-sm justify-content-center">
+			${pageStr}
+		</span>
+	</nav>
+
+</div>
 			</div>
 			<!--//container-fluid-->
 		</div>
