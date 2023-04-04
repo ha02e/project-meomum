@@ -78,7 +78,12 @@
 					<div class="col">
 						<div class="card h-100">
 						<div class="card-body img">
-							<img class="card-img-top" src="images/reviewImg/review_thumb02.jpg" alt="Card image cap" />
+							<c:if test="${not empty dto.thumb}">
+									<img src="/meomum/images/reviewImg/${dto.thumb}" alt="Card image cap" />
+							</c:if>
+							<c:if test="${empty dto.thumb}">
+								<img class="card-img-top" src="/meomum/images/noimage.jpg" alt="Card image cap" />
+							</c:if>
 						</div>
 						<c:url var="contentUrl" value="reviewContent.do">
 							<c:param name="review_idx">${dto.review_idx}</c:param>
