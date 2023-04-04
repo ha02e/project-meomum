@@ -83,7 +83,7 @@
 							
 						</div>
 						<div class="card-body">
-							<h4 class="card-title">${dto.subject}</h4>
+							<h4 class="card-title text-truncate">${dto.subject}</h4>
 							<div class="entry-meta">
 								<ul class="d-flex justify-content-between">
 									<li class="d-flex align-items-center"><i class="bi bi-person"></i>&nbsp;${dto.writer}</li>

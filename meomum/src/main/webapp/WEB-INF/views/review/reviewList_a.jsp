@@ -96,7 +96,7 @@
 						        <div class="notification-type mb-2">
 						        	<span class="badge bg-info">Project</span>
 						        </div>
-						        <h4 class="notification-title mb-1">${dto.subject}</h4>
+						        <h4 class="notification-title mb-1 text-truncate">${dto.subject}</h4>
 						        
 						        <ul class="notification-meta list-inline mb-0">
 							        <li class="list-inline-item">주문/서비스번호</li>
