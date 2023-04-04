@@ -67,4 +67,10 @@
 		delete from review where review_idx=#{review_idx}
 	</delete>
 	
+	
+	<select id="reviewUpdateForm" parameterType="Integer" resultType="com.mm.review.model.ReviewDTO">
+		select * from review
+		where review_idx=#{review_idx}
+	</select>
+	
 </mapper>

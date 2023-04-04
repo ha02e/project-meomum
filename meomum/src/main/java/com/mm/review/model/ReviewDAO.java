@@ -18,4 +18,5 @@ public interface ReviewDAO {
 	
 	public int reviewDelete(int review_idx);
 
+	public ReviewDTO reviewUpdateForm(int review_idx);
 }

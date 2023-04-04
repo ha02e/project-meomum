@@ -257,4 +257,15 @@ public class ReviewController {
 		return mav;
 	}
 	
+	
+	@RequestMapping("/reviewUpdateForm.do")
+	public ModelAndView reviewUpdateForm(@RequestParam("review_idx")int review_idx) {
+		ReviewDTO review=reviewService.reviewUpdateForm(review_idx);
+		
+		ModelAndView mav=new ModelAndView();
+		mav.addObject("review", review);
+		mav.setViewName("review/reviewUpdate");
+		
+		return mav;
+	}
 }

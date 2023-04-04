@@ -85,4 +85,10 @@ public class ReviewServiceImple implements ReviewService {
 		return count;
 	}
 	
+	
+	@Override
+	public ReviewDTO reviewUpdateForm(int review_idx) {
+		ReviewDTO review=reviewDao.reviewUpdateForm(review_idx);
+		return review;
+	}
 }
