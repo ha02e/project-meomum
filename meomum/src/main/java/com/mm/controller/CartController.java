@@ -13,8 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.mm.cart.model.CartDAO;
 import com.mm.cart.model.CartDTO;
 import com.mm.member.model.MemberDTO;
-import com.mm.pro.model.ProDAO;
-import com.mm.pro.model.ProDTO;
+
 
 @Controller
 public class CartController {
