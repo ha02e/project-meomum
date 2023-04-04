@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<link href="/docs/5.2/dist/css/bootstrap.min.css" rel="stylesheet"
+	integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+	crossorigin="anonymous">
 
+<!-- App CSS -->
+<link id="theme-style" rel="stylesheet" href="assets/css/portal_a.css">
+<link rel="stylesheet" type="text/css" href="css/mainLayout_a.css">
 <header class="app-header fixed-top">	            
 	<div class="app-header-inner">  
 	<div class="container-fluid py-2">
@@ -82,13 +88,13 @@
 					<!-- 계정 --> 
 					<div class="app-utility-item app-user-dropdown dropdown">
 						<a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
-							<span class="admin-name">admin</span>
+							<span class="admin-name">${sessionScope.ssInfo.user_name}</span>
 						</a>
 				            <ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
-								<li><a class="dropdown-item" href="account.html">Account</a></li>
+								<li><a class="dropdown-item" href="index.do">머뭄홈페이지</a></li>
 								<li><a class="dropdown-item" href="settings.html">Settings</a></li>
 								<li><hr class="dropdown-divider"></li>
-								<li><a class="dropdown-item" href="logout.do">Log Out</a></li>
+								<li><a class="dropdown-item" href="logout.do">로그아웃</a></li>
 							</ul>
 			            </div><!--//app-user-dropdown--> 
 		            </div><!--//app-utilities-->

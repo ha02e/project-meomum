@@ -46,10 +46,20 @@
   								)
     
     </insert>
-    <update id="askaskUpdate" parameterType="Integer">
+    <update id="updateAskPlusOne" parameterType="Integer">
     	update ask set ask_ask = ask_ask+1 where ask_idx= #{ask_idx}
+    </update>
+     <update id="updateAskMinusOne" parameterType="Integer">
+    	update ask set ask_ask = ask_ask-1 where ask_idx= #{ask_idx}
     </update>
     <select id="commList" parameterType="Integer" resultType="com.mm.ask.model.CommentsDTO">
    	 select * from comments where ask_idx = #{ask_idx}
     </select>
+    <delete id="deleteAsk" parameterType="Integer">
+    	delete from ask where ask_idx = #{ask_idx}
+    </delete>
+    <delete id="deleteComm" parameterType="Integer">
+    	delete from comments where ask_idx = #{ask_idx}
+    </delete>
+
   </mapper>
