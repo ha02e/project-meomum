@@ -73,7 +73,6 @@
 							</c:forEach>
 						</tbody>
 					</table>
-				</div>
 
 				<nav class="d-flex justify-content-between align-items-center">
 					<div
@@ -81,10 +80,8 @@
 						<span class="pagination pagination-sm justify-content-center">
 							${pageStr} </span>
 					</div>
-					<div class="col-auto">
-						<a href="askWrite.do" class="btn btn-primary">글쓰기</a>
-					</div>
 				</nav>
+				</div>
 			</div>
 		</div>
 	</div>

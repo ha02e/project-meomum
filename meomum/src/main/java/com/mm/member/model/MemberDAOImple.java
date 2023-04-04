@@ -18,6 +18,10 @@ public class MemberDAOImple implements MemberDAO {
 		this.sqlMap = sqlMap;
 	}
 
+	public MemberDAOImple() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	@Override
 	public int insertJoin(MemberDTO dto) {
 		int count = sqlMap.insert("insertJoin",dto);

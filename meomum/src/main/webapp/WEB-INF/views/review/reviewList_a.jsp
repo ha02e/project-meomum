@@ -6,21 +6,20 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-
-<!-- 아이콘 -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link href="/docs/5.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    
+<!-- App CSS -->  
+<link id="theme-style" rel="stylesheet" href="assets/css/portal_a.css">
+<link rel="stylesheet" type="text/css" href="css/mainLayout_a.css">
 
 <style>
-.col-auto {
-	margin:0 0 10px 0;
+.title{
+	text-align: center;
+	font-weight: bold;
+	margin: 30px 0;
 }
-.app-content {
-	margin: 0 20px;
-	padding: 0 20px;
-}
-.app-card{
-	border:1px solid #eeeeee;
+.noreview h5{
+	line-height:180px;
 }
 
 .reviewThumb{
@@ -37,31 +36,21 @@
   	left: 50%;
   	transform: translate(-50%, -50%);
 }
-
-.title{
-	text-align: center;
-	font-weight: bold;
-	margin-bottom: 30px;
-}
-.noreview h5{
-	line-height:180px;
-}
 .review-star i {
     color:#FFD400;
 }
 </style>
-
 </head>
-<body>
-<%@include file="../header.jsp"%> 
-<section class="shop spad">
-<div class="container">
-<div class="row"> 
-	<%@include file="../myMenu.jsp"%> 
-	<div class="col-xl-9 col-md-9">	
-		<!-- ---------- 마이페이지 작업한 파일 페이지 여기에 넣어주세요!!(include) ---------- -->	
-		<div class="container-xl">
-		<h2 class="title">내가 쓴 후기</h2>
+
+<body class="app"> 
+
+<%@include file="../header_a.jsp"%>  
+
+<div class="app-wrapper">
+	    
+	    <div class="app-content pt-3 p-md-3 p-lg-4">
+		    <div class="container-xl">
+			   <h2 class="title">후기 관리</h2>
 			<c:if test="${empty lists}">
 				<div class="row noreview">
 					<div class="card">
@@ -69,7 +58,7 @@
 					</div>
 				</div>
 			</c:if>
-			<div class="row row-cols-1 row-cols-md-2 g-4 mb-5">
+			<div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
 				<c:forEach var="dto" items="${lists}">
 					<div class="col">
 						<div class="card">
@@ -101,11 +90,33 @@
 							<c:url var="contentUrl" value="reviewContent.do">
 								<c:param name="review_idx">${dto.review_idx}</c:param>
 							</c:url>
-							<button class="btn btn-primary btn-sm" onclick="location.href='${contentUrl}'">자세히 보기</button>
-							<button class="btn btn-primary btn-sm">수정</button>
-								<a href="reviewDel.do?review_idx=${dto.review_idx}">
-									<button class="btn btn-danger btn-sm">삭제</button>
-								</a>
+							<button class="btn btn-primary btn-sm" id="btn-view">자세히 보기</button>
+							<div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">모달테스트</h5>
+											<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">X</span>
+											</button>
+										</div>
+										<div class="modal-body">내용 입력 !!</div>
+										<div class="modal-footer">
+											<a class="btn" id="modalY" href="#">예</a>
+											<button class="btn" type="button" data-dismiss="modal">아니요</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<script>
+									$('#btn-view').click(function(e){
+										e.preventDefault();
+										$('#reviewModal').modal("show");
+									});
+							</script>
+							<a href="reviewDel.do?review_idx=${dto.review_idx}">
+								<button class="btn btn-danger btn-sm">삭제</button>
+							</a>
 						</div>
 					</div>
               		</div>
@@ -119,17 +130,17 @@
 						</ul>
 					</nav>
 				</div>	    
-		</div>
-		<!-- ---------- 마이페이지 각 페이지 여기에 넣어주세요!! 끝 지점 ---------- -->
-	</div>
-</div>
-		
-</div>
-</section>
+		    </div><!--//container-fluid-->
+	    </div><!--//app-content-->
 
-<%@include file="../footer.jsp"%> 
+
+<%@include file="../footer_a.jsp"%>    
+</div><!--//app-wrapper-->    					
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+</body>
 
+</html>
 </body>
 </html>

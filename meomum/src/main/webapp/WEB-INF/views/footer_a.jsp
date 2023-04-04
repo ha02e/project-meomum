@@ -9,7 +9,7 @@
 		Thank you for your support. :) */-->
 		<small class="copyright">
 			<div class="mm-copyright">
-				<a href="#">MEOMUM</a>&nbsp;
+				<a href="index.do" target="blank">MEOMUM</a>&nbsp;
 				Copyright &copy;2023 MEOMUM Corp. All rights reserved.
 			</div>
 		</small>

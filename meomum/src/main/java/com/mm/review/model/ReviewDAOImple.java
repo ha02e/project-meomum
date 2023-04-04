@@ -1,5 +1,6 @@
 package com.mm.review.model;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,10 +35,29 @@ public class ReviewDAOImple implements ReviewDAO {
 		return count;
 	}
 	
+	@Override
+	public List<ReviewDTO> myreviewList(Map map) {
+		List<ReviewDTO> lists=sqlMap.selectList("myreviewList",map);
+		return lists;
+	}
+	
+	@Override
+	public int myreviewTotalCnt() {
+		int count=sqlMap.selectOne("myreviewTotalCnt");
+		return count;
+	}
+	
 	
 	@Override
 	public ReviewDTO reviewContent(int review_idx) {
 		ReviewDTO dto=sqlMap.selectOne("reviewContent",review_idx);
 		return dto;
 	}
+	
+	@Override
+	public int reviewDelete(int review_idx) {
+		int count=sqlMap.delete("reviewDelete",review_idx);
+		return count;
+	}
+	
 }
