@@ -143,7 +143,7 @@ font-family: 'Stylish', sans-serif;
                             aria-expanded="false">구독일상</a>
 
                         <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
-                            <li><a class="dropdown-item" href="#">가구 구독</a></li>
+                            <li><a class="dropdown-item" href="proList.do">가구 구독</a></li>
 
                             <li><a class="dropdown-item" href="#">이용 방법</a></li>
                         </ul>
@@ -159,12 +159,18 @@ font-family: 'Stylish', sans-serif;
 		                        <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
 		                            <li><a class="dropdown-item " href="logout.do">로그아웃 <span class="material-symbols-outlined">login</span></a>
                  				     <li><a class="dropdown-item" href="#">장바구니</a></li>
+                 				     <c:if test="${sessionScope.ssInfo.user_info=='관리자'}">
+                 				      <li><a class="dropdown-item" href="admin.do">관리자 페이지</a></li>
+                 				     
+                 				     </c:if>
 		                        </ul>
 		                        </c:if>
 		                        <c:if test="${empty sessionScope.ssInfo}">
 		                        <a class="bi bi-person-circle display-6 bs-warning-bg-subtle" href="login.do"></a>
 		                        </c:if>
 		                    </li>
+ 
+ 
  
                 </ul>
             </div>

@@ -46,7 +46,7 @@
 		</td>
 		<td>구독 월 금액란</td>
 		<td>구독 총 금액란</td>
-		<td><img src="images/icons/icon-close2.png" alt="CLOSE"></td>
+		<td><img src="images/icon/icon-close2.png" alt="CLOSE"></td>
 	</tr>
 	
 	</table>

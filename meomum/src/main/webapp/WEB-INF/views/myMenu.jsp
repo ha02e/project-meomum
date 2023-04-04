@@ -83,8 +83,16 @@
 					</div>
 					
 					<div class="card">
-						<div class="card-heading one">
-							<a href="myReview.do">후기 내역</a>
+						<div class="card-heading">
+							<a data-toggle="collapse" data-target="#collapseFour">후기 내역</a>
+						</div>
+						<div id="collapseFour" class="collapse" data-parent="#accordionExample">
+							<div class="card-body">
+								<ul>
+									<li><a href="myReviewList.do">내가 쓴 후기</a></li>
+									<li><a href="reviewable.do">작성 가능한 후기</a></li>
+								</ul>
+							</div>
 						</div>
 					</div>
 					

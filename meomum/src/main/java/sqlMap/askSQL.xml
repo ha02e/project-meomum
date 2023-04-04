@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.mm.ask">
-  	<insert id="askInsert">
+  	<insert id="askInsert" parameterType="com.mm.ask.model.AskDTO">
   		insert into ask values(
   								ask_ask_idx.nextval,
   								#{user_idx},
@@ -37,4 +37,29 @@
    <select id="existsFile" parameterType="String" resultType="Integer">
         SELECT COUNT(*) FROM ASK WHERE ask_file = #{fileName}
     </select>
+    <insert id="commentsInsert" parameterType="com.mm.ask.model.CommentsDTO">
+    	insert into comments values(comments_comm_idx.nextval,
+  								#{ask_idx},
+  								#{user_idx},
+  								sysdate,
+  								#{comm_cont}
+  								)
+    
+    </insert>
+    <update id="updateAskPlusOne" parameterType="Integer">
+    	update ask set ask_ask = ask_ask+1 where ask_idx= #{ask_idx}
+    </update>
+     <update id="updateAskMinusOne" parameterType="Integer">
+    	update ask set ask_ask = ask_ask-1 where ask_idx= #{ask_idx}
+    </update>
+    <select id="commList" parameterType="Integer" resultType="com.mm.ask.model.CommentsDTO">
+   	 select * from comments where ask_idx = #{ask_idx}
+    </select>
+    <delete id="deleteAsk" parameterType="Integer">
+    	delete from ask where ask_idx = #{ask_idx}
+    </delete>
+    <delete id="deleteComm" parameterType="Integer">
+    	delete from comments where ask_idx = #{ask_idx}
+    </delete>
+
   </mapper>

@@ -18,14 +18,15 @@ public class AskDTO {
 	private java.sql.Timestamp ask_wdate;
 	private int ask_ask;
 	
-	
 	/**날짜 변환 */
     private String ask_date; // yyyy-MM-dd 형식의 문자열 저장
+    private boolean newicon;
     
 	public AskDTO() {
 		super();
 	}
 
+	
 	public AskDTO(int ask_idx, String user_idx, String ask_title, String ask_writer, String ask_tel, String rsd_type,
 			String rsd_py, String ask_file, String ask_content, String ask_pwd, String ask_tos, Timestamp ask_wdate,
 			int ask_ask) {
@@ -170,10 +171,20 @@ public class AskDTO {
 	}
 	
 	public String getAsk_wdateTime() {
-		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 
 		return sdf.format(this.ask_wdate);
 	}
+
+	public boolean isNewicon() {
+		return newicon;
+	}
+
+	public void setNewicon(boolean newicon) {
+		this.newicon = newicon;
+	}
+	
+	
 	
 }
 

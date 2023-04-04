@@ -5,6 +5,7 @@ import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.JsonObject;
+import com.mm.member.model.MemberDTO;
 import com.mm.review.model.ReviewDTO;
 import com.mm.review.service.ReviewService;
 
@@ -28,29 +30,75 @@ public class ReviewController {
 	@Autowired
 	private ReviewService reviewService;
 	
-	
 	@RequestMapping("/myReview.do")
 	public String myReview() {
 		return "review/myReview";
 	}
+	
+	@RequestMapping("/myReviewList.do")
+	public ModelAndView myreviewList(@RequestParam(value="cp",defaultValue = "1")int cp,
+									HttpSession session) {
+		MemberDTO mdto=(MemberDTO)session.getAttribute("ssInfo");
+		
+		int totalCnt=reviewService.getTotalCnt();
+		int listSize=2;
+		int pageSize=5;
+		int user_idx=mdto.getUser_idx();
+		
+		String pageStr=com.mm.module.PageModule
+				.makePage("myReviewList.do", totalCnt, listSize, pageSize, cp);
+		
+		List<ReviewDTO> lists=reviewService.myreviewList(cp, listSize,user_idx);
+		
+		ModelAndView mav=new ModelAndView();
+		mav.setViewName("review/myReviewList");
+		mav.addObject("lists", lists);
+		mav.addObject("pageStr",pageStr);
+		
+		return mav;
+	}
+	
 	@RequestMapping("/reviewable.do")
 	public String reviewable() {
 		return "review/reviewable";
 	}
 	
 	
-	//리뷰작성 테스트
+
 	@RequestMapping(value="/reviewWrite.do", method = RequestMethod.GET)
 	public String reviewForm() {
 		return "review/reviewWrite";
 	}
-	
-	
+		
 	@RequestMapping(value="/reviewWrite.do", method = RequestMethod.POST)
-	public ModelAndView reviewWriteSubmit(ReviewDTO dto) {
+	public ModelAndView reviewWrite(MultipartHttpServletRequest req, HttpSession session) {
+		ReviewDTO dto=new ReviewDTO();
+		MemberDTO mdto=(MemberDTO)session.getAttribute("ssInfo");
+		
+		dto.setUser_idx(mdto.getUser_idx());
+		dto.setWriter(req.getParameter("writer"));
+		int category=Integer.parseInt(req.getParameter("category"));
+		dto.setCategory(category);
+		dto.setSubject(req.getParameter("subject"));
+		dto.setContent(req.getParameter("content"));
+		int star=Integer.parseInt(req.getParameter("star"));
+		dto.setStar(star);
+		
+		MultipartFile mf=req.getFile("thumb");
+		String path=req.getRealPath("/images/reviewImg");
+		String fileName=mf.getOriginalFilename();
+		File uploadFile=new File(path+"/"+fileName);
+		
+		try {
+			mf.transferTo(uploadFile);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		dto.setThumb(fileName);
+		
 		int result=reviewService.reviewInsert(dto);
 		String msg=result>0?"리뷰 등록 완료되었습니다.":"리뷰 등록에 실패하였습니다.";
-		String link = result>0?"myReview.do":"reviewWrite.do";
+		String link = result>0?"myReviewList.do":"reviewWrite.do";
 		
 		ModelAndView mav=new ModelAndView();
 		mav.addObject("msg", msg);
@@ -60,61 +108,6 @@ public class ReviewController {
 		return mav;
 	}
 	
-	/** ckeditor 파일업로드 */
-	/**
-	@RequestMapping(value="/review/ckUpload", method=RequestMethod.POST)
-	public void ckeditorUpload(HttpServletRequest req,
-	          				HttpServletResponse res,
-	          				@RequestParam MultipartFile upload)throws Exception {
-		
-		logger.info("post CKEditor img upload");
-	          					 
-		// 랜덤 문자 생성
-		UUID uid = UUID.randomUUID();
-	          					 
-		OutputStream out = null;
-		PrintWriter printWriter = null;
-	          					   
-		// 인코딩
-	    res.setCharacterEncoding("utf-8");
-	    res.setContentType("text/html;charset=utf-8");
-	          					 
-	    try {
-	          					  
-	    	String fileName = upload.getOriginalFilename();  // 파일 이름 가져오기
-	    	byte[] bytes = upload.getBytes();
-	          					  
-	        // 업로드 경로
-	        String ckUploadPath = uploadPath + File.separator + "ckUpload" + File.separator + uid + "_" + fileName;
-	          					  
-	        out = new FileOutputStream(new File(ckUploadPath));
-	        out.write(bytes);
-	        out.flush();  // out에 저장된 데이터를 전송하고 초기화
-	          					  
-	        String callback = req.getParameter("CKEditorFuncNum");
-	        printWriter = res.getWriter();
-	        String fileUrl = "/ckUpload/" + uid + "_" + fileName;  // 작성화면
-	          					  
-	        // 업로드시 메시지 출력
-	      	printWriter.println("<script type='text/javascript'>"
-	      			+ "window.parent.CKEDITOR.tools.callFunction("
-	      			+ callback+",'"+ fileUrl+"','이미지를 업로드하였습니다.')"
-	      			+"</script>");
-	          					  
-	    	printWriter.flush();
-	          					  
-	        } catch (IOException e) { e.printStackTrace();
-	        } finally {
-	        try {
-	        	if(out != null) { out.close(); }
-	          	if(printWriter != null) { printWriter.close(); }
-	          	} catch(IOException e) { e.printStackTrace(); }
-	        }
-	          					 
-	       	return;
-	       	
-	}
-	*/
 	
 	/** ck에디터 json이용 */
 	@RequestMapping(value="/review/ckUpload.do")
@@ -150,7 +143,7 @@ public class ReviewController {
 						//저장되는 파일에 경로 설정
 						File uploadFile=new File(uploadPath);
 						if(!uploadFile.exists()) {
-							uploadFile.mkdirs(); //mkdirs() : 파일 저장 시 디렉토리 생성하는 함수
+							uploadFile.mkdirs(); //mkdirs():파일 저장 시 디렉토리 생성하는 함수
 						}
 						
 						//파일 이름 랜덤으로 생성
@@ -213,6 +206,8 @@ public class ReviewController {
 	}
 	
 	
+	
+	
 	@RequestMapping("/reviewContent.do")
 	public ModelAndView reviewContent(@RequestParam("review_idx")int review_idx) {
 		
@@ -221,6 +216,43 @@ public class ReviewController {
 		ModelAndView mav= new ModelAndView();
 		mav.addObject("dto",dto);
 		mav.setViewName("review/reviewContent");
+		return mav;
+	}
+	
+	
+	@RequestMapping("/reviewDel.do")
+	public ModelAndView reviewDelete(@RequestParam("review_idx")int review_idx) {
+		int result=reviewService.reviewDelete(review_idx);
+		
+		String msg=result>0?"리뷰 삭제가 완료되었습니다.":"리뷰 삭제에 실패하였습니다.";
+		
+		ModelAndView mav=new ModelAndView();
+		mav.addObject("msg", msg);
+		mav.addObject("link", "myReviewList.do");
+		mav.setViewName("/msg");
+		
+		return mav;
+	}
+	
+	
+	/** 관리자 리뷰 관리 */
+	
+	@RequestMapping("/reviewList_a.do")
+	public ModelAndView reviewList_a(@RequestParam(value="cp",defaultValue = "1")int cp) {
+		int totalCnt=reviewService.getTotalCnt();
+		int listSize=4;
+		int pageSize=5;
+		
+		String pageStr=com.mm.module.PageModule
+				.makePage("reviewList_a.do", totalCnt, listSize, pageSize, cp);
+		
+		List<ReviewDTO> lists=reviewService.reviewList(cp, listSize);
+		
+		ModelAndView mav=new ModelAndView();
+		mav.setViewName("review/reviewList_a");
+		mav.addObject("lists", lists);
+		mav.addObject("pageStr",pageStr);
+		
 		return mav;
 	}
 	

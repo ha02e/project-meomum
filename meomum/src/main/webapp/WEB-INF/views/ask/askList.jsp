@@ -67,14 +67,21 @@
               <c:url var = "askContentUrl" value="askContent.do">
                 <c:param name="ask_idx">${ask.ask_idx }</c:param>
               </c:url>
-              <td><a href="${askContentUrl}">${ask.ask_title}</a></td>
-              <td>${ask.ask_writer}</td>
+              <td align="left">
+	              <a href="${askContentUrl}">
+		              ${ask.ask_title}
+		              <c:if test="${ask.newicon}">
+		             	 <img src="/meomum/images/icon/icon_new.png" alt="new" style="si">
+		              </c:if>
+	              </a></td>
+              <td>${ask.ask_writer}
+              </td>
               <td>
-                <c:if test="${ask.ask_ask==1}">
-                  <button type="button" class="btn btn-success btn-sm align-middle">답변완료</button>
+                <c:if test="${ask.ask_ask>0}">
+                  <button type="button" class="btn btn-success btn-sm align-middle disabled">답변완료</button>
                 </c:if>
                 <c:if test="${ask.ask_ask==0}">
-                  <button type="button" class="btn btn-outline-danger btn-sm align-middle">진행중</button>
+                  <button type="button" class="btn btn-outline-danger btn-sm align-middle disabled">진행중</button>
                 </c:if>
               </td>
 
@@ -85,9 +92,12 @@
         </tbody>
       </table>
       </div>
+      
 			<nav class="d-flex justify-content-between align-items-center">
 			  <div class="col-12 justify-content-center align-items-start text-center">
-			    ${pageStr}
+			    	<span class="pagination pagination-sm justify-content-center">
+			${pageStr}
+			</span>
 			  </div>
 			  <div class="col-auto">
 			    <a href="askWrite.do" class="btn btn-primary">글쓰기</a>

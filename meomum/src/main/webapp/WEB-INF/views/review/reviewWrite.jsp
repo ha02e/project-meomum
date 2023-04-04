@@ -78,18 +78,19 @@
 						<div class="col">
 							<div class="input-group mb-3">
 								<span class="input-group-text" id="inputGroup-sizing-default">작성자</span>
-								<input type="text" name="writer" id="writer" class="form-control">
+								<input type="text" name="writer" class="form-control" 
+										value="${sessionScope.ssInfo.user_name}">
 							</div>
 						</div>
 						<div class="col">
 							<div class="input-group mb-3">
 								<span class="input-group-text" id="inputGroup-sizing-default">카테고리</span>
-								<input type="text" name="category" id="category" class="form-control">
+								<input type="text" name="category" class="form-control">
 							</div>
 						</div>
 					</div>
 					<div class="mb-3 title">
-						<input type="text" name="subject" id="subject" class="form-control form-control-lg" placeholder="제목">
+						<input type="text" name="subject" class="form-control form-control-lg" placeholder="제목">
 					</div>
 					
 					<!-- ckeditor -->
@@ -106,13 +107,12 @@
 							var reviewContent=CKEDITOR.instances.content.getData();
 						</script>
 					</div>
-							
-					<!-- 
+					
 					<div class="mb-3">
 						<label>대표이미지</label>
-						<input class="form-control" type="file" name="thumb" id="formFileMultiple">
+						<input class="form-control" type="file" name="thumb">
 					</div>
-					 -->
+					
 					<div class="mb-3" id="review-star">
 						<fieldset>
 							<span class="text-bold">별점을 선택해주세요</span>
