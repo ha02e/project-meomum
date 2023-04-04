@@ -26,6 +26,7 @@ public class AskDTO {
 		super();
 	}
 
+	
 	public AskDTO(int ask_idx, String user_idx, String ask_title, String ask_writer, String ask_tel, String rsd_type,
 			String rsd_py, String ask_file, String ask_content, String ask_pwd, String ask_tos, Timestamp ask_wdate,
 			int ask_ask) {

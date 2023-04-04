@@ -13,6 +13,8 @@
 <!-- App CSS -->
 <link id="theme-style" rel="stylesheet" href="assets/css/portal_a.css">
 <link rel="stylesheet" type="text/css" href="css/mainLayout_a.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 <body>
 
@@ -48,10 +50,11 @@
 	      <td>${ask.ask_wdate}</td>
 	    </tr>
 		<tr>
-		  <th class="bg-light text-center">내용</th>
-		  <td colspan="3" style="height: 300px;">
-		    <textarea class="form-control" rows="10" readonly style="overflow-y: scroll; resize: none;">${ask.ask_content}</textarea>
-		  </td>
+			<th class="bg-light text-center">내용</th>
+			<td colspan="3" style="height: 300px;"><textarea
+					class="form-control" rows="100" name="ask_content" id="ask_content"  readonly
+					style="overflow-y: scroll; resize: none; height:300px">${ask.ask_content}</textarea>
+			</td>
 		</tr>
 	    <tr>
 	      <th class="bg-light text-center">첨부파일</th>
@@ -91,9 +94,9 @@
 	  </tbody>
 	</table>
 	<div class="text-center">
-	 <a href="askList.do" class="btn btn-primary text-center">수정</a>
-	 <a href="askList.do" class="btn btn-primary text-center">삭제</a>
-	 <a href="askList.do" class="btn btn-primary text-center">목록으로 돌아가기</a>
+	 <a href="askList_a.do" class="btn btn-primary text-center">수정</a>
+	 <button type="button" class="btn btn-primary" onclick="deleteData()">삭제</button>
+	 <a href="askList_a.do" class="btn btn-primary text-center">목록으로 돌아가기</a>
 	 </div>
 	 
 	 <!-- 관리자 댓글용 -->
@@ -111,17 +114,18 @@
 	        </form>
 	      </div>
       </c:if>
-      <c:if test="${!empty comm }">
-      		<div class="form-floating mb-3">
-			  <input type="text" name="comm_date" value="${comm.comm_date}" class="form-control" id="comm_date" readonly>
-			  <label for="comm_date">작성시간</label>
+<!-- 답글시작 -->
+		<c:if test="${!empty comm }">
+			<div class="card mb-3">
+				<div class="card-header">
+					관리자:${mInfo.user_name} (${comm.comm_date})  <button type="button" class="btn btn-primary" onclick="deleteComm()">삭제</button>
+				</div>
+				<div class="card-body">
+					<p class="card-text">${comm.comm_cont}</p>
+				</div>
 			</div>
-			<div class="form-floating">
-			  <textarea name="comm_cont" id="comm_cont" class="form-control" readonly>${comm.comm_cont}</textarea>
-			  <label for="comm_cont">내용</label>
-			</div>
-
-      </c:if>
+		</c:if>
+		<!-- 답글 끝 -->
     </div>
   </div>
 </div>
@@ -129,6 +133,55 @@
 <%@include file="/WEB-INF/views/footer_a.jsp" %>
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="/meomum/js/request.js"></script>
+
+<!-- 게시글 삭제 -->
+<script>
+	var data = {
+		ask_idx : "${ask.ask_idx}",
+		ask_file : "${ask.ask_file}",
+	};
+
+	function deleteData() {
+		if (confirm("정말로 삭제하시겠습니까?")) {
+			$.ajax({
+				url : "askDelete.do",
+				type : "POST",
+				contentType : "application/json",
+				data : JSON.stringify(data),
+				success : function(response) {
+					alert("게시물이 삭제되었습니다.");
+					$(this).closest('tr').remove();
+					location.href = 'askList_a.do';
+				},
+				error : function() {
+					alert("삭제 요청이 실패하였습니다.");
+				}
+			});
+		}
+	}
+	
+	function deleteComm() {
+		if (confirm("정말로 삭제하시겠습니까?")){  var ask_idx = '${ask.ask_idx}';
+
+		  $.ajax({
+		    url: 'askCommDel.do',
+		    method: 'POST',
+		    data: {
+		      ask_idx: ask_idx
+		    },
+		    success: function(data) {
+		      window.location.reload();
+		      alert(data.msg + comm_idx);
+		    },
+		    error: function(jqXHR, textStatus) {
+		      alert('전송 실패: '+comm_idx + textStatus + ' (' + jqXHR.status + ')');
+		    }
+		  });
+		}
+	}
+</script>
 
 </body>
 </html>
