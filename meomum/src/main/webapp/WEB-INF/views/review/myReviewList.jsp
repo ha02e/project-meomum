@@ -22,20 +22,6 @@
 .app-card{
 	border:1px solid #eeeeee;
 }
-.notification-title{
-	font-weight: bold;
-}
-.app-card-notification .app-card-footer {
-    background: #E3DBD6;
-}
-.action-link {
-    color: #3d2217;
-    text-decoration: none;
-    background-color: transparent;
-}
-.action-link:hover{
-    color: #000000;
-}
 
 .reviewThumb{
 	position: relative;
@@ -52,25 +38,13 @@
   	transform: translate(-50%, -50%);
 }
 
-<!-- 작성 가능한 후기 -->
-.reviewable-img img{
-	width:60%;
-	border:1px solid red;
+.title{
+	text-align: center;
+	font-weight: bold;
+	margin-bottom: 30px;
 }
-.thumb{
-	width:10%;
-}
-.num{
-	width:25%;
-}
-.service{
-	width:32%;
-}
-.category{
-	width:13%;
-}
-.button{
-	width:20%;
+.noreview h5{
+	line-height:180px;
 }
 .review-star i {
     color:#FFD400;
@@ -87,15 +61,26 @@
 	<div class="col-xl-9 col-md-9">	
 		<!-- ---------- 마이페이지 작업한 파일 페이지 여기에 넣어주세요!!(include) ---------- -->	
 		<div class="container-xl">
-			<div class="row row-cols-1 row-cols-md-2 g-4 mb-5">
-				<c:if test="${empty lists}">
+		<h2 class="title">내가 쓴 후기</h2>
+			<c:if test="${empty lists}">
+				<div class="row noreview">
+					<div class="card">
 					<h5 class="text-center">등록된 후기가 없습니다.</h5>
-				</c:if>
+					</div>
+				</div>
+			</c:if>
+			<div class="row row-cols-1 row-cols-md-2 g-4 mb-5">
 				<c:forEach var="dto" items="${lists}">
 					<div class="col">
 						<div class="card">
 						<div class="reviewThumb">
-							<img class="img-fluid card-img-top" src="/meomum/images/reviewImg/${dto.thumb}" alt="review thumb">
+							<c:if test="${not empty dto.thumb}">
+								<img class="img-fluid card-img-top" src="/meomum/images/reviewImg/${dto.thumb}" alt="review thumb">
+							</c:if>
+							<c:if test="${empty dto.thumb}">
+								<img class="img-fluid card-img-top" src="/meomum/images/noimage.jpg" alt="no thumb">
+							</c:if>
+							
 						</div>
 						<div class="card-body">
 							<h4 class="card-title">${dto.subject}</h4>
@@ -118,7 +103,9 @@
 							</c:url>
 							<button class="btn btn-primary btn-sm" onclick="location.href='${contentUrl}'">자세히 보기</button>
 							<button class="btn btn-primary btn-sm">수정</button>
-							<button class="btn btn-danger btn-sm" onclick="location.href='reviewDel.do'">삭제</button>
+								<a href="reviewDel.do?review_idx=${dto.review_idx}">
+									<button class="btn btn-danger btn-sm">삭제</button>
+								</a>
 						</div>
 					</div>
               		</div>

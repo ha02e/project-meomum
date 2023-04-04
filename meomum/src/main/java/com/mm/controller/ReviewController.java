@@ -98,7 +98,7 @@ public class ReviewController {
 		
 		int result=reviewService.reviewInsert(dto);
 		String msg=result>0?"리뷰 등록 완료되었습니다.":"리뷰 등록에 실패하였습니다.";
-		String link = result>0?"myReview.do":"reviewWrite.do";
+		String link = result>0?"myReviewList.do":"reviewWrite.do";
 		
 		ModelAndView mav=new ModelAndView();
 		mav.addObject("msg", msg);
@@ -228,7 +228,7 @@ public class ReviewController {
 		
 		ModelAndView mav=new ModelAndView();
 		mav.addObject("msg", msg);
-		mav.addObject("link", "review/myReviewList");
+		mav.addObject("link", "myReviewList.do");
 		mav.setViewName("/msg");
 		
 		return mav;
