@@ -47,6 +47,7 @@ public class NtcDAOImple implements NtcDAO {
 	@Override
 	public int getTotalCnt() {
 		int count = sqlMap.selectOne("ntcTotalCnt");
+		count=count==0?1:count;
 		return count;
 	}
 

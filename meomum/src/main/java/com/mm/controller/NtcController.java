@@ -42,7 +42,7 @@ public class NtcController {
 	public ModelAndView ntcList_a(@RequestParam(value = "cp", defaultValue = "1") int cp) {
 
 		int totalCnt = ntcDao.getTotalCnt();
-		int listSize = 5;
+		int listSize = 6;
 		int pageSize = 5;
 
 		String pageStr = com.mm.module.PageModule.makePage("ntcList_a.do", totalCnt, listSize, pageSize, cp);
