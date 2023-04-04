@@ -41,7 +41,7 @@ public class ReviewController {
 		MemberDTO mdto=(MemberDTO)session.getAttribute("ssInfo");
 		
 		int totalCnt=reviewService.getTotalCnt();
-		int listSize=3;
+		int listSize=2;
 		int pageSize=5;
 		int user_idx=mdto.getUser_idx();
 		
