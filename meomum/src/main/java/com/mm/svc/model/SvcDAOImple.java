@@ -44,15 +44,40 @@ public class SvcDAOImple implements SvcDAO {
 	
 	/**방문 견적 예약 신청자 리트스*/
 	@Override
-	public List<SvcSelectAllDTO> svcList() {
-		List<SvcSelectAllDTO> list = sqlMap.selectList("svcList");
+	public List<SvcSelectAllDTO> svcAdminList() {
+		List<SvcSelectAllDTO> list = sqlMap.selectList("svcAdminList");
 		return list;
 	}
 	
 	/**예약 상세 보기*/
 	@Override
-	public List<SvcContentDTO> svcContent(String idx) {
-		List<SvcContentDTO> list = sqlMap.selectList("svcContent",idx);
-		return list;
+	public SvcContentDTO svcContent(String idx) {
+		SvcContentDTO dto = sqlMap.selectOne("svcContent",idx);
+		dto.setSvc_req(dto.getSvc_req().replaceAll("\n", "<br>"));
+		return dto;
 	}
+	
+	/**예약 정보 수정*/
+	@Override
+	public int svcMemUpdate(SvcMemDTO dto) {
+		int count = sqlMap.update("svcMemUpdate", dto);
+		return count;
+	}
+	@Override
+	public int svcDetailUpdate(SvcDetailDTO dto) {
+		int count = sqlMap.update("svcDetailUpdate", dto);
+		return count;
+	}
+	@Override
+	public int svcDateUpdate(SvcDateDTO dto) {
+		int count = sqlMap.update("svcDateUpdate", dto);
+		return count;
+	}
+	
+	/**마이페이지 방문 예약 신청 내역*/
+	@Override
+	public List<SvcSelectAllDTO> svcUserList(int user_idx) {
+		List<SvcSelectAllDTO> list = sqlMap.selectList("svcUserList");
+		return list;
+}
 }
