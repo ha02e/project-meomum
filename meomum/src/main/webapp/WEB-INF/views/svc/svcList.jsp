@@ -121,8 +121,8 @@ input[type="text"]{
 							<input type="checkbox" name="svc_state" value="견적완료">견적완료&nbsp;
 							<input type="checkbox" name="svc_state" value="결제대기">결제대기&nbsp;
 							<input type="checkbox" name="svc_state" value="결제완료">결제완료&nbsp;
-							<input type="checkbox" name="svc_state" value="결제완료">결제취소&nbsp;
-							<input type="checkbox" name="svc_state" value="결제완료">작업완료&nbsp;
+							<input type="checkbox" name="svc_state" value="결제취소">결제취소&nbsp;
+							<input type="checkbox" name="svc_state" value="작업완료">작업완료&nbsp;
 						</li>
 						<div><input type="submit" value="검색"></div>
 					</ul>
