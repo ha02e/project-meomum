@@ -71,7 +71,8 @@
  	pro_price=#{pro_price},
  	pro_state=#{pro_state},
  	pro_month=#{pro_month},
- 	pro_subprice=#{pro_subprice}
+ 	pro_subprice=#{pro_subprice},
+ 	pro_allprice=#{pro_allprice}
  	where pro_idx=#{pro_idx}
  	</update>
  	

@@ -8,6 +8,7 @@ public class CartDAOImple implements CartDAO {
 	private SqlSessionTemplate sqlMap;
 	
 	
+	
 	public CartDAOImple(SqlSessionTemplate sqlMap) {
 		super();
 		this.sqlMap = sqlMap;
@@ -24,18 +25,17 @@ public class CartDAOImple implements CartDAO {
 	
 	//장바구니 중복 확인
 	@Override
-	public List<CartDTO> cartCheck(int pro_idx) {
-		List<CartDTO> lists=sqlMap.selectList("cartCheck",pro_idx);
+	public int cartCheck(int pro_idx) {
+		int count=sqlMap.selectOne("cartFind",pro_idx);
+		return count;
+	}
+	
+	//장바구니 리스트 출력
+	@Override
+	public List<CartDTO> cartList(int user_idx) {
+		List<CartDTO> lists=sqlMap.selectList("cartList", user_idx);
 		return lists;
 	}
-	
-	
-	//중복된 상품의 개수 추가
-	@Override
-	public int cartMoreInsert(CartDTO dto) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	
+
 
 }

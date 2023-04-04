@@ -12,13 +12,23 @@
 		)
 	</insert>
 	
-	<select id="cartCheck" parameterType="integer" resultType="com.mm.pro.model.ProDTO">
-	select * from cart
+	<select id="cartFind" parameterType="integer" resultType="integer">
+	select count(*) from cart
 	where pro_idx=#{pro_idx}
 	</select>
 	
-	<update id="cartMoreInsert" parameterType="integer">
-	update
-	</update>
+	<select id="cartList" parameterType="integer" resultType="com.mm.cart.model.CartDTO">
+	select p.*, c.*
+    from product p
+    join cart c ON p.pro_idx = c.pro_idx
+    where c.user_idx = #{user_idx}
+    order by c.cart_idx desc
+	</select>
 	
+	<delete id="cartDelete" parameterType="integer">
+	delete from cart
+	where cart_idx=#{cart_idx}
+	</delete>
+	
+
   </mapper>
