@@ -62,240 +62,311 @@
 		</div>
 	</div>
 		
-		
-		
-				
-		<form name="detailForm" method="post" action="purchase.do">
-			 <input type="hidden" name="pro_idx" value="${lists[0].pro_idx}">
-			 <input type="hidden" name="user_idx" value="${user_idx}">
-			
-					<h4 class="mtext-105 cl2 js-name-detail p-b-14">
-						<input type="text" value="${lists[0].pro_name}">
-					</h4>
-					<!-- 찜하기 버튼 -->
-					<span class="flex-m bor9 p-r-10 m-r-11">
-								<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100" data-tooltip="Add to Wishlist">
-									<i class="zmdi zmdi-favorite"></i>
-								</a>
-					</span>
-					정가<input type="text" value="${lists[0].pro_price}">원
-					월<input type="text" value="${lists[0].pro_subprice}">원
-					배송비<input type="text" value="${lists[0].pro_delprice }">원
-					<h2 class="mtext-105 cl2 js-name-detail p-b-14">
-					총 주문 금액 
-					</h2>
-					월<input type="text" value="${lists[0].pro_subprice}">원<br>
-					사용 기간 ${lists[0].pro_month }개월 | 총 ${lists[0].pro_subprice * lists[0].pro_month}원
-					
-					
-						<div class="flex-w flex-r-m p-b-10">
-							<div class="size-204 flex-w flex-m respon6-next">
-								<div class="wrap-num-product flex-w m-r-20 m-tb-10">
-									<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-										<i class="fs-16 zmdi zmdi-minus"></i>
-									</div>
 
-									<input class="mtext-104 cl3 txt-center num-product" type="number" name="cart_amount" value="1">
 
-									<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-										<i class="fs-16 zmdi zmdi-plus"></i>
+	<!-- Product Detail -->
+	<section class="sec-product-detail bg0 p-t-65 p-b-60">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 col-lg-7 p-b-30">
+					<div class="p-l-25 p-r-30 p-lr-0-lg">
+						<div class="wrap-slick3 flex-sb flex-w">
+							<div class="wrap-slick3-dots"></div>
+							<div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
+
+							<div class="slick3 gallery-lb">
+								<div class="item-slick3" data-thumb="/meomum/items/${lists[0].pro_thumb}">
+									<div class="wrap-pic-w pos-relative">
+										<img src="/meomum/items/${lists[0].pro_thumb}" alt="IMG-PRODUCT">
+
+										<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="/meomum/items/${lists[0].pro_thumb}">
+											<i class="fa fa-expand"></i>
+										</a>
 									</div>
 								</div>
-							</div>
-						</div>	
-							<div id="cartbtn">
-							<button type="submit" formaction="cartInsert.do">장바구니</button><br>
-							 <button type="submit" formaction="purchase.do">구매하기</button>
-							</div>
-							 
-							 
-							<!-- 
-							<c:if test="${empty sessionScope.user_idx}">
-					        <button type="button" onclick="alert('로그인 후 이용해주세요.'); location.href='member/login.do';">구매하기</button>
-					  		</c:if>
-					  		 --> 
-							</form>
-							
-			
-				
-				
-				<!-- 상세 설명. 이용 안내, 배송 안내 -->
-				
-			<div class="bor10 m-t-50 p-t-43 p-b-40">
-				<!-- Tab01 -->
-				<div class="tab01">
-					<!-- Nav tabs -->
-					<ul class="nav nav-tabs" role="tablist">
-						<li class="nav-item p-b-10">
-							<a class="nav-link active" data-toggle="tab" href="#description" role="tab">상세 설명</a>
-						</li>
 
-						<li class="nav-item p-b-10">
-							<a class="nav-link" data-toggle="tab" href="#information" role="tab">이용 안내</a>
-						</li>
+								<div class="item-slick3" data-thumb="/meomum/items/${lists[0].pro_img1}">
+									<div class="wrap-pic-w pos-relative">
+										<img src="/meomum/items/${lists[0].pro_img1}" alt="IMG-PRODUCT">
 
-						<li class="nav-item p-b-10">
-							<a class="nav-link" data-toggle="tab" href="#reviews" role="tab">배송 안내</a>
-						</li>
-					</ul>
-
-					<!-- Tab panes -->
-					<div class="tab-content p-t-43">
-						<!-- 상세 설명 -->
-						<div class="tab-pane fade show active" id="description" role="tabpanel">
-							<div class="how-pos2 p-lr-15-md">
-								<p class="stext-102 cl6">
-									<img src="/meomum/items/${lists[0].pro_content }" alt="pro_cotent">
-								</p>
-							</div>
-						</div>
-
-						<!-- 이용 안내 -->
-						<div class="tab-pane fade" id="information" role="tabpanel">
-							<div class="row">
-								<div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
-									<ul class="p-lr-28 p-lr-15-sm">
-										<li class="flex-w flex-t p-b-7">
-											<span class="stext-102 cl3 size-205">
-												Weight
-											</span>
-
-											<span class="stext-102 cl6 size-206">
-												0.79 kg
-											</span>
-										</li>
-
-										<li class="flex-w flex-t p-b-7">
-											<span class="stext-102 cl3 size-205">
-												Dimensions
-											</span>
-
-											<span class="stext-102 cl6 size-206">
-												110 x 33 x 100 cm
-											</span>
-										</li>
-
-										<li class="flex-w flex-t p-b-7">
-											<span class="stext-102 cl3 size-205">
-												Materials
-											</span>
-
-											<span class="stext-102 cl6 size-206">
-												60% cotton
-											</span>
-										</li>
-
-										<li class="flex-w flex-t p-b-7">
-											<span class="stext-102 cl3 size-205">
-												Color
-											</span>
-
-											<span class="stext-102 cl6 size-206">
-												Black, Blue, Grey, Green, Red, White
-											</span>
-										</li>
-
-										<li class="flex-w flex-t p-b-7">
-											<span class="stext-102 cl3 size-205">
-												Size
-											</span>
-
-											<span class="stext-102 cl6 size-206">
-												XL, L, M, S
-											</span>
-										</li>
-									</ul>
+										<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="/meomum/items/${lists[0].pro_img1}">
+											<i class="fa fa-expand"></i>
+										</a>
+									</div>
 								</div>
-							</div>
-						</div>
 
-						<!-- - -->
-						<div class="tab-pane fade" id="reviews" role="tabpanel">
-							<div class="row">
-								<div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
-									<div class="p-b-30 m-lr-15-sm">
-										<!-- Review -->
-										<div class="flex-w flex-t p-b-68">
-											<div class="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
-												<img src="images/avatar-01.jpg" alt="AVATAR">
-											</div>
+								<div class="item-slick3" data-thumb="/meomum/items/${lists[0].pro_img2}">
+									<div class="wrap-pic-w pos-relative">
+										<img src="/meomum/items/${lists[0].pro_img2}" alt="IMG-PRODUCT">
 
-											<div class="size-207">
-												<div class="flex-w flex-sb-m p-b-17">
-													<span class="mtext-107 cl2 p-r-20">
-														Ariana Grande
-													</span>
-
-													<span class="fs-18 cl11">
-														<i class="zmdi zmdi-star"></i>
-														<i class="zmdi zmdi-star"></i>
-														<i class="zmdi zmdi-star"></i>
-														<i class="zmdi zmdi-star"></i>
-														<i class="zmdi zmdi-star-half"></i>
-													</span>
-												</div>
-
-												<p class="stext-102 cl6">
-													Quod autem in homine praestantissimum atque optimum est, id deseruit. Apud ceteros autem philosophos
-												</p>
-											</div>
-										</div>
-										
-										<!-- Add review -->
-										<form class="w-full">
-											<h5 class="mtext-108 cl2 p-b-7">
-												Add a review
-											</h5>
-
-											<p class="stext-102 cl6">
-												Your email address will not be published. Required fields are marked *
-											</p>
-
-											<div class="flex-w flex-m p-t-50 p-b-23">
-												<span class="stext-102 cl3 m-r-16">
-													Your Rating
-												</span>
-
-												<span class="wrap-rating fs-18 cl11 pointer">
-													<i class="item-rating pointer zmdi zmdi-star-outline"></i>
-													<i class="item-rating pointer zmdi zmdi-star-outline"></i>
-													<i class="item-rating pointer zmdi zmdi-star-outline"></i>
-													<i class="item-rating pointer zmdi zmdi-star-outline"></i>
-													<i class="item-rating pointer zmdi zmdi-star-outline"></i>
-													<input class="dis-none" type="number" name="rating">
-												</span>
-											</div>
-
-											<div class="row p-b-25">
-												<div class="col-12 p-b-5">
-													<label class="stext-102 cl3" for="review">Your review</label>
-													<textarea class="size-110 bor8 stext-102 cl2 p-lr-20 p-tb-10" id="review" name="review"></textarea>
-												</div>
-
-												<div class="col-sm-6 p-b-5">
-													<label class="stext-102 cl3" for="name">Name</label>
-													<input class="size-111 bor8 stext-102 cl2 p-lr-20" id="name" type="text" name="name">
-												</div>
-
-												<div class="col-sm-6 p-b-5">
-													<label class="stext-102 cl3" for="email">Email</label>
-													<input class="size-111 bor8 stext-102 cl2 p-lr-20" id="email" type="text" name="email">
-												</div>
-											</div>
-
-											<button class="flex-c-m stext-101 cl0 size-112 bg7 bor11 hov-btn3 p-lr-15 trans-04 m-b-10">
-												Submit
-											</button>
-										</form>
+										<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="/meomum/items/${lists[0].pro_img2}">
+											<i class="fa fa-expand"></i>
+										</a>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+				
+			
+				<div class="col-md-6 col-lg-5 p-b-30">
+					<div class="p-r-50 p-t-5 p-lr-0-lg">
+						
+						
+						<h4 class="mtext-105 cl2 js-name-detail p-b-14">
+							${lists[0].pro_name}
+						</h4>
+
+						<span class="mtext-106 cl2">
+							정가 ${lists[0].pro_price}원 | 월 ${lists[0].pro_subprice}원 | ${lists[0].pro_month}개월 구독 가격
+						</span>
+
+						<p class="stext-102 cl3 p-t-23">
+							배송비 ${lists[0].pro_delprice}원
+						</p>
+						
+						<span class="mtext-106 cl2">
+							총 ${lists[0].pro_allprice}원
+						</span>
+						
+						<!--  -->
+						<form name="contentForm" method="post" action="purchase.do">	
+						 <input type="hidden" name="pro_idx" value="${lists[0].pro_idx}">
+						 <input type="hidden" name="pro_name" value="${lists[0].pro_name}">
+						 <input type="hidden" name="pro_subprice" value="${lists[0].pro_subprice}">
+						 <input type="hidden" name="pro_delprice" value="${lists[0].pro_delprice }">
+						 
+						<div class="wrap-num-product flex-w m-r-20 m-tb-10">
+									
+										<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+											<i class="fs-16 zmdi zmdi-minus"></i>
+										</div>
+
+										<input class="mtext-104 cl3 txt-center num-product" type="number" name="cart_amount" value="1">
+
+										<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
+											<i class="fs-16 zmdi zmdi-plus"></i>
+										</div>
+						</div>
+							
+							<div class="flex-w flex-r-m p-b-10">
+								<div class="size-204 flex-w flex-m respon6-next">
+									<button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail"
+									type="submit" formaction="cartInsert.do">장바구니</button>
+									
+									 <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail"
+									 type="submit" formaction="purchase.do">구매하기</button>
+								</div>
+							</div>	
+							</form>
+						</div>
+						
+						
+
+						<!-- 뭐 기타 등등 -->
+						<div class="flex-w flex-m p-l-100 p-t-40 respon7">
+							<div class="flex-m bor9 p-r-10 m-r-11">
+								<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100" data-tooltip="Add to Wishlist">
+									<i class="zmdi zmdi-favorite"></i>
+								</a>
+							</div>
+
+							<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Facebook">
+								<i class="fa fa-facebook"></i>
+							</a>
+
+							<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Twitter">
+								<i class="fa fa-twitter"></i>
+							</a>
+
+							<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Google Plus">
+								<i class="fa fa-google-plus"></i>
+							</a>
+						</div>
+					</div>
+				</div>
 			</div>
-	
+
+
+	<!-- 상품 설명, 이용 안내, 배송 안내 -->
+	<div class="bor10 m-t-50 p-t-43 p-b-40">
+		<!-- Tab01 -->
+		<div class="tab01">
+			<!-- Nav tabs -->
+			<ul class="nav nav-tabs" role="tablist">
+				<li class="nav-item p-b-10">
+					<a class="nav-link active" data-toggle="tab" href="#description" role="tab">상품 설명</a>
+				</li>
+
+				<li class="nav-item p-b-10">
+					<a class="nav-link" data-toggle="tab" href="#information" role="tab">이용 안내</a>
+				</li>
+
+				<li class="nav-item p-b-10">
+					<a class="nav-link" data-toggle="tab" href="#reviews" role="tab">배송 안내</a>
+				</li>
+			</ul>
+
+		<!-- Tab panes -->
+		<div class="tab-content p-t-43">
+			<!-- 상품 설명 -->
+			<div class="tab-pane fade show active" id="description" role="tabpanel">
+				<div class="how-pos2 p-lr-15-md text-center">
+					<p>
+					<img class="stext-102 cl6" src="/meomum/items/${lists[0].pro_content}" alt="AVATAR">
+					</p>
+				</div>
+			</div>
+
+
+
+	<!-- 이용 안내 -->
+	<div class="tab-pane fade" id="information" role="tabpanel">
+		<div class="row">
+			<div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
+				<ul class="p-lr-28 p-lr-15-sm">
+					<li class="flex-w flex-t p-b-7">
+						<span class="stext-102 cl3 size-205">
+							Weight
+						</span>
+
+						<span class="stext-102 cl6 size-206">
+							0.79 kg
+						</span>
+					</li>
+
+					<li class="flex-w flex-t p-b-7">
+						<span class="stext-102 cl3 size-205">
+							Dimensions
+						</span>
+
+						<span class="stext-102 cl6 size-206">
+							110 x 33 x 100 cm
+						</span>
+					</li>
+
+					<li class="flex-w flex-t p-b-7">
+						<span class="stext-102 cl3 size-205">
+							Materials
+						</span>
+
+						<span class="stext-102 cl6 size-206">
+							60% cotton
+						</span>
+					</li>
+
+					<li class="flex-w flex-t p-b-7">
+						<span class="stext-102 cl3 size-205">
+							Color
+						</span>
+
+						<span class="stext-102 cl6 size-206">
+							Black, Blue, Grey, Green, Red, White
+						</span>
+					</li>
+
+					<li class="flex-w flex-t p-b-7">
+						<span class="stext-102 cl3 size-205">
+							Size
+						</span>
+
+						<span class="stext-102 cl6 size-206">
+							XL, L, M, S
+						</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+		<!-- 배송 안내 -->
+		<div class="tab-pane fade" id="reviews" role="tabpanel">
+			<div class="row">
+				<div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
+					<div class="p-b-30 m-lr-15-sm">
+						<!-- Review -->
+						<div class="flex-w flex-t p-b-68">
+							<div class="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
+								<img src="images/avatar-01.jpg" alt="AVATAR">
+							</div>
+
+							<div class="size-207">
+								<div class="flex-w flex-sb-m p-b-17">
+									<span class="mtext-107 cl2 p-r-20">
+										Ariana Grande
+									</span>
+
+									<span class="fs-18 cl11">
+										<i class="zmdi zmdi-star"></i>
+										<i class="zmdi zmdi-star"></i>
+										<i class="zmdi zmdi-star"></i>
+										<i class="zmdi zmdi-star"></i>
+										<i class="zmdi zmdi-star-half"></i>
+									</span>
+								</div>
+
+								<p class="stext-102 cl6">
+									Quod autem in homine praestantissimum atque optimum est, id deseruit. Apud ceteros autem philosophos
+								</p>
+							</div>
+						</div>
+										
+		<!-- Add review -->
+				<form class="w-full">
+					<h5 class="mtext-108 cl2 p-b-7">
+						Add a review
+					</h5>
+
+					<p class="stext-102 cl6">
+						Your email address will not be published. Required fields are marked *
+					</p>
+
+					<div class="flex-w flex-m p-t-50 p-b-23">
+						<span class="stext-102 cl3 m-r-16">
+							Your Rating
+						</span>
+
+						<span class="wrap-rating fs-18 cl11 pointer">
+							<i class="item-rating pointer zmdi zmdi-star-outline"></i>
+							<i class="item-rating pointer zmdi zmdi-star-outline"></i>
+							<i class="item-rating pointer zmdi zmdi-star-outline"></i>
+							<i class="item-rating pointer zmdi zmdi-star-outline"></i>
+							<i class="item-rating pointer zmdi zmdi-star-outline"></i>
+							<input class="dis-none" type="number" name="rating">
+						</span>
+					</div>
+
+					<div class="row p-b-25">
+						<div class="col-12 p-b-5">
+							<label class="stext-102 cl3" for="review">Your review</label>
+							<textarea class="size-110 bor8 stext-102 cl2 p-lr-20 p-tb-10" id="review" name="review"></textarea>
+						</div>
+
+						<div class="col-sm-6 p-b-5">
+							<label class="stext-102 cl3" for="name">Name</label>
+							<input class="size-111 bor8 stext-102 cl2 p-lr-20" id="name" type="text" name="name">
+						</div>
+
+						<div class="col-sm-6 p-b-5">
+							<label class="stext-102 cl3" for="email">Email</label>
+							<input class="size-111 bor8 stext-102 cl2 p-lr-20" id="email" type="text" name="email">
+						</div>
+					</div>
+
+					<button class="flex-c-m stext-101 cl0 size-112 bg7 bor11 hov-btn3 p-lr-15 trans-04 m-b-10">
+						Submit
+					</button>
+						</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	</section>
+
 
 	<!-- Back to top -->
 	<div class="btn-back-to-top" id="myBtn">
@@ -348,51 +419,6 @@
 	</script>
 <!--===============================================================================================-->
 	<script src="vendor/isotope/isotope.pkgd.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/sweetalert/sweetalert.min.js"></script>
-	<script>
-		$('.js-addwish-b2, .js-addwish-detail').on('click', function(e){
-			e.preventDefault();
-		});
-
-		$('.js-addwish-b2').each(function(){
-			var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
-			$(this).on('click', function(){
-				swal(nameProduct, "is added to wishlist !", "success");
-
-				$(this).addClass('js-addedwish-b2');
-				$(this).off('click');
-			});
-		});
-
-		$('.js-addwish-detail').each(function(){
-			var nameProduct = $(this).parent().parent().parent().find('.js-name-detail').html();
-
-			$(this).on('click', function(){
-				swal(nameProduct, "is added to wishlist !", "success");
-
-				$(this).addClass('js-addedwish-detail');
-				$(this).off('click');
-			});
-		});
-
-		/*---------------------------------------------*/
-		<!-- 카트 클릭시-->
-		$('.js-addcart-detail').each(function(){
-			var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
-			$(this).on('click', function(){
-				swal(nameProduct, "is added to cart !", "success");
-			});
-		});
-		
-		$('.js-payment-detail').each(function(){
-			  var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
-			  $(this).on('click', function(){
-			    window.location.href = 'pay.do';
-			  });
-			});
-	
-	</script>
 <!--===============================================================================================-->
 	<script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	<script>
