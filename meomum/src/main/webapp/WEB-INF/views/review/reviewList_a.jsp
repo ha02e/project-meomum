@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="/docs/5.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     
 <!-- App CSS -->  
 <link id="theme-style" rel="stylesheet" href="assets/css/portal_a.css">
@@ -22,23 +22,42 @@
 	line-height:180px;
 }
 
+.app-card-notification .notification-title {
+    font-size: 1.5rem;
+}
+.app-card-notification .notification-meta {
+    font-size: .85rem;
+}
 .reviewThumb{
 	position: relative;
 	overflow: hidden;
-	width: 100%;
-	height:240px;
-	padding:16px 0;
+	width: 200px;
+	height: 120px;
+	margin:auto;
 }
-.card-img-top{
+.profile-image{
 	position: absolute;
   	width: 100%;
   	top: 50%; 
   	left: 50%;
   	transform: translate(-50%, -50%);
 }
-.review-star i {
+
+.review-star {
     color:#FFD400;
 }
+
+.btn-detail a, .btn-del a{
+	padding:5px 40px;
+}
+.btn-detail a:hover, .btn-del a:hover{
+	padding:5px 40px;
+	background-color: #15a362;
+	color:#ffffff;
+	transition:all 0.5s;
+}
+
+
 </style>
 </head>
 
@@ -58,70 +77,75 @@
 					</div>
 				</div>
 			</c:if>
-			<div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
+				<div class="row row-cols-1 row-cols-md-2 g-4 mb-2">
 				<c:forEach var="dto" items="${lists}">
-					<div class="col">
-						<div class="card">
-						<div class="reviewThumb">
-							<c:if test="${not empty dto.thumb}">
-								<img class="img-fluid card-img-top" src="/meomum/images/reviewImg/${dto.thumb}" alt="review thumb">
-							</c:if>
-							<c:if test="${empty dto.thumb}">
-								<img class="img-fluid card-img-top" src="/meomum/images/noimage.jpg" alt="no thumb">
-							</c:if>
-							
-						</div>
-						<div class="card-body">
-							<h4 class="card-title">${dto.subject}</h4>
-							<div class="entry-meta">
-								<ul class="d-flex justify-content-between">
-									<li class="d-flex align-items-center"><i class="bi bi-person"></i>&nbsp;${dto.writer}</li>
-									<li class="d-flex align-items-center review-star">
-										<c:forEach var="i" begin="1" end="${dto.star}" step="1">
-											<i class="bi bi-star-fill"></i>&nbsp;
-										</c:forEach>
-					                  	</li>
-					                  	<li class="d-flex align-items-center"><i class="bi bi-clock"></i>&nbsp;${dto.writedate}</li>
-					                </ul>
-							</div>	
-						</div>
-						<div class="card-footer text-center">
-							<input type="hidden" name="review_idx" value="${dto.review_idx}">
-							<c:url var="contentUrl" value="reviewContent.do">
-								<c:param name="review_idx">${dto.review_idx}</c:param>
-							</c:url>
-							<button class="btn btn-primary btn-sm" id="btn-view">자세히 보기</button>
-							<div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-								<div class="modal-dialog" role="document">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h5 class="modal-title" id="exampleModalLabel">모달테스트</h5>
-											<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-												<span aria-hidden="true">X</span>
-											</button>
-										</div>
-										<div class="modal-body">내용 입력 !!</div>
-										<div class="modal-footer">
-											<a class="btn" id="modalY" href="#">예</a>
-											<button class="btn" type="button" data-dismiss="modal">아니요</button>
-										</div>
-									</div>
-								</div>
-							</div>
-							<script>
-									$('#btn-view').click(function(e){
-										e.preventDefault();
-										$('#reviewModal').modal("show");
-									});
-							</script>
-							<a href="reviewDel.do?review_idx=${dto.review_idx}">
-								<button class="btn btn-danger btn-sm">삭제</button>
-							</a>
-						</div>
-					</div>
-              		</div>
+				<div class="col app-card app-card-notification shadow-sm mb-4">
+				    <div class="app-card-headerpx-4 py-3">
+				        <div class="row g-3 d-flex justify-content-around align-items-center">
+					        <div class="col-12 col-lg-4 text-center text-lg-start">	
+					        	<div class="reviewThumb">					        
+				                	<c:if test="${not empty dto.thumb}">
+										<img src="/meomum/images/reviewImg/${dto.thumb}" alt="tumb" />
+									</c:if>
+									<c:if test="${empty dto.thumb}">
+										<img class="card-img-top" src="/meomum/images/noimage.jpg" alt="no thumb" />
+									</c:if>
+					        	</div>
+					        </div><!--//col-->
+					        <div class="col-12 col-lg-8 text-center text-lg-start">
+						        <div class="notification-type mb-2">
+						        	<span class="badge bg-info">Project</span>
+						        </div>
+						        <h4 class="notification-title mb-1">${dto.subject}</h4>
+						        
+						        <ul class="notification-meta list-inline mb-0">
+							        <li class="list-inline-item">주문/서비스번호</li>
+							        <li class="list-inline-item">|</li>
+							        <li class="list-inline-item">${dto.writer}</li>
+							        <li class="list-inline-item">|</li>
+							        <li class="list-inline-item review-star">
+							        	<c:forEach var="i" begin="1" end="${dto.star}" step="1">
+						                  	<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+											  <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+											</svg>
+					                  	</c:forEach>
+							        </li>
+							        <li class="list-inline-item">|</li>
+							        <li class="list-inline-item">${dto.writedate}</li>
+						        </ul>
+						   
+					        </div><!--//col-->
+				        </div><!--//row-->
+				    </div><!--//app-card-header-->
+				    <div class="d-flex text-center app-card-footer px-4 py-3">
+				    <div class="col btn-detail">
+				    	<c:url var="contentUrl" value="reviewContent.do">
+							<c:param name="review_idx">${dto.review_idx}</c:param>
+						</c:url>
+					    <a class="action-link" href="${contentUrl}" target="blank">
+						    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+							  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+							</svg>
+					    보기
+						</a>
+				    </div>
+				    <div class="col btn-del">
+					    <a class="action-link" href="reviewDel.do?review_idx=${dto.review_idx}">
+					    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-dash-circle" viewBox="0 0 16 16">
+						  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+						  <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+						</svg>
+					    삭제
+						</a>
+				    </div>
+				    </div><!--//app-card-footer-->
+				</div>
+				
 				</c:forEach>
 				</div>
+					
+
+
 				
 				<div class="container-xl">
 					<nav aria-label="Page navigation example">
