@@ -158,7 +158,7 @@ font-family: 'Stylish', sans-serif;
 		                      <a class="bi bi-person-circle display-6 bs-warning-bg-subtle" href="infoEdit.do"></a>
 		                        <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
 		                            <li><a class="dropdown-item " href="logout.do">로그아웃 <span class="material-symbols-outlined">login</span></a>
-                 				     <li><a class="dropdown-item" href="#">장바구니</a></li>
+                 				     <li><a class="dropdown-item" href="proCart.do?user_idx=${sessionScope.ssInfo.user_idx}">장바구니</a></li>
                  				     <c:if test="${sessionScope.ssInfo.user_info=='관리자'}">
                  				      <li><a class="dropdown-item" href="admin.do">관리자 페이지</a></li>
                  				     
