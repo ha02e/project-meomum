@@ -35,7 +35,6 @@
 #review-star fieldset{
     display: inline-block;
     direction: rtl;
-    /*border:0;*/
 }
 #review-star fieldset legend{
     text-align: right;
@@ -49,13 +48,13 @@
     text-shadow: 0 0 0 #dddddd;
 }
 #review-star label:hover{
-    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+    text-shadow: 0 0 0 #FFD400;
 }
 #review-star label:hover ~ label{
-    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+    text-shadow: 0 0 0 #FFD400;
 }
 #review-star input[type=radio]:checked ~ label{
-    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+    text-shadow: 0 0 0 #FFD400;
 }
 </style>
 </head>
@@ -116,11 +115,10 @@
 					<div class="mb-3" id="review-star">
 						<fieldset>
 							<span class="text-bold">별점을 선택해주세요</span>
-							<input type="radio" name="star" value="5" id="rate1"><label for="rate1">★</label>
-							<input type="radio" name="star" value="4" id="rate2"><label for="rate2">★</label>
-							<input type="radio" name="star" value="3" id="rate3"><label for="rate3">★</label>
-							<input type="radio" name="star" value="2" id="rate4"><label for="rate4">★</label>
-							<input type="radio" name="star" value="1" id="rate5"><label for="rate5">★</label>
+							<c:forEach var="i" begin="1" end="5">
+							    <input type="radio" name="star" value="<c:out value='${6 - i}'/>" id="rate<c:out value='${i}'/>">
+							    	<label for="rate<c:out value='${i}'/>"><i class="bi bi-star-fill"></i></label>
+							</c:forEach>
 						</fieldset>
 					</div>		
 				</div>
