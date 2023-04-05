@@ -52,24 +52,25 @@
 <section class="reviewList">
 <div class="container">
 
-<!-- 탭메뉴  -->
+<
+			<!-- 전체보기 -->
+			
+			<div class="container">
+			!-- 탭메뉴  -->
 	<ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
 		<li class="nav-item flex-fill" role="presentation">
 			<button class="nav-link w-100 active" id="home-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-home" type="button" role="tab" aria-controls="home" aria-selected="false" tabindex="-1">전체보기</button>
 		</li>
 		<li class="nav-item flex-fill" role="presentation">
-			<button class="nav-link w-100" id="profile-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-profile" type="button" role="tab" aria-controls="profile" aria-selected="true">정리일상</button>
+			<button class="nav-link w-100" id="profile-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-profile" type="button" role="tab" aria-controls="profile" aria-selected="true">회원</button>
 		</li>
 		<li class="nav-item flex-fill" role="presentation">
-			<button class="nav-link w-100" id="profile-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-profile" type="button" role="tab" aria-controls="profile" aria-selected="true">구독일상</button>
+			<button class="nav-link w-100" id="profile-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-profile" type="button" role="tab" aria-controls="profile" aria-selected="true">관리자</button>
 		</li>
 	</ul>
 	
 	<div class="tab-content pt-2" id="borderedTabJustifiedContent">
 		<div class="tab-pane fade active show" id="bordered-justified-home" role="tabpanel" aria-labelledby="home-tab">
-			<!-- 전체보기 -->
-			
-			<div class="container">
 				<div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
 				<c:if test="${empty lists}">
 					<h5 class="text-center">등록된 후기가 없습니다.</h5>
