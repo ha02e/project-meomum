@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -201,24 +202,32 @@ public class MemberController {
 
 	    return mav;
 	}
-	/**관리자 회원정보 수정*/
+	/**관리자 회원정보 확인*/
 	@RequestMapping(value="/menMan.do",method = RequestMethod.GET)
-	public ModelAndView memManList(@RequestParam(value="cp",defaultValue = "1")int cp) {
-		int rtotalCnt = mdao.getuserTTCnt();
+	public ModelAndView memManList(@RequestParam(value="cp",defaultValue = "1")int cp,
+									@RequestParam(value="fvalue",required = false)String fvalue,
+									@RequestParam(value="type",defaultValue = "no")String type,
+									@RequestParam(value="orderby",defaultValue = "1")String orderby) {
+		
+		int rtotalCnt = mdao.getuserTTCnt(fvalue);
 		int totalCnt = rtotalCnt==0?1:rtotalCnt;
 		int listSize = 10;
 		int pageSize = 5;
 		String pageStr = com.mm.module.PageModule.makePage("menMan.do", totalCnt, listSize, pageSize, cp);
 		
-		List<MemberDTO> lists = mdao.memberList(cp, listSize);
-		
+		List<MemberDTO> lists = mdao.memberList(cp, listSize,type,fvalue,orderby);
+
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("member/memManList");
 		
+		mav.addObject("order",orderby);
+		mav.addObject("type",type);
+		mav.addObject("fvalue",fvalue);
 		mav.addObject("totalCnt",rtotalCnt);
 		mav.addObject("lists",lists);
 		mav.addObject("pageStr",pageStr);
 		return mav;
 	}
+
 	
 }
