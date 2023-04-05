@@ -156,29 +156,16 @@
       </div>
       
       
-      
-       <div class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
-        <i class="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
-        <i class="icon-close-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
-        Search
-      </div>
-      
-      	
-
-       <!-- Search product -->
-      <form name="itemFind" action="itemFind.do">
-      <div class="dis-none panel-search w-full p-t-10 p-b-15">
-        <div class="bor8 dis-flex p-l-15">
-          <button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
-            <i class="zmdi zmdi-search"></i>
-          </button>
-          <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product" placeholder="Search">
-          
-        </div>
-      </div>
-    </form>
-   </div>
-
+    <!-- Search product -->
+  <form name="itemFind" action="itemFind.do">
+    <div class="dis-flex panel-search w-full p-t-10 p-b-15">
+      <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product" placeholder="Search">
+      <button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
+        <i class="zmdi zmdi-search"></i>
+      </button>
+    </div>
+  </form>
+</div>
 
 	
 <!-- products -->
@@ -191,7 +178,7 @@
                     <img src="/meomum/items/${list.pro_thumb}" alt="IMG-PRODUCT">
 
                     <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                        킵
+                       ${list.pro_month }개월
                     </a>
                 </div>
 

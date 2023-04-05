@@ -5,9 +5,11 @@ import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mm.cart.model.CartDAO;
@@ -50,7 +52,6 @@ public class CartController {
 			        dto.setUser_idx(user_idx);
 			        
 			        count= cartDao.cartCheck(pro_idx);
-			        System.out.println(pro_idx);
 			        
 			        if(count>=1) {
 			            msg="이미 장바구니에 있는 물건입니다. 장바구니로 이동하시겠습니까?";
@@ -119,5 +120,36 @@ public class CartController {
 			}			
 			return mav;
 		}
+		
+		//장바구니 삭제
+		@RequestMapping(value="cartDelete.do", method = RequestMethod.POST)
+		@ResponseBody
+		public ModelAndView cartDelete(@RequestParam("cart_idx")int cart_idx){
+			ModelAndView mav = new ModelAndView();
+			int result=cartDao.cartDelete(cart_idx);
+			mav.setViewName("mmJson");
+			return mav;
+		}
+		
+		
+		//장바구니 수량 조절
+		@RequestMapping(value="cartNumUpdate.do", method=RequestMethod.POST)
+		@ResponseBody
+		public String cartNumUpdate(@RequestParam("cart_idx") int cart_idx, 
+		                             @RequestParam("cart_amount") int cart_amount) {
+		  
+			CartDTO dto=new CartDTO();
+			dto.setCart_idx(cart_idx);
+			dto.setCart_amount(cart_amount);
+			int result = cartDao.cartNumUpdate(dto);
+			ModelAndView mav = new ModelAndView();
+		  
+			if (result > 0) {
+			    return "success";
+			  } else {
+			    return "fail";
+			  }
+		}
+		
 	
 }

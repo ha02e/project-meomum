@@ -1,6 +1,6 @@
 package com.mm.cart.model;
 
-import java.util.List;
+import java.util.*;
 import org.mybatis.spring.SqlSessionTemplate;
 
 public class CartDAOImple implements CartDAO {
@@ -37,5 +37,19 @@ public class CartDAOImple implements CartDAO {
 		return lists;
 	}
 
+	//장바구니 삭제
+	@Override
+	public int cartDelete(int cart_idx) {
+		int count=sqlMap.delete("cartDelete",cart_idx);
+		return count;
+	}
+	
+	//장바구니 수량 조절
+	@Override
+	public int cartNumUpdate(CartDTO dto) {
+		int count=sqlMap.update("cartNumUpdate",dto);
+		return count;
+	}
+	
 
 }

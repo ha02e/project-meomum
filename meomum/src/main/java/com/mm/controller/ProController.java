@@ -254,7 +254,7 @@ public class ProController {
 		List<ProDTO> lists=proDao.proFind2(proF);
 		mav.addObject("lists", lists);
 		}
-		mav.setViewName("pro/proList");
+		mav.setViewName("pro/proAdmin");
 		return mav;
 	}
 	

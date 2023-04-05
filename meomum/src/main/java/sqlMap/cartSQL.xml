@@ -25,10 +25,16 @@
     order by c.cart_idx desc
 	</select>
 	
-	<delete id="cartDelete" parameterType="integer">
+	<delete id="cartDelete" parameterType="map">
 	delete from cart
 	where cart_idx=#{cart_idx}
 	</delete>
+	
+	<update id="cartNumUpdate" parameterType="com.mm.cart.model.CartDTO">
+    update cart
+    set cart_amount=#{cart_amount}
+    where cart_idx=#{cart_idx}
+    </update>
 	
 
   </mapper>
