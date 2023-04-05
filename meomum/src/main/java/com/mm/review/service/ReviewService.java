@@ -20,5 +20,5 @@ public interface ReviewService {
 	public int reviewDelete(int review_idx);
 
 	public ReviewDTO reviewUpdateForm(int review_idx);
-	
+	public int reviewUpdate(ReviewDTO dto);
 }

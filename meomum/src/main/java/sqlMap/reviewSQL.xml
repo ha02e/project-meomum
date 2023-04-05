@@ -64,13 +64,13 @@
 	
 	
 	<delete id="reviewDelete" parameterType="Integer">
-		delete from review where review_idx=#{review_idx}
+		delete from review 
+		where review_idx=#{review_idx}
 	</delete>
 	
-	
-	<select id="reviewUpdateForm" parameterType="Integer" resultType="com.mm.review.model.ReviewDTO">
-		select * from review
+	<update id="reviewUpdate" parameterType="com.mm.review.model.ReviewDTO">
+		update review
+		set subject=#{subject}, content=#{content}, thumb=#{thumb} , star=#{star}
 		where review_idx=#{review_idx}
-	</select>
-	
+	</update>
 </mapper>

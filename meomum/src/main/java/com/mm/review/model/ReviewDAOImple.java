@@ -70,7 +70,13 @@ public class ReviewDAOImple implements ReviewDAO {
 	
 	@Override
 	public ReviewDTO reviewUpdateForm(int review_idx) {
-		ReviewDTO review=sqlMap.selectOne("reviewUpdateForm", review_idx);
-		return null;
+		ReviewDTO review=sqlMap.selectOne("reviewContent", review_idx);
+		return review;
+	}
+	
+	@Override
+	public int reviewUpdate(ReviewDTO dto) {
+		int count=sqlMap.update("reviewUpdate", dto);
+		return count;
 	}
 }

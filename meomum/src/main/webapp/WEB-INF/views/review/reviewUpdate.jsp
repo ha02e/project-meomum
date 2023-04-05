@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +13,6 @@
 
 <!-- ckeditor -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/ckeditor/ckeditor.js"></script>
-
 
 <style>
 .title{
@@ -31,14 +31,23 @@
 	margin: 20px auto;
 }
 
+.nofile{
+	margin-bottom:10px;
+	color:blue;
+	font-weight: bold;
+}
+.fileDel{
+	margin-bottom:10px;
+}
+.fileDel span{
+	color:blue;
+	font-weight: bold;
+}
+
 /* 별점 */
 #review-star fieldset{
     display: inline-block;
     direction: rtl;
-    /*border:0;*/
-}
-#review-star fieldset legend{
-    text-align: right;
 }
 #review-star input[type=radio]{
     display: none;
@@ -49,13 +58,13 @@
     text-shadow: 0 0 0 #dddddd;
 }
 #review-star label:hover{
-    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+    text-shadow: 0 0 0 #FFD400;
 }
 #review-star label:hover ~ label{
-    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+    text-shadow: 0 0 0 #FFD400;
 }
 #review-star input[type=radio]:checked ~ label{
-    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+    text-shadow: 0 0 0 #FFD400;
 }
 </style>
 </head>
@@ -71,9 +80,8 @@
 			<div class="row">
 				<h3 class="title text-center">후기 수정하기</h3>
 				<!-- 테스트 리뷰게시판 -->
-				<form action="reviewWrite.do" name="reviewWrite" method="post" enctype="multipart/form-data">
+				<form action="reviewUpdate.do" name="reviewUpdate" method="post" enctype="multipart/form-data">
 				
-				<input type="hidden" name="review_idx" value="${review.review_idx}">
 				<div class="container-xl">
 					<div class="position-relative mb-3">
 					<div class="row g-3 justify-content">
@@ -111,26 +119,45 @@
 					</div>
 					
 					<div class="mb-3">
-						<label>대표이미지</label>
+						<label>대표이미지</label> 
+						<c:if test="${empty review.thumb}">
+							<div class="nofile">
+							<span>등록된 썸네일이 없습니다.</span>
+							</div>
+						</c:if>
+						<c:if test="${!empty review.thumb}">
+							<div class="fileDel">
+								<span>${review.thumb}</span>
+								<button class="btn btn-sm btn-outline-danger"><i class="bi bi-x-circle"></i>&nbsp;삭제</button>
+							</div>
+						</c:if>
+						<div>
 						<input class="form-control" type="file" name="thumb">
+						</div>
 					</div>
 					
-					<div class="mb-3" id="review-star" value="${review.star}">
+					<div class="mb-3" id="review-star">
 						<fieldset>
 							<span class="text-bold">별점을 선택해주세요</span>
-							<input type="radio" name="star" value="5" id="rate1"><label for="rate1">★</label>
-							<input type="radio" name="star" value="4" id="rate2"><label for="rate2">★</label>
-							<input type="radio" name="star" value="3" id="rate3"><label for="rate3">★</label>
-							<input type="radio" name="star" value="2" id="rate4"><label for="rate4">★</label>
-							<input type="radio" name="star" value="1" id="rate5"><label for="rate5">★</label>
+								<c:forEach var="i" begin="1" end="5" step="1">
+									<c:set var="reviewStar" value="${review.star}"/>
+								    <c:set var="starValue" value="${6 - i}"/>
+								    <c:set var="isChecked" value="${starValue == reviewStar ? 'checked' : ''}"/>
+								    <input type="radio" name="star" value="<c:out value='${starValue}'/>" id="rate<c:out value='${i}'/>" <c:out value='${isChecked}'/>>
+								    <label for="rate<c:out value='${i}'/>"><i class="bi bi-star-fill"></i></label>
+								</c:forEach>
 						</fieldset>
 					</div>		
 				</div>
 				
 				<div class="mb-3 text-center">
-					<input type="submit" class="btn btn-outline-primary mb-2" value="작성하기">	
+				
+				<input type="hidden" name="review_idx" value="${review.review_idx}">
+					<input type="submit" class="btn btn-outline-primary mb-2" value="수정하기">
 				</div>
-			</form>
+				
+				</div>
+				</form>
 			</div>
 		<!-- ---------- 마이페이지 각 페이지 여기에 넣어주세요!! 끝 지점 ---------- -->
 		</div>

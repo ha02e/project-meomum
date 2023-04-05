@@ -210,8 +210,6 @@ public class ReviewController {
 	}
 	
 	
-	
-	
 	@RequestMapping("/reviewContent.do")
 	public ModelAndView reviewContent(@RequestParam("review_idx")int review_idx) {
 		reviewService.reviewReadnum(review_idx);
@@ -229,15 +227,14 @@ public class ReviewController {
 	public ModelAndView reviewDelete(@RequestParam("review_idx")int review_idx) {
 		ReviewDTO review=reviewService.reviewContent(review_idx);
 		
-		String oldFileName = review.getThumb(); // 기존 이미지 파일 이름
+		String oldFileName = review.getThumb(); 
 		String path=servletContext.getRealPath("/images/reviewImg");
-		if (oldFileName != null) { // 기존 이미지 파일이 존재하는 경우 삭제
+		if (oldFileName != null) { 
 			File oldFile = new File(path + "/" + oldFileName);
 			if (oldFile.exists()) {
 				oldFile.delete();
 			}
 		}
-		System.out.println(oldFileName);
 		
 		int result=reviewService.reviewDelete(review_idx);
 		
@@ -264,27 +261,52 @@ public class ReviewController {
 	}
 	
 	@RequestMapping(value = "/reviewUpdate.do")
-	public ModelAndView reviewUpdate(MultipartHttpServletRequest req) {
+	public ModelAndView reviewUpdate(@RequestParam("review_idx")int review_idx,
+										MultipartHttpServletRequest req) {
+		ReviewDTO review=reviewService.reviewContent(review_idx);
 		ReviewDTO dto=new ReviewDTO();
 
-		int review_idx=Integer.parseInt(req.getParameter("review_idx"));
 		dto.setReview_idx(review_idx);
 		dto.setSubject(req.getParameter("subject"));
 		dto.setContent(req.getParameter("content"));
 		int star=Integer.parseInt(req.getParameter("star"));
 		dto.setStar(star);
 
+		MultipartFile mf = req.getFile("thumb");
+		if (mf != null && !mf.isEmpty()) {
+			String path = req.getRealPath("/images/reviewImg");
+			String fileName = mf.getOriginalFilename(); 
+			File uploadFile = new File(path + "/" + fileName);
+
+			try {
+				mf.transferTo(uploadFile);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			String oldFileName = review.getThumb();
+			System.out.println("oldfileName:"+oldFileName);
+			if (oldFileName != null) { 
+				File oldFile = new File(path + "/" + oldFileName);
+				if (oldFile.exists()) {
+					oldFile.delete();
+				}
+			}
+			dto.setThumb(fileName);
+		} else { 
+			dto.setThumb(review.getThumb());
+		}
+		
+		
 		int result=reviewService.reviewUpdate(dto);
 		String msg=result>0?"후기 수정이 완료되었습니다.":"후기 수정에 실패하였습니다.";
 
-		
 		ModelAndView mav=new ModelAndView();
 		mav.addObject("msg", msg);
 		mav.addObject("link", "myReviewList.do");
 		mav.setViewName("/msg");
 		
 		return mav;
-
 
 	}
 	
