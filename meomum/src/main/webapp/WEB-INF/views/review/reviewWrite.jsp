@@ -71,6 +71,7 @@
 				<h3 class="title text-center">후기 작성하기</h3>
 				<!-- 테스트 리뷰게시판 -->
 				<form action="reviewWrite.do" name="reviewWrite" method="post" enctype="multipart/form-data">
+				<input type="hidden" name="activity_idx" value="${param.activity_idx}">
 				<div class="container-xl">
 					<div class="position-relative mb-3">
 					<div class="row g-3 justify-content">

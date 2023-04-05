@@ -83,6 +83,7 @@
 								<td class="align-middle service"></td>
 								<td class="align-middle button">
 									<c:url var="contentUrl" value="reviewWrite.do">
+										<c:param name="activity_idx">${dto.activity_idx}</c:param>
 										<c:param name="writer">${dto.writer}</c:param>
 										<c:param name="category">정리일상</c:param>										
 									</c:url>
