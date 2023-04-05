@@ -56,10 +56,7 @@
 							<div class="card-body">
 								<ul>
 									<li><a href="#">간단 견적 문의 내역</a></li>
-										<c:url var="listUrl" value="svcList.do">
-											<c:param name="user_idx">${sessionScope.ssInfo.user_idx}</c:param>
-										</c:url>
-										<li><a href="listUrl">방문 견적 예약 내역</a></li>
+									<li><a href="svcList.do">방문 견적 예약 내역</a></li>
 									<li><a href="#">정리일상 진행 현황</a></li>
 								</ul>
 							</div>

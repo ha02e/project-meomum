@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mm.member.model.MemberDAO;
+import com.mm.member.model.MemberDTO;
 import com.mm.svc.model.SvcContentDTO;
 import com.mm.svc.model.SvcDAO;
 import com.mm.svc.model.SvcMemDTO;
@@ -28,6 +32,7 @@ public class SvcController {
 	
 	@Autowired
 	private SvcDAO svcDao;
+	private MemberDAO mdao;
 	
 	@RequestMapping("/svc.do")
 	public String svc() {
@@ -44,7 +49,7 @@ public class SvcController {
 		int result = memAdd+detailAdd + dateAdd;
 		
 		String msg = result>0?"방문견적 예약이 신청되었습니다":"다시 시도해주세요";
-		String link = result>0?"index.do":"svc.do";
+		String link = result>0?"index.do":"svcList.do";
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("msg",msg);
 		mav.addObject("link",link);
@@ -63,7 +68,7 @@ public class SvcController {
 		return mav; 
 	}
 	
-	/**관리자 페이지-예약 현황*/
+	/**관리자 페이지-예약 리스트*/
 	@RequestMapping("/asvcList.do")
 	public ModelAndView asvcList() {
 		List<SvcSelectAllDTO> list = svcDao.svcAdminList();
@@ -72,6 +77,7 @@ public class SvcController {
 		mav.setViewName("svc/a_svcList");
 		return mav;
 	}
+	
 	
 	/**관리자 페이지-예약 상세 보기*/
 	@RequestMapping("/asvcContent.do")
@@ -82,6 +88,8 @@ public class SvcController {
 		mav.setViewName("svc/a_svcContent");
 		return mav;
 	}
+	
+	/**관리자-예약 세부 검색*/
 	
 	/**관리자 페이지-예약 수정*/
 	@RequestMapping("/asvcUpdate.do")
@@ -106,13 +114,77 @@ public class SvcController {
 
 	/**마이페이지-방문 견적 내역*/
 	@RequestMapping("/svcList.do")
-	public ModelAndView svcUserList(@RequestParam("user_idx")int idx) {
-		System.out.println(idx);
-		List<SvcSelectAllDTO> list = svcDao.svcUserList(idx);
+	public ModelAndView svcUserList(HttpSession session) {
+		session.getAttribute("ssInfo");
+		MemberDTO sdto =(MemberDTO) session.getAttribute("ssInfo");
+		
+		int user_idx = sdto.getUser_idx();
+		List<SvcSelectAllDTO> list = svcDao.svcUserList(user_idx);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("list", list);
-		System.out.println(list);
+
 		mav.setViewName("svc/svcList");
+		return mav;
+	}
+	
+	/**마이페이지-예약 상세 보기*/
+	@RequestMapping("/svcContent.do")
+	public ModelAndView svcInfo(@RequestParam("svc_idx")String idx) {
+		SvcContentDTO dto = svcDao.svcContent(idx);
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("dto",dto);
+		mav.setViewName("svc/svcContent");
+		return mav;
+	}
+	
+	/**사용자 페이지-예약 수정 폼*/
+	@RequestMapping("/svcUpdateForm.do")
+	public ModelAndView updateForm(@RequestParam("svc_idx")String idx) {
+		SvcContentDTO dto = svcDao.svcContent(idx);
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("dto",dto);
+		mav.setViewName("svc/svcUpdate");
+		return mav;
+	}
+	
+	/**사용자 페이지-예약 수정*/
+	@RequestMapping("/svcUpdate.do")
+	public ModelAndView svcUpdate(SvcMemDTO memDto,SvcDetailDTO detailDto, SvcDateDTO dateDto) {
+		int memUpdate = svcDao.svcMemUpdate(memDto);
+		int detailUpdate = svcDao.svcDetailUpdate(detailDto);
+		int dateUpdate = svcDao.svcDateUpdate(dateDto);
+		
+		
+		int result = memUpdate+detailUpdate+dateUpdate;
+		
+		String msg = result>0?"방문견적 예약이 수정되었습니다":"다시 시도해주세요";
+		String link = result>0?"svcList.do":"svcUpdate.do";
+	
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("msg",msg);
+		mav.addObject("link",link);
+		
+		mav.setViewName("/msg");
+		
+		return mav;
+	}
+	
+	/**사용자-방문견적 예약 취소*/
+	@RequestMapping("/svcDelete.do")
+	public ModelAndView svcDelete(@RequestParam("svc_idx")String svc_idx) {
+		int stateResult=svcDao.svcStateCancle(svc_idx);
+		int dateResult = svcDao.svcDateCancle(svc_idx);
+		
+		ModelAndView mav = new ModelAndView();
+		
+		String msg = stateResult+dateResult>0?"방문견적 예약이 취소되었습니다":"다시 시도해주세요";
+		String link = stateResult+dateResult>0?"svcList.do":"svcContent.do";
+		
+		mav.addObject("msg",msg);
+		mav.addObject("link",link);
+		
+		mav.setViewName("/msg");
+		
 		return mav;
 	}
 }

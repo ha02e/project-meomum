@@ -8,91 +8,123 @@
 	<!-- 방문예약 신청시 실행 -->
 	<insert id="svcMemInsert"
 		parameterType="com.mm.svc.model.SvcMemDTO">
-		insert into svc_member
-		values(('S'||TO_CHAR(SYSDATE, 'YYYYMMDD-')||svc_member_idx.nextval),
+		INSERT INTO svc_member
+		VALUES(('S'||TO_CHAR(SYSDATE, 'YYYYMMDD-')||svc_member_idx.nextval),
 		#{user_idx},#{user_name},#{user_tel},#{user_pcode},#{user_addr},nvl(#{user_detail},'-'),'예약확정')
 	</insert>
 
-	<insert id="svcDetailInsert"
-		parameterType="com.mm.svc.model.SvcDetailDTO">
-		insert into svc_detail
-		values(svc_detail_idx.nextval,('S'||TO_CHAR(SYSDATE,
+	<insert id="svcDetailInsert" parameterType="com.mm.svc.model.SvcDetailDTO">
+		INSERT INTO svc_detail
+		VALUES(svc_detail_idx.nextval,('S'||TO_CHAR(SYSDATE,
 		'YYYYMMDD-')||svc_member_idx.currval),#{user_idx},#{svc_type},#{svc_py},#{svc_area},nvl(#{svc_req},'없음'),#{svc_know},#{svc_pia},sysdate,'-')
 	</insert>
 
-	<insert id="svcDateInsert"
-		parameterType="com.mm.svc.model.SvcDateDTO">
-		insert into svc_date
-		values(svc_date_idx.nextval,('S'||TO_CHAR(SYSDATE, 'YYYYMMDD-')||svc_member_idx.currval),#{user_idx},#{svc_days},#{svc_time})
+	<insert id="svcDateInsert" parameterType="com.mm.svc.model.SvcDateDTO">
+		INSERT INTO svc_date
+		VALUES(svc_date_idx.nextval,('S'||TO_CHAR(SYSDATE, 'YYYYMMDD-')||svc_member_idx.currval),#{user_idx},#{svc_days},#{svc_time})
 	</insert>
 
 
-	<select id="svcTimeSelect" parameterType="String"
-		resultType="String">
-		select svc_time from svc_date where svc_days = #{svc_days}
+	<select id="svcTimeSelect" parameterType="String" resultType="String">
+		SELECT svc_time FROM svc_date WHERE svc_days = #{svc_days}
 	</select>
 
 	<!-- 관리자: 방문 예약 리스트 -->
-	<select id="svcAdminList"
-		resultType="com.mm.svc.model.SvcSelectAllDTO">
+	<select id="svcAdminList" resultType="com.mm.svc.model.SvcSelectAllDTO">
 		SELECT a.svc_idx, a.user_idx, a.user_name, a.user_tel,
 		b.svc_regdate,a.svc_state,c.svc_days,c.svc_time
-		from svc_member a, svc_detail b,svc_date c
-		where a.svc_idx = b.svc_idx and a.svc_idx=c.svc_idx
-		order by a.svc_idx desc
+		FROM svc_member a, svc_detail b,svc_date c
+		WHERE a.svc_idx = b.svc_idx and a.svc_idx=c.svc_idx
+		ORDER BY a.svc_idx desc
 	</select>
-
-	<!-- 방문 예약 상세 정보 -->
-	<select id="svcContent" parameterType="String"
-		resultType="com.mm.svc.model.SvcContentDTO">
-		select a.*,b.user_name,
+	
+	<!-- 관리자: 세부 검색  -->
+	<select id="svcSelectDetail" parameterType="Map" resultType="com.mm.svc.model.SvcSelectAllDTO">
+		SELECT a.svc_idx, a.user_idx, a.user_name, a.user_tel,
+		b.svc_regdate,a.svc_state,c.svc_days,c.svc_time
+		FROM svc_member a, svc_detail b,svc_date c
+		WHERE a.svc_idx = b.svc_idx and a.svc_idx=c.svc_idx
+		<where>
+			<if test="minDate != null and maxDate != null">
+				AND svc_date BETWEEN #{minDate} AND #{maxDate}
+			</if>
+			<if test="category==1 and keyword!=null">
+				AND user_name LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="category==2 and keyword!=null">
+				AND user_tel LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="state != null and state.length > 0">
+				AND svc_state IN
+			<foreach collection="state" item="arr" open="(" separator="," close=")">
+   			 #{arr}
+			</foreach>
+			</if>
+		</where>
+		ORDER BY a.svc_idx desc
+	</select>
+	
+	<!-- 공통: 방문 예약 상세 정보 -->
+	<select id="svcContent" parameterType="String" resultType="com.mm.svc.model.SvcContentDTO">
+		SELECT a.*,b.user_name,
 		b.user_tel,b.user_pcode,b.user_addr,b.user_detail,b.svc_state,c.svc_days,c.svc_time
-		from svc_detail a
-		left join svc_member b on a.svc_idx = b.svc_idx
-		left join svc_date c on b.svc_idx = c.svc_idx
-		where b.svc_idx = #{svc_idx}
+		FROM svc_detail a
+		LEFT JOIN svc_member b on a.svc_idx = b.svc_idx
+		LEFT JOIN svc_date c on b.svc_idx = c.svc_idx
+		WHERE b.svc_idx = #{svc_idx}
 	</select>
 
 
 	<!-- 방문예약 정보 수정 -->
-	<update id="svcMemUpdate"
-		parameterType="com.mm.svc.model.SvcMemDTO">
-		update svc_member
-		set user_name = #{user_name,jdbcType=VARCHAR},
+	<update id="svcMemUpdate" parameterType="com.mm.svc.model.SvcMemDTO">
+		UPDATE svc_member
+		SET user_name = #{user_name,jdbcType=VARCHAR},
 		user_tel=#{user_tel,jdbcType=VARCHAR},
 		user_pcode=#{user_pcode,jdbcType=VARCHAR},
 		user_addr=#{user_addr,jdbcType=VARCHAR},
 		user_detail=nvl(#{user_detail},'-'),
 		svc_state=#{svc_state,jdbcType=VARCHAR}
-		where svc_idx = #{svc_idx}
+		WHERE svc_idx = #{svc_idx}
 	</update>
 
-	<update id="svcDetailUpdate"
-		parameterType="com.mm.svc.model.SvcDetailDTO">
-		update svc_detail
-		set svc_type=#{svc_type,jdbcType=VARCHAR},
+	<update id="svcDetailUpdate" parameterType="com.mm.svc.model.SvcDetailDTO">
+		UPDATE svc_detail
+		SET svc_type=#{svc_type,jdbcType=VARCHAR},
 		svc_py=#{svc_py,jdbcType=VARCHAR},
 		svc_area=#{svc_area,jdbcType=VARCHAR},
 		svc_req=nvl(#{svc_req},'-'),
 		svc_memo=nvl(#{svc_memo},'-')
-		where svc_idx = #{svc_idx}
+		WHERE svc_idx = #{svc_idx}
 	</update>
 
 	<update id="svcDateUpdate" parameterType="com.mm.svc.model.SvcDateDTO">
-		update svc_date
-		set svc_days=#{svc_days,jdbcType=VARCHAR},
+		UPDATE svc_date
+		SET svc_days=#{svc_days,jdbcType=VARCHAR},
 		svc_time=#{svc_time,jdbcType=VARCHAR}
-		where svc_idx = #{svc_idx}
+		WHERE svc_idx = #{svc_idx}
 	</update>
 
 	<!--마이페이지 : 방문 예약 신청 내역 -->
 	<select id="svcUserList" parameterType="Integer" resultType="com.mm.svc.model.SvcSelectAllDTO">
-		SELECT a.svc_idx, a.user_idx, a.user_name, a.user_tel,
-		b.svc_regdate,a.svc_state,c.svc_days,c.svc_time
-		from svc_member a, svc_detail b,svc_date c
-		where a.user_idx=#{user_idx} and a.user_idx = b.user_idx and
-		a.user_idx=c.user_idx
-		order by a.svc_idx desc
+	SELECT a.svc_idx, a.user_idx, a.user_name, a.user_tel, b.svc_regdate, a.svc_state, c.svc_days, c.svc_time
+	FROM svc_member a
+	LEFT JOIN svc_detail b ON a.svc_idx = b.svc_idx
+	LEFT JOIN svc_date c ON a.svc_idx = c.svc_idx
+	WHERE a.user_idx = #{user_idx} and a.svc_state='예약확정' or a.svc_state='예약취소'
+	ORDER BY a.svc_idx DESC
 	</select>
-
+	
+	<!-- 사용자: 방문 예약 취소 -->
+	<update id="svcStateCancle" parameterType="String">
+	UPDATE svc_member
+	SET svc_state='예약취소'
+	WHERE svc_idx=#{svc_idx}
+	</update>
+	
+	<delete id="svcDateCancle" parameterType="String">
+	UPDATE svc_date
+	SET svc_days='C'||#{svc_days},
+		svc_time='C'||#{svc_time}
+	WHERE svc_idx=#{svc_idx}
+	</delete>
 </mapper>
