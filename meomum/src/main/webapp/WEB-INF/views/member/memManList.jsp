@@ -7,6 +7,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>머뭄 회원 관리 페이지</title>
+<script type="text/javascript">
+function sortUsers(orderby, type, fvalue) {
+
+	  if(type=='yes') {
+	    window.location.href = 'menMan.do?orderby='+orderby+'&type=yes&fvalue='+fvalue;
+	  } else {
+	    window.location.href = 'menMan.do?orderby='+orderby;
+	  }
+	}
+
+</script>
 </head>
 
 <body class="app">
@@ -20,18 +31,23 @@
 				<div class="row justify-content-center mb-3">
 					<div class="col-md-6">
 						<div class="input-group">
-							<input type="text" class="form-control" placeholder="전체 사용자 검색">
-							<button class="btn btn-primary" type="button">검색</button>
+							<form name="searchuser" action ="menMan.do">
+								<input type="hidden" name="type" value="yes">
+								<input type="hidden" name="orderby" value="${orderby}">
+								<input type="text" class="form-control" placeholder="전체 사용자 검색" name="fvalue">
+								<button class="btn btn-primary" type="submit">검색</button>
+								</form>
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="d-flex justify-content-end align-items-center">
-							<span class="me-2">정렬:</span> <select class="form-select w-auto">
-								<option value="1">신규 회원순</option>
-								<option value="2">이름순</option>
-								<option value="3">예약횟수순</option>
-								<option value="4">구독순</option>
-								<option value="5">후기작성순</option>
+							<span class="me-2">정렬:</span> 
+							  <select class="form-select w-auto" name="orderby" onchange="sortUsers(this.value, '${type}', '${fvalue}')">
+								<option value="1" ${order == '1' ? 'selected' : ''}>신규 회원순</option>
+								<option value="2" ${order == '2' ? 'selected' : ''}>이름순</option>
+								<option value="3" ${order == '3' ? 'selected' : ''}>예약횟수순</option>
+								<option value="4" ${order == '4' ? 'selected' : ''}>구독순</option>
+								<option value="5"${order == '5' ? 'selected' : ''} >후기작성순</option>
 							</select>
 						</div>
 					</div>
@@ -100,6 +116,7 @@
 		integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
 		crossorigin="anonymous">
 	</script>
+
 </body>
 
 </html>
