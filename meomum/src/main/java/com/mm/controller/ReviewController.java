@@ -34,10 +34,6 @@ public class ReviewController {
 	@Autowired
 	private ServletContext servletContext;
 	
-	@RequestMapping("/myReview.do")
-	public String myReview() {
-		return "review/myReview";
-	}
 	
 	@RequestMapping("/myReviewList.do")
 	public ModelAndView myreviewList(@RequestParam(value="cp",defaultValue = "1")int cp,

@@ -78,13 +78,13 @@
 							<div class="input-group mb-3">
 								<span class="input-group-text" id="inputGroup-sizing-default">작성자</span>
 								<input type="text" name="writer" class="form-control" 
-										value="${sessionScope.ssInfo.user_name}">
+										value="${param.writer}" readonly>
 							</div>
 						</div>
 						<div class="col">
 							<div class="input-group mb-3">
 								<span class="input-group-text" id="inputGroup-sizing-default">카테고리</span>
-								<input type="text" name="category" class="form-control">
+								<input type="text" name="category" class="form-control" value="${param.category}" readonly>
 							</div>
 						</div>
 					</div>
