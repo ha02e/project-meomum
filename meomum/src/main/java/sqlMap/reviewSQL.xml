@@ -11,7 +11,7 @@
 			review_idx.nextval,
 			#{user_idx},
 			'svc_idx',
-			1,
+			#{category},
 			#{activity_idx},
 			#{writer},
 			#{star},
