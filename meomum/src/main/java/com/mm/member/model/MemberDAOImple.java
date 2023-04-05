@@ -7,6 +7,7 @@ import java.util.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.cache.annotation.CacheEvict;
 
 public class MemberDAOImple implements MemberDAO {
 	private SqlSessionTemplate sqlMap;
@@ -202,21 +203,32 @@ public class MemberDAOImple implements MemberDAO {
 	
 	/**회원 정보 리스트 불러오기*/
 	@Override
-	public List<MemberDTO> memberList(int cp, int ls) {
+	public List<MemberListDTO> memberList(int cp, int ls,String type, String fvalue,String orderby) {
 		int start = (cp-1)*ls+1;
 		int end = cp*ls;
+
 		
 		Map map = new HashMap();
+
+		
+		if(type.equals("yes")) {
+			map.put("fvalue","%" + fvalue + "%");
+		}
+		
+	
 		map.put("start", start);
 		map.put("end", end);
+		map.put("orderby", orderby);
 		
-		List<MemberDTO> lists = sqlMap.selectList("memberList",map);
+		List<MemberListDTO> lists = sqlMap.selectList("memberList",map);
 		return lists;
 	}
 	
 	@Override
-	public int getuserTTCnt() {
-		int count = sqlMap.selectOne("getuserTTCnt");
+	public int getuserTTCnt(String fvalue) {
+			fvalue = "%" + fvalue + "%";
+		int count = sqlMap.selectOne("getuserTTCnt", fvalue);
 		return count;
 	}
+
 }

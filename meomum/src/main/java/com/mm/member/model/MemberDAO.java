@@ -18,8 +18,8 @@ public interface MemberDAO {
 	public MemberDTO getuserInfo(int user_idx);
 	public int updatePWD(String newPwd,int user_idx);
 	/*수정예정*/
-	public List<MemberDTO> memberList(int cp, int ls);
-	public int getuserTTCnt();
+	public List<MemberListDTO> memberList(int cp, int ls,String type,String fvalue,String orderby);
+	public int getuserTTCnt(String fvalue);
 
 
 }

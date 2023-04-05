@@ -22,6 +22,7 @@
 		)
 	</insert>
 	
+	<!-- main reviewList -->
 	<select id="reviewList" parameterType="Map" resultType="com.mm.review.model.ReviewDTO">
 		select * from
 		(select rownum as rnum, a.*from(
@@ -35,7 +36,7 @@
 			review
 	</select>
 	
-	
+	<!-- mypage reviewList -->	
 	<select id="myreviewList" parameterType="Map" resultType="com.mm.review.model.ReviewDTO">
 		select * from
 		(select rownum as rnum, a.*from(
@@ -50,15 +51,51 @@
 		where user_idx=#{user_idx}
 	</select>
 
+	<!-- mypage reviewable -->
+	<select id="reviewableList" parameterType="Map" resultType="com.mm.review.model.ReviewDTO">
+		select * from
+		(select rownum as rnum, c.*from(
+			select svc_idx activity_idx 
+  			from svc_member a
+ 			where a.user_idx = #{user_idx}
+				and svc_state='작업완료'
+				and not exists (select * from review b
+								 where a.svc_idx = b.activity_idx)			
+			)c 
+		)d
+		where rnum<![CDATA[>=]]>#{start} and rnum<![CDATA[<=]]>#{end}
+	</select>
+	
+	<select id="reviewableTotalCnt" parameterType="Integer" resultType="Integer">
+		select count(*) from
+			svc_member a
+ 			where a.user_idx = #{user_idx}
+				and svc_state='작업완료'
+				and not exists (select * from review b
+								 where a.svc_idx = b.activity_idx)
+	</select>
+
 
 	<select id="reviewContent" parameterType="Integer" resultType="com.mm.review.model.ReviewDTO">
 		select * from review
 		where review_idx=#{review_idx}
 	</select>
 	
+	<update id="reviewReadnum" parameterType="Integer" >
+		update review
+		set readnum=readnum+1
+		where review_idx=#{review_idx}
+	</update>
+	
 	
 	<delete id="reviewDelete" parameterType="Integer">
-		delete from review where review_idx=#{review_idx}
+		delete from review 
+		where review_idx=#{review_idx}
 	</delete>
 	
+	<update id="reviewUpdate" parameterType="com.mm.review.model.ReviewDTO">
+		update review
+		set subject=#{subject}, content=#{content}, thumb=#{thumb} , star=#{star}
+		where review_idx=#{review_idx}
+	</update>
 </mapper>
