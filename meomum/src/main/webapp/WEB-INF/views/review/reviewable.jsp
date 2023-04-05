@@ -29,24 +29,6 @@
 	padding: 0 20px;
 }
 
-.reviewable-img img{
-	width:60%;
-}
-.thumb{
-	width:10%;
-}
-.num{
-	width:25%;
-}
-.service{
-	width:32%;
-}
-.category{
-	width:13%;
-}
-.button{
-	width:20%;
-}
 .review-star i {
     color:#FFD400;
 }
@@ -62,75 +44,40 @@
 	<div class="col-xl-9 col-md-9">	
 		<!-- ---------- 마이페이지 작업한 파일 페이지 여기에 넣어주세요!!(include) ---------- -->	
 		
-		<div class="app-content pt-3 p-md-3 p-lg-4">
 			<div class="container-xl text-center">
 				<h2 class="title">작성 가능한 후기</h2>
+
 				<table class="table reviewable-table">
 					<thead class="table-light">
 						<tr class="table-borderless">
-							<th scope="col" class="thumb">Preview</th>
 							<th scope="col" class="num">서비스/주문번호</th>
 							<th scope="col" class="service">이용서비스</th>
-							<th scope="col" class="category">카테고리</th>
 							<th scope="col" class="button">버튼</th>
 						</tr>
 					</thead>
 					
 					<tbody class="table-group-divider">
-						<tr>
-							<th scope="row" class="align-middle">
-								<a href="#" class="reviewable-img">
-									<img src="images/reviewImg/product-1.jpg" alt="">
-								</a>
-							</th>
-							<td class="align-middle">O20230330-1001</td>
-							<td class="align-middle"><a href="#" class="text-success fw-bold">모찌 소파 Mozzi｜B type</a></td>
-							<td class="align-middle"><span class="badge bg-primary">구독일상</span></td>
-							<td class="align-middle">
-								<a href="#" class="btn btn-sm btn-outline-success">후기 작성하기</a>
-							</td>
-						</tr>
-						<tr>
-							<th scope="row" class="align-middle"><a href="#"><img src="images/reviewImg/product-1.jpg" alt=""></a></a></th>
-							<td class="align-middle">S20230330-1001</td>
-							<td class="align-middle"><a href="#" class="text-success fw-bold">모찌 소파 Mozzi｜B type</a></td>
-							<td class="align-middle"><span class="badge bg-warning">정리일상</span></td>
-							<td class="align-middle">
-								<a href="#" class="btn btn-sm btn-outline-success">후기 작성하기</a>
-							</td>
-						</tr>
-						<tr>
-							<th scope="row" class="align-middle"><a href="#"><img src="images/reviewImg/product-1.jpg" alt=""></a></a></th>
-							<td class="align-middle">S20230330-1002</td>
-							<td class="align-middle"><a href="#" class="text-success fw-bold">모찌 소파 Mozzi｜B type</a></td>
-							<td class="align-middle"><span class="badge bg-warning">정리일상</span></td>
-							<td class="align-middle">
-								<a href="#" class="btn btn-sm btn-outline-success">후기 작성하기</a>
-							</td>
-						</tr>
-						<tr>
-							<th scope="row" class="align-middle"><a href="#"><img src="images/reviewImg/product-1.jpg" alt=""></a></a></th>
-							<td class="align-middle">O20230330-1002</td>
-							<td class="align-middle"><a href="#" class="text-success fw-bold">모찌 소파 Mozzi｜B type</a></td>
-							<td class="align-middle"><span class="badge bg-primary">구독일상</span></td>
-							<td class="align-middle">
-								<a href="#" class="btn btn-sm btn-outline-success">후기 작성하기</a>
-							</td>
-						</tr>
-						<tr>
-							<th scope="row" class="align-middle"><a href="#"><img src="images/reviewImg/product-1.jpg" alt=""></a></a></th>
-							<td class="align-middle">S20230330-1003</td>
-							<td class="align-middle"><a href="#" class="text-success fw-bold">모찌 소파 Mozzi｜B type</a></td>
-							<td class="align-middle"><span class="badge bg-warning">정리일상</span></td>
-							<td class="align-middle">
-								<a href="#" class="btn btn-sm btn-outline-success">후기 작성하기</a>
-							</td>
-						</tr>
+						<c:if test="${empty lists}">
+							<tr>
+								<td class="align-middle" colspan="4">
+									<h5 class="text-center">작성 가능한 후기가 없습니다.</h5>
+								</td>
+							</tr>
+						</c:if>
+						<c:forEach var="dto" items="${lists}">
+							<tr>
+								<td class="align-middle">${dto.activity_idx}</td>
+								<td class="align-middle">정리일상</td>
+								<td class="align-middle">
+									<a href="#" class="btn btn-sm btn-outline-success">후기 작성하기</a>
+								</td>
+							</tr>
+						</c:forEach>
 					</tbody>
 				</table>
 
 			</div>	
-		</div>
+		
 
 		<!-- ---------- 마이페이지 각 페이지 여기에 넣어주세요!! 끝 지점 ---------- -->
 	</div>

@@ -63,8 +63,27 @@ public class ReviewController {
 	}
 	
 	@RequestMapping("/reviewable.do")
-	public String reviewable() {
-		return "review/reviewable";
+	public ModelAndView reviewableList(@RequestParam(value="cp",defaultValue = "1")int cp,
+									HttpSession session) {
+		MemberDTO mdto=(MemberDTO)session.getAttribute("ssInfo");
+
+		int user_idx=mdto.getUser_idx();
+		int totalCnt=reviewService.reviewableTotalCnt(user_idx);
+		int listSize=5;
+		int pageSize=5;
+		
+		String pageStr=com.mm.module.PageModule
+				.makePage("reviewable.do", totalCnt, listSize, pageSize, cp);
+		
+		List<ReviewDTO> lists=reviewService.reviewableList(cp, pageSize, user_idx);
+		
+		ModelAndView mav=new ModelAndView();
+		mav.setViewName("review/reviewable");
+		mav.addObject("lists", lists);
+		mav.addObject("pageStr",pageStr);
+		
+		
+		return mav;
 	}
 	
 	

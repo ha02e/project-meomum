@@ -1,6 +1,7 @@
 package com.mm.review.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.mm.review.model.ReviewDTO;
 
@@ -13,6 +14,9 @@ public interface ReviewService {
 	
 	public List<ReviewDTO> myreviewList(int cp, int ls, int user_idx);
 	public int myreviewTotalCnt();
+	
+	public List<ReviewDTO> reviewableList(int cp, int ls, int user_idx);
+	public int reviewableTotalCnt(int user_idx);
 	
 	public ReviewDTO reviewContent(int review_idx);
 	public int reviewReadnum(int review_idx);

@@ -47,6 +47,18 @@ public class ReviewDAOImple implements ReviewDAO {
 		return count;
 	}
 	
+	@Override
+	public List<ReviewDTO> reviewableList(Map map) {
+		List<ReviewDTO> lists=sqlMap.selectList("reviewableList",map);
+		return lists;
+	}
+	
+	@Override
+	public int reviewableTotalCnt(int user_idx) {
+		int count=sqlMap.selectOne("reviewableTotalCnt",user_idx);
+		return count;
+	}
+	
 	
 	@Override
 	public ReviewDTO reviewContent(int review_idx) {
