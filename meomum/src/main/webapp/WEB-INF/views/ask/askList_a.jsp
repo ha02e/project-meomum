@@ -15,64 +15,87 @@
 <!-- App CSS -->
 <link id="theme-style" rel="stylesheet" href="assets/css/portal_a.css">
 <link rel="stylesheet" type="text/css" href="css/mainLayout_a.css">
-
+<script type="text/javascript">
+	function checklist(checklist) {
+			window.location.href = 'askList_a.do?checklist=' + checklist;
+	}
+</script>
 </head>
 <body>
 	<%@include file="/WEB-INF/views/header_a.jsp"%>
-	<div class="app-wrapper">
-		<div class="app-content pt-3 p-md-3 p-lg-4">
-			<div class="container pt-5">
-				<h1 class="text-center mb-4">간단문의 게시글 관리 </h1>
-				<div class="row justify-content-center mb-3">
-					<div class="col-md-6">
-						<div class="input-group">
-							<input type="text" class="form-control" placeholder="전체 사용자 검색">
-							<button class="btn btn-primary" type="button">검색</button>
+
+
+				<div class="app-wrapper" style="overflow: auto;">
+				  <div class="app-content pt-3 p-md-3 p-lg-4">
+				    <div class="container pt-5">
+				      <h1 class="text-center mb-4">간단문의 게시글 관리</h1>
+				      <div class="d-flex justify-content-between align-items-center mb-3">
+				        <p class="mb-0">
+				          전체 글 수: <span id="total-users">${totalCnt}</span>개
+				        </p>
+				        <form name="searchask" action="askList_a.do" class="ms-auto me-auto">
+				          <div class="input-group">
+				            <input type="hidden" name="type" value="yes">
+				            <input type="text" class="form-control" placeholder="검색 내용" name="fvalue">
+				            <button class="btn btn-primary" type="submit">검색</button>
+				          </div>
+				        </form>
+				        <div class="col-md-2">
+				          <div class="d-flex justify-content-end align-items-center">
+							<select class="form-select w-auto"
+								name="checklist"
+								onchange="checklist(this.value)">
+								<option value="1" ${checklist == '1' ? 'selected' : ''}>전체보기</option>
+								<option value="2" ${checklist == '2' ? 'selected' : ''}>답변미완료글</option>
+								<option value="3" ${checklist == '3' ? 'selected' : ''}>당일 작성글</option>
+							</select>
 						</div>
 					</div>
-					<table class="table table-striped table-hover table-sm text-center">
-						<thead>
+				</div>
+				<table
+					class="table table-striped table-hover table-sm text-center table-responsive">
+					<thead>
+						<tr>
+							<th scope="col" style="width: 10%;">No.</th>
+							<th align="left" scope="col" style="width: 45%;">제목</th>
+							<th scope="col" style="width: 15%;">작성자</th>
+							<th scope="col" style="width: 15%;">진행상태</th>
+							<th scope="col" style="width: 15%;">작성일</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:if test="${empty lists}">
 							<tr>
-								<th scope="col" style="width: 10%;">No.</th>
-								<th scope="col" style="width: 45%;">제목</th>
-								<th scope="col" style="width: 15%;">작성자</th>
-								<th scope="col" style="width: 15%;">진행상태</th>
-								<th scope="col" style="width: 15%;">작성일</th>
+								<td colspan="5" class="text-center">등록된 글이 없습니다.</td>
 							</tr>
-						</thead>
-						<tbody>
-							<c:if test="${empty lists}">
-								<tr>
-									<td colspan="5" class="text-center">등록된 글이 없습니다.</td>
-								</tr>
-							</c:if>
-							<c:forEach var="ask" items="${lists}">
-								<tr>
-									<td>${ask.ask_idx}</td>
-									<c:url var="askContentUrl" value="askContent_a.do">
-										<c:param name="ask_idx">${ask.ask_idx }</c:param>
-									</c:url>
-									<td align="left"><a href="${askContentUrl}">
-											${ask.ask_title} <c:if test="${ask.newicon}">
-												<img src="/meomum/images/icon/icon_new.png" alt="new"
-													style="">
-											</c:if>
-									</a></td>
-									<td>${ask.ask_writer}</td>
-									<td><c:if test="${ask.ask_ask>0}">
-											<button type="button"
-												class="btn btn-success btn-sm align-middle disabled">답변완료</button>
-										</c:if> <c:if test="${ask.ask_ask==0}">
-											<button type="button"
-												class="btn btn-outline-danger btn-sm align-middle disabled">진행중</button>
-										</c:if></td>
+						</c:if>
+						<c:forEach var="ask" items="${lists}">
+							<tr>
+								<td>${ask.ask_idx}</td>
+								<c:url var="askContentUrl" value="askContent_a.do">
+									<c:param name="ask_idx">${ask.ask_idx }</c:param>
+								</c:url>
+								<td align="left"><a href="${askContentUrl}">
+										${ask.ask_title} <c:if test="${ask.newicon}">
+											<img src="/meomum/images/icon/icon_new.png" alt="new"
+												style="">
+										</c:if>
+								</a></td>
+								<td>${ask.ask_writer}</td>
+								<td><c:if test="${ask.ask_ask>0}">
+										<button type="button"
+											class="btn btn-success btn-sm align-middle disabled">답변완료</button>
+									</c:if> <c:if test="${ask.ask_ask==0}">
+										<button type="button"
+											class="btn btn-outline-danger btn-sm align-middle disabled">진행중</button>
+									</c:if></td>
 
-									<td>${ask.ask_date}</td>
+								<td>${ask.ask_date}</td>
 
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
 
 				<nav class="d-flex justify-content-between align-items-center">
 					<div
@@ -81,7 +104,6 @@
 							${pageStr} </span>
 					</div>
 				</nav>
-				</div>
 			</div>
 		</div>
 	</div>
@@ -93,8 +115,11 @@
 
 
 	<%@include file="/WEB-INF/views/footer_a.jsp"%>
-	
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-	
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+		crossorigin="anonymous"></script>
+
 </body>
 </html>
