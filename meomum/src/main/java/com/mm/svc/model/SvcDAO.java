@@ -7,7 +7,10 @@ public interface SvcDAO {
 	public int svcDetailInsert(SvcDetailDTO dto);
 	public int svcDateInsert(SvcDateDTO dto);
 	public List<String> svcTimeSelect(String userdate);
-	public List<SvcSelectAllDTO> svcList();
-	public List<SvcContentDTO> svcContent(String idx);
-	
+	public List<SvcSelectAllDTO> svcAdminList();
+	public SvcContentDTO svcContent(String idx);
+	public int svcMemUpdate(SvcMemDTO dto);
+	public int svcDetailUpdate(SvcDetailDTO dto);
+	public int svcDateUpdate(SvcDateDTO dto);
+	public List<SvcSelectAllDTO> svcUserList(int user_idx);
 }
