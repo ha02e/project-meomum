@@ -95,6 +95,14 @@
 				</table>
 
 			</div>	
+			
+			<div class="container-xl">
+				<nav aria-label="Page navigation example">
+					<ul class="pagination pagination-sm justify-content-center">
+						${pageStr}
+					</ul>
+				</nav>
+			</div>	
 		
 
 		<!-- ---------- 마이페이지 각 페이지 여기에 넣어주세요!! 끝 지점 ---------- -->
