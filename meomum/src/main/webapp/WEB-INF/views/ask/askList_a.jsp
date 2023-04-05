@@ -8,23 +8,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>간단문의 관리하기</title>
-<link href="/docs/5.2/dist/css/bootstrap.min.css" rel="stylesheet"
-	integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
-	crossorigin="anonymous">
 
-<!-- App CSS -->
-<link id="theme-style" rel="stylesheet" href="assets/css/portal_a.css">
-<link rel="stylesheet" type="text/css" href="css/mainLayout_a.css">
 <script type="text/javascript">
 	function checklist(checklist) {
 			window.location.href = 'askList_a.do?checklist=' + checklist;
 	}
 </script>
 </head>
-<body>
-	<%@include file="/WEB-INF/views/header_a.jsp"%>
+<body class="app">
 
-
+				<%@include file="/WEB-INF/views/header_a.jsp"%>
+				
 				<div class="app-wrapper" style="overflow: auto;">
 				  <div class="app-content pt-3 p-md-3 p-lg-4">
 				    <div class="container pt-5">
@@ -106,16 +100,9 @@
 				</nav>
 			</div>
 		</div>
-	</div>
-
-
-
-
-
-
+</div>
 
 	<%@include file="/WEB-INF/views/footer_a.jsp"%>
-
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
