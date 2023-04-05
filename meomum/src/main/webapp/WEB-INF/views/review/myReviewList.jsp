@@ -97,19 +97,18 @@
 							</div>	
 						</div>
 						<div class="card-footer text-center">
-						<form name="reviewUpdateForm" action="reviewUpdateForm.do" method="post">
 							<input type="hidden" name="review_idx" value="${dto.review_idx}">
 							<c:url var="contentUrl" value="reviewContent.do">
 								<c:param name="review_idx">${dto.review_idx}</c:param>
 							</c:url>
 							<button class="btn btn-primary btn-sm" onclick="location.href='${contentUrl}'">자세히 보기</button>
-							
-							<input type="submit" class="btn btn-primary btn-sm" value="수정">
-
+							<a href="reviewUpdateForm.do?review_idx=${dto.review_idx}">
+								<button class="btn btn-primary btn-sm">수정</button>
+							</a>
 							<a href="reviewDel.do?review_idx=${dto.review_idx}">
 								<button class="btn btn-danger btn-sm">삭제</button>
 							</a>
-						</form>
+							</form>
 						</div>
 					</div>
               		</div>

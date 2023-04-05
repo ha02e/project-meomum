@@ -3,6 +3,7 @@ package com.mm.controller;
 import java.io.*;
 import java.util.*;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -29,6 +30,9 @@ public class ReviewController {
 	
 	@Autowired
 	private ReviewService reviewService;
+	
+	@Autowired
+	private ServletContext servletContext;
 	
 	@RequestMapping("/myReview.do")
 	public String myReview() {
@@ -97,7 +101,7 @@ public class ReviewController {
 		dto.setThumb(fileName);
 		
 		int result=reviewService.reviewInsert(dto);
-		String msg=result>0?"리뷰 등록 완료되었습니다.":"리뷰 등록에 실패하였습니다.";
+		String msg=result>0?"후기 등록 완료되었습니다.":"후기 등록에 실패하였습니다.";
 		String link = result>0?"myReviewList.do":"reviewWrite.do";
 		
 		ModelAndView mav=new ModelAndView();
@@ -223,9 +227,21 @@ public class ReviewController {
 	
 	@RequestMapping("/reviewDel.do")
 	public ModelAndView reviewDelete(@RequestParam("review_idx")int review_idx) {
+		ReviewDTO review=reviewService.reviewContent(review_idx);
+		
+		String oldFileName = review.getThumb(); // 기존 이미지 파일 이름
+		String path=servletContext.getRealPath("/images/reviewImg");
+		if (oldFileName != null) { // 기존 이미지 파일이 존재하는 경우 삭제
+			File oldFile = new File(path + "/" + oldFileName);
+			if (oldFile.exists()) {
+				oldFile.delete();
+			}
+		}
+		System.out.println(oldFileName);
+		
 		int result=reviewService.reviewDelete(review_idx);
 		
-		String msg=result>0?"리뷰 삭제가 완료되었습니다.":"리뷰 삭제에 실패하였습니다.";
+		String msg=result>0?"후기 삭제가 완료되었습니다.":"후기 삭제에 실패하였습니다.";
 		
 		ModelAndView mav=new ModelAndView();
 		mav.addObject("msg", msg);
@@ -236,8 +252,44 @@ public class ReviewController {
 	}
 	
 	
-	/** 관리자 리뷰 관리 */
+	@RequestMapping("/reviewUpdateForm.do")
+	public ModelAndView reviewUpdateForm(@RequestParam("review_idx")int review_idx) {
+		ReviewDTO review=reviewService.reviewContent(review_idx);
+		
+		ModelAndView mav=new ModelAndView();
+		mav.addObject("review", review);
+		mav.setViewName("review/reviewUpdate");
+
+		return mav;
+	}
 	
+	@RequestMapping(value = "/reviewUpdate.do")
+	public ModelAndView reviewUpdate(MultipartHttpServletRequest req) {
+		ReviewDTO dto=new ReviewDTO();
+
+		int review_idx=Integer.parseInt(req.getParameter("review_idx"));
+		dto.setReview_idx(review_idx);
+		dto.setSubject(req.getParameter("subject"));
+		dto.setContent(req.getParameter("content"));
+		int star=Integer.parseInt(req.getParameter("star"));
+		dto.setStar(star);
+
+		int result=reviewService.reviewUpdate(dto);
+		String msg=result>0?"후기 수정이 완료되었습니다.":"후기 수정에 실패하였습니다.";
+
+		
+		ModelAndView mav=new ModelAndView();
+		mav.addObject("msg", msg);
+		mav.addObject("link", "myReviewList.do");
+		mav.setViewName("/msg");
+		
+		return mav;
+
+
+	}
+	
+	
+	/** 관리자 리뷰 관리 */
 	@RequestMapping("/reviewList_a.do")
 	public ModelAndView reviewList_a(@RequestParam(value="cp",defaultValue = "1")int cp) {
 		int totalCnt=reviewService.getTotalCnt();
@@ -257,15 +309,4 @@ public class ReviewController {
 		return mav;
 	}
 	
-	
-	@RequestMapping("/reviewUpdateForm.do")
-	public ModelAndView reviewUpdateForm(@RequestParam("review_idx")int review_idx) {
-		ReviewDTO review=reviewService.reviewUpdateForm(review_idx);
-		
-		ModelAndView mav=new ModelAndView();
-		mav.addObject("review", review);
-		mav.setViewName("review/reviewUpdate");
-		
-		return mav;
-	}
 }
