@@ -26,7 +26,7 @@ public class AskDAOImple implements AskDAO {
 	
 	/**간단문의 리스트*/
 	@Override
-	public List<AskDTO> askList(int cp, int ls) {
+	public List<AskDTO> askList(int cp, int ls,String type,String fvalue) {
 		int start = (cp-1)*ls+1;
 		int end = cp*ls;
 		
@@ -34,14 +34,19 @@ public class AskDAOImple implements AskDAO {
 		map.put("start", start);
 		map.put("end", end);
 		
+		if(type.equals("yes")) {
+			map.put("fvalue","%" + fvalue + "%");
+		}
+		
 		List<AskDTO> lists = sqlMap.selectList("askList",map);
 		return lists;
 	}
 
 	/**간단문의 총 게시글 수*/
 	 @Override
-	public int askCnt() {
-		int cnt = sqlMap.selectOne("askCnt");
+	public int askCnt(String fvalue) {
+		 fvalue = "%" + fvalue + "%";
+		int cnt = sqlMap.selectOne("askCnt", fvalue);
 
 		return cnt;
 	}
@@ -96,4 +101,23 @@ public class AskDAOImple implements AskDAO {
  		}
  		return result;
  	}
+ 	
+ 	/**관리자용 간단문의 리스트*/
+	@Override
+	public List<AskDTO> askList_a(int cp, int ls,String type,String fvalue,String checklist) {
+		int start = (cp-1)*ls+1;
+		int end = cp*ls;
+		
+		Map map = new HashMap();
+		map.put("start", start);
+		map.put("end", end);
+		map.put("checklist", checklist);
+		if(type.equals("yes")) {
+			map.put("fvalue","%" + fvalue + "%");
+		}
+		
+		List<AskDTO> lists = sqlMap.selectList("askList_a",map);
+		return lists;
+	}
+
 }

@@ -163,7 +163,8 @@
 	}
 	
 	function deleteComm() {
-		if (confirm("정말로 삭제하시겠습니까?")){  var ask_idx = '${ask.ask_idx}';
+		if (confirm("정말로 삭제하시겠습니까?")){ 
+			var ask_idx = '${ask.ask_idx}';
 
 		  $.ajax({
 		    url: 'askCommDel.do',
@@ -173,10 +174,10 @@
 		    },
 		    success: function(data) {
 		      window.location.reload();
-		      alert(data.msg + comm_idx);
+		      alert(data.msg);
 		    },
 		    error: function(jqXHR, textStatus) {
-		      alert('전송 실패: '+comm_idx + textStatus + ' (' + jqXHR.status + ')');
+		      alert('전송 실패');
 		    }
 		  });
 		}

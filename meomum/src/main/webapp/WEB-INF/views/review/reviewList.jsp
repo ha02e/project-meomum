@@ -89,7 +89,7 @@
 							<c:param name="review_idx">${dto.review_idx}</c:param>
 						</c:url>
 						<div class="card-body">
-							<h5 class="card-title"><a href="${contentUrl}">${dto.subject}</a></h5>
+							<h5 class="card-title text-truncate"><a href="${contentUrl}">${dto.subject}</a></h5>
 						</div>
 						<ul class="list-group list-group-flush">
 							<li class="list-group-item">

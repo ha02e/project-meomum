@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
@@ -46,18 +47,22 @@ public class AskController {
 	
 	/**간단문의 리스트*/
 	@RequestMapping("/askList.do")
-	public ModelAndView askList(@RequestParam(value="cp",defaultValue = "1")int cp) {
+	public ModelAndView askList(@RequestParam(value="cp",defaultValue = "1")int cp,
+								@RequestParam(value="fvalue",defaultValue = "")String fvalue,
+								@RequestParam(value="type",defaultValue = "no")String type) {
 
 		
 		//페이징
-		int rtotalCnt = adao.askCnt();
+		int rtotalCnt = adao.askCnt(fvalue);
 		int totalCnt = rtotalCnt==0?1:rtotalCnt;
 		int listSize = 10;
 		int pageSize = 5;
+		
+		String param = "&fvalue="+fvalue+"&type="+type;
+		String pageStr = com.mm.module.PageModule.makePageParam("askList.do", totalCnt, listSize, pageSize, cp,param);
 
-		String pageStr = com.mm.module.PageModule.makePage("askList.do", totalCnt, listSize, pageSize, cp);
-
-		List<AskDTO> lists = adao.askList(cp, listSize);
+		
+		List<AskDTO> lists = adao.askList(cp, listSize,type,fvalue);
 		
 		for (AskDTO dto : lists) {
 		    String askDate;
@@ -202,7 +207,10 @@ public class AskController {
 	
 	/**관리자 간단문의 관리 이동*/
 	@RequestMapping("/askList_a.do")
-	public ModelAndView askList_a(@RequestParam(value="cp",defaultValue = "1")int cp,HttpSession session) {
+	public ModelAndView askList_a(@RequestParam(value="cp",defaultValue = "1")int cp,HttpSession session,
+									@RequestParam(value="fvalue",defaultValue = "")String fvalue,
+									@RequestParam(value="type",defaultValue = "no")String type,
+									@RequestParam(value="checklist",defaultValue = "1")String checklist) {
 		ModelAndView mav = new ModelAndView();
 		MemberDTO ssInfo = (MemberDTO) session.getAttribute("ssInfo");
 		if(ssInfo==null||!ssInfo.getUser_info().equals("관리자")) {
@@ -213,15 +221,17 @@ public class AskController {
 		}
 		
 		//페이징
-		int rtotalCnt = adao.askCnt();
+		int rtotalCnt = adao.askCnt(fvalue);
 		int totalCnt = rtotalCnt==0?1:rtotalCnt;
 		int listSize = 10;
 		int pageSize = 5;
+		String param = "&fvalue="+fvalue+"&type="+type+"&checklist="+checklist;
+		String pageStr = com.mm.module.PageModule.makePageParam("askList_a.do", totalCnt, listSize, pageSize, cp,param);
 
-		String pageStr = com.mm.module.PageModule.makePage("askList.do", totalCnt, listSize, pageSize, cp);
-
-		List<AskDTO> lists = adao.askList(cp, listSize);
+		List<AskDTO> lists = adao.askList_a(cp, listSize,type,fvalue,checklist);
 		
+		
+		//게시글 작성 시간 구분
 		for (AskDTO dto : lists) {
 		    String askDate;
 		    if (dto.getAsk_wdateYMD().equals(LocalDate.now().toString())) {
@@ -234,10 +244,13 @@ public class AskController {
 		    }
 		    dto.setAsk_date(askDate);
 		}
-		mav.setViewName("ask/askList_a");
-		
 		mav.addObject("totalCnt",rtotalCnt);
+		mav.addObject("checklist",checklist);
+		
 		mav.addObject("lists",lists);
+		
+		
+		mav.setViewName("ask/askList_a");
 		mav.addObject("pageStr",pageStr);
 		return mav;
 	}
@@ -262,6 +275,7 @@ public class AskController {
 			MemberDTO mdto = mdao.getuserInfo(comm.getUser_idx());
 			mav.addObject("mInfo",mdto);
 		}
+		
 		mav.addObject("ask",dto);
 		mav.addObject("comm", comm);
 		mav.setViewName("ask/askContent_a");
@@ -322,7 +336,6 @@ public class AskController {
 	  return mav;
 	}
 	
-
 	
 	
 }

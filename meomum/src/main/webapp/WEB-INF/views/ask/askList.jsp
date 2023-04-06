@@ -37,15 +37,21 @@
         </div>
     </div>
 <!-- 본문 시작 -->
-<div class="container">
-  <div class="row">
-    <div class="col-9 mx-auto">
-   		 <p>
-			전체 글 수 :<span id="total-users">${totalCnt}</span>개
-		</p>
-		<div class="table-responsive">
-		
-      <table class="table table-striped table-hover table-sm text-center">
+<div class="container " style="overflow: auto;">
+  <div class="row justify-content-center">
+    <div class="col-10">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <p class="mb-0">전체 글 수: <span id="total-users">${totalCnt}</span>개</p>
+        <form name="searchask" action ="askList.do">
+          <div class="input-group">
+     	     <input type="hidden" name="type" value="yes">
+            <input type="text" class="form-control" placeholder="검색 내용" name="fvalue">
+            <button class="btn btn-primary" type="submit">검색</button>
+          </div>
+        </form>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-striped table-hover table-sm text-center">
         <thead>
           <tr>
             <th scope="col" style="width: 10%;">No.</th>
@@ -94,7 +100,7 @@
       </div>
       
 			<nav class="d-flex justify-content-between align-items-center">
-			  <div class="col-12 justify-content-center align-items-start text-center">
+			  <div class="col-10 justify-content-center align-items-start text-center">
 			    	<span class="pagination pagination-sm justify-content-center">
 			${pageStr}
 			</span>
@@ -104,6 +110,7 @@
 			  </div>
 			</nav>
     </div>
+    <!-- 본문끝 -->
   </div>
 </div>
 <%@include file="/WEB-INF/views/footer.jsp" %>

@@ -2,64 +2,145 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  <mapper namespace="com.mm.ask">
-  	<insert id="askInsert" parameterType="com.mm.ask.model.AskDTO">
-  		insert into ask values(
-  								ask_ask_idx.nextval,
-  								#{user_idx},
-								#{ask_title},
-								#{ask_writer},
-								#{ask_tel},
-								#{rsd_type},
-								#{rsd_py},
-								#{ask_file},
-								#{ask_content},
-								#{ask_pwd},
-								#{ask_tos},
-								sysdate,
-								0
-  		
-  		)
-  	</insert>
-	<select id="askList" parameterType="Map" resultType="com.mm.ask.model.AskDTO">
-			select * from 
-  			(select rownum as rnum,a.* from
-				(select * from ask order by ask_idx desc)a
-			)b
-		where rnum <![CDATA[>=]]> #{start} and rnum <![CDATA[<=]]>#{end}
-	</select>
-		<select id="askCnt" resultType="Integer">
-  		select count(*) from ask
-  	</select>
-  	<select id="askSelectContent" parameterType="Integer" resultType="com.mm.ask.model.AskDTO">
-  		select * from ask where ask_idx = #{ask_idx}
-  	</select>
-   <select id="existsFile" parameterType="String" resultType="Integer">
-        SELECT COUNT(*) FROM ASK WHERE ask_file = #{fileName}
-    </select>
-    <insert id="commentsInsert" parameterType="com.mm.ask.model.CommentsDTO">
-    	insert into comments values(comments_comm_idx.nextval,
-  								#{ask_idx},
-  								#{user_idx},
-  								sysdate,
-  								#{comm_cont}
-  								)
-    
-    </insert>
-    <update id="updateAskPlusOne" parameterType="Integer">
-    	update ask set ask_ask = ask_ask+1 where ask_idx= #{ask_idx}
-    </update>
-     <update id="updateAskMinusOne" parameterType="Integer">
-    	update ask set ask_ask = ask_ask-1 where ask_idx= #{ask_idx}
-    </update>
-    <select id="commList" parameterType="Integer" resultType="com.mm.ask.model.CommentsDTO">
-   	 select * from comments where ask_idx = #{ask_idx}
-    </select>
-    <delete id="deleteAsk" parameterType="Integer">
-    	delete from ask where ask_idx = #{ask_idx}
-    </delete>
-    <delete id="deleteComm" parameterType="Integer">
-    	delete from comments where ask_idx = #{ask_idx}
-    </delete>
+<mapper namespace="com.mm.ask">
+	<insert id="askInsert" parameterType="com.mm.ask.model.AskDTO">
+		insert into ask values(
+		ask_ask_idx.nextval,
+		#{user_idx},
+		#{ask_title},
+		#{ask_writer},
+		#{ask_tel},
+		#{rsd_type},
+		#{rsd_py},
+		#{ask_file},
+		#{ask_content},
+		#{ask_pwd},
+		#{ask_tos},
+		sysdate,
+		0
 
-  </mapper>
+		)
+	</insert>
+	<select id="askList" parameterType="Map"
+		resultType="com.mm.ask.model.AskDTO">
+		select * from
+		(select rownum as rnum,a.* from
+		(select * from ask
+		<if test="fvalue != null">
+
+			WHERE
+			ask_title LIKE #{fvalue} or
+			ask_writer LIKE #{fvalue}
+			or
+			ask_content LIKE #{fvalue} or
+			ask_tel LIKE #{fvalue}
+
+		</if>
+		order by ask_idx desc
+		)a
+		)b
+		where rnum <![CDATA[>=]]>
+		#{start} and rnum <![CDATA[<=]]>#{end}
+	</select>
+
+
+	<select id="askCnt" resultType="Integer" parameterType="String">
+		select count(*) from ask
+		<if test="fvalue != null">
+			where
+			ask_title LIKE #{fvalue} or
+			ask_writer LIKE #{fvalue}
+			or
+			ask_content LIKE #{fvalue} or
+			ask_tel LIKE #{fvalue}
+		</if>
+	</select>
+
+
+
+	<select id="askSelectContent" parameterType="Integer"
+		resultType="com.mm.ask.model.AskDTO">
+		select * from ask where ask_idx = #{ask_idx}
+	</select>
+	<select id="existsFile" parameterType="String"
+		resultType="Integer">
+		SELECT COUNT(*) FROM ASK WHERE ask_file = #{fileName}
+	</select>
+	<insert id="commentsInsert"
+		parameterType="com.mm.ask.model.CommentsDTO">
+		insert into comments values(comments_comm_idx.nextval,
+		#{ask_idx},
+		#{user_idx},
+		sysdate,
+		#{comm_cont}
+		)
+
+	</insert>
+	<update id="updateAskPlusOne" parameterType="Integer">
+		update ask set
+		ask_ask = ask_ask+1 where ask_idx= #{ask_idx}
+	</update>
+	<update id="updateAskMinusOne" parameterType="Integer">
+		update ask set
+		ask_ask = ask_ask-1 where ask_idx= #{ask_idx}
+	</update>
+	<select id="commList" parameterType="Integer"
+		resultType="com.mm.ask.model.CommentsDTO">
+		select * from comments where ask_idx = #{ask_idx}
+	</select>
+	<delete id="deleteAsk" parameterType="Integer">
+		delete from ask where
+		ask_idx = #{ask_idx}
+	</delete>
+	<delete id="deleteComm" parameterType="Integer">
+		delete from comments where
+		ask_idx = #{ask_idx}
+	</delete>
+
+	<select id="askList_a" parameterType="Map"
+		resultType="com.mm.ask.model.AskDTO">
+		select * from
+		(select rownum as rnum,a.* from
+		(select * from ask
+
+
+		<choose>
+			<when test="checklist == 2">
+				where ask_ask <![CDATA[<]]>1
+			</when>
+			<when test="checklist == 3">
+				 WHERE TO_CHAR(ask_wdate, 'YYYY-MM-DD') <![CDATA[=]]> TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+			</when>
+			<otherwise>
+				<if test="fvalue != null">
+					WHERE
+					ask_title LIKE #{fvale} oru
+					ask_writer LIKE #{fvalue} or
+					ask_content LIKE #{fvalue} or
+					ask_tel LIKE #{fvalue}
+				</if>
+				
+			</otherwise>
+		</choose>
+		order by ask_idx desc
+		)a
+		)b
+		where rnum <![CDATA[>=]]>
+		#{start} and rnum <![CDATA[<=]]>#{end}
+	</select>
+
+
+	<select id="askCnt_a" resultType="Integer"
+		parameterType="String">
+		select count(*) from ask
+		<if test="fvalue != null">
+			where
+			ask_title LIKE #{fvalue} or
+			ask_writer LIKE #{fvalue}
+			or
+			ask_content LIKE #{fvalue} or
+			ask_tel LIKE #{fvalue}
+		</if>
+	</select>
+
+</mapper>

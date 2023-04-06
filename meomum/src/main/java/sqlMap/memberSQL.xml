@@ -54,45 +54,72 @@
 	
 	<select id="getuserTTCnt" resultType="Integer" parameterType="String">
 	  SELECT COUNT(*) FROM member 
+	  	<if test="fvalue != null">
 	 	 WHERE user_idx LIKE #{fvalue} or 
 	 	 	user_id LIKE #{fvalue} or
 	 	 	user_name LIKE #{fvalue} or
 	 	 	user_tel LIKE #{fvalue}
+	 	</if>
 	</select>
-	<select id="memberList" parameterType="Map" resultType="com.mm.member.model.MemberDTO">
-    select * from 
-    (
-        select rownum as rnum,a.* from
-        (
-            select * from member 
-            <if test="fvalue != null">
-                	 WHERE user_idx LIKE #{fvalue} or 
-					 	 	user_id LIKE #{fvalue} or
-					 	 	user_name LIKE #{fvalue} or
-					 	 	user_tel LIKE #{fvalue}
-            </if>
+	
+	
+<select id="memberList" parameterType="Map" resultType="com.mm.member.model.MemberListDTO">
+		SELECT *
+		FROM (
+		    SELECT rownum as rnum, a.*
+		    FROM (
+		        SELECT
+		            m.user_idx,
+		            m.user_info,
+		            m.user_id,
+		            m.user_name,
+		            m.user_tel,
+		            m.joindate,
+		            COUNT(DISTINCT sd.svc_idx) AS svcCount,
+		            COUNT(DISTINCT od.svc_idx) AS orderCount,
+		            COUNT(DISTINCT r.review_idx) AS reviewCount,
+		            m.user_memo
+		        FROM member m
+		        LEFT JOIN svc_date sd ON m.user_idx = sd.user_idx
+		        LEFT JOIN svc_detail od ON m.user_idx = od.user_idx
+		        LEFT JOIN review r ON m.user_idx = r.user_idx
+          		  <if test="fvalue != null">
+                	 WHERE m.user_idx LIKE #{fvalue} or 
+					 	 	m.user_id LIKE #{fvalue} or
+					 	 	m.user_name LIKE #{fvalue} or
+					 	 	m.user_tel LIKE #{fvalue}
+           		 </if>
+            GROUP BY
+            m.user_idx,
+            m.user_info,
+            m.user_id,
+            m.user_name,
+            m.user_tel,
+            m.joindate,
+            m.user_memo
+			    
               <choose>
 				  <when test="orderby== 2">
-				    ORDER BY user_name
+				    ORDER BY m.user_name
 				  </when>
 				  <when test="orderby== 3">
-				    ORDER BY user_idx asc
+				    ORDER BY svcCount DESC, user_name
 				  </when>
 				  <when test="orderby== 4">
-				    ORDER BY joindate DESC
+				    ORDER BY orderCount DESC, user_name
 				  </when>
 				  <when test="orderby== 5">
-				    ORDER BY joindate
+				    ORDER BY reviewCount DESC, user_name
 				  </when>
 				  <otherwise>
-				    ORDER BY user_idx DESC
+				    ORDER BY m.user_idx DESC
 				  </otherwise>
-			</choose>
-        )a
-    )b
+			  </choose>
+        ) a
+    ) b
     where rnum <![CDATA[>=]]> #{start} and rnum <![CDATA[<=]]> #{end}
-    
 </select>
+
 
 	
 	
