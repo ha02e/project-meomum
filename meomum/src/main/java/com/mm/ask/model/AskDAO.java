@@ -15,4 +15,7 @@ public interface AskDAO {
 	public CommentsDTO commList(int ask_idx);
 	public int deleteAsk(int ask_idx);
 	public int deleteComm(int comm_idx);
+	public List<AskDTO> myaskList(int cp, int ls,int user_idx);
+	public int myaskCnt(int user_idx);
+
 }

@@ -23,7 +23,6 @@
 <!-- add annotation-driven --> 
    <mvc:annotation-driven/>
 
-<!-- ckeditor -->
 <!-- fileupload -->
 	<bean id="uploadPath" class="java.lang.String">
 		<constructor-arg value="/meomum/src/main/webapp/resources"></constructor-arg>

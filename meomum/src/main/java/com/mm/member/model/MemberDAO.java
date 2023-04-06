@@ -20,6 +20,11 @@ public interface MemberDAO {
 	/*수정예정*/
 	public List<MemberListDTO> memberList(int cp, int ls,String type,String fvalue,String orderby);
 	public int getuserTTCnt(String fvalue);
-
+	public int managerUpdate(int user_idx);
+	public int userMemoUpdate(int user_idx,String user_memo);
+	public List<MemberListDTO> managerList(int cp, int ls,String type,String fvalue,String orderby);
+	public int getmanagerTTCnt(String fvalue);
+	public int managerDelete(int user_idx);
+	public String findID(String user_name, String user_tel);
 
 }
