@@ -23,4 +23,10 @@ public class OrderDAOImple implements OrderDAO {
 		ProDTO dto=sqlMap.selectOne("orderList", idx);
 		return dto;
 	}
+	
+	@Override
+	public int orderInsert(OrderDTO dto) {
+		int count=sqlMap.insert("orderInsert", dto);
+		return count;
+	}
 }
