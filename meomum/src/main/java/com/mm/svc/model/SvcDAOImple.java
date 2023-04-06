@@ -1,7 +1,9 @@
 package com.mm.svc.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
@@ -42,14 +44,28 @@ public class SvcDAOImple implements SvcDAO {
 		return times;
 	}
 	
-	/**방문 견적 예약 신청자 리트스*/
+	/**관리자: 방문 견적 예약 신청자 리스트*/
 	@Override
 	public List<SvcSelectAllDTO> svcAdminList() {
 		List<SvcSelectAllDTO> list = sqlMap.selectList("svcAdminList");
 		return list;
 	}
 	
-	/**예약 상세 보기*/
+	/**관리자: 방문 예약 신청자 세부 검색*/
+	@Override
+	public List<SvcSelectAllDTO> svcSelectDetail(String minDate, String maxDate, String category, String keyword, String[] state) {
+		Map map = new HashMap();
+		map.put("minDate",minDate);
+		map.put("maxDate",maxDate);
+		map.put("keyword", keyword);
+		map.put("category", category);
+		map.put("state",state);
+		
+		List<SvcSelectAllDTO> lists = sqlMap.selectList("svcSelectDetail",map);		
+		return lists;
+	}
+	
+	/**공통: 예약 상세 보기*/
 	@Override
 	public SvcContentDTO svcContent(String idx) {
 		SvcContentDTO dto = sqlMap.selectOne("svcContent",idx);
@@ -57,7 +73,7 @@ public class SvcDAOImple implements SvcDAO {
 		return dto;
 	}
 	
-	/**예약 정보 수정*/
+	/**공통: 예약 정보 수정*/
 	@Override
 	public int svcMemUpdate(SvcMemDTO dto) {
 		int count = sqlMap.update("svcMemUpdate", dto);
@@ -74,10 +90,23 @@ public class SvcDAOImple implements SvcDAO {
 		return count;
 	}
 	
-	/**마이페이지 방문 예약 신청 내역*/
+	/**마이페이지 : 방문 예약 신청 내역*/
 	@Override
 	public List<SvcSelectAllDTO> svcUserList(int user_idx) {
-		List<SvcSelectAllDTO> list = sqlMap.selectList("svcUserList");
+		List<SvcSelectAllDTO> list = sqlMap.selectList("svcUserList",user_idx);
 		return list;
-}
+	}
+	
+	/**마이페이지: 사용자 방문 견적 예약 삭제*/
+	@Override
+	public int svcStateCancle(String svc_idx) {
+		int count = sqlMap.update("svcStateCancle", svc_idx);
+		return count;
+	}
+	
+	@Override
+	public int svcDateCancle(String svc_idx) {
+		int count = sqlMap.update("svcDateCancle", svc_idx);
+		return count;
+	}
 }

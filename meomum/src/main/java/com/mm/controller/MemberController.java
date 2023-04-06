@@ -16,12 +16,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.mm.member.model.MemberDAO;
 import com.mm.member.model.MemberDTO;
+import com.mm.member.model.MemberListDTO;
 
 @Controller
 public class MemberController {
@@ -80,6 +81,7 @@ public class MemberController {
 			MemberDTO dto = mdao.getsessionInfo(input_id);
 			
 			session.setAttribute("ssInfo", dto);
+			session.setMaxInactiveInterval(120*60); //
 			
 			if(dto.getUser_info().equals("회원")) {
 				mav.addObject("msg",dto.getUser_name()+"님 환영합니다.");
@@ -188,24 +190,23 @@ public class MemberController {
 	}
 	/*비밀번호 변경*/
 	@RequestMapping(value="/pwdChange.do",method = RequestMethod.POST)
-	public ModelAndView pwdChange(@RequestParam("user_idx")String user_idx,@RequestParam("newPwd")String newPwd ) {
+	@ResponseBody
+	public ModelAndView pwdChange(@RequestParam("user_idx")int user_idx,@RequestParam("newPassword")String newPwd ) {
 
 		System.out.println("pwd="+newPwd);
 		System.out.println("idx="+user_idx);
-	    /*int result = mdao.updatePWD(pwd,Integer.parseInt(user_idx));
-		String msg = result>0?"비밀번호가 수정되었습니다.":"비밀번호 수정에 실패하였습니다. 다시 시도해주세요.";
+	    int result = mdao.updatePWD(newPwd, user_idx);
 
 	    
-	    mav.addObject("msg", msg);*/
 		ModelAndView mav = new ModelAndView();
-	    mav.addObject("msg", "성공");
-
+		mav.addObject("result", result);
+	    mav.setViewName("mmJson");
 	    return mav;
 	}
 	/**관리자 회원정보 확인*/
 	@RequestMapping(value="/menMan.do",method = RequestMethod.GET)
 	public ModelAndView memManList(@RequestParam(value="cp",defaultValue = "1")int cp,
-									@RequestParam(value="fvalue",required = false)String fvalue,
+									@RequestParam(value="fvalue",defaultValue = "")String fvalue,
 									@RequestParam(value="type",defaultValue = "no")String type,
 									@RequestParam(value="orderby",defaultValue = "1")String orderby) {
 		
@@ -213,9 +214,11 @@ public class MemberController {
 		int totalCnt = rtotalCnt==0?1:rtotalCnt;
 		int listSize = 10;
 		int pageSize = 5;
-		String pageStr = com.mm.module.PageModule.makePage("menMan.do", totalCnt, listSize, pageSize, cp);
 		
-		List<MemberDTO> lists = mdao.memberList(cp, listSize,type,fvalue,orderby);
+		String param = "&fvalue="+fvalue+"&type="+type+"&orderby="+orderby;
+		String pageStr = com.mm.module.PageModule.makePageParam("menMan.do", totalCnt, listSize, pageSize, cp,param);
+		
+		List<MemberListDTO> lists = mdao.memberList(cp, listSize,type,fvalue,orderby);
 
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("member/memManList");
@@ -228,6 +231,6 @@ public class MemberController {
 		mav.addObject("pageStr",pageStr);
 		return mav;
 	}
-
+	
 	
 }

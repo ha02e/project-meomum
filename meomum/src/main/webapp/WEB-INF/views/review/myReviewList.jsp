@@ -83,7 +83,7 @@
 							
 						</div>
 						<div class="card-body">
-							<h4 class="card-title">${dto.subject}</h4>
+							<h4 class="card-title text-truncate">${dto.subject}</h4>
 							<div class="entry-meta">
 								<ul class="d-flex justify-content-between">
 									<li class="d-flex align-items-center"><i class="bi bi-person"></i>&nbsp;${dto.writer}</li>
@@ -102,10 +102,13 @@
 								<c:param name="review_idx">${dto.review_idx}</c:param>
 							</c:url>
 							<button class="btn btn-primary btn-sm" onclick="location.href='${contentUrl}'">자세히 보기</button>
-							<button class="btn btn-primary btn-sm">수정</button>
-								<a href="reviewDel.do?review_idx=${dto.review_idx}">
-									<button class="btn btn-danger btn-sm">삭제</button>
-								</a>
+							<a href="reviewUpdateForm.do?review_idx=${dto.review_idx}">
+								<button class="btn btn-primary btn-sm">수정</button>
+							</a>
+							<a href="reviewDel.do?review_idx=${dto.review_idx}">
+								<button class="btn btn-danger btn-sm">삭제</button>
+							</a>
+							</form>
 						</div>
 					</div>
               		</div>

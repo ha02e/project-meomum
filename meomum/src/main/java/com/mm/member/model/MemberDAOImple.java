@@ -190,7 +190,7 @@ public class MemberDAOImple implements MemberDAO {
 		
 		return count;
 	}
-	/**회원정보 비밀번호 수정 _ 수정해야함*/
+	/**회원정보 비밀번호 수정*/
 	@Override
 	public int updatePWD(String newPwd,int user_idx) {
 		Map map = new HashMap();
@@ -203,7 +203,7 @@ public class MemberDAOImple implements MemberDAO {
 	
 	/**회원 정보 리스트 불러오기*/
 	@Override
-	public List<MemberDTO> memberList(int cp, int ls,String type, String fvalue,String orderby) {
+	public List<MemberListDTO> memberList(int cp, int ls,String type, String fvalue,String orderby) {
 		int start = (cp-1)*ls+1;
 		int end = cp*ls;
 
@@ -220,7 +220,7 @@ public class MemberDAOImple implements MemberDAO {
 		map.put("end", end);
 		map.put("orderby", orderby);
 		
-		List<MemberDTO> lists = sqlMap.selectList("memberList",map);
+		List<MemberListDTO> lists = sqlMap.selectList("memberList",map);
 		return lists;
 	}
 	

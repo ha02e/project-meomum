@@ -26,7 +26,6 @@ label.detail {
 	font-size: 14px;
 }
 
-/**/
 label:hover, label:active, input:hover+label, input:active+label {
 	background: #00cdac;
 	transition: 0.3s;
@@ -102,10 +101,12 @@ $(function() {
 </head>
 <body>
 	<h1>방문 견적 예약</h1>
-	<form name="asvcUpdate" action="asvcUpdate.do" method="post">
+	<form name="svcUpdate" action="svcUpdate.do" method="post">
+	<input type="hidden" name="svc_state" value="${dto.svc_state}">
+	<input type="hidden" name="svc_know" value="${dto.svc_know}">
+	<input type="hidden" name="svc_memo" value="${dto.svc_memo}">
 		<ul>
-			<li>예약번호 <input type="text" name="svc_idx"
-				value="${dto.svc_idx}" readonly>
+			<li>예약번호 <input type="text" name="svc_idx" value="${dto.svc_idx}" readonly>
 			</li>
 
 			<li>거주형태 
@@ -156,29 +157,12 @@ $(function() {
 					<input id="timeB" type="radio" name="svc_time" value="13:00" ${dto.svc_time =="13:00"?"checked":""}>13:00<span></span> 
 					<input id="timeC" type="radio" name="svc_time" value="16:00" ${dto.svc_time =="16:00"?"checked":""}>16:00<span></span>
 			</div>
-			<li>예약상태 
-				<select name="svc_state">
-					<option value="예약확정" ${dto.svc_state =="예약확정"?"selected":""}>예약확정</option>
-					<option value="예약취소" ${dto.svc_state =="예약취소"?"selected":""}>예약취소</option>
-					<option value="견적완료" ${dto.svc_state =="견적완료"?"selected":""}>견적완료</option>
-					<option value="결제대기" ${dto.svc_state =="결제대기"?"selected":""}>결제대기</option>
-					<option value="결제완료" ${dto.svc_state =="결제완료"?"selected":""}>결제완료</option>
-					<option value="결제취소" ${dto.svc_state =="결제취소"?"selected":""}>결제취소</option>
-					<option value="작업완료" ${dto.svc_state =="작업완료"?"selected":""}>작업완료</option>
-				</select>
-			</li>
-
 
 			<li>요청사항<br> 
 				<textarea name="svc_req" rows="5" cols="35">${dto.svc_req}</textarea>
 			</li>
-
-			<li>서비스 인지 경로 
-				<input type="text" value="${dto.svc_know}" readonly>
-			</li>
-			<li>관리자 메모<br> 
-				<textarea name="svc_memo" rows="5" cols="35">${dto.svc_memo}</textarea>
-			</li>
+			
+			
 		</ul>
 
 		<div>

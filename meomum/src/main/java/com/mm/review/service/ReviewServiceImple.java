@@ -43,6 +43,7 @@ public class ReviewServiceImple implements ReviewService {
 		return count;
 	}
 	
+	
 	@Override
 	public List<ReviewDTO> myreviewList(int cp, int ls, int user_idx) {
 		int start=(cp-1)*ls+1;
@@ -66,10 +67,38 @@ public class ReviewServiceImple implements ReviewService {
 	
 	
 	@Override
+	public List<ReviewDTO> reviewableList(int cp, int ls, int user_idx) {
+		int start=(cp-1)*ls+1;
+		int end=cp*ls;
+		
+		Map map=new HashMap();
+		map.put("start", start);
+		map.put("end", end);
+		map.put("user_idx", user_idx);
+		
+		List<ReviewDTO> lists=reviewDao.reviewableList(map);
+		return lists;
+	}
+	
+	@Override
+	public int reviewableTotalCnt(int user_idx) {
+		int count=reviewDao.reviewableTotalCnt(user_idx);
+		count=count==0?1:count;
+		return count;
+	}
+	
+	
+	@Override
 	public ReviewDTO reviewContent(int review_idx) {
 		ReviewDTO dto=reviewDao.reviewContent(review_idx);
 		dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
 		return dto;
+	}
+	
+	@Override
+	public int reviewReadnum(int review_idx) {
+		int count=reviewDao.reviewReadnum(review_idx);
+		return count;
 	}
 
 	
@@ -79,4 +108,16 @@ public class ReviewServiceImple implements ReviewService {
 		return count;
 	}
 	
+	
+	@Override
+	public ReviewDTO reviewUpdateForm(int review_idx) {
+		ReviewDTO review=reviewDao.reviewContent(review_idx);
+		return review;
+	}
+	
+	@Override
+	public int reviewUpdate(ReviewDTO dto) {
+		int count=reviewDao.reviewUpdate(dto);
+		return count;
+	}
 }
