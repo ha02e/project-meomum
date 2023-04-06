@@ -20,7 +20,7 @@
 	    <div class="col-md-6">
 	      <h4 class="mb-3 text-center">회원가입</h4>
 	      <form name="memberJoin" action="memberJoin.do" method="post">
-	      <input type="hidden" name="user_jointype" value="머뭄">
+	      <input type="hidden" name="user_jointype" value="${param.user_jointype ? '머뭄' : param.user_jointype}">
 	       <input type="hidden" name="user_info" value="회원">
 	      
 	        <div class="form-group">

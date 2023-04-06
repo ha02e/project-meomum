@@ -159,12 +159,21 @@ public class AskController {
 	}
 	
 	/**간단문의 본문 보기*/
-	@RequestMapping("/askContent.do")
-	public ModelAndView askContent(@RequestParam("ask_idx")int ask_idx) {
+	@RequestMapping(value="/askContent.do",method = RequestMethod.POST)
+	public ModelAndView askContent(@RequestParam("ask_idx")int ask_idx,
+									@RequestParam("ask_ok")String ask_ok
+									) {
+		ModelAndView mav = new ModelAndView();
+
+		if(!ask_ok.equals("OK")) {
+			mav.addObject("msg","잘못된 접근입니다.");
+			mav.addObject("gopage","history.back()");
+			mav.setViewName("mainMsg");
+			return mav;
+		}
+		
 		AskDTO dto = adao.askContent(ask_idx);
 		CommentsDTO comm = adao.commList(ask_idx);
-
-		ModelAndView mav = new ModelAndView();
 		mav.addObject("ask",dto);
 		mav.addObject("comm",comm);
 		mav.setViewName("ask/askContent");
@@ -337,5 +346,19 @@ public class AskController {
 	}
 	
 	
+	
+	/**비밀번호 정보 보내기*/
+	@RequestMapping(value="/getPassword.do",method = RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView getPassword(@RequestParam("ask_idx")int ask_idx) {
+		
+		AskDTO dto = adao.askContent(ask_idx);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("pwd", dto.getAsk_pwd());
+		mav.setViewName("mmJson");
+		
+	  return mav;
+	}
 	
 }

@@ -94,7 +94,6 @@
 	  </tbody>
 	</table>
 	<div class="text-center">
-	 <a href="askList_a.do" class="btn btn-primary text-center">수정</a>
 	 <button type="button" class="btn btn-primary" onclick="deleteData()">삭제</button>
 	 <a href="askList_a.do" class="btn btn-primary text-center">목록으로 돌아가기</a>
 	 </div>

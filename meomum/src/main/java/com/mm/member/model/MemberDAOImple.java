@@ -12,8 +12,6 @@ import org.springframework.cache.annotation.CacheEvict;
 public class MemberDAOImple implements MemberDAO {
 	private SqlSessionTemplate sqlMap;
 
-	
-	
 	public MemberDAOImple(SqlSessionTemplate sqlMap) {
 		super();
 		this.sqlMap = sqlMap;
@@ -22,45 +20,44 @@ public class MemberDAOImple implements MemberDAO {
 	public MemberDAOImple() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	@Override
 	public int insertJoin(MemberDTO dto) {
-		int count = sqlMap.insert("insertJoin",dto);
+		int count = sqlMap.insert("insertJoin", dto);
 		return count;
 	}
-	
-	 @Override
+
+	@Override
 	public int login(String input_id, String input_pwd) {
 		MemberDTO dto = sqlMap.selectOne("login", input_id);
 		int result = 0;
-		
-		if(dto==null) {
+
+		if (dto == null) {
 			result = NOT_ID;
-		}else{
-			if(dto.getUser_pwd().equals(input_pwd)) {
+		} else {
+			if (dto.getUser_pwd().equals(input_pwd)) {
 				result = LOGIN_OK;
-			}else {
+			} else {
 				result = NOT_PWD;
 			}
 		}
-		
+
 		return result;
 	}
-	 
-	 @Override
+
+	@Override
 	public MemberDTO getsessionInfo(String input_id) {
 		MemberDTO dto = sqlMap.selectOne("login", input_id);
 		return dto;
 	}
-	 
-	 
-	 /**카카오 code보내 access_Token얻기*/
+
+	/** 카카오 code보내 access_Token얻기 */
 	@Override
-	public String getAccessToken(String authorize_code){
+	public String getAccessToken(String authorize_code) {
 		String access_Token = "";
 		String refresh_Token = "";
 		String reqURL = "https://kauth.kakao.com/oauth/token";
-		
+
 		try {
 			URL url = new URL(reqURL);
 
@@ -69,7 +66,7 @@ public class MemberDAOImple implements MemberDAO {
 
 			conn.setRequestMethod("POST");
 			conn.setDoOutput(true);
-			
+
 			// POST 요청에 필요로 요구하는 파라미터 스트림을 통해 전송
 
 			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
@@ -116,8 +113,8 @@ public class MemberDAOImple implements MemberDAO {
 		}
 		return access_Token;
 	}
-	
-	/**access_Token을 보내 사용자의 정보 얻기*/
+
+	/** access_Token을 보내 사용자의 정보 얻기 */
 	@Override
 	public HashMap<String, Object> getKakaoUserInfo(String access_Token) {
 		HashMap<String, Object> userInfo = new HashMap<String, Object>();
@@ -175,59 +172,110 @@ public class MemberDAOImple implements MemberDAO {
 		}
 		return userInfo;
 	}
-	
-	/*회원 정보 가져오기**/
+
+	/* 회원 정보 가져오기 **/
 	@Override
 	public MemberDTO getuserInfo(int user_idx) {
 		MemberDTO dto = sqlMap.selectOne("getuserInfo", user_idx);
 		return dto;
 	}
-	
-	/**회원 정보 수정*/
+
+	/** 회원 정보 수정 */
 	@Override
 	public int updateUserInfo(MemberDTO dto) {
-		int count = sqlMap.update("updateUserInfo",dto);
-		
+		int count = sqlMap.update("updateUserInfo", dto);
+
 		return count;
 	}
-	/**회원정보 비밀번호 수정*/
+
+	/** 회원정보 비밀번호 수정 */
 	@Override
-	public int updatePWD(String newPwd,int user_idx) {
+	public int updatePWD(String newPwd, int user_idx) {
 		Map map = new HashMap();
 		map.put("user_idx", user_idx);
 		map.put("newPwd", newPwd);
-		
-		int count = sqlMap.update("updatePWD",map);
+
+		int count = sqlMap.update("updatePWD", map);
 		return count;
 	}
-	
-	/**회원 정보 리스트 불러오기*/
-	@Override
-	public List<MemberListDTO> memberList(int cp, int ls,String type, String fvalue,String orderby) {
-		int start = (cp-1)*ls+1;
-		int end = cp*ls;
 
-		
+	/** 회원 정보 리스트 불러오기 */
+	@Override
+	public List<MemberListDTO> memberList(int cp, int ls, String type, String fvalue, String orderby) {
+		int start = (cp - 1) * ls + 1;
+		int end = cp * ls;
+
 		Map map = new HashMap();
 
-		
-		if(type.equals("yes")) {
-			map.put("fvalue","%" + fvalue + "%");
+		if (type.equals("yes")) {
+			map.put("fvalue", "%" + fvalue + "%");
 		}
-		
-	
+
 		map.put("start", start);
 		map.put("end", end);
 		map.put("orderby", orderby);
-		
-		List<MemberListDTO> lists = sqlMap.selectList("memberList",map);
+
+		List<MemberListDTO> lists = sqlMap.selectList("memberList", map);
 		return lists;
 	}
-	
+
+	/** 총회원수 */
 	@Override
 	public int getuserTTCnt(String fvalue) {
-			fvalue = "%" + fvalue + "%";
+		fvalue = "%" + fvalue + "%";
 		int count = sqlMap.selectOne("getuserTTCnt", fvalue);
+		return count;
+	}
+
+	/** 회원 관리자로 변경 메서드 */
+	@Override
+	public int managerUpdate(int user_idx) {
+		int count = sqlMap.update("managerUpdate", user_idx);
+		return count;
+	}
+
+	/** 관리자 _회원 메모 수정 */
+	@Override
+	public int userMemoUpdate(int user_idx, String user_memo) {
+		Map map = new HashMap();
+		map.put("user_idx", user_idx);
+		map.put("user_memo", user_memo);
+		int count = sqlMap.update("userMemoUpdate", map);
+		return count;
+	}
+
+	/** 관리자 정보 리스트 불러오기 */
+	@Override
+	public List<MemberListDTO> managerList(int cp, int ls, String type, String fvalue, String orderby) {
+		int start = (cp - 1) * ls + 1;
+		int end = cp * ls;
+
+		Map map = new HashMap();
+
+		if (type.equals("yes")) {
+			map.put("fvalue", "%" + fvalue + "%");
+		}
+
+		map.put("start", start);
+		map.put("end", end);
+		map.put("orderby", orderby);
+
+		List<MemberListDTO> lists = sqlMap.selectList("managerList", map);
+		return lists;
+	}
+
+	/** 관리자 수 */
+	@Override
+	public int getmanagerTTCnt(String fvalue) {
+		fvalue = "%" + fvalue + "%";
+		int count = sqlMap.selectOne("getmanagerTTCnt", fvalue);
+		return count;
+	}
+
+	/** 관리자 회원으로 변경 */
+	@Override
+	public int managerDelete(int user_idx) {
+		int count = sqlMap.update("managerDelete", user_idx);
 		return count;
 	}
 

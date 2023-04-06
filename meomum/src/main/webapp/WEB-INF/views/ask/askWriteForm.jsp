@@ -20,7 +20,7 @@
     
     <h4 class="text-center">간단문의글 작성</h4>
       <form name="askWrite" action= "askWrite.do" method="post" enctype="multipart/form-data">
-      <input type="hidden" name="user_idx" value="${sessionScope.ssInfo.user_idx}">
+      <input type="hidden" name="user_idx" value="${empty sessionScope.ssInfo.user_idx ? 0 : sessionScope.ssInfo.user_idx}">
 		 <div class="input-group mb-3">
 		  <label class="input-group-text col-3 text-center" for="inputGroupSelect01">공간유형</label>
 		  <select class="form-select" id="inputGroupSelect01" name="rsd_type">
@@ -65,7 +65,7 @@
         </div>
         </c:if>
         <c:if test="${!empty sessionScope.ssInfo}">
-          <input type="hidden" class="form-control input-group-text-fixed" id="password" name="ask_pwd" value=" ">
+          <input type="hidden" class="form-control input-group-text-fixed" id="password" name="ask_pwd">
         </c:if>
          <div class="input-group mb-3">
           <label for="password" class="input-group-text col-3 text-center">보안방지</label>
