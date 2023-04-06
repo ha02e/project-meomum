@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -190,18 +190,17 @@ public class MemberController {
 	}
 	/*비밀번호 변경*/
 	@RequestMapping(value="/pwdChange.do",method = RequestMethod.POST)
-	public ModelAndView pwdChange(@RequestParam("user_idx")String user_idx,@RequestParam("newPwd")String newPwd ) {
+	@ResponseBody
+	public ModelAndView pwdChange(@RequestParam("user_idx")int user_idx,@RequestParam("newPassword")String newPwd ) {
 
 		System.out.println("pwd="+newPwd);
 		System.out.println("idx="+user_idx);
-	    /*int result = mdao.updatePWD(pwd,Integer.parseInt(user_idx));
-		String msg = result>0?"비밀번호가 수정되었습니다.":"비밀번호 수정에 실패하였습니다. 다시 시도해주세요.";
+	    int result = mdao.updatePWD(newPwd, user_idx);
 
 	    
-	    mav.addObject("msg", msg);*/
 		ModelAndView mav = new ModelAndView();
-	    mav.addObject("msg", "성공");
-
+		mav.addObject("result", result);
+	    mav.setViewName("mmJson");
 	    return mav;
 	}
 	/**관리자 회원정보 확인*/
@@ -232,6 +231,6 @@ public class MemberController {
 		mav.addObject("pageStr",pageStr);
 		return mav;
 	}
-
+	
 	
 }
