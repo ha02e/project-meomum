@@ -40,29 +40,70 @@
 	
 	<!-- 관리자: 세부 검색  -->
 	<select id="svcSelectDetail" parameterType="Map" resultType="com.mm.svc.model.SvcSelectAllDTO">
+    SELECT a.svc_idx, a.user_idx, a.user_name, a.user_tel,
+    b.svc_regdate, a.svc_state, c.svc_days, c.svc_time
+    FROM svc_member a, svc_detail b, svc_date c
+    WHERE a.svc_idx = b.svc_idx and a.svc_idx=c.svc_idx
+    <if test="minDate != null and maxDate != null">
+        AND svc_regdate BETWEEN COALESCE(#{minDate}, '1900-01-01') AND COALESCE(#{maxDate}, '9999-12-31')
+    </if>
+    <if test="minDate != null and maxDate == null">
+        AND svc_regdate <![CDATA[>=]]> #{minDate}
+    </if>
+    <if test="minDate == null and maxDate != null">
+        AND svc_regdate <![CDATA[<=]]>  #{maxDate}
+    </if>
+    <if test="keyword != null and category == 1">
+        AND user_name LIKE '%'||#{keyword}||'%'
+    </if>
+    <if test="keyword != null and category == 2">
+        AND user_tel LIKE '%'||#{keyword}||'%'
+    </if>
+    <if test="state.size() != 0">
+        <foreach item="arr" index="index" collection="state"
+            open=" AND svc_state IN (" separator="," close=")">
+            #{arr}
+        </foreach>
+    </if>
+    <if test="minDate == null and maxDate == null and keyword == null">
+        AND 1=1
+    </if>
+    ORDER BY a.svc_idx desc
+	</select>
+
+	
+	
+<!-- 	<select id="svcSelectDetail" parameterType="Map" resultType="com.mm.svc.model.SvcSelectAllDTO">
 		SELECT a.svc_idx, a.user_idx, a.user_name, a.user_tel,
 		b.svc_regdate,a.svc_state,c.svc_days,c.svc_time
 		FROM svc_member a, svc_detail b,svc_date c
 		WHERE a.svc_idx = b.svc_idx and a.svc_idx=c.svc_idx
-		<where>
-			<if test="minDate != null and maxDate != null">
-				AND svc_date BETWEEN #{minDate} AND #{maxDate}
-			</if>
-			<if test="category==1 and keyword!=null">
-				AND user_name LIKE CONCAT('%', #{keyword}, '%')
-			</if>
-			<if test="category==2 and keyword!=null">
-				AND user_tel LIKE CONCAT('%', #{keyword}, '%')
-			</if>
-			<if test="state != null and state.length > 0">
-				AND svc_state IN
-			<foreach collection="state" item="arr" open="(" separator="," close=")">
-   			 #{arr}
-			</foreach>
-			</if>
-		</where>
+	<if test="minDate != null and maxDate != null">
+		AND svc_regdate BETWEEN #{minDate} AND #{maxDate}
+	</if>
+	<if test="keyword!=null and category==1">
+		AND user_name LIKE '%'||#{keyword}||'%'
+	</if>
+	<if test="keyword!=null and category==2">
+		AND user_tel LIKE '%'||#{keyword}||'%'
+	</if>
+	<if test="state.size()!=0">
+	<foreach item="arr" index="index" collection="state"
+		open=" AND svc_state IN (" separator="," close=")">
+		#{arr}
+	</foreach>
+	</if>
+	<if test="minDate == null">
+        AND 1=1
+    </if>
+    <if test="maxDate == null">
+        AND 1=1
+    </if>
+    <if test="keyword == null">
+        AND 1=1
+    </if>
 		ORDER BY a.svc_idx desc
-	</select>
+	</select>  -->
 	
 	<!-- 공통: 방문 예약 상세 정보 -->
 	<select id="svcContent" parameterType="String" resultType="com.mm.svc.model.SvcContentDTO">

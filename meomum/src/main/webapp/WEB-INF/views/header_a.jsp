@@ -198,7 +198,7 @@
 					        <div id="submenu-2" class="collapse submenu submenu-2" data-bs-parent="#menu-accordion">
 						        <ul class="submenu-list list-unstyled">
 							        <li class="submenu-item"><a class="submenu-link" href="#">상품 구매 매출</a></li>
-							        <li class="submenu-item"><a class="submenu-link" href="#">상품 관리</a></li>
+							        <li class="submenu-item"><a class="submenu-link" href="proAdmin.do">상품 관리</a></li>
 							        <li class="submenu-item"><a class="submenu-link" href="#">주문/배송 내역</a></li>
 							        <li class="submenu-item"><a class="submenu-link" href="#">구독 반납 내역</a></li>
 						        </ul>
