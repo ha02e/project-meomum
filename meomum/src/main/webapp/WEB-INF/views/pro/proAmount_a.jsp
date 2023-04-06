@@ -29,7 +29,7 @@
 .truncate{
 	margin-left:0.6rem;
 }
-.amount-box {
+.pro_amount {
     border-radius: 0rem;
     border: 1px solid #bcc1cb;
     padding : 0.1rem 0.4rem;
@@ -40,7 +40,16 @@
     padding : 0.1rem 0.4rem;
 }
 </style>
-
+<script>
+	function validate() {
+		var amount = document.forms["proAmountUpdate"]["pro_amount"].value;
+		if (amount == "" || isNaN(amount)) {
+			window.alert('수량을 입력해주세요.');
+			return false;
+		}
+		return true;
+	}
+</script>
 </head>
 <body class="app"> 
 
@@ -137,15 +146,20 @@
 													</td>
 													<td class="cell">${dto.pro_amount}</td>
 													<td class="cell">
-														<input class="amount-box" type="text" name="pro_amount" size="4" placeholder="${dto.pro_amount}">
-														<a class="btn-sm app-btn-secondary" href="#">수정</a>
+														<form action="proAmountUpdate.do?pro_idx=${dto.pro_idx}" name="proAmountUpdate" 
+																method="post" onsubmit="return validate()">
+															<input class="pro_amount" id="pro_amount" type="text" name="pro_amount" size="4" placeholder="${dto.pro_amount}">
+															<input type="submit" class="btn-sm app-btn-secondary" value="수정">
+														</form>
 													</td>
 													<td class="cell">
-														<select class="state-box w-auto">
-															<option selected value="option-1">판매중</option>
-															<option value="option-2">품절</option>
-														</select>
-														<a class="btn-sm app-btn-secondary" href="#">수정</a>
+														<form action="proStateUpdate.do?pro_idx=${dto.pro_idx}" name="proStateUpdate" method="post">
+															<select class="state-box w-auto" name="pro_state">
+																<option ${dto.pro_state==0?"selected":""} value="0">판매중</option>
+																<option ${dto.pro_state==1?"selected":""} value="1">품절</option>
+															</select>
+															<input type="submit" class="btn-sm app-btn-secondary" value="수정">
+														</form>
 													</td>
 												</tr>
 											</c:forEach>

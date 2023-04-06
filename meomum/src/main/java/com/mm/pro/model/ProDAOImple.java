@@ -76,5 +76,26 @@ private SqlSessionTemplate sqlMap;
 		}
 	
 	
+	//상품 재고/상태 수정 시 조회
+	@Override
+		public ProDTO proSelect(int pro_idx) {
+			ProDTO pdto=sqlMap.selectOne("proSelect", pro_idx);
+			return pdto;
+		}
 	
+	
+	//상품 재고 수정
+	@Override
+		public int proAmountUpdate(ProDTO dto) {
+			int count=sqlMap.update("proAmountUpdate", dto);
+			return count;
+		}
+	
+	
+	//상품 상태 수정
+	@Override
+		public int proStateUpdate(ProDTO dto) {
+			int count=sqlMap.update("proStateUpdate", dto);
+			return count;
+		}
 }
