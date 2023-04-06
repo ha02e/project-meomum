@@ -25,5 +25,6 @@ public interface MemberDAO {
 	public List<MemberListDTO> managerList(int cp, int ls,String type,String fvalue,String orderby);
 	public int getmanagerTTCnt(String fvalue);
 	public int managerDelete(int user_idx);
+	public String findID(String user_name, String user_tel);
 
 }

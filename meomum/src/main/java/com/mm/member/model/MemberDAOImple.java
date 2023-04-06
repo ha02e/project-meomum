@@ -279,4 +279,15 @@ public class MemberDAOImple implements MemberDAO {
 		return count;
 	}
 
+	/**회원 아이디 찾기*/
+	@Override
+	public String findID(String user_name, String user_tel) {
+		
+		Map map = new HashMap();
+		map.put("user_name", user_name);
+		map.put("user_tel", user_tel);
+		
+		String user_id = sqlMap.selectOne("findID", map);
+		return user_id;
+	}
 }

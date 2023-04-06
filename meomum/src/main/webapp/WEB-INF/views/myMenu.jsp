@@ -44,7 +44,7 @@
 				<div class="accordion" id="accordionExample">
 					<div class="card">
 						<div class="card-heading active one">
-							<a data-toggle="collapse" href="infoEdit.do">나의 정보 수정</a>
+							<a href="infoEdit.do">나의 정보 수정</a>
 						</div>
 					</div>
 					
@@ -55,7 +55,7 @@
 						<div id="collapseTwo" class="collapse" data-parent="#accordionExample">
 							<div class="card-body">
 								<ul>
-									<li><a href="#">간단 견적 문의 내역</a></li>
+									<li><a href="myAskList.do">간단 견적 문의 내역</a></li>
 									<li><a href="svcList.do">방문 견적 예약 내역</a></li>
 									<li><a href="#">정리일상 진행 현황</a></li>
 								</ul>

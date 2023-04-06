@@ -116,7 +116,7 @@ public class MemberController {
 	}
 	
 	/*회원 정보 수정 페이지 이동*/
-	@RequestMapping(value="/infoEdit",method = RequestMethod.GET)
+	@RequestMapping(value="/infoEdit.do",method = RequestMethod.GET)
 	public ModelAndView infoEditForm(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		
@@ -128,15 +128,15 @@ public class MemberController {
 		}
 		
 		
-		
 		mav.setViewName("member/infoEditForm");
 
 		return mav;
 	}
 	/*회원 정보 수정 페이지 이동*/
-	@RequestMapping(value="/infoEdit",method = RequestMethod.POST)
-	public ModelAndView infoEditSubmit(HttpSession session,
+	@RequestMapping(value="/infoEdit.do",method = RequestMethod.POST)
+	public ModelAndView infoEditFormOK(@RequestParam(value = "user_idx")int user_idx,
 									@RequestParam(value = "user_ok",defaultValue = "NO")String user_ok) {
+	
 		
 		ModelAndView mav = new ModelAndView();
 		
@@ -146,9 +146,8 @@ public class MemberController {
 			mav.setViewName("mainMsg");
 			return mav;
 		}
-		
-        MemberDTO sdto =(MemberDTO) session.getAttribute("ssInfo");
-        int user_idx = sdto.getUser_idx();
+  
+
 			MemberDTO userInfo = mdao.getuserInfo(user_idx);
 					
 			mav.addObject("info",userInfo);
@@ -196,7 +195,7 @@ public class MemberController {
 
 	}
 	
-	@RequestMapping(value="/infoEdit.do",method = RequestMethod.POST)
+	@RequestMapping(value="/infoEditOK.do",method = RequestMethod.POST)
 	public ModelAndView infoEditSubmit(MemberDTO dto) {
 		int result = mdao.updateUserInfo(dto);
 		
@@ -323,4 +322,21 @@ public class MemberController {
 	    return mav;
 	}
 	
+	
+	
+	/**회원 아이디 찾기*/
+	@RequestMapping(value="/findId.do",method = RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView findID(@RequestParam("input_name")String input_name,
+								@RequestParam("input_tel")String input_tel) {
+
+	
+	String user_id = mdao.findID(input_name, input_tel);
+	ModelAndView mav = new ModelAndView();
+	mav.addObject("user_id",user_id);
+    mav.setViewName("mmJson");
+    return mav;
+	}
+	
 }
+

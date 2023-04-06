@@ -5,15 +5,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -359,6 +356,57 @@ public class AskController {
 		mav.setViewName("mmJson");
 		
 	  return mav;
+	}
+	
+	
+	/**나의 간단견적문의 내역(마이페이지)*/
+	@RequestMapping(value="/myAskList.do",method = RequestMethod.GET)
+	public ModelAndView myAskList(HttpSession session,@RequestParam(value="cp",defaultValue = "1")int cp) {
+		
+		
+		ModelAndView mav = new ModelAndView();
+		MemberDTO sdto =(MemberDTO) session.getAttribute("ssInfo");
+		
+		if(sdto==null) {
+			mav.addObject("msg", "잘못된 접근입니다.");
+			mav.addObject("gopage","location.href='index.do';");
+			mav.setViewName("mainMsg");
+			return mav;
+		}
+		
+        int user_idx = sdto.getUser_idx();
+        
+		int rtotalCnt = adao.myaskCnt(user_idx);
+		int totalCnt = rtotalCnt==0?1:rtotalCnt;
+		int listSize = 10;
+		int pageSize = 5;
+		
+		String pageStr = com.mm.module.PageModule.makePage("myAskList.do", totalCnt, listSize, pageSize, cp);
+
+		
+		List<AskDTO> lists = adao.myaskList(cp, listSize, user_idx);
+		
+		for (AskDTO dto : lists) {
+		    String askDate;
+		    if (dto.getAsk_wdateYMD().equals(LocalDate.now().toString())) {
+		        askDate = dto.getAsk_wdateTime();
+		        dto.setNewicon(true);
+		    } else {
+		        askDate = dto.getAsk_wdateYMD();
+		        dto.setNewicon(false);
+
+		    }
+		    dto.setAsk_date(askDate);
+		}
+		
+		
+		mav.addObject("totalCnt",rtotalCnt);
+		mav.addObject("lists",lists);
+		mav.addObject("pageStr",pageStr);
+
+		mav.setViewName("ask/myAskList");
+
+		return mav;
 	}
 	
 }
