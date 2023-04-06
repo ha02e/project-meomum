@@ -57,6 +57,7 @@ public class SvcController {
 		return mav;
 	}
 	
+	
 	/**방문 견적 신청 시 예약된 시간 비활성화*/
 	@RequestMapping(value = "/svcTimeSelect.do", method = RequestMethod.GET)
 	@ResponseBody 
@@ -68,6 +69,7 @@ public class SvcController {
 		return mav; 
 	}
 	
+
 	/**관리자 페이지-예약 리스트*/
 	@RequestMapping("/asvcList.do")
 	public ModelAndView asvcList() {
@@ -90,14 +92,34 @@ public class SvcController {
 	}
 	
 	/**관리자-예약 세부 검색*/
-	
+	@RequestMapping("/svcSearch.do")
+	@ResponseBody
+	public ModelAndView svcSearch(@RequestParam("minDate") String minDate,
+			@RequestParam("maxDate") String maxDate,
+            @RequestParam(value="category",defaultValue="1") int category,
+            @RequestParam("keyword") String keyword,
+            @RequestParam("state[]") List<String> state){
+		
+		ArrayList<String> arr = new ArrayList<String>();
+		for(int i=0;i<state.size();i++) {
+			arr.add(state.get(i));
+		}
+		
+		List<SvcSelectAllDTO> list = svcDao.svcSelectDetail(minDate,maxDate,category,keyword,arr);
+		System.out.println("컨트롤러 list"+list);
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("list", list);
+		mav.setViewName("mmJson");
+		return mav;
+	}
+
+
 	/**관리자 페이지-예약 수정*/
 	@RequestMapping("/asvcUpdate.do")
 	public ModelAndView asvcUpdate(SvcMemDTO memDto,SvcDetailDTO detailDto, SvcDateDTO dateDto) {
 		int memUpdate = svcDao.svcMemUpdate(memDto);
 		int detailUpdate = svcDao.svcDetailUpdate(detailDto);
 		int dateUpdate = svcDao.svcDateUpdate(dateDto);
-		
 		
 		int result = memUpdate+detailUpdate+dateUpdate;
 		

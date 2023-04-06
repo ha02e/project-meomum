@@ -68,4 +68,9 @@
 			<ref bean="sqlSessionTemplate" />
 		</constructor-arg>
 	</bean>
+		<bean id="loveDAO" class="com.mm.love.model.LoveDAOImple">
+		<constructor-arg>
+			<ref bean="sqlSessionTemplate" />
+		</constructor-arg>
+	</bean>
 </beans>
