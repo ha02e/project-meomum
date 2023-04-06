@@ -130,10 +130,10 @@
 													<td>${ul.reviewCount}</td>
 													<td>
 														<!-- Button trigger modal -->
-														     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" 
-              onclick="document.getElementById('user_Idx').value='${ul.user_idx}';">
-        수정
-      </button>
+														<button type="button" class="btn btn-primary"
+															data-bs-toggle="modal" data-bs-target="#exampleModal"
+															onclick="document.getElementById('user_Idx').value='${ul.user_idx}';">
+															수정</button>
 													</td>
 												</tr>
 											</c:forEach>
@@ -167,32 +167,39 @@
 
 
 
-<!-- 회원 정보수정 모달 -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">회원 정보 수정
-        <input type="hidden" name="user_Idx" id="user_Idx"></h1>
+	<!-- 회원 정보수정 모달 -->
+	<div class="modal fade" id="exampleModal" tabindex="-1"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">
+						회원 정보 수정 <input type="text" name="user_Idx" id="user_Idx"
+							value="${user_idx}">
+					</h1>
 
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <button type="button" class="btn btn-secondary btn-sm mb-3" data-bs-dismiss="modal" id="change-admin-btn" onclick="manage()">관리자로 변경</button>
-        <form>
-          <div class="mb-3">
-            <label for="user-memo" class="form-label">사용자 메모</label>
-            <input type="text" class="form-control" id="user-memo" placeholder="사용자 메모를 입력하세요.">
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-        <button type ="submit" class="btn btn-primary">수정</button>
-      </div>
-    </div>
-  </div>
-</div>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<button type="button" class="btn btn-danger" id="manageBtn"
+						data-user-idx="">관리자로 변경</button>
+					<form>
+						<div class="mb-3">
+							<label for="user-memo" class="form-label">사용자 메모</label> <input
+								type="text" class="form-control" id="user-memo"
+								placeholder="사용자 메모를 입력하세요.">
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">닫기</button>
+					<button type="submit" class="btn btn-primary">수정</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 
@@ -205,10 +212,30 @@
 		crossorigin="anonymous">
 		
 	</script>
-<script type="text/javascript" src="/meomum/js/request.js"></script>
-<script>
-
-</script>
+	<script type="text/javascript" src="/meomum/js/request.js"></script>
+	<script>
+		function manage() {
+			if (confirm("관리자로 변경하시겠습니까?")) {
+				var user_idx = document.getElementById('manageBtn')
+						.getAttribute('data-user-idx');
+				alert(user_idx);
+				$.ajax({
+					url : 'askCommDel.do',
+					method : 'POST',
+					data : {
+						ask_idx : ask_idx
+					},
+					success : function(data) {
+						window.location.reload();
+						alert(data.msg);
+					},
+					error : function(jqXHR, textStatus) {
+						alert('전송 실패');
+					}
+				});
+			}
+		}
+	</script>
 
 
 
