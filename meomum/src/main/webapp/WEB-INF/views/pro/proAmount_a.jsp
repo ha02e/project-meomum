@@ -40,16 +40,20 @@
     padding : 0.1rem 0.4rem;
 }
 </style>
+<!--
 <script>
-	function validate() {
-		var amount = document.forms["proAmountUpdate"]["pro_amount"].value;
-		if (amount == "" || isNaN(amount)) {
-			window.alert('수량을 입력해주세요.');
-			return false;
-		}
-		return true;
-	}
-</script>
+function validate() {
+	  var proAmountField = document.getElementById("pro_amount");
+	  var proAmountValue = proAmountField.value.trim();
+
+	  if (proAmountValue === "" || isNaN(proAmountValue)) {
+        alert("수량은 숫자만 입력 가능합니다.");
+        return false;
+    }
+    return true;
+}
+</script>  
+-->
 </head>
 <body class="app"> 
 

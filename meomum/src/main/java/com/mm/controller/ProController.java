@@ -308,11 +308,21 @@ public class ProController {
 	//상품 재고 관리 - 재고수정
 	@RequestMapping("/proAmountUpdate.do")
 	public ModelAndView proAmountUpdate(@RequestParam("pro_idx")int pro_idx,
-										@RequestParam(value="pro_amount", required = false)Integer pro_amount_s,
+										@RequestParam(value="pro_amount", required = false)String pro_amount_str,
 										ProDTO dto, HttpServletRequest req) {
 		
-		if (pro_amount_s == null) {
+		if (pro_amount_str == null || pro_amount_str.trim().equals("")) {
 	        String msg = "수량을 입력해주세요.";
+	        ModelAndView mav = new ModelAndView("/msg", "msg", msg);
+	        mav.addObject("link", "proAmount_a.do");
+	        return mav;
+	    }
+		
+		int pro_amount_s=0;
+		try {
+			pro_amount_s = Integer.parseInt(pro_amount_str.trim());
+	    } catch (NumberFormatException e) {
+	        String msg = "수량은 숫자만 입력 가능합니다.";
 	        ModelAndView mav = new ModelAndView("/msg", "msg", msg);
 	        mav.addObject("link", "proAmount_a.do");
 	        return mav;
