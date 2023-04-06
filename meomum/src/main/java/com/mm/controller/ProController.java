@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -52,30 +53,6 @@ public class ProController {
 		return mav;
 	}
 	
-	
-	/*확인용
-	@RequestMapping("/purchase.do")
-	public ModelAndView test(@RequestParam(value="cp",defaultValue="1")int cp,
-			@RequestParam(value="cart_amount",defaultValue="1")int cart_amount,
-			@RequestParam("pro_idx") int pro_idx,
-			HttpSession session) {
-		
-		session.getAttribute("ssInfo");
-		MemberDTO sdto =(MemberDTO) session.getAttribute("ssInfo");
-		int user_idx = sdto != null ? sdto.getUser_idx() : 0;
-		
-		List<ProDTO> lists=proDao.proUpdateList(pro_idx);
-		
-		ModelAndView mav=new ModelAndView();
-		mav.addObject("lists", lists);
-		mav.addObject("pro_buyNum", cart_amount);
-		mav.addObject("user_idx", user_idx);
-		
-		mav.setViewName("pro/purchase");
-		
-		return mav;
-	}
-	*/
 	
 	//사용자 상품 리스트
 	@RequestMapping("/proList.do")
@@ -272,12 +249,24 @@ public class ProController {
 	
 	
 	//상품 수정 기능
-	@RequestMapping("/proUpdate.do")
+	@RequestMapping(value="proUpdate.do", method=RequestMethod.POST)
 	public ModelAndView proUpdate(ProDTO dto) {
 		ModelAndView mav=new ModelAndView();
-		int result = proDao.proUpdate(dto);
-		String msg=result>=0?"수정 성공":"수정 실패";
+		
+		int result = proDao.proUpdate(dto); 
+		
+		ProDTO pdto=new ProDTO();
+		System.out.println("name:"+pdto.getPro_name());
+		System.out.println("price:"+pdto.getPro_price());
+		System.out.println("state"+pdto.getPro_state());
+		System.out.println("month"+pdto.getPro_month());
+		System.out.println("subprice:"+pdto.getPro_subprice());
+		System.out.println("allprice:"+pdto.getPro_allprice());
+		
+		String msg=result>=0?"수정 완료했습니다.":"수정 실패했습니다.";
+		String link ="proAdmin.do";
 		mav.addObject("msg", msg);
+		mav.addObject("link", link);
 		mav.setViewName("pro/proMsg");
 		return mav;
 	}

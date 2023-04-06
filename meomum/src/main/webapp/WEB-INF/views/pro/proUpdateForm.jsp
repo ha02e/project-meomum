@@ -17,8 +17,9 @@ function calPrice(){
 }
 </script>
 </head>
-	<h2>상품 수정하기</h2>
 	<form name="proUpdate" action="proUpdate.do" method="post">
+	<h2>상품 수정하기</h2>
+	
 		<input type="hidden" name="pro_idx" value="${lists[0].pro_idx}">
 		<ul>
 			<li>대표 사진
@@ -53,8 +54,9 @@ function calPrice(){
 			</c:choose>
 			</li>
 			
+			
 			<li>상품명
-				<input type="text" name="pro_name" id="pro_name" value="${lists[0].pro_name}">
+				<input type="text" name="pro_name" value="${lists[0].pro_name}">
 			</li>
 			<li>정가
 				<input type="text" name="pro_price" id="pro_price" value="${lists[0].pro_price}">
@@ -85,5 +87,6 @@ function calPrice(){
 			<li><input type="submit" value="등록하기"><input type="reset" value="다시 작성"></li>
 		</ul>
 		</form>
+		
 </body>
 </html>

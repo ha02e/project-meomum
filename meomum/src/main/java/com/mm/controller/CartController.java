@@ -70,7 +70,7 @@ public class CartController {
 			                link = "proCart.do?user_idx="+user_idx;
 			                mav.addObject("msg", msg);
 			                mav.addObject("link", link);
-			                
+			                mav.addObject("pro_idx", pro_idx);
 			                mav.addObject("confirm", true); // confirm 속성 추가
 			                mav.setViewName("pro/proMsg");
 			            } else {
@@ -126,29 +126,29 @@ public class CartController {
 		@ResponseBody
 		public ModelAndView cartDelete(@RequestParam("cart_idx")int cart_idx){
 			ModelAndView mav = new ModelAndView();
-			int result=cartDao.cartDelete(cart_idx);
+			cartDao.cartDelete(cart_idx);
 			mav.setViewName("mmJson");
 			return mav;
 		}
 		
-		
+	
 		//장바구니 수량 조절
 		@RequestMapping(value="cartNumUpdate.do", method=RequestMethod.POST)
 		@ResponseBody
-		public String cartNumUpdate(@RequestParam("cart_idx") int cart_idx, 
-		                             @RequestParam("cart_amount") int cart_amount) {
-		  
+		public ModelAndView cartNumUpdate(@RequestParam("cart_idx")int cart_idx,
+				@RequestParam("cart_amount") int cart_amount) {
+			
+			ModelAndView mav= new ModelAndView();
 			CartDTO dto=new CartDTO();
-			dto.setCart_idx(cart_idx);
+			
 			dto.setCart_amount(cart_amount);
-			int result = cartDao.cartNumUpdate(dto);
-			ModelAndView mav = new ModelAndView();
-		  
-			if (result > 0) {
-			    return "success";
-			  } else {
-			    return "fail";
-			  }
+			dto.setCart_idx(cart_idx);
+			
+			System.out.println();
+			cartDao.cartNumUpdate(dto);
+			mav.setViewName("mmJson");
+			
+			return mav;
 		}
 		
 	

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -99,9 +100,11 @@ td.column-3 img {
 								<c:forEach var="list" items="${lists}">
 								
 								<tr class="table_row">
+									
 									<td>
 									<input type="checkbox" id="selectOne" name="selectOne" value="ok">
 									</td>
+									
 									<td class="column-1">
 										<div class="how-itemcart1">
 											<img src="/meomum/items/${list.pro_thumb}" alt="IMG-PRODUCT">
@@ -110,7 +113,7 @@ td.column-3 img {
 									
 									<td class="column-2">${list.pro_name}</td>
 									
-									<td class="column-3">${list.pro_subprice}원</td>
+									<td class="column-3"><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.pro_subprice }" />원</td>
 									
 									<td class="column-3">${list.pro_month }개월</td>
 									<td class="column-4">
@@ -123,8 +126,11 @@ td.column-3 img {
 
 										<!-- 수량 조절 -->
 											<input class="mtext-104 cl3 txt-center num-product" type="number" 
-											value="${list.cart_amount }" name="cart_amount" data-cart-idx="${list.cart_idx }"
-											onchange="cartAmountUpdate(this)">
+						     				 value="${list.cart_amount }" 
+						     				 name="cart_amount" 
+						     				 data-cart-idx="${list.cart_idx }"
+						  				     onchange="cartAmountUpdate(this)" 
+						  				     id="cart_amount">
 										
 										
 										<!-- 플러스 -->
@@ -134,16 +140,17 @@ td.column-3 img {
 											
 										</div>
 									</td>
+									
 									<td class="column-5">
-									<div>구독가 입력</div>
-									<div>총 ${list.pro_allprice}원</div>
+										<div>구독가 입력</div>
+										<div>총 <fmt:formatNumber type="number" maxFractionDigits="3" value="${list.pro_allprice }" />원</div>
 									</td>
 									
 									<!-- 장바구니 삭제 -->
 									<td class="column-3">
-									 <a href="#" onclick="deleteCartItem(${list.cart_idx})">
-									<img src="images/icon/icon-close2.png" alt="DELETE" class="delete-icon">
-									</a>
+										 <a href="#" onclick="deleteCartItem(${list.cart_idx})">
+											<img src="images/icon/icon-close2.png" alt="DELETE" class="delete-icon">
+										</a>
 									</td>
 
 								</tr>
@@ -151,17 +158,18 @@ td.column-3 img {
 							</table>
 						</div>
 
+
 						<div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
 							<div class="flex-w flex-m m-r-20 m-tb-5">
 								<input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text" name="coupon" placeholder="쿠폰 코드">
 							</div>
 
 							<div class="flex-c-m column-3">
-								<div>총 구독 가격 800,000원</div>
+								<div>총 구독 가격 ()원</div>
 							</div>
 							
 							<div class="flex-c-m column-3">
-								<div>총 배송비 500,000원</div>
+								<div>총 배송비 ()원</div>
 							</div>
 							
 						</div>
@@ -169,50 +177,50 @@ td.column-3 img {
 				</div>
 				
 				
-				<!-- 오른쪽 구역 -->
-<div class="col-sm-9 col-lg-6 col-xl-4 m-lr-auto m-b-50">
-  <div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 m-lr-0-xl p-lr-15-sm">
-    <h4 class="mtext-109 cl2 p-b-30">
-      Cart Totals
-    </h4>
-
-    <div class="flex-w flex-t bor12 p-b-13">
-      <div class="size-208">
-        <span class="stext-110 cl2">
-          Subtotal:
-        </span>
-      </div>
-
-      <div class="size-209">
-        <span class="mtext-110 cl2">
-          $79.65
-        </span>
-      </div>
-    </div>
-
-    <div class="flex-w flex-t p-t-27 p-b-33 justify-content-center">
-      <div class="size-208">
-        <span class="mtext-101 cl2">
-          Total:
-        </span>
-      </div>
-
-      <div class="size-209 p-t-1">
-        <span class="mtext-110 cl2">
-          $79.65
-        </span>
-      </div>
-    </div>
-
-    <button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer"
-    type="submit" formaction="proPayment.do">
-      구매하기
-    </button>
-  </div>
-</div>
-</div>
-</div>
-</form>
+								<!-- 오른쪽 구역 -->
+							<div class="col-sm-9 col-lg-6 col-xl-4 m-lr-auto m-b-50">
+							  <div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 m-lr-0-xl p-lr-15-sm">
+							    <h4 class="mtext-109 cl2 p-b-30">
+							      Cart Totals
+							    </h4>
+							
+							    <div class="flex-w flex-t bor12 p-b-13">
+							      <div class="size-208">
+							        <span class="stext-110 cl2">
+							          구독 금액
+							        </span>
+							      </div>
+							
+							      <div class="size-209">
+							        <span class="mtext-110 cl2">
+							          월 ()원
+							        </span>
+							      </div>
+							    </div>
+							
+							    <div class="flex-w flex-t p-t-27 p-b-33 justify-content-center">
+							      <div class="size-208">
+							        <span class="mtext-101 cl2">
+							          배송비
+							        </span>
+							      </div>
+							
+							      <div class="size-209 p-t-1">
+							        <span class="mtext-110 cl2">
+							          (배송비)
+							        </span>
+							      </div>
+							    </div>
+							
+							    <button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer"
+							    type="submit" formaction="proPayment.do">
+							      구매하기
+							    </button>
+							  </div>
+							</div>
+						</div>
+					</div>
+				</form>
 
 
 
@@ -233,6 +241,30 @@ td.column-3 img {
   }
 </script>
 
+<script>
+function cartAmountUpdate(cart_amount) {
+	  const cartIdx = cart_amount.getAttribute("data-cart-idx");
+	  const cartAmount = input.value;
+
+	  alert(cartIdx);
+	  
+	  $.ajax({
+		    url: 'cartNumUpdate.do',
+		    type: 'POST',
+		    dataType: 'json',
+		    data: {cart_idx: cartIdx, cart_amount: cartAmount},
+		    success: function (data) {
+		    	console.log(data);
+		    	alert(data);
+		      }
+		    },
+		    error: function (xhr, status, error) {
+		      alert("수량 변경에 실패하였습니다.");
+		    },
+		  });
+	  
+	}
+</script>
 
 
 <script>
@@ -243,6 +275,12 @@ td.column-3 img {
     selectOneCheckboxes.forEach((checkbox) => {
       checkbox.checked = allCheckbox.checked;
     });
+  });
+
+  // 모든 체크박스를 선택하도록 설정
+  allCheckbox.checked = true;
+  selectOneCheckboxes.forEach((checkbox) => {
+    checkbox.checked = true;
   });
 </script>
 <!--===============================================================================================-->	

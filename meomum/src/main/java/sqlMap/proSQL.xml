@@ -23,7 +23,6 @@
 		)
 	</insert>
 	
-	
 	<select id="proList" parameterType="Map" resultType="com.mm.pro.model.ProDTO">
 	 select * from
 	(select rownum as rnum,a.* from

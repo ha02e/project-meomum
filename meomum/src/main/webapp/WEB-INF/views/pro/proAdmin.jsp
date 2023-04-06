@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,6 +17,16 @@ function confirmDel(pro_idx){
 	    window.location.href = "proDel.do?pro_idx=" + pro_idx;
 	}
 }
+
+function sortUsers(orderby, type, fvalue) {
+
+	  if(type=='yes') {
+	    window.location.href = 'proFind.do?proF='+orderby+'&type=yes&fvalue='+fvalue;
+	  } else {
+	    window.location.href = 'proFind.do?proF='+orderby;
+	  }
+	}
+
 </script>
 </head>
 <body class="app">
@@ -25,20 +36,31 @@ function confirmDel(pro_idx){
 		<div class="app-content pt-3 p-md-3 p-lg-4">
 			<div class="container pt-5">
 				<h2 class="text-center mb-4">상품 관리</h2>
-
-
 				
-			<div class="row justify-content-center mb-3">
-				<form name="proFind" action="proFind.do">
-					<div class="col-md-6">
-						<div class="input-group">
-							<input type="text" class="form-control" name="proF" placeholder="상품명/카테고리 검색">
-							<button class="btn btn-primary" type="submit">검색</button>
-						</div>
-					</div>
-				</form>	
-			</div>
-	
+	<div class="row justify-content-between mb-3">
+    <div class="col-md-6">
+        <form name="proFind" action="proFind.do">
+            <div class="input-group">
+                <input type="text" class="form-control" name="proF" placeholder="상품명 검색" style="max-width: 250px;">
+                <button class="btn btn-primary" type="submit">검색</button>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-6">
+    <div class="d-flex justify-content-end align-items-center">
+        <span class="me-2">카테고리:</span> 
+        <select class="form-select w-auto" name="orderby" onchange="sortUsers(this.value, '${type}', '${fvalue}')">
+            <option value="침대" ${order == '1' ? 'selected' : ''}>침대</option>
+            <option value="테이블" ${order == '2' ? 'selected' : ''}>테이블</option>
+            <option value="의자" ${order == '3' ? 'selected' : ''}>의자</option>
+            <option value="소파" ${order == '4' ? 'selected' : ''}>소파</option>
+            <option value="조명" ${order == '5' ? 'selected' : ''}>조명</option>
+        </select>
+    </div>
+</div>
+</div>
+				
+				
 	<a href="proForm.do">상품 등록</a>
 		
 				<div class="table-responsive">
@@ -100,9 +122,9 @@ function confirmDel(pro_idx){
 									  	</c:otherwise>
 									</c:choose>
 								</td>
-								<td>${list.pro_price }</td>
+								<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.pro_price }" />원</td>
 								<td>${list.pro_month }</td>
-								<td>${list.pro_subprice }</td>
+								<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.pro_subprice }" />원</td>
 								<td>${list.pro_date }</td>	
 								<td><a href="proUpdateForm.do?pro_idx=${list.pro_idx}">수정</a> | <a href="#" onclick="confirmDel(${list.pro_idx})">삭제</a></td>
 							</tr>
