@@ -16,5 +16,5 @@ public interface SvcDAO {
 	public List<SvcSelectAllDTO> svcUserList(int user_idx);
 	public int svcStateCancle(String svc_idx);
 	public int svcDateCancle(String svc_idx);
-	public List<SvcSelectAllDTO> svcSelectDetail(String minDate, String maxDate, String category, String keyword, String[] state);
+	public List<SvcSelectAllDTO> svcSelectDetail(String minDate, String maxDate, int category, String keyword, List<String> state);
 }

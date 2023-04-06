@@ -14,35 +14,8 @@ App CSS
 
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
-<!-- <script>
-// 현재 일자를 구하는 함수
-function getCurrentDate() {
-  var now = new Date();
-  var year = now.getFullYear();
-  var month = now.getMonth() + 1; // getMonth()는 0부터 시작하므로 +1을 해줍니다.
-  var day = now.getDate();
-
-  // 월과 일이 한 자리 수일 경우 0을 붙여줍니다.
-  month = month < 10 ? '0' + month : month;
-  day = day < 10 ? '0' + day : day;
-
-  return year + '-' + month + '-' + day;
-  
-}
-// minDate와 maxDate의 초기값을 설정합니다.
-document.getElementById('minDate').value = getCurrentDate();
-document.getElementById('maxDate').value = getCurrentDate();
-
-/* 		var now = new Date();
-		var date = new Date(now.getTime()- now.getTimezoneOffset() * 60000).toISOString().split("T")[0];
-		document.getElementById('minDate').value = date;
-		document.getElementById('maxDate').value = date; */
-
-</script> -->
-
 <script>
 //전체 체크박스 클릭시 전체 체크박스 선택
-
 	$(function() {
 		$('input[name="svc_state"]').click(
 				function() {
@@ -60,18 +33,36 @@ document.getElementById('maxDate').value = getCurrentDate();
 
 	//세부 검색 기능
 	function selectDetail() {
-		var minDate = $("#minDate").val();
+		var minDate = $("#minDate").val();{}
 		var maxDate = $("#maxDate").val();
 		var category = $("select[name=category] > option:selected").val();
 		var keyword = $("#keyword").val();
 
-		var arr = [];
+		var arr = new Array();
 		$('input:checkbox[name=svc_state]:checked').each(function() {
 			// 전체 체크박스를 제외한 나머지 체크박스만 배열에 추가
 			if ($(this).val() !== '전체') {
 				arr.push($(this).val());
 			}
 		});
+		
+		//검색 값들이 없을 경우
+		if(!minDate){
+			minDate ="";
+		}
+		
+		if(!maxDate){
+			maxDate = "";
+		}
+		
+		if(!keyword){
+			keyword = "";
+		}
+		
+		if(arr.length==0){
+			arr.push("");
+		}
+		
 		var allData = {
 			"minDate" : minDate,
 			"maxDate" : maxDate,
@@ -80,7 +71,6 @@ document.getElementById('maxDate').value = getCurrentDate();
 			"state" : arr
 		};
 		console.log(allData);
-		
 		$.ajax({
 			url : "svcSearch.do",
 			data :allData,
@@ -88,11 +78,36 @@ document.getElementById('maxDate').value = getCurrentDate();
 			method : "get"
 		}).done(function(data) {
 			console.log(data);
+			$('#tableBody').empty();
+			
+			if(data.list.length==0){
+				var tableTd = '<tr><td colspan="6" style="text-align:center;">회원 정보가 없습니다.</td></tr>';
+				$('#tableBody').append(tableTd);
+			}else{
+				for (var i = 0; i < data.list.length; i++) {
+			
+		        var rowData = data.list[i];
+		        
+		        //일자가 timestamp로 반환되어 yyyy-mm-dd로 출력되게 변환
+		        var date = new Date(rowData.svc_regdate);
+		        var date = new Date(rowData.svc_regdate);
+		        var formatDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
+	
+		        var tableTd = '<tr>';
+		        tableTd += '<td><input type="checkbox" name="check" value=""></td>';
+		        tableTd += '<td>' + rowData.svc_idx + '</td>';
+		        tableTd += '<td>' + formatDate + '</td>';
+		        tableTd += '<td><a href="asvcContent.do?svc_idx=' + rowData.svc_idx + '">' + rowData.user_name + '</a></td>';
+		        tableTd += '<td>' + rowData.user_tel + '</td>';
+		        tableTd += '<td>' + rowData.svc_state + '</td>';
+		        tableTd += '</tr>';
+		        $('#tableBody').append(tableTd);
+				}
+			}
 		}).fail(function() {
 			alert('다시 시도해주세요');
 		});
 	}
-	
 </script>
 
 </head>
@@ -101,7 +116,7 @@ document.getElementById('maxDate').value = getCurrentDate();
 	<!-- 세부 검색 -->
 	<section>
 		<article>
-			<form>
+			<form name="searchDetail">
 				<div id="detaildiv">
 					<fieldset>
 						<ul>
@@ -142,6 +157,7 @@ document.getElementById('maxDate').value = getCurrentDate();
 	<section>
 		<fieldset>
 			<table>
+				<thead>
 				<tr>
 					<th><input type="checkbox" name="check" value=""></th>
 					<th>예약번호</th>
@@ -150,6 +166,8 @@ document.getElementById('maxDate').value = getCurrentDate();
 					<th>전화번호</th>
 					<th>상태</th>
 				</tr>
+				<thead>
+				<tbody id="tableBody">
 				<c:if test="${empty svcDTO}">
 					<tr>
 						<td colspan="6">예약한 회원이 없습니다</td>
@@ -168,6 +186,7 @@ document.getElementById('maxDate').value = getCurrentDate();
 						<td>${dto.svc_state}</td>
 					</tr>
 				</c:forEach>
+				</tbody>
 			</table>
 			<input type="submit" value="선택 삭제">
 		</fieldset>
