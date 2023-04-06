@@ -190,7 +190,7 @@ public class MemberDAOImple implements MemberDAO {
 		
 		return count;
 	}
-	/**회원정보 비밀번호 수정 _ 수정해야함*/
+	/**회원정보 비밀번호 수정*/
 	@Override
 	public int updatePWD(String newPwd,int user_idx) {
 		Map map = new HashMap();

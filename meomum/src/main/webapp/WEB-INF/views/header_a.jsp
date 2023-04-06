@@ -160,7 +160,7 @@
 						</a><!--//nav-link-->
 						<div id="submenu-1" class="collapse submenu submenu-1" data-bs-parent="#menu-accordion">
 							<ul class="submenu-list list-unstyled">
-								<li class="submenu-item"><a class="submenu-link" href="#">전체 스케줄</a></li>
+								<li class="submenu-item"><a class="submenu-link" href="svcCalendar.do">전체 스케줄</a></li>
 								<li class="submenu-item"><a class="submenu-link" href="#">방문 견적 예약</a></li>
 								<li class="submenu-item"><a class="submenu-link" href="askList_a.do">간단 견적 문의</a></li>
 							</ul>
