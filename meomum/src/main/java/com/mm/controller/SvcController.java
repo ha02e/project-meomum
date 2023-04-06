@@ -69,12 +69,8 @@ public class SvcController {
 		return mav; 
 	}
 	
-<<<<<<< HEAD
-	
-	/**관리자 페이지-예약 현황*/
-=======
+
 	/**관리자 페이지-예약 리스트*/
->>>>>>> ef03346447728c684a00fb886a83899a45ec5863
 	@RequestMapping("/asvcList.do")
 	public ModelAndView asvcList() {
 		List<SvcSelectAllDTO> list = svcDao.svcAdminList();

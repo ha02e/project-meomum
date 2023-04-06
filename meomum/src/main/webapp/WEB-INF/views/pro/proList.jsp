@@ -188,13 +188,15 @@
                         <a href="proContent.do?pro_idx=${list.pro_idx}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
                             ${list.pro_name}
                         </a>
-
+			
                         <span class="stext-105 cl3">
                         <fmt:formatNumber type="number" maxFractionDigits="3" value="${list.pro_subprice }" />원
                         </span>
                     </div>
-
+						
+						
                     <div class="block2-txt-child2 flex-r p-t-3">
+                    	<input type="hidden" id="pro_idx" name="pro_idx" value="${list.pro_idx }">
                         <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
                             <img class="icon-heart1 dis-block trans-04" src="images/icon/icon-heart-01.png" alt="ICON">
                             <img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icon/icon-heart-02.png" alt="ICON">
@@ -260,40 +262,30 @@
 <!--===============================================================================================-->
 	<script src="vendor/sweetalert/sweetalert.min.js"></script>
 	<script>
-		$('.js-addwish-b2, .js-addwish-detail').on('click', function(e){
-			e.preventDefault();
-		});
+	$('.js-addwish-b2').each(function(){
+	    $(this).on('click', function(){
+	        $.ajax({
+	            url: 'loveInsert.do',
+	            type: 'POST',
+	            data: {pro_idx: $("#pro_idx").val();
 
-		$('.js-addwish-b2').each(function(){
-			var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
-			$(this).on('click', function(){
-				swal(nameProduct, "찜 완료", "success");
-
-				$(this).addClass('js-addedwish-b2');
-				$(this).off('click');
-			});
-		});
-
-		$('.js-addwish-detail').each(function(){
-			var nameProduct = $(this).parent().parent().parent().find('.js-name-detail').html();
-
-			$(this).on('click', function(){
-				swal(nameProduct, "is added to wishlist !", "success");
-
-				$(this).addClass('js-addedwish-detail');
-				$(this).off('click');
-			});
-		});
-
-		/*---------------------------------------------*/
-
-		$('.js-addcart-detail').each(function(){
-			var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
-			$(this).on('click', function(){
-				swal(nameProduct, "is added to cart !", "success");
-			});
-		});
-	
+	            	},
+	            success: function(response){
+	                $('.js-addwish-b2').each(function(){
+	                    var clicked_pro_idx = $(this).closest('.block2-txt').find('input[name="pro_idx"]').val();
+	                    if(clicked_pro_idx == pro_idx) {
+	                        $(this).addClass('js-addedwish-b2');
+	                        $(this).off('click');
+	                    }
+	                });
+	            },
+	            error: function(){
+	        
+	                alert(pro_idx+'오류가 발생했습니다.');
+	            }
+	        });
+	    });
+	});
 	</script>
 <!--===============================================================================================-->
 	<script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>

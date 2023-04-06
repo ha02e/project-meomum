@@ -133,23 +133,30 @@ public class CartController {
 		
 	
 		//장바구니 수량 조절
-		@RequestMapping(value="cartNumUpdate.do", method=RequestMethod.POST)
-		@ResponseBody
+		@RequestMapping(value="cartNumUpdate.do")
 		public ModelAndView cartNumUpdate(@RequestParam("cart_idx")int cart_idx,
-				@RequestParam("cart_amount") int cart_amount) {
+				@RequestParam("cart_amount") int cart_amount,
+				HttpSession session) {
 			
 			ModelAndView mav= new ModelAndView();
-			CartDTO dto=new CartDTO();
 			
+			session.getAttribute("ssInfo");
+			MemberDTO sdto =(MemberDTO) session.getAttribute("ssInfo");
+			int user_idx =sdto.getUser_idx();
+			
+			CartDTO dto=new CartDTO();
 			dto.setCart_amount(cart_amount);
 			dto.setCart_idx(cart_idx);
+			System.out.println(cart_amount+"/"+cart_idx+"/"+user_idx);
+			int result=cartDao.cartNumUpdate(dto);
 			
-			System.out.println();
-			cartDao.cartNumUpdate(dto);
-			mav.setViewName("mmJson");
-			
-			return mav;
-		}
+			String msg=result>=0?"수정 성공":"수정 실패";
+	      	String link = "proCart.do?user_idx="+user_idx;
+	      	mav.addObject("msg", msg);
+	        mav.addObject("link", link);
+	        mav.setViewName("pro/proMsg");
+	        return mav;
+			}
 		
 	
 }
