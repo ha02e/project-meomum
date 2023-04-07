@@ -86,10 +86,10 @@ function updateShippingCost() {
 				</tr>
 			</c:if>
 			
-		<form name="cartForm" method="post" action="orderList.do">
+		<form name="cartForm" method="get" action="orderList.do">
 			<c:forEach var="list" items="${lists}">		
-			<c:set var="totalSubPrice" value="${totalSubPrice + (list.cart_amount * list.pro_subprice)}" />
-			<c:set var="totalShippingCost" value="${totalShippingCost + (list.cart_amount * list.pro_delprice)}" />
+			<c:set var="totalSub" value="${totalSub + (list.cart_amount * list.pro_subprice)}" />
+			<c:set var="totalDel" value="${totalDel + (list.cart_amount * list.pro_delprice)}" />
 					<tr>
 						<td>
 						<input type="checkbox" id="selectOne" name="selectOne" value="ok">
@@ -117,7 +117,7 @@ function updateShippingCost() {
 							<!-- 수량 조절 -->
 								
 								<input class="mtext-104 cl3 txt-center num-product" type="number" min="1" max="10" name="cart_amount"
-								value="${list.cart_amount }">
+								value="${list.cart_amount }" onchange="updatePrice(this, ${list.pro_subprice}, ${list.pro_allprice})">
 								<input type="hidden" name="cart_idx" value="${list.cart_idx }">
 								
 							
@@ -130,8 +130,9 @@ function updateShippingCost() {
 							<button type="submit" formaction="cartNumUpdate.do">수량 변경</button>
 						</td>
 						<td>
-						<div><span id="subPrice">${list.cart_amount * list.pro_subprice}</span>원</div>
-    					<div><span id="allPrice">${list.cart_amount * list.pro_allprice}</span>원</div>
+						<div><span id="subPrice-${list.cart_idx}"><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.cart_amount * list.pro_subprice}" />원
+						</span></div>
+    					<div><span id="allPrice-${list.cart_idx}"><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.cart_amount * list.pro_allprice}" />원</span></div>
 						</td>
 						
 						<!-- 장바구니 삭제 -->
@@ -143,20 +144,22 @@ function updateShippingCost() {
 					</tr>
 					</c:forEach>				
 					<tr>
-						<td><div>월 구독 가격 <fmt:formatNumber type="number" maxFractionDigits="3" value="${totalSubPrice}" />원</div></td>
-						<td><div>| 총 배송비 <fmt:formatNumber type="number" maxFractionDigits="3" value="${totalShippingCost}" />원</div></td>
+						<td><div id="totalSub-${list.cart_idx }">월 구독 가격 <fmt:formatNumber type="number" maxFractionDigits="3" value="${totalSub}" />원</div></td>
+						<td><div id="totalDel-${list.cart_idx}">| 총 배송비 <fmt:formatNumber type="number" maxFractionDigits="3" value="${totalDel}" />원</div></td>
 					</tr>
 					<tr>
 						<td>
 						<input type="hidden" name="pro_idx" value="${list.pro_idx}" >
 						<input type="hidden" name="cart_amount" value="${list.cart_amount}" >
 						<input type="hidden" name="totalSubPrice" value="${totalSubPrice}" >
-						<input type="hidden" name="totalShippingCost" value="${totalShippingCost}" >	
+						<input type="hidden" name="totalDel" value="${totalDel}" >	
 						<button type="submit" formaction="orderList.do">결제하기</button>
 						</td>
 					</tr>
 				</table>
 			</form>		
+
+
 
 <script>
   function deleteCartItem(cartIdx) {
@@ -175,6 +178,18 @@ function updateShippingCost() {
   }
 </script>
 
+<script>
+function updatePrice(input, subprice, allprice) {
+    var cartIdx = input.nextElementSibling.value;
+    var cartAmount = input.value;
+    var subPrice = cartAmount * subprice;
+    var allPrice = cartAmount * allprice;
+    
+    // 하위 요소에서 ID를 이용하여 값을 업데이트합니다.
+    document.getElementById("subPrice-" + cartIdx).innerHTML = subPrice + "원";
+    document.getElementById("allPrice-" + cartIdx).innerHTML = allPrice + "원";
+}
+</script>
 
 
 <script>
