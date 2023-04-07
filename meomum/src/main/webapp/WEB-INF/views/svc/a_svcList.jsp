@@ -15,7 +15,7 @@ App CSS
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
 <script>
-//전체 체크박스 클릭시 전체 체크박스 선택
+	//"전체" 체크박스 클릭시 체크박스 모두 선택
 	$(function() {
 		$('input[name="svc_state"]').click(
 				function() {
@@ -27,8 +27,8 @@ App CSS
 							$('input[name="svc_state"]').not(this).prop(
 									"checked", false);
 						}
-					}
-				});
+				}
+			});
 	});
 
 	//세부 검색 기능

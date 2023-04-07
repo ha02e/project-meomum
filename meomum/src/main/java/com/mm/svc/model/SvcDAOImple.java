@@ -85,6 +85,13 @@ public class SvcDAOImple implements SvcDAO {
 		return count;
 	}
 	
+	/**관리자: 서비스 견적 내용 추가*/
+	@Override
+	public int svcIngInsert(SvcIngDTO dto) {
+		int count = sqlMap.insert("svcIngInsert",dto);
+		return count;
+	}
+	
 	/**마이페이지 : 방문 예약 신청 내역*/
 	@Override
 	public List<SvcSelectAllDTO> svcUserList(int user_idx) {
