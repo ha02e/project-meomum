@@ -7,15 +7,19 @@
 <title>[관리자] 상품 수정</title>
 <script>
 function calPrice(){
-	 const proprice = Number(document.getElementById("pro_price").value);
-	    const subMonth = Number(document.querySelector('input[name="pro_month"]:checked').value);
-	    const subprice = Math.ceil(proprice / (15 * subMonth)) * subMonth;
-	    document.getElementById("pro_subprice").value = subprice;
+	const proprice = Number(document.getElementById("pro_price").value);
+    const subMonth = Number(document.querySelector('input[name="pro_month"]:checked').value);
+    const subprice = Math.ceil(proprice / (15 * subMonth)) * subMonth;
+    document.getElementById("pro_subprice").value = subprice;
+    
+    const allprice = subprice*subMonth;
+    document.getElementById("pro_allprice").value = allprice;   
 }
 </script>
 </head>
-	<h2>상품 수정하기</h2>
 	<form name="proUpdate" action="proUpdate.do" method="post">
+	<h2>상품 수정하기</h2>
+	
 		<input type="hidden" name="pro_idx" value="${lists[0].pro_idx}">
 		<ul>
 			<li>대표 사진
@@ -50,11 +54,12 @@ function calPrice(){
 			</c:choose>
 			</li>
 			
+			
 			<li>상품명
 				<input type="text" name="pro_name" value="${lists[0].pro_name}">
 			</li>
 			<li>정가
-				<input type="text" name="pro_price" value="${lists[0].pro_price}">
+				<input type="text" name="pro_price" id="pro_price" value="${lists[0].pro_price}">
 			</li>
 			<li>재고 수량
 				${lists[0].pro_amount}
@@ -75,8 +80,13 @@ function calPrice(){
 			<input type="text" id="pro_subprice" name="pro_subprice" value="${lists[0].pro_subprice }">
 			</li>
 			
+			<li>총 구독 가격
+			<input type="text" id="pro_allprice" name="pro_allprice" value="${lists[0].pro_allprice }">
+			</li>
+			
 			<li><input type="submit" value="등록하기"><input type="reset" value="다시 작성"></li>
 		</ul>
 		</form>
+		
 </body>
 </html>

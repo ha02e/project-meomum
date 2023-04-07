@@ -58,6 +58,7 @@ public class SvcController {
 		return mav;
 	}
 	
+	
 	/**방문 견적 신청 시 예약된 시간 비활성화*/
 	@RequestMapping(value = "/svcTimeSelect.do", method = RequestMethod.GET)
 	@ResponseBody 
@@ -68,7 +69,6 @@ public class SvcController {
 		mav.setViewName("mmJson");
 		return mav; 
 	}
-	
 	
 	/**관리자 페이지-예약 리스트*/
 	@RequestMapping("/asvcList.do")

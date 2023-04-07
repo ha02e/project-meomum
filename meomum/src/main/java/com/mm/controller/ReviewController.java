@@ -34,10 +34,6 @@ public class ReviewController {
 	@Autowired
 	private ServletContext servletContext;
 	
-	@RequestMapping("/myReview.do")
-	public String myReview() {
-		return "review/myReview";
-	}
 	
 	@RequestMapping("/myReviewList.do")
 	public ModelAndView myreviewList(@RequestParam(value="cp",defaultValue = "1")int cp,
@@ -99,9 +95,9 @@ public class ReviewController {
 		MemberDTO mdto=(MemberDTO)session.getAttribute("ssInfo");
 		
 		dto.setUser_idx(mdto.getUser_idx());
+		dto.setCategory(req.getParameter("category"));
 		dto.setWriter(req.getParameter("writer"));
-		int category=Integer.parseInt(req.getParameter("category"));
-		dto.setCategory(category);
+		dto.setActivity_idx(req.getParameter("activity_idx"));
 		dto.setSubject(req.getParameter("subject"));
 		dto.setContent(req.getParameter("content"));
 		int star=Integer.parseInt(req.getParameter("star"));

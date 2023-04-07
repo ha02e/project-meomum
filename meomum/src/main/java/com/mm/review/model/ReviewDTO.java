@@ -7,7 +7,7 @@ public class ReviewDTO {
 	private int review_idx;
 	private int user_idx;
 	private String cate_idx;
-	private int category;
+	private String category;
 	private String activity_idx;
 	private String writer;
 	private int star;
@@ -23,7 +23,7 @@ public class ReviewDTO {
 	}
 
 
-	public ReviewDTO(int review_idx, int user_idx, String cate_idx, int category, String activity_idx, String writer,
+	public ReviewDTO(int review_idx, int user_idx, String cate_idx, String category, String activity_idx, String writer,
 			int star, String subject, String content, Date writedate, int readnum, String thumb) {
 		super();
 		this.review_idx = review_idx;
@@ -71,12 +71,12 @@ public class ReviewDTO {
 	}
 
 
-	public int getCategory() {
+	public String getCategory() {
 		return category;
 	}
 
 
-	public void setCategory(int category) {
+	public void setCategory(String category) {
 		this.category = category;
 	}
 

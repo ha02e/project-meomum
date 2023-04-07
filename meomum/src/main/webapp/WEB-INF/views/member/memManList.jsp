@@ -7,6 +7,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>머뭄 회원 관리 페이지</title>
+	<script type="text/javascript" src="/meomum/js/request.js"></script>
+
 <script type="text/javascript">
 	function sortUsers(orderby, type, fvalue) {
 
@@ -17,6 +19,53 @@
 			window.location.href = 'menMan.do?orderby=' + orderby;
 		}
 	}
+	
+	function manage() {
+		  if (confirm("관리자로 변경하시겠습니까?")) {
+		    var user_idx = document.getElementById('user_idx').value;
+		    var param = "user_idx="+user_idx;
+			sendRequest('managerUpdate.do',param,'POST',managerResult);
+
+		  }
+		}
+	function managerResult(){
+		if(XHR.readyState==4){
+			if(XHR.status==200){
+				 var data = XHR.responseText;
+		            data = JSON.parse(data);
+		            alert(data.msg);
+		            location.reload();
+					
+			}else{
+				alert('전송에 실패하였습니다.');
+			}
+		}
+	}
+
+	function updateUserMemo() {
+		 if (confirm("사용자 정보를 변경하시겠습니까?")) {
+			  var memoInput = document.getElementById('user_memo').value;
+			  var user_idx = document.getElementById('user_idx').value;
+			  var param = "user_memo="+memoInput+"&user_idx="+user_idx;
+	
+			  sendRequest('userMemoUpdate.do',param,'POST',updateUserMemoResult);
+			}
+	}
+	function updateUserMemoResult(){
+		if(XHR.readyState==4){
+			if(XHR.status==200){
+				 var data = XHR.responseText;
+		            data = JSON.parse(data);
+		            alert(data.msg);
+		            location.reload();
+					
+			}else{
+				alert('전송에 실패하였습니다.');
+			}
+		}
+	}
+
+	
 </script>
 
 </head>
@@ -31,41 +80,13 @@
 			<div class="container pt-5">
 				<h1 class="text-center mb-4">회원관리</h1>
 
-				<!-- 탭 메뉴  -->
-				<ul class="nav nav-tabs nav-tabs-sm" id="borderedTabJustified"
-					role="tablist">
-					<li class="nav-item" role="presentation">
-						<button class="nav-link active" id="home-tab" data-bs-toggle="tab"
-							data-bs-target="#bordered-justified-home" type="button"
-							role="tab" aria-controls="home" aria-selected="false"
-							tabindex="-1">전체보기</button>
-					</li>
-					<li class="nav-item" role="presentation">
-						<button class="nav-link" id="profile-tab" data-bs-toggle="tab"
-							data-bs-target="#bordered-justified-profile" type="button"
-							role="tab" aria-controls="profile" aria-selected="true">회원</button>
-					</li>
-					<li class="nav-item" role="presentation">
-						<button class="nav-link" id="admin-tab" data-bs-toggle="tab"
-							data-bs-target="#bordered-justified-admin" type="button"
-							role="tab" aria-controls="admin" aria-selected="false">관리자</button>
-					</li>
-				</ul>
-				<!-- 탭 메뉴끝  -->
-
-
-				<!-- 전체 회원 보기 tab  -->
-				<div class="tab-content pt-2" id="borderedTabJustifiedContent">
-					<div class="tab-pane fade active show" id="bordered-justified-home"
-						role="tabpanel" aria-labelledby="home-tab">
-
 						<div class="tab-pane active row justify-content-center">
 							<div class="col-md-6">
 
 								<form name="searchuser" action="menMan.do" class="input-group">
 									<input type="hidden" name="type" value="yes"> <input
 										type="hidden" name="orderby" value="${orderby}"> <input
-										type="text" class="form-control" placeholder="전체 관리자+회원 검색"
+										type="text" class="form-control" placeholder="회원 검색"
 										name="fvalue">
 									<button class="btn btn-primary" type="submit">검색</button>
 								</form>
@@ -88,7 +109,7 @@
 						</div>
 
 
-						<div class="container pt-5">
+						<div class="container pt-5 overflow-x-auto">
 							<div class="row justify-content-center">
 								<div class="col-md-12">
 									<div class="text-center mb-4">
@@ -109,6 +130,7 @@
 												<th>구독수</th>
 												<th>후기작성</th>
 												<th>비고</th>
+												
 											</tr>
 										</thead>
 										<tbody id="user-list">
@@ -130,9 +152,11 @@
 													<td>${ul.reviewCount}</td>
 													<td>
 														<!-- Button trigger modal -->
-														<button type="button" class="btn btn-primary"
+														<button type="button" class="btn btn-outline-secondary"
 															data-bs-toggle="modal" data-bs-target="#exampleModal"
-															onclick="document.getElementById('user_Idx').value='${ul.user_idx}';">
+															onclick="document.getElementById('user_idx').value='${ul.user_idx}';
+															document.getElementById('user_memo').value='${ul.user_memo}';
+															">
 															수정</button>
 													</td>
 												</tr>
@@ -155,9 +179,6 @@
 
 					<!--  전체 회원 탭 끝 -->
 
-
-				</div>
-			</div>
 		</div>
 		<!--//app-content-->
 		<!-- 본문 끝 -->
@@ -168,39 +189,39 @@
 
 
 	<!-- 회원 정보수정 모달 -->
-	<div class="modal fade" id="exampleModal" tabindex="-1"
-		aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h1 class="modal-title fs-5" id="exampleModalLabel">
-						회원 정보 수정 <input type="text" name="user_Idx" id="user_Idx"
-							value="${user_idx}">
-					</h1>
-
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					<button type="button" class="btn btn-danger" id="manageBtn"
-						data-user-idx="">관리자로 변경</button>
-					<form>
-						<div class="mb-3">
-							<label for="user-memo" class="form-label">사용자 메모</label> <input
-								type="text" class="form-control" id="user-memo"
-								placeholder="사용자 메모를 입력하세요.">
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-bs-dismiss="modal">닫기</button>
-					<button type="submit" class="btn btn-primary">수정</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
+<div class="modal fade" id="exampleModal" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">
+                    회원 정보 수정 
+                    <input type="hidden" name="user_idx" id="user_idx"
+                        value="${user_idx}">
+                </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+               
+                <form id="memoForm">
+                    <div class="mb-3">
+                        <label for="user_memo" class="form-label">사용자 메모</label>
+                        <input type="text" class="form-control" id="user_memo"
+                            placeholder="사용자 메모를 입력하세요.">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+             <button type="button" class="btn btn-outline-info" id="manageBtn"
+                    onclick="manage()">관리자로 변경</button>
+                <button type="button" class="btn btn-secondary"
+                    data-bs-dismiss="modal">닫기</button>
+                <button type="button" class="btn btn-info" id="modifyBtn" onclick="updateUserMemo()">수정</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
@@ -211,30 +232,6 @@
 		integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
 		crossorigin="anonymous">
 		
-	</script>
-	<script type="text/javascript" src="/meomum/js/request.js"></script>
-	<script>
-		function manage() {
-			if (confirm("관리자로 변경하시겠습니까?")) {
-				var user_idx = document.getElementById('manageBtn')
-						.getAttribute('data-user-idx');
-				alert(user_idx);
-				$.ajax({
-					url : 'askCommDel.do',
-					method : 'POST',
-					data : {
-						ask_idx : ask_idx
-					},
-					success : function(data) {
-						window.location.reload();
-						alert(data.msg);
-					},
-					error : function(jqXHR, textStatus) {
-						alert('전송 실패');
-					}
-				});
-			}
-		}
 	</script>
 
 

@@ -95,7 +95,7 @@
 						<div class="col">
 							<div class="input-group mb-3">
 								<span class="input-group-text" id="inputGroup-sizing-default">카테고리</span>
-								<input type="text" name="category" class="form-control">
+								<input type="text" name="category" class="form-control" value="${review.category}">
 							</div>
 						</div>
 					</div>

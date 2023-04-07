@@ -71,6 +71,7 @@
 				<h3 class="title text-center">후기 작성하기</h3>
 				<!-- 테스트 리뷰게시판 -->
 				<form action="reviewWrite.do" name="reviewWrite" method="post" enctype="multipart/form-data">
+				<input type="hidden" name="activity_idx" value="${param.activity_idx}">
 				<div class="container-xl">
 					<div class="position-relative mb-3">
 					<div class="row g-3 justify-content">
@@ -78,13 +79,13 @@
 							<div class="input-group mb-3">
 								<span class="input-group-text" id="inputGroup-sizing-default">작성자</span>
 								<input type="text" name="writer" class="form-control" 
-										value="${sessionScope.ssInfo.user_name}">
+										value="${param.writer}" readonly>
 							</div>
 						</div>
 						<div class="col">
 							<div class="input-group mb-3">
 								<span class="input-group-text" id="inputGroup-sizing-default">카테고리</span>
-								<input type="text" name="category" class="form-control">
+								<input type="text" name="category" class="form-control" value="${param.category}" readonly>
 							</div>
 						</div>
 					</div>

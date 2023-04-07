@@ -3,124 +3,225 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mm.member">
-	<insert id="insertJoin" parameterType="com.mm.member.model.MemberDTO">
+	<insert id="insertJoin"
+		parameterType="com.mm.member.model.MemberDTO">
 		insert into member values(
-									member_user_idx.nextval,
-									#{user_id},
-									#{user_jointype},
-									#{user_info},
-									#{user_pwd},
-									#{user_name},
-									#{user_pcode},
-									#{user_addr},
-									#{addr_detail},
-									#{user_tel},
-									sysdate,
-									#{tos},
-									#{user_pia},
-									''
-									)
+		member_user_idx.nextval,
+		#{user_id},
+		#{user_jointype},
+		#{user_info},
+		#{user_pwd},
+		#{user_name},
+		#{user_pcode},
+		#{user_addr},
+		#{addr_detail},
+		#{user_tel},
+		sysdate,
+		#{tos},
+		#{user_pia},
+		''
+		)
 	</insert>
-	
-	
-	<select id="login" parameterType="String" resultType="com.mm.member.model.MemberDTO">
-		select * from member where user_id = #{user_id }	
-	</select>
-	
-	
-	<select id="getsessionInfo" parameterType="String" resultType="com.mm.member.model.MemberDTO">
+
+
+	<select id="login" parameterType="String"
+		resultType="com.mm.member.model.MemberDTO">
 		select * from member where user_id = #{user_id }
 	</select>
-	
-	
-	<update id="updateUserInfo" parameterType="com.mm.member.model.MemberDTO">
+
+
+	<select id="getsessionInfo" parameterType="String"
+		resultType="com.mm.member.model.MemberDTO">
+		select * from member where user_id = #{user_id }
+	</select>
+
+
+	<update id="updateUserInfo"
+		parameterType="com.mm.member.model.MemberDTO">
 		update member set user_name = #{user_name},
-						user_pcode = #{user_pcode},
-						user_addr = #{user_addr},
-						addr_detail = #{addr_detail},
-						user_tel = #{user_tel}
-					where user_idx = #{user_idx}
+		user_pcode =
+		#{user_pcode},
+		user_addr = #{user_addr},
+		addr_detail = #{addr_detail},
+		user_tel = #{user_tel}
+		where user_idx = #{user_idx}
 	</update>
-	
-	
-	<select id="getuserInfo" parameterType="Integer" resultType="com.mm.member.model.MemberDTO">
+
+
+	<select id="getuserInfo" parameterType="Integer"
+		resultType="com.mm.member.model.MemberDTO">
 		select * from member where user_idx = #{user_idx}
 	</select>
-	
-	
+
+
 	<update id="updatePWD" parameterType="Map">
-		update member set user_pwd = #{newPwd} where user_idx =#{user_idx} 
+		update member set user_pwd
+		= #{newPwd} where user_idx =#{user_idx}
 	</update>
-	
-	<select id="getuserTTCnt" resultType="Integer" parameterType="String">
-	  SELECT COUNT(*) FROM member 
-	  	<if test="fvalue != null">
-	 	 WHERE user_idx LIKE #{fvalue} or 
-	 	 	user_id LIKE #{fvalue} or
-	 	 	user_name LIKE #{fvalue} or
-	 	 	user_tel LIKE #{fvalue}
-	 	</if>
+
+	<select id="getuserTTCnt" resultType="Integer"
+		parameterType="String">
+		SELECT COUNT(*) FROM member
+		WHERE user_info = '회원'
+		<if test="fvalue != null">
+			and
+			(user_idx LIKE #{fvalue} or
+			user_id LIKE #{fvalue} or
+			user_name LIKE #{fvalue} or
+			user_tel LIKE #{fvalue})
+		</if>
+
 	</select>
-	
-	
-<select id="memberList" parameterType="Map" resultType="com.mm.member.model.MemberListDTO">
+
+
+	<select id="memberList" parameterType="Map"
+		resultType="com.mm.member.model.MemberListDTO">
 		SELECT *
 		FROM (
-		    SELECT rownum as rnum, a.*
-		    FROM (
-		        SELECT
-		            m.user_idx,
-		            m.user_info,
-		            m.user_id,
-		            m.user_name,
-		            m.user_tel,
-		            m.joindate,
-		            COUNT(DISTINCT sd.svc_idx) AS svcCount,
-		            COUNT(DISTINCT od.svc_idx) AS orderCount,
-		            COUNT(DISTINCT r.review_idx) AS reviewCount,
-		            m.user_memo
-		        FROM member m
-		        LEFT JOIN svc_date sd ON m.user_idx = sd.user_idx
-		        LEFT JOIN svc_detail od ON m.user_idx = od.user_idx
-		        LEFT JOIN review r ON m.user_idx = r.user_idx
-          		  <if test="fvalue != null">
-                	 WHERE m.user_idx LIKE #{fvalue} or 
-					 	 	m.user_id LIKE #{fvalue} or
-					 	 	m.user_name LIKE #{fvalue} or
-					 	 	m.user_tel LIKE #{fvalue}
-           		 </if>
-            GROUP BY
-            m.user_idx,
-            m.user_info,
-            m.user_id,
-            m.user_name,
-            m.user_tel,
-            m.joindate,
-            m.user_memo
-			    
-              <choose>
-				  <when test="orderby== 2">
-				    ORDER BY m.user_name
-				  </when>
-				  <when test="orderby== 3">
-				    ORDER BY svcCount DESC, user_name
-				  </when>
-				  <when test="orderby== 4">
-				    ORDER BY orderCount DESC, user_name
-				  </when>
-				  <when test="orderby== 5">
-				    ORDER BY reviewCount DESC, user_name
-				  </when>
-				  <otherwise>
-				    ORDER BY m.user_idx DESC
-				  </otherwise>
-			  </choose>
-        ) a
-    ) b
-    where rnum <![CDATA[>=]]> #{start} and rnum <![CDATA[<=]]> #{end}
-</select>
+		SELECT rownum as rnum, a.*
+		FROM (
+		SELECT
+		m.user_idx,
+		m.user_info,
+		m.user_id,
+		m.user_name,
+		m.user_tel,
+		m.joindate,
+		COUNT(DISTINCT sd.svc_idx) AS svcCount,
+		COUNT(DISTINCT od.svc_idx) AS
+		orderCount,
+		COUNT(DISTINCT r.review_idx) AS reviewCount,
+		m.user_memo
+		FROM member m
+		LEFT JOIN svc_date sd ON m.user_idx = sd.user_idx
+		LEFT
+		JOIN svc_detail od ON m.user_idx = od.user_idx
+		LEFT JOIN review r ON
+		m.user_idx = r.user_idx
+		<if test="fvalue != null">
+			WHERE m.user_idx LIKE #{fvalue} or
+			m.user_id LIKE #{fvalue}
+			or
+			m.user_name LIKE #{fvalue} or
+			m.user_tel LIKE #{fvalue}
+		</if>
+		GROUP BY
+		m.user_idx,
+		m.user_info,
+		m.user_id,
+		m.user_name,
+		m.user_tel,
+		m.joindate,
+		m.user_memo
 
+		having m.user_info = '회원'
+		<choose>
+			<when test="orderby== 2">
+				ORDER BY m.user_name
+			</when>
+			<when test="orderby== 3">
+				ORDER BY svcCount DESC, user_name
+			</when>
+			<when test="orderby== 4">
+				ORDER BY orderCount DESC, user_name
+			</when>
+			<when test="orderby== 5">
+				ORDER BY reviewCount DESC, user_name
+			</when>
+			<otherwise>
+				ORDER BY m.user_idx DESC
+			</otherwise>
+		</choose>
+		) a
+		) b
+		where rnum <![CDATA[>=]]>
+		#{start} and rnum <![CDATA[<=]]>
+		#{end}
+	</select>
+	<update id="managerUpdate" parameterType="Integer">
+		update member set
+		user_info = '관리자' where user_idx =#{user_idx}
+	</update>
+	<update id="userMemoUpdate" parameterType="Map">
+		update member set
+		user_memo = #{user_memo} where user_idx =#{user_idx}
+	</update>
+	
+	<select id="managerList" parameterType="Map"
+		resultType="com.mm.member.model.MemberListDTO">
+		SELECT *
+		FROM (
+		SELECT rownum as rnum, a.*
+		FROM (
+		SELECT
+		m.user_idx,
+		m.user_info,
+		m.user_id,
+		m.user_name,
+		m.user_tel,
+		m.joindate,
+		COUNT(DISTINCT sd.svc_idx) AS svcCount,
+		COUNT(DISTINCT od.svc_idx) AS
+		orderCount,
+		COUNT(DISTINCT r.review_idx) AS reviewCount,
+		m.user_memo
+		FROM member m
+		LEFT JOIN svc_date sd ON m.user_idx = sd.user_idx
+		LEFT
+		JOIN svc_detail od ON m.user_idx = od.user_idx
+		LEFT JOIN review r ON
+		m.user_idx = r.user_idx
+		<if test="fvalue != null">
+			WHERE m.user_idx LIKE #{fvalue} or
+			m.user_id LIKE #{fvalue}
+			or
+			m.user_name LIKE #{fvalue} or
+			m.user_tel LIKE #{fvalue}
+		</if>
+		GROUP BY
+		m.user_idx,
+		m.user_info,
+		m.user_id,
+		m.user_name,
+		m.user_tel,
+		m.joindate,
+		m.user_memo
 
+		having m.user_info = '관리자'
+		<choose>
+			<when test="orderby== 2">
+				ORDER BY m.user_name
+			</when>
+			<otherwise>
+				ORDER BY m.user_idx DESC
+			</otherwise>
+		</choose>
+		) a
+		) b
+		where rnum <![CDATA[>=]]>
+		#{start} and rnum <![CDATA[<=]]>
+		#{end}
+	</select>
+	<select id="getmanagerTTCnt" resultType="Integer"
+		parameterType="String">
+		SELECT COUNT(*) FROM member
+		WHERE user_info = '관리자'
+		<if test="fvalue != null">
+			and
+			(user_idx LIKE #{fvalue} or
+			user_id LIKE #{fvalue} or
+			user_name LIKE #{fvalue} or
+			user_tel LIKE #{fvalue})
+		</if>
+
+	</select>
 	
+		<update id="managerDelete" parameterType="Integer">
+		update member set
+		user_info = '회원' where user_idx =#{user_idx}
+	</update>
 	
+	<select id="findID" parameterType="Map" resultType="String">
+		select user_id from member where user_name = #{user_name} and user_tel = #{user_tel}
+	</select>
 </mapper> 

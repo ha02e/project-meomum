@@ -13,5 +13,6 @@ public interface NtcDAO {
 	public NtcDTO ntcFind(Integer idx);
 	public int ntcUpdate(NtcDTO dto);
 	public List<NtcDTO> ntcSearch(String keyword);
+	public String getNtcImageName(Integer idx);
 }
 

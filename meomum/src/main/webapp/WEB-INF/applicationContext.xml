@@ -60,12 +60,23 @@
 	</bean>
 	<bean id="askDAO" class="com.mm.ask.model.AskDAOImple">
 		<constructor-arg>
-			<ref bean="sqlSessionTemplate"/>
+			<ref bean="sqlSessionTemplate" />
 		</constructor-arg>
 	</bean>
 	<bean id="cartDAO" class="com.mm.cart.model.CartDAOImple">
 		<constructor-arg>
 			<ref bean="sqlSessionTemplate" />
+		</constructor-arg>
+	</bean>
+<<<<<<< HEAD
+	<bean id="orderDAO" class="com.mm.order.model.OrderDAOImple">
+		<constructor-arg>
+			<ref bean="sqlSessionTemplate"/>
+=======
+		<bean id="loveDAO" class="com.mm.love.model.LoveDAOImple">
+		<constructor-arg>
+			<ref bean="sqlSessionTemplate" />
+>>>>>>> 202564f232edff748f298c4d72193c1faa5bb31d
 		</constructor-arg>
 	</bean>
 </beans>
