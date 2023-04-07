@@ -75,5 +75,21 @@
  	where pro_idx=#{pro_idx}
  	</update>
  	
+ 	 <select id="proSelect" parameterType="Integer" resultType="com.mm.pro.model.ProDTO">
+	 select * from product
+	 where pro_idx=#{pro_idx}
+ 	</select>
+ 	
+	<update id="proAmountUpdate" parameterType="com.mm.pro.model.ProDTO">
+		update product
+		set pro_amount=#{pro_amount}, pro_state=#{pro_state}
+		where pro_idx=#{pro_idx}
+	</update>
+	
+	<update id="proStateUpdate" parameterType="com.mm.pro.model.ProDTO">
+		update product
+		set pro_state=#{pro_state}, pro_amount=#{pro_amount}
+		where pro_idx=#{pro_idx}
+	</update>
 	
 </mapper> 

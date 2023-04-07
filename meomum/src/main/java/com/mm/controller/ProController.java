@@ -271,4 +271,137 @@ public class ProController {
 		return mav;
 	}
 	
+	
+	//상품 재고 관리 리스트
+	@RequestMapping("/proAmount_a.do")
+	public ModelAndView proAmountList(@RequestParam(value="cp",defaultValue="1")int cp) {
+
+		int totalCnt=proDao.getTotalCnt();
+		int listSize=5;
+		int pageSize=5;
+		
+		String pageStr=com.mm.module.PageModule.makePage("proAmount_a.do", totalCnt, listSize, pageSize, cp);
+		
+		
+		List<ProDTO> lists=proPage(cp,listSize);
+		
+		ModelAndView mav=new ModelAndView();
+		mav.setViewName("pro/proAmount_a");
+		mav.addObject("lists", lists);
+		mav.addObject("pageStr", pageStr);
+		
+		return mav;
+	}
+	
+	
+	//상품 재고 관리 - 재고수정
+	@RequestMapping("/proAmountUpdate.do")
+	public ModelAndView proAmountUpdate(@RequestParam("pro_idx")int pro_idx,
+										@RequestParam(value="pro_amount", required = false)String pro_amount_str,
+										ProDTO dto, HttpServletRequest req) {
+		
+		if(pro_amount_str==null || pro_amount_str.trim().isEmpty()) {
+			String msg = "수량을 입력해주세요.";
+			ModelAndView mav = new ModelAndView("/msg", "msg", msg);
+			mav.addObject("link", "proAmount_a.do");
+			return mav;
+		}
+		
+		if (!pro_amount_str.matches("\\d+")) { //"\\d+" : 1개 이상의 숫자를 의미
+		    String msg = "수량은 숫자만 입력 가능합니다.";
+		    ModelAndView mav = new ModelAndView("/msg", "msg", msg);
+		    mav.addObject("link", "proAmount_a.do");
+		    return mav;
+		}
+		
+		
+		int pro_amount_s=Integer.parseInt(pro_amount_str);
+		
+		ProDTO pdto=proDao.proSelect(pro_idx);
+		int pro_amount=pdto.getPro_amount(); //기존 수량
+		int pro_state=pdto.getPro_state();  //기존 재고상태
+		
+		
+		if(pro_amount==pro_amount_s){
+			String msg = "수량이 동일합니다. 다시 입력해주세요.";
+			ModelAndView mav = new ModelAndView("/msg", "msg", msg);
+			mav.addObject("link", "proAmount_a.do");
+			return mav;
+		}else {
+			if(pro_amount_s==0 || pro_amount_s==1) {
+				dto.setPro_amount(pro_amount_s);
+				dto.setPro_state(1);
+			}else if(pro_amount_s>1){
+				dto.setPro_amount(pro_amount_s);
+				dto.setPro_state(0);
+			}
+		}
+		
+		
+		int result=proDao.proAmountUpdate(dto);
+		
+		String msg=result>=0?"재고 수정이 완료되었습니다.":"재고 수정에 실패하였습니다.";
+		
+		ModelAndView mav=new ModelAndView();
+		mav.addObject("msg", msg);
+		mav.addObject("link", "proAmount_a.do");
+		mav.setViewName("/msg");
+		return mav;
+		
+	}
+	
+	
+	//상품 재고 관리 - 상태수정
+	@RequestMapping("/proStateUpdate.do")
+	public ModelAndView proStateUpdate(@RequestParam("pro_idx")int pro_idx,
+										ProDTO dto, HttpServletRequest req) {
+
+		String pro_state_s=req.getParameter("pro_state"); //관리자가 선택한 재고상태
+		
+		ProDTO pdto=proDao.proSelect(pro_idx);
+		int pro_amount=pdto.getPro_amount(); //기존 수량
+		int pro_state=pdto.getPro_state();  //기존 재고상태
+		
+		
+		if("0".equals(pro_state_s)) {
+			if(pro_state==0) {
+				String msg = "이미 판매중인 상품입니다.";
+		        ModelAndView mav = new ModelAndView("/msg", "msg", msg);
+				mav.addObject("link", "proAmount_a.do");
+		        return mav;		
+			}else {
+				dto.setPro_state(0);
+			}
+		    if(pro_amount == 0 || pro_amount == 1) {
+		        String msg = "재고 수량을 수정해주세요.";
+		        ModelAndView mav = new ModelAndView("/msg", "msg", msg)
+		        		;
+				mav.addObject("link", "proAmount_a.do");
+		        return mav;				
+		    }
+		}else if("1".equals(pro_state_s)){
+			if(pro_state==1) {
+				String msg = "이미 품절중인 상품입니다.";
+		        ModelAndView mav = new ModelAndView("/msg", "msg", msg);
+				mav.addObject("link", "proAmount_a.do");
+		        return mav;	
+			}else {
+				dto.setPro_state(1);
+				dto.setPro_amount(1);
+			}
+		}
+
+		int result=proDao.proStateUpdate(dto);
+		
+		String msg=result>=0?"재고상태 수정이 완료되었습니다.":"재고상태 수정에 실패하였습니다.";
+
+		ModelAndView mav=new ModelAndView();
+		mav.addObject("msg", msg);
+		mav.addObject("link", "proAmount_a.do");
+		mav.setViewName("/msg");
+		return mav;
+		
+	}
+
+	
 }

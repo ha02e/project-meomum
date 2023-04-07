@@ -6,25 +6,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>머뭄 회원 관리 페이지</title>
+<title>머뭄 관리자 관리 페이지</title>
 	<script type="text/javascript" src="/meomum/js/request.js"></script>
 
 <script type="text/javascript">
 	function sortUsers(orderby, type, fvalue) {
 
 		if (type == 'yes') {
-			window.location.href = 'menMan.do?orderby=' + orderby
+			window.location.href = 'managerList.do?orderby=' + orderby
 					+ '&type=yes&fvalue=' + fvalue;
 		} else {
-			window.location.href = 'menMan.do?orderby=' + orderby;
+			window.location.href = 'managerList.do?orderby=' + orderby;
 		}
 	}
 	
 	function manage() {
-		  if (confirm("관리자로 변경하시겠습니까?")) {
+		  if (confirm("회원으로 변경하시겠습니까?")) {
 		    var user_idx = document.getElementById('user_idx').value;
 		    var param = "user_idx="+user_idx;
-			sendRequest('managerUpdate.do',param,'POST',managerResult);
+			sendRequest('managetDelete.do',param,'POST',managerResult);
 
 		  }
 		}
@@ -43,7 +43,7 @@
 	}
 
 	function updateUserMemo() {
-		 if (confirm("사용자 정보를 변경하시겠습니까?")) {
+		 if (confirm("변경하시겠습니까?")) {
 			  var memoInput = document.getElementById('user_memo').value;
 			  var user_idx = document.getElementById('user_idx').value;
 			  var param = "user_memo="+memoInput+"&user_idx="+user_idx;
@@ -78,15 +78,15 @@
 	<div class="app-wrapper">
 		<div class="app-content pt-3 p-md-3 p-lg-4">
 			<div class="container pt-5">
-				<h1 class="text-center mb-4">회원관리</h1>
+				<h1 class="text-center mb-4">관리자 관리</h1>
 
 						<div class="tab-pane active row justify-content-center">
 							<div class="col-md-6">
 
-								<form name="searchuser" action="menMan.do" class="input-group">
+								<form name="searchuser" action="managerList.do" class="input-group">
 									<input type="hidden" name="type" value="yes"> <input
 										type="hidden" name="orderby" value="${orderby}"> <input
-										type="text" class="form-control" placeholder="회원 검색"
+										type="text" class="form-control" placeholder="관리자 검색"
 										name="fvalue">
 									<button class="btn btn-primary" type="submit">검색</button>
 								</form>
@@ -97,12 +97,8 @@
 									<span class="me-2 ">정렬:</span> <select
 										class="form-select w-auto" name="orderby"
 										onchange="sortUsers(this.value, '${type}', '${fvalue}')">
-										<option value="1" ${order == '1' ? 'selected' : ''}>신규
-											회원순</option>
-										<option value="2" ${order == '2' ? 'selected' : ''}>이름순</option>
-										<option value="3" ${order == '3' ? 'selected' : ''}>예약횟수순</option>
-										<option value="4" ${order == '4' ? 'selected' : ''}>구독순</option>
-										<option value="5" ${order == '5' ? 'selected' : ''}>후기작성순</option>
+										<option value="1" ${order == '1' ? 'selected' : ''}>신규관리자순</option>
+										<option value="2" ${order == '2' ? 'selected' : ''}>이름오름차순</option>
 									</select>
 								</div>
 							</div>
@@ -114,7 +110,7 @@
 								<div class="col-md-12">
 									<div class="text-center mb-4">
 										<p class="text-start">
-											전체 사용자 <span id="total-users">${totalCnt}</span>명
+											전체 관리자 <span id="total-users">${totalCnt}</span>명
 										</p>
 									</div>
 									<table class="table table-hover">
@@ -125,10 +121,6 @@
 												<th>아이디</th>
 												<th>이름</th>
 												<th>휴대폰</th>
-												<th>가입일자</th>
-												<th>예약횟수</th>
-												<th>구독수</th>
-												<th>후기작성</th>
 												<th>비고</th>
 												
 											</tr>
@@ -136,7 +128,7 @@
 										<tbody id="user-list">
 											<c:if test="${empty lists }">
 												<tr>
-													<td colspan="9" align="center">회원이 없습니다.</td>
+													<td colspan="9" align="center">등록된 관리자가 없습니다.</td>
 												</tr>
 											</c:if>
 											<c:forEach var="ul" items="${lists}">
@@ -146,10 +138,6 @@
 													<td>${ul.user_id }</td>
 													<td>${ul.user_name}</td>
 													<td>${ul.user_tel}</td>
-													<td>${ul.joindate}</td>
-													<td>${ul.svcCount}</td>
-													<td>${ul.orderCount}</td>
-													<td>${ul.reviewCount}</td>
 													<td>
 														<!-- Button trigger modal -->
 														<button type="button" class="btn btn-outline-secondary"
@@ -195,7 +183,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">
-                    회원 정보 수정 
+                    관리자 정보 수정 
                     <input type="hidden" name="user_idx" id="user_idx"
                         value="${user_idx}">
                 </h1>
@@ -206,15 +194,15 @@
                
                 <form id="memoForm">
                     <div class="mb-3">
-                        <label for="user_memo" class="form-label">사용자 메모</label>
+                        <label for="user_memo" class="form-label">관리자 메모</label>
                         <input type="text" class="form-control" id="user_memo"
-                            placeholder="사용자 메모를 입력하세요.">
+                            placeholder="관리자 메모를 입력하세요.">
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
              <button type="button" class="btn btn-outline-info" id="manageBtn"
-                    onclick="manage()">관리자로 변경</button>
+                    onclick="manage()">회원으로 변경</button>
                 <button type="button" class="btn btn-secondary"
                     data-bs-dismiss="modal">닫기</button>
                 <button type="button" class="btn btn-info" id="modifyBtn" onclick="updateUserMemo()">수정</button>

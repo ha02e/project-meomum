@@ -131,7 +131,7 @@
 						</span>
 						
 						<!--  -->
-						<form name="contentForm" method="post" action="purchase.do">	
+						<form name="contentForm" method="get" action="orderList.do">	
 						 <input type="hidden" name="pro_idx" value="${lists[0].pro_idx}">
 						 <input type="hidden" name="pro_name" value="${lists[0].pro_name}">
 						 <input type="hidden" name="pro_subprice" value="${lists[0].pro_subprice}">
@@ -156,7 +156,7 @@
 									type="submit" formaction="cartInsert.do">장바구니</button>
 									
 									 <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail"
-									 type="submit" formaction="purchase.do">구매하기</button>
+									 type="submit" formaction="orderList.do">구매하기</button>
 								</div>
 							</div>	
 							</form>

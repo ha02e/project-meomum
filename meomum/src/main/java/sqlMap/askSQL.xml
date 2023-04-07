@@ -109,17 +109,19 @@
 				where ask_ask <![CDATA[<]]>1
 			</when>
 			<when test="checklist == 3">
-				 WHERE TO_CHAR(ask_wdate, 'YYYY-MM-DD') <![CDATA[=]]> TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+				WHERE TO_CHAR(ask_wdate, 'YYYY-MM-DD') <![CDATA[=]]>
+				TO_CHAR(SYSDATE, 'YYYY-MM-DD')
 			</when>
 			<otherwise>
 				<if test="fvalue != null">
 					WHERE
 					ask_title LIKE #{fvale} oru
-					ask_writer LIKE #{fvalue} or
+					ask_writer LIKE
+					#{fvalue} or
 					ask_content LIKE #{fvalue} or
 					ask_tel LIKE #{fvalue}
 				</if>
-				
+
 			</otherwise>
 		</choose>
 		order by ask_idx desc
@@ -142,5 +144,24 @@
 			ask_tel LIKE #{fvalue}
 		</if>
 	</select>
+	<select id="myaskList" parameterType="Map"
+		resultType="com.mm.ask.model.AskDTO">
+		select * from
+		(select rownum as rnum,a.* from
+		(select * from ask where user_idx =#{user_idx}
+
+		order by ask_idx desc
+		)a
+		)b
+		where rnum <![CDATA[>=]]>
+		#{start} and rnum <![CDATA[<=]]>#{end}
+	</select>
+
+
+	<select id="myaskCnt" resultType="Integer" parameterType="Integer">
+		select count(*) from ask where user_idx= #{user_idx}
+		
+	</select>
+
 
 </mapper>
