@@ -110,7 +110,7 @@
 		
 			<a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
 			<div class="app-branding">
-				<a class="app-logo" href="#">
+				<a class="app-logo" href="admin.do">
 					<img class="logo-icon me-2" src="images/meomum_logo(bold).png" alt="logo">
 				</a>
 			</div><!--//app-branding-->  
@@ -173,7 +173,7 @@
 						<div id="submenu-1" class="collapse submenu submenu-1" data-bs-parent="#menu-accordion">
 							<ul class="submenu-list list-unstyled">
 								<li class="submenu-item"><a class="submenu-link" href="svcCalendar.do">전체 스케줄</a></li>
-								<li class="submenu-item"><a class="submenu-link" href="#">방문 견적 예약</a></li>
+								<li class="submenu-item"><a class="submenu-link" href="asvcList.do">방문 견적 예약</a></li>
 								<li class="submenu-item"><a class="submenu-link" href="askList_a.do">간단 견적 문의</a></li>
 							</ul>
 						</div>
@@ -225,7 +225,7 @@
 						</a><!--//nav-link-->
 						<div id="submenu-3" class="collapse submenu submenu-3" data-bs-parent="#menu-accordion">
 							<ul class="submenu-list list-unstyled">
-								<li class="submenu-item"><a class="submenu-link" href="#">공지사항/FAQ 관리</a></li>
+								<li class="submenu-item"><a class="submenu-link" href="ntcList_a.do">공지사항/FAQ 관리</a></li>
 								<li class="submenu-item"><a class="submenu-link" href="reviewList_a.do">후기 관리</a></li>
 							</ul>
 						</div>
