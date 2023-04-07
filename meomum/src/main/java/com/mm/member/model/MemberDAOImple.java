@@ -290,4 +290,25 @@ public class MemberDAOImple implements MemberDAO {
 		String user_id = sqlMap.selectOne("findID", map);
 		return user_id;
 	}
+	
+	
+	/**회원 비밀번호 찾기*/
+	@Override
+	public Integer findPWD(String user_name, String user_tel,String user_id) {
+		
+		Map map = new HashMap();
+		map.put("user_name", user_name);
+		map.put("user_tel", user_tel);
+		map.put("user_id", user_id);
+		
+		Integer user_idx = sqlMap.selectOne("findPWD", map);
+		return user_idx;
+	}
+	
+	/**회원 아이디 중복 검사*/
+	@Override
+	public boolean memberIdcheck(String input_id) {
+		boolean result = sqlMap.selectOne("memberIdcheck", input_id)==null?true:false;
+		return result;
+	}
 }
