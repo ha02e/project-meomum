@@ -13,6 +13,7 @@ public interface SvcDAO {
 	public int svcMemUpdate(SvcMemDTO dto);
 	public int svcDetailUpdate(SvcDetailDTO dto);
 	public int svcDateUpdate(SvcDateDTO dto);
+	public int svcIngInsert(SvcIngDTO dto);
 	public List<SvcSelectAllDTO> svcUserList(int user_idx);
 	public int svcStateCancle(String svc_idx);
 	public int svcDateCancle(String svc_idx);
