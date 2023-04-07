@@ -1,8 +1,11 @@
 package com.mm.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,6 +39,36 @@ public class OrderController {
 		mav.addObject("msg", msg);
 		mav.addObject("goUrl", "/meomum/index.do");
 		mav.setViewName("ntc/ntcMsg");
+		return mav;
+	}
+	
+	
+	public List<OrderDTO> reportPage(int cp, int ls) {
+		int start = (cp - 1) * ls + 1;
+		int end = cp * ls;
+		Map map = new HashMap();
+		map.put("start", start);
+		map.put("end", end);
+		List<OrderDTO> lists = orderDao.orderReport(map);
+		return lists;
+	}
+	
+	@RequestMapping("/orderReport_a.do")
+	public ModelAndView orderReport_a(@RequestParam(value="cp",defaultValue = "1")int cp) {
+		int totalCnt=orderDao.reportTotalCnt();
+		int listSize=5;
+		int pageSize=5;
+		
+		String pageStr=com.mm.module.PageModule
+				.makePage("orderReport_a.do", totalCnt, listSize, pageSize, cp);
+		
+		List<OrderDTO> lists=reportPage(cp, pageSize);
+		
+		ModelAndView mav=new ModelAndView();
+		mav.addObject("lists", lists);
+		mav.setViewName("order/orderReport_a");
+		mav.addObject("pageStr",pageStr);
+		
 		return mav;
 	}
 	

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -91,8 +92,8 @@ table.dataTable thead .sorting_desc_disabled {
 						
 						<table id="example" class="display dataTable" style="min-width: 845px" role="grid" aria-describedby="example_info">
 							<thead>
-								<tr role="row">
-									<th class="sorting_asc" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending">주문번호</th>
+								<tr role="row" class="text-center">
+									<th class="sorting_desc" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-sort="descending" aria-label="Name: activate to sort column descending">주문번호</th>
 									<th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending">구독상품</th>
 									<th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending">주문자</th>
 									<th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending">연락처</th>
@@ -101,59 +102,72 @@ table.dataTable thead .sorting_desc_disabled {
 								</tr>
 							</thead>
 							<tbody>
-								<tr class="odd" role="row">
-									<td class="sorting_1">Airi Satou</td>
-									<td>Accountant</td>
-									<td>Tokyo</td>
-									<td>33</td>
-									<td>2008/11/28</td>
-									<td>$162,700</td>
+								<c:if test="${empty lists}">
+									<tr>
+										<td colspan="6" class="text-center">
+											주문/배송 내역이 없습니다.
+										</td>
+									</tr>
+								</c:if>
+								<c:forEach var="dto" items="${lists}">
+									<tr class="odd text-center" role="row">
+										<td class="sorting_1">${dto.order_idx}</td>
+										<td>상품이름 불러올 예정</td>
+										<td>회원번호${dto.user_idx}로 불러올 예정</td>
+										<td>회원번호${dto.user_idx}로 불러올 예정</td>
+										<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${dto.amount}" />원</td>
+										<td>
+											<c:choose>
+												<c:when test="${dto.order_status eq 1}">
+													<span>상품준비중</span>
+													<button class="btn btn-sm btn-outline-success"><i class="bi bi-x-circle"></i>&nbsp;배송처리</button>
+												</c:when>
+												<c:when test="${dto.order_status eq 2}">
+													<span>배송중</span>
+													<button class="btn btn-sm btn-outline-success"><i class="bi bi-x-circle"></i>&nbsp;배송조회</button>
+												</c:when>
+												<c:when test="${dto.order_status eq 3}">
+													<span>주문취소</span>
+												</c:when>
+												<c:when test="${dto.order_status eq 4}">
+													<span>배송완료</span>
+													<button class="btn btn-sm btn-outline-success"><i class="bi bi-x-circle"></i>&nbsp;배송조회</button>
+												</c:when>
+												<c:when test="${dto.order_status eq 5}">
+													<span>반납신청</span>
+													<button class="btn btn-sm btn-outline-success"><i class="bi bi-x-circle"></i>&nbsp;반납처리</button>
+												</c:when>
+												<c:when test="${dto.order_status eq 5}">반납진행</c:when>
+												<c:when test="${dto.order_status eq 5}">반납완료</c:when>
+											</c:choose>
+										</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+							
+							<tfoot>
+								<tr>
+									<th colspan="6" class="text-center">
+										<nav aria-label="Page navigation example">
+											<ul class="pagination pagination-sm justify-content-center">
+												${pageStr}
+											</ul>
+										</nav>
+									</th>
+
 								</tr>
-								<tr class="even" role="row">
-									<td class="sorting_1">Angelica Ramos</td>
-									<td>Chief Executive Officer (CEO)</td>
-									<td>London</td>
-									<td>47</td>
-									<td>2009/10/09</td>
-									<td>$1,200,000</td>
-								</tr>
-								<tr class="odd" role="row">
-									<td class="sorting_1">Ashton Cox</td>
-									<td>Junior Technical Author</td>
-									<td>San Francisco</td>
-                                    <td>66</td>
-                                    <td>2009/01/12</td>
-                                    <td>$86,000</td>
-                                   </tr>
-                                   <tr class="even" role="row">
-                                                <td class="sorting_1">Bradley Greer</td>
-                                                <td>Software Engineer</td>
-                                                <td>London</td>
-                                                <td>41</td>
-                                                <td>2012/10/13</td>
-                                                <td>$132,000</td>
-                                            </tr><tr class="odd" role="row">
-                                                <td class="sorting_1">Brenden Wagner</td>
-                                                <td>Software Engineer</td>
-                                                <td>San Francisco</td>
-                                                <td>28</td>
-                                                <td>2011/06/07</td>
-                                                <td>$206,850</td>
-                                            </tr>
-                                            </tbody>
-                                        <tfoot>
-                                            <tr><th rowspan="1" colspan="1">Name</th><th rowspan="1" colspan="1">Position</th>
-                                            <th rowspan="1" colspan="1">Office</th>
-                                            <th rowspan="1" colspan="1">Age</th>
-                                            <th rowspan="1" colspan="1">Start date</th>
-                                            <th rowspan="1" colspan="1">Salary</th>
-                                            </tr>
-                                        </tfoot>
+							</tfoot>
                                     </table>
-                                    
+                                    <!--
                                     <div class="dataTables_info" id="example_info" role="status" aria-live="polite"></div>
                                     
-
+                                    <div class="dataTables_paginate paging_simple_numbers" id="example_paginate">
+                                    	<nav aria-label="Page navigation example">
+											<ul class="pagination pagination-sm justify-content-center">
+												${pageStr}
+											</ul>
+										</nav>
+                                    </div>  -->
                                     
                                 </div>
                             </div>

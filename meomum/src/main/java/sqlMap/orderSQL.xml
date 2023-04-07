@@ -9,4 +9,17 @@
   	<insert id="orderInsert" parameterType="com.mm.order.model.OrderDTO">
   		insert into orders values(31, #{user_idx}, 'r', sysdate, sysdate+ INTERVAL '1' MONTH, #{order_pcode}, 'r', 'r', #{order_addr}, #{order_detail}, 'r', 1, sysdate, 1, 1, sysdate, 'y')
 	</insert>
+	
+	
+	<select id="orderReport" parameterType="Map" resultType="com.mm.order.model.OrderDTO">
+		select * from
+			(select rownum as rnum, a.*from(
+			select * from orders order by order_idx desc
+			)a )b
+		where rnum<![CDATA[>=]]>#{start} and rnum<![CDATA[<=]]>#{end}
+	</select>
+	<select id="reportTotalCnt" resultType="Integer">
+		select count(*) from
+			orders
+	</select>
   </mapper>
