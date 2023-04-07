@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -52,30 +53,6 @@ public class ProController {
 		return mav;
 	}
 	
-	
-	/*확인용
-	@RequestMapping("/purchase.do")
-	public ModelAndView test(@RequestParam(value="cp",defaultValue="1")int cp,
-			@RequestParam(value="cart_amount",defaultValue="1")int cart_amount,
-			@RequestParam("pro_idx") int pro_idx,
-			HttpSession session) {
-		
-		session.getAttribute("ssInfo");
-		MemberDTO sdto =(MemberDTO) session.getAttribute("ssInfo");
-		int user_idx = sdto != null ? sdto.getUser_idx() : 0;
-		
-		List<ProDTO> lists=proDao.proUpdateList(pro_idx);
-		
-		ModelAndView mav=new ModelAndView();
-		mav.addObject("lists", lists);
-		mav.addObject("pro_buyNum", cart_amount);
-		mav.addObject("user_idx", user_idx);
-		
-		mav.setViewName("pro/purchase");
-		
-		return mav;
-	}
-	*/
 	
 	//사용자 상품 리스트
 	@RequestMapping("/proList.do")
@@ -254,7 +231,7 @@ public class ProController {
 		List<ProDTO> lists=proDao.proFind2(proF);
 		mav.addObject("lists", lists);
 		}
-		mav.setViewName("pro/proList");
+		mav.setViewName("pro/proAdmin");
 		return mav;
 	}
 	
@@ -272,14 +249,159 @@ public class ProController {
 	
 	
 	//상품 수정 기능
-	@RequestMapping("/proUpdate.do")
+	@RequestMapping(value="proUpdate.do", method=RequestMethod.POST)
 	public ModelAndView proUpdate(ProDTO dto) {
 		ModelAndView mav=new ModelAndView();
-		int result = proDao.proUpdate(dto);
-		String msg=result>=0?"수정 성공":"수정 실패";
+		
+		int result = proDao.proUpdate(dto); 
+		
+		ProDTO pdto=new ProDTO();
+		System.out.println("name:"+pdto.getPro_name());
+		System.out.println("price:"+pdto.getPro_price());
+		System.out.println("state"+pdto.getPro_state());
+		System.out.println("month"+pdto.getPro_month());
+		System.out.println("subprice:"+pdto.getPro_subprice());
+		System.out.println("allprice:"+pdto.getPro_allprice());
+		
+		String msg=result>=0?"수정 완료했습니다.":"수정 실패했습니다.";
+		String link ="proAdmin.do";
 		mav.addObject("msg", msg);
+		mav.addObject("link", link);
 		mav.setViewName("pro/proMsg");
 		return mav;
 	}
+	
+	
+	//상품 재고 관리 리스트
+	@RequestMapping("/proAmount_a.do")
+	public ModelAndView proAmountList(@RequestParam(value="cp",defaultValue="1")int cp) {
+
+		int totalCnt=proDao.getTotalCnt();
+		int listSize=5;
+		int pageSize=5;
+		
+		String pageStr=com.mm.module.PageModule.makePage("proAmount_a.do", totalCnt, listSize, pageSize, cp);
+		
+		
+		List<ProDTO> lists=proPage(cp,listSize);
+		
+		ModelAndView mav=new ModelAndView();
+		mav.setViewName("pro/proAmount_a");
+		mav.addObject("lists", lists);
+		mav.addObject("pageStr", pageStr);
+		
+		return mav;
+	}
+	
+	
+	//상품 재고 관리 - 재고수정
+	@RequestMapping("/proAmountUpdate.do")
+	public ModelAndView proAmountUpdate(@RequestParam("pro_idx")int pro_idx,
+										@RequestParam(value="pro_amount", required = false)String pro_amount_str,
+										ProDTO dto, HttpServletRequest req) {
+		
+		if(pro_amount_str==null || pro_amount_str.trim().isEmpty()) {
+			String msg = "수량을 입력해주세요.";
+			ModelAndView mav = new ModelAndView("/msg", "msg", msg);
+			mav.addObject("link", "proAmount_a.do");
+			return mav;
+		}
+		
+		if (!pro_amount_str.matches("\\d+")) { //"\\d+" : 1개 이상의 숫자를 의미
+		    String msg = "수량은 숫자만 입력 가능합니다.";
+		    ModelAndView mav = new ModelAndView("/msg", "msg", msg);
+		    mav.addObject("link", "proAmount_a.do");
+		    return mav;
+		}
+		
+		
+		int pro_amount_s=Integer.parseInt(pro_amount_str);
+		
+		ProDTO pdto=proDao.proSelect(pro_idx);
+		int pro_amount=pdto.getPro_amount(); //기존 수량
+		int pro_state=pdto.getPro_state();  //기존 재고상태
+		
+		
+		if(pro_amount==pro_amount_s){
+			String msg = "수량이 동일합니다. 다시 입력해주세요.";
+			ModelAndView mav = new ModelAndView("/msg", "msg", msg);
+			mav.addObject("link", "proAmount_a.do");
+			return mav;
+		}else {
+			if(pro_amount_s==0 || pro_amount_s==1) {
+				dto.setPro_amount(pro_amount_s);
+				dto.setPro_state(1);
+			}else if(pro_amount_s>1){
+				dto.setPro_amount(pro_amount_s);
+				dto.setPro_state(0);
+			}
+		}
+		
+		
+		int result=proDao.proAmountUpdate(dto);
+		
+		String msg=result>=0?"재고 수정이 완료되었습니다.":"재고 수정에 실패하였습니다.";
+		
+		ModelAndView mav=new ModelAndView();
+		mav.addObject("msg", msg);
+		mav.addObject("link", "proAmount_a.do");
+		mav.setViewName("/msg");
+		return mav;
+		
+	}
+	
+	
+	//상품 재고 관리 - 상태수정
+	@RequestMapping("/proStateUpdate.do")
+	public ModelAndView proStateUpdate(@RequestParam("pro_idx")int pro_idx,
+										ProDTO dto, HttpServletRequest req) {
+
+		String pro_state_s=req.getParameter("pro_state"); //관리자가 선택한 재고상태
+		
+		ProDTO pdto=proDao.proSelect(pro_idx);
+		int pro_amount=pdto.getPro_amount(); //기존 수량
+		int pro_state=pdto.getPro_state();  //기존 재고상태
+		
+		
+		if("0".equals(pro_state_s)) {
+			if(pro_state==0) {
+				String msg = "이미 판매중인 상품입니다.";
+		        ModelAndView mav = new ModelAndView("/msg", "msg", msg);
+				mav.addObject("link", "proAmount_a.do");
+		        return mav;		
+			}else {
+				dto.setPro_state(0);
+			}
+		    if(pro_amount == 0 || pro_amount == 1) {
+		        String msg = "재고 수량을 수정해주세요.";
+		        ModelAndView mav = new ModelAndView("/msg", "msg", msg)
+		        		;
+				mav.addObject("link", "proAmount_a.do");
+		        return mav;				
+		    }
+		}else if("1".equals(pro_state_s)){
+			if(pro_state==1) {
+				String msg = "이미 품절중인 상품입니다.";
+		        ModelAndView mav = new ModelAndView("/msg", "msg", msg);
+				mav.addObject("link", "proAmount_a.do");
+		        return mav;	
+			}else {
+				dto.setPro_state(1);
+				dto.setPro_amount(1);
+			}
+		}
+
+		int result=proDao.proStateUpdate(dto);
+		
+		String msg=result>=0?"재고상태 수정이 완료되었습니다.":"재고상태 수정에 실패하였습니다.";
+
+		ModelAndView mav=new ModelAndView();
+		mav.addObject("msg", msg);
+		mav.addObject("link", "proAmount_a.do");
+		mav.setViewName("/msg");
+		return mav;
+		
+	}
+
 	
 }

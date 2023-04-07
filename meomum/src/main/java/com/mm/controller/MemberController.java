@@ -115,27 +115,45 @@ public class MemberController {
 		return "redirect:/index.do";
 	}
 	
-	
 	/*회원 정보 수정 페이지 이동*/
-	@RequestMapping(value="/infoEdit",method = RequestMethod.GET)
+	@RequestMapping(value="/infoEdit.do",method = RequestMethod.GET)
 	public ModelAndView infoEditForm(HttpSession session) {
-		
 		ModelAndView mav = new ModelAndView();
 		
 		if(session.getAttribute("ssInfo")==null) {
 			mav.addObject("msg", "잘못된 접근입니다.");
 			mav.addObject("gopage","location.href='index.do';");
 			mav.setViewName("mainMsg");
-		}else {
-			MemberDTO sdto =(MemberDTO) session.getAttribute("ssInfo");
-			int user_idx = sdto.getUser_idx();
-			
+			return mav;
+		}
+		
+		
+		mav.setViewName("member/infoEditForm");
+
+		return mav;
+	}
+	/*회원 정보 수정 페이지 이동*/
+	@RequestMapping(value="/infoEdit.do",method = RequestMethod.POST)
+	public ModelAndView infoEditFormOK(@RequestParam(value = "user_idx")int user_idx,
+									@RequestParam(value = "user_ok",defaultValue = "NO")String user_ok) {
+	
+		
+		ModelAndView mav = new ModelAndView();
+		
+		if(!user_ok.equals("OK")) {
+			mav.addObject("msg", "잘못된 접근입니다.");
+			mav.addObject("gopage","location.href='index.do';");
+			mav.setViewName("mainMsg");
+			return mav;
+		}
+  
+
 			MemberDTO userInfo = mdao.getuserInfo(user_idx);
 					
 			mav.addObject("info",userInfo);
 			mav.setViewName("member/infoEdit");
 			
-		}
+		
 		return mav;
 	}
 	
@@ -154,7 +172,7 @@ public class MemberController {
 		if(mdao.getsessionInfo((String)userInfo.get("email"))==null){
 
 			mav.addObject("msg", "회원 정보가 없습니다. 추가 정보 입력 후에 회원가입 가능합니다.");
-			mav.addObject("gopage", "location.href='memberJoin.do?user_id="+userInfo.get("email")+"&user_name="+userInfo.get("nickname")+"';");
+			mav.addObject("gopage", "location.href='memberJoin.do?user_id="+userInfo.get("email")+"&user_name="+userInfo.get("nickname")+"&user_jointype=카카오';");
 			mav.setViewName("mainMsg");
 
 		}else {
@@ -177,7 +195,7 @@ public class MemberController {
 
 	}
 	
-	@RequestMapping(value="/infoEdit.do",method = RequestMethod.POST)
+	@RequestMapping(value="/infoEditOK.do",method = RequestMethod.POST)
 	public ModelAndView infoEditSubmit(MemberDTO dto) {
 		int result = mdao.updateUserInfo(dto);
 		
@@ -193,8 +211,7 @@ public class MemberController {
 	@ResponseBody
 	public ModelAndView pwdChange(@RequestParam("user_idx")int user_idx,@RequestParam("newPassword")String newPwd ) {
 
-		System.out.println("pwd="+newPwd);
-		System.out.println("idx="+user_idx);
+	
 	    int result = mdao.updatePWD(newPwd, user_idx);
 
 	    
@@ -232,5 +249,94 @@ public class MemberController {
 		return mav;
 	}
 	
+	/**관리자로 변경 */
+	@RequestMapping(value="/managerUpdate.do",method = RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView managerInsert(@RequestParam("user_idx")int user_idx) {
+
+		
+	   
+		int result = mdao.managerUpdate(user_idx);
+	    String msg = result>0?"관리자로 등록되었습니다.":"관리자 등록에 실패하였습니다.";
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("msg", msg);
+	    mav.setViewName("mmJson");
+	    return mav;
+	}
+	/**회원 메모 변경 */
+	@RequestMapping(value="/userMemoUpdate.do",method = RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView userMemoUpdate(@RequestParam("user_idx")int user_idx,
+									@RequestParam("user_memo")String user_memo) {
+
+		
+	   
+		int result = mdao.userMemoUpdate(user_idx,user_memo);
+	    String msg = result>0?"사용자 정보를 등록하였습니다.":"사용자 정보 등록에 실패하였습니다.";
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("msg", msg);
+	    mav.setViewName("mmJson");
+	    return mav;
+	}
+	
+	
+	/**관리자 관리자 정보 확인*/
+	@RequestMapping(value="/managerList.do",method = RequestMethod.GET)
+	public ModelAndView managerList(@RequestParam(value="cp",defaultValue = "1")int cp,
+									@RequestParam(value="fvalue",defaultValue = "")String fvalue,
+									@RequestParam(value="type",defaultValue = "no")String type,
+									@RequestParam(value="orderby",defaultValue = "1")String orderby) {
+		
+		int rtotalCnt = mdao.getmanagerTTCnt(fvalue);
+		int totalCnt = rtotalCnt==0?1:rtotalCnt;
+		int listSize = 10;
+		int pageSize = 5;
+		
+		String param = "&fvalue="+fvalue+"&type="+type+"&orderby="+orderby;
+		String pageStr = com.mm.module.PageModule.makePageParam("managerList.do", totalCnt, listSize, pageSize, cp,param);
+		
+		List<MemberListDTO> lists = mdao.managerList(cp, listSize,type,fvalue,orderby);
+
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("member/managerList");
+		
+		mav.addObject("order",orderby);
+		mav.addObject("type",type);
+		mav.addObject("fvalue",fvalue);
+		mav.addObject("totalCnt",rtotalCnt);
+		mav.addObject("lists",lists);
+		mav.addObject("pageStr",pageStr);
+		return mav;
+	}
+	
+	/**관리자 회원으로 변경 */
+	@RequestMapping(value="/managetDelete.do",method = RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView managerDelete(@RequestParam("user_idx")int user_idx) {
+
+		int result = mdao.managerDelete(user_idx);
+	    String msg = result>0?"회원으로 변경되었습니다.":"회원으로 변경에 실패하였습니다.";
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("msg", msg);
+	    mav.setViewName("mmJson");
+	    return mav;
+	}
+	
+	
+	
+	/**회원 아이디 찾기*/
+	@RequestMapping(value="/findId.do",method = RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView findID(@RequestParam("input_name")String input_name,
+								@RequestParam("input_tel")String input_tel) {
+
+	
+	String user_id = mdao.findID(input_name, input_tel);
+	ModelAndView mav = new ModelAndView();
+	mav.addObject("user_id",user_id);
+    mav.setViewName("mmJson");
+    return mav;
+	}
 	
 }
+

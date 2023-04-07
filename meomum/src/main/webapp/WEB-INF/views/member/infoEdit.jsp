@@ -83,25 +83,25 @@
 								<h4 class="card-title mb-4 text-center">나의 정보 수정</h4>
 
 
-								<form name="userInfo_Update" action="infoEdit.do" method="post">
+								<form name="userInfo_Update" action="infoEditOK.do" method="post">
 									<input type="hidden" name="user_idx"
-										value="${sessionScope.ssInfo.user_idx}">
+										value="${sessionScope.ssInfo.user_idx}" required="required">
 									<div class="form-group">
 										<label for="user_id">이메일</label> <input type="text"
 											class="form-control" id="user_id" name="user_id"
-											value="${info.user_id}" readonly="readonly">
+											value="${info.user_id}" readonly="readonly" required="required">
 									</div>
 									<div class="form-group">
 										<label for="user_name">이름</label> <input type="text"
 											class="form-control" id="user_name" name="user_name"
-											value="${info.user_name}" placeholder="이름">
+											value="${info.user_name}" placeholder="이름" required="required">
 									</div>
 									<div class="form-group">
 										<label for="user_pcode">우편번호</label>
 										<div class="input-group mb-3">
 											<input type="text" class="form-control" id="user_pcode"
 												name="user_pcode" value="${info.user_pcode}"
-												readonly="readonly" onclick="findaddr()">
+												readonly="readonly" onclick="findaddr()" required="required">
 											<div class="input-group-append">
 												<button class="btn btn-outline-secondary" type="button"
 													onclick="findaddr()">우편번호 검색</button>
@@ -111,7 +111,7 @@
 									<div class="form-group">
 										<input type="text" class="form-control" id="user_addr"
 											name="user_addr" value="${info.user_addr}"
-											readonly="readonly">
+											readonly="readonly" required="required">
 									</div>
 									<div class="form-group">
 										<input type="text" class="form-control" id="addr_detail"
@@ -142,7 +142,7 @@
 				</div>-->
 										</div>
 										<input type="tel" class="form-control" name="user_tel"
-											placeholder="-제외하고 입력" value="${info.user_tel}">
+											placeholder="-제외하고 입력" value="${info.user_tel}" required="required">
 									</div>
 
 									<div class="text-center">
@@ -200,7 +200,10 @@
 	</div>
 
 	<!-- 비밀번호 변경 모달끝  -->
+	
 	<%@include file="../footer.jsp"%>
+	
+	
 	<script>
 		/**주소검색*/
 		function findaddr() {

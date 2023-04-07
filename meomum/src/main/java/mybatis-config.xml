@@ -13,6 +13,10 @@
   		<mapper resource="sqlMap/reviewSQL.xml"/>
   		<mapper resource="sqlMap/askSQL.xml"/>
   		<mapper resource="sqlMap/cartSQL.xml"/>
+<<<<<<< HEAD
   		<mapper resource="sqlMap/orderSQL.xml"/>
+=======
+  		<mapper resource="sqlMap/loveSQL.xml"/>
+>>>>>>> 202564f232edff748f298c4d72193c1faa5bb31d
   	</mappers>
   </configuration>

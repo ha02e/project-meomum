@@ -3,10 +3,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>[관리자] 상품 등록</title>
+<title>[관리자] 상품 관리</title>
 <link href="/docs/5.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">   
 <!-- App CSS -->  
 <link id="theme-style" rel="stylesheet" href="assets/css/portal_a.css">
 <link rel="stylesheet" type="text/css" href="css/mainLayout_a.css">
@@ -18,8 +18,7 @@ function calPrice(){
 	    document.getElementById("pro_subprice").value = subprice;
 	    
 	    const allprice = subprice*subMonth;
-	    document.getElementById("pro_allprice").value = allprice;
-	    
+	    document.getElementById("pro_allprice").value = allprice;   
 }
 
 function addConfirm() {
@@ -28,11 +27,15 @@ function addConfirm() {
 </script>
 </head>
 <body class="app">
-<%@include file="../header_a.jsp"%>  
-<div class="app-wrapper">
-
-	<h2>상품 등록하기</h2>
-	<form name="addPro" action="addPro.do" enctype="multipart/form-data" method="post" onsubmit="return addConfirm();">
+	<%@include file="/WEB-INF/views/header_a.jsp"%>
+	<!-- 본문 시작 -->
+	<section class="shop spad">
+	<div class="app-wrapper">
+		<div class="app-content pt-3 p-md-3 p-lg-4">
+			<div class="container pt-5">
+				<h2 class="text-center mb-4">상품 등록</h2>
+			
+				<form name="addPro" action="addPro.do" enctype="multipart/form-data" method="post" onsubmit="return addConfirm();">
 		<ul>
 			<li>대표 사진
 			<input type="file" name="pro_thumb">
@@ -89,9 +92,20 @@ function addConfirm() {
 			<input type="file" name="pro_content">
 			</li>
 			<li><input type="submit" value="등록하기"><input type="reset" value="다시 작성"></li>
-		</ul>
-	</form>
-</div>
-<%@include file="../footer_a.jsp"%>    
+			</ul>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+		<!-- 본문 끝 -->
+		<%@include file="/WEB-INF/views/footer_a.jsp"%>
+	<!-- app-wrapper 끝-->
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+		crossorigin="anonymous">
+	</script>
 </body>
 </html>

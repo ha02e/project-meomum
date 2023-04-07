@@ -92,6 +92,7 @@ public class AskDAOImple implements AskDAO {
 		}
 		return result;
 	}
+ 	
  	@Override
  	public int deleteComm(int ask_idx) {
  		int result = sqlMap.delete("deleteComm",ask_idx);
@@ -120,4 +121,28 @@ public class AskDAOImple implements AskDAO {
 		return lists;
 	}
 
+	
+	
+	/**회원 본인 간단문의 리스트*/
+	@Override
+	public List<AskDTO> myaskList(int cp, int ls, int user_idx) {
+		
+		int start = (cp-1)*ls+1;
+		int end = cp*ls;
+		Map map = new HashMap();
+		map.put("start", start);
+		map.put("end", end);
+		map.put("user_idx", user_idx);
+		
+		List<AskDTO> lists = sqlMap.selectList("myaskList",map);
+
+		
+		return lists;
+	}
+	/**회원 본인 간단문의 총 개수*/
+	@Override
+	public int myaskCnt(int user_idx) {
+		int cnt = sqlMap.selectOne("myaskCnt", user_idx);
+		return cnt;
+	}
 }

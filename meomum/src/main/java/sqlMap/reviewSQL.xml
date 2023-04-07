@@ -11,7 +11,8 @@
 			review_idx.nextval,
 			#{user_idx},
 			'svc_idx',
-			1,
+			#{category},
+			#{activity_idx},
 			#{writer},
 			#{star},
 			#{subject},
@@ -55,7 +56,7 @@
 	<select id="reviewableList" parameterType="Map" resultType="com.mm.review.model.ReviewDTO">
 		select * from
 		(select rownum as rnum, c.*from(
-			select svc_idx activity_idx 
+			select svc_idx activity_idx, user_idx , user_name writer
   			from svc_member a
  			where a.user_idx = #{user_idx}
 				and svc_state='작업완료'

@@ -29,6 +29,18 @@
 	padding: 0 20px;
 }
 
+.num{
+	width: 20%;
+}
+.category{
+	width:15%;
+}
+.svclist{
+	width:40%;
+}
+.button{
+	width:25%;
+}
 .review-star i {
     color:#FFD400;
 }
@@ -51,7 +63,7 @@
 					<thead class="table-light">
 						<tr class="table-borderless">
 							<th scope="col" class="num">서비스/주문번호</th>
-							<th scope="col" class="service">이용서비스</th>
+							<th colspan="2" scope="col"=>이용내역</th>
 							<th scope="col" class="button">버튼</th>
 						</tr>
 					</thead>
@@ -66,16 +78,30 @@
 						</c:if>
 						<c:forEach var="dto" items="${lists}">
 							<tr>
-								<td class="align-middle">${dto.activity_idx}</td>
-								<td class="align-middle">정리일상</td>
-								<td class="align-middle">
-									<a href="#" class="btn btn-sm btn-outline-success">후기 작성하기</a>
+								<td class="align-middle num">${dto.activity_idx}</td>
+								<td class="align-middle category">정리일상</td>
+								<td class="align-middle service"></td>
+								<td class="align-middle button">
+									<c:url var="contentUrl" value="reviewWrite.do">
+										<c:param name="activity_idx">${dto.activity_idx}</c:param>
+										<c:param name="writer">${dto.writer}</c:param>
+										<c:param name="category">정리일상</c:param>										
+									</c:url>
+									<a href="${contentUrl}" class="btn btn-sm btn-outline-success">후기 작성하기</a>
 								</td>
 							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
 
+			</div>	
+			
+			<div class="container-xl">
+				<nav aria-label="Page navigation example">
+					<ul class="pagination pagination-sm justify-content-center">
+						${pageStr}
+					</ul>
+				</nav>
 			</div>	
 		
 
