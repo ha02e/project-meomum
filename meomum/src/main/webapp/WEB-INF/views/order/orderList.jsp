@@ -71,7 +71,7 @@
 
 	function requestPay() {
 		IMP.request_pay({
-			pg :"kakaopay", //"html5_inicis",
+			pg : "kakaopay", //"html5_inicis",
 			pay_method : 'card',
 			merchant_uid : "IMP" + makeMerchantUid,
 			name : document.getElementById("order_name").value,
@@ -102,55 +102,6 @@
 		
 	}
 </script>
-<meta charset="UTF-8">
-<title>Sample Payment</title>
-
-<!-- 부트스트랩 CSS 파일 추가 -->
-<link
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-9gVRbX+6ePRepvpODvJy27JQ+wh2StsQJz9TYs2X0Pm6Rc8IljaUksdQRVvoxv3"
-	crossorigin="anonymous">
-
-<style>
-/*헤더 이미지용 url에 이미지 추가하면 됩니다.*/
-.page-header {
-	background: linear-gradient(rgba(36, 39, 38, 0.5), rgba(36, 39, 38, 0.5)),
-		rgba(36, 39, 38, 0.5)
-		url(https://cdn.aitimes.com/news/photo/202210/147215_155199_1614.jpg)
-		no-repeat center;
-	background-size: cover;
-	margin: 0;
-	border-bottom: none;
-	padding-bottom: 0px;
-}
-
-.page-caption {
-	padding: 90px 0px;
-	position: relative;
-	z-index: 1;
-	color: #fff;
-	text-align: center;
-}
-
-.page-title {
-	color: #fff;
-	font-size: 40px;
-	font-weight: 400;
-	letter-spacing: -1px;
-}
-/**헤더 이미지용 끝*/
-</style>
-
-<style type="text/css">
-.input-group-append ml-2 {
-	margin-left: 8px;
-}
-/* 가운데 정렬과 좌우여백 설정 */
-.form-group {
-	text-align: center;
-}
-</style>
 
 </head>
 

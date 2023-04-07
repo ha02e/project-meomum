@@ -26,5 +26,8 @@ public interface MemberDAO {
 	public int getmanagerTTCnt(String fvalue);
 	public int managerDelete(int user_idx);
 	public String findID(String user_name, String user_tel);
+	public Integer findPWD(String user_name, String user_tel,String user_id);
+	public boolean memberIdcheck(String input_id);
+
 
 }
