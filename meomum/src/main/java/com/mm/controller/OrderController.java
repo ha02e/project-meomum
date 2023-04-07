@@ -1,5 +1,7 @@
 package com.mm.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,6 +38,15 @@ public class OrderController {
 		mav.addObject("msg", msg);
 		mav.addObject("goUrl", "/meomum/index.do");
 		mav.setViewName("ntc/ntcMsg");
+		return mav;
+	}
+	
+	@RequestMapping("/myOrderList.do")
+	public ModelAndView myOrderList(@RequestParam("user_idx") Integer idx) {
+		List<OrderDTO> list=orderDao.myOrderList(idx);
+		ModelAndView mav=new ModelAndView();
+		mav.addObject("list", list);
+		mav.setViewName("order/myOrderList");
 		return mav;
 	}
 	

@@ -16,7 +16,7 @@ public class OrderDTO {
 	private String order_detail;
 	private String order_msg;
 	private int using_point;
-	private int pay_date;
+	private Date pay_date;
 	private int amount;
 	private int order_status;
 	private Date order_date;
@@ -28,7 +28,7 @@ public class OrderDTO {
 
 	public OrderDTO(String order_idx, int user_idx, String order_name, Date sub_start, Date sub_end, String order_pcode,
 			String receiver, String receiver_tel, String order_addr, String order_detail, String order_msg,
-			int using_point, int pay_date, int amount, int order_status, Date order_date, String order_tos) {
+			int using_point, Date pay_date, int amount, int order_status, Date order_date, String order_tos) {
 		super();
 		this.order_idx = order_idx;
 		this.user_idx = user_idx;
@@ -145,11 +145,11 @@ public class OrderDTO {
 		this.using_point = using_point;
 	}
 
-	public int getPay_date() {
+	public Date getPay_date() {
 		return pay_date;
 	}
 
-	public void setPay_date(int pay_date) {
+	public void setPay_date(Date pay_date) {
 		this.pay_date = pay_date;
 	}
 

@@ -29,4 +29,10 @@ public class OrderDAOImple implements OrderDAO {
 		int count=sqlMap.insert("orderInsert", dto);
 		return count;
 	}
+	
+	@Override
+	public List<OrderDTO> myOrderList(Integer idx) {
+		List<OrderDTO> list=sqlMap.selectList("myOrderList", idx);
+		return list;
+	}
 }

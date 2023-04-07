@@ -8,4 +8,5 @@ public interface OrderDAO {
 
 	public ProDTO orderList(int idx);
 	public int orderInsert(OrderDTO dto);
+	public List<OrderDTO> myOrderList(Integer idx);
 }
