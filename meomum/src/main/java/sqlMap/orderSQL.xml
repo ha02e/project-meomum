@@ -9,10 +9,10 @@
   	<insert id="orderInsert" parameterType="com.mm.order.model.OrderDTO">
   		insert into orders values(31, #{user_idx}, 'r', sysdate, sysdate+ INTERVAL '1' MONTH, #{order_pcode}, 'r', 'r', #{order_addr}, #{order_detail}, 'r', 1, sysdate, 1, 1, sysdate, 'y')
 	</insert>
-<<<<<<< HEAD
+
 	<select id="myOrderList" parameterType="Integer" resultType="com.mm.order.model.OrderDTO">
 		select * from orders where user_idx=#{user_idx}
-=======
+	</select>
 	
 	
 	<select id="orderReport" parameterType="Map" resultType="com.mm.order.model.OrderDTO">
@@ -32,6 +32,5 @@
 	<select id="reportTotalCnt" resultType="Integer">
 		select count(*) from
 			orders
->>>>>>> 01139caf060ebc1e414d8d67277c7f7b0912676d
 	</select>
   </mapper>

@@ -3,7 +3,6 @@
 <!DOCTYPE configuration
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
-<<<<<<< HEAD
 
 <configuration>
 	<mappers>
@@ -18,19 +17,3 @@
 		<mapper resource="sqlMap/loveSQL.xml" />
 	</mappers>
 </configuration>
-=======
-  
-  <configuration>
-  	<mappers>
-  		<mapper resource="sqlMap/ntcSQL.xml"/>
-  		<mapper resource="sqlMap/svcSQL.xml"/>
-  		<mapper resource="sqlMap/memberSQL.xml"/>
-  		<mapper resource="sqlMap/proSQL.xml"/>
-  		<mapper resource="sqlMap/reviewSQL.xml"/>
-  		<mapper resource="sqlMap/askSQL.xml"/>
-  		<mapper resource="sqlMap/cartSQL.xml"/>
-  		<mapper resource="sqlMap/orderSQL.xml"/>
-  		<mapper resource="sqlMap/loveSQL.xml"/>
-  	</mappers>
-  </configuration>
->>>>>>> 01139caf060ebc1e414d8d67277c7f7b0912676d
