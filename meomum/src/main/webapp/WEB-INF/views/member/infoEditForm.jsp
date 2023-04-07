@@ -26,44 +26,7 @@
 <script type="text/javascript" src="/meomum/js/request.js"></script>
 <!--  -->
 
-<script type="text/javascript">
-function pwdCheck(){
-	var input_pwd = document.getElementById('input_pwd').value;
 
-	var user_idx = document.getElementById('user_idx').value;
-	var user_pwd = ${sessionScope.ssInfo.user_pwd};
-
-	
-	
-	if(input_pwd==user_pwd){	
-		 const form = document.createElement('form');
-	        form.method = 'POST';
-	        form.action = 'infoEdit.do';
-		
-	       
-			 const userIdxInput = document.createElement('input');
-			    userIdxInput.type = 'hidden';
-			    userIdxInput.name = 'user_idx';
-			    userIdxInput.value = user_idx;
-			    form.appendChild(userIdxInput);
-
-			
-			    const userOkInput = document.createElement('input');
-			    userOkInput.type = 'hidden';
-			    userOkInput.name = 'user_ok';
-			    userOkInput.value = 'OK';
-			    form.appendChild(userOkInput);
-			
-
-	        document.body.appendChild(form);
-	        form.submit();
-	}else{
-		alert('비밀번호가 일치하지 않습니다.');
-	}
-	
-}
-
-</script>
 
 <style>
 /*헤더 이미지용 url에 이미지 추가하면 됩니다.*/
@@ -121,13 +84,13 @@ function pwdCheck(){
 						<div class="card text-center">
 							<div class="card-body">
 								<h4 class="card-title mb-4 text-center">나의 정보 수정</h4>
-								<form class="form-inline justify-content-center" >
+								<form class="form-inline justify-content-center" method="POST" action="infoEdit.do" id="myForm">
 									<div class="form-group mr-3">
-									<input type="hidden" id="user_idx" name="user_idx" value="${sessionScope.ssInfo.user_idx}">
-									
+								
 										<label for="password-input">비밀번호</label> <input
 											type="password" class="form-control" id="input_pwd"
 											name="input_pwd" placeholder="비밀번호를 입력하세요" required="required">
+											<input type="hidden" id="user_ok" name="user_ok" value="OK" >
 									</div>
 									<button type="button" class="btn btn-primary"
 										onclick="pwdCheck()">확인</button>
@@ -139,7 +102,22 @@ function pwdCheck(){
 			</div>
 		</div>
 	</section>
+	
+<script type="text/javascript">
+function pwdCheck(){
+	var input_pwd = encodeURIComponent(document.getElementById('input_pwd').value);
+	var user_pwd =  encodeURIComponent("${sessionScope.ssInfo.user_pwd}");
 
+	if(input_pwd===user_pwd){	
+		console.log(input_pwd + "===" + user_pwd);
+	    document.getElementById('myForm').submit(); // 폼을 전송합니다.
+	}else{
+		alert('비밀번호가 일치하지 않습니다.');
+	}
+	
+}
+
+</script>
 </body>
 
 </html>

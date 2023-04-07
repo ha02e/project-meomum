@@ -8,6 +8,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="/meomum/js/request.js"></script>
+
 <script>
 function allCheck() {
 	  var chkArr = document.getElementsByName("tos");
@@ -30,6 +32,41 @@ function allCheck() {
 	    }
 	  }
 	}
+	
+	
+function checkPasswordMatch() {
+	  var input_id = document.getElementById("user_id").value;
+	  var password = document.getElementById("user_pwd").value;
+	  var confirmPassword = document.getElementById("user_pwd_confirm").value;
+
+	  if (password != confirmPassword) {
+	    alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+	    return false;
+	  }
+
+	  var xhr = new XMLHttpRequest();
+	  xhr.onreadystatechange = function () {
+	    if (xhr.readyState == XMLHttpRequest.DONE) {
+	      if (xhr.status == 200) {
+	        var result = JSON.parse(xhr.responseText).result;
+	        if (result) {
+	         
+	            document.getElementById("memberJoin").submit();
+	        } else {
+	          
+	          alert('이미 등록되어있는 아이디입니다.');
+	        }
+	      } else {
+	        alert('전송에 실패하였습니다.');
+	      }
+	    }
+	  };
+
+	  xhr.open("POST", "idCheck.do", true);
+	  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	  xhr.send("input_id=" + input_id);
+	  return false;
+	}
 </script>
 
 </head>
@@ -40,21 +77,25 @@ function allCheck() {
 		<div class="row justify-content-center">
 			<div class="col-md-6">
 				<h4 class="mb-3 text-center">회원가입</h4>
-				<form name="memberJoin" action="memberJoin.do" method="post">
+				<form id="memberJoin" name="memberJoin" action="memberJoin.do" method="post" onsubmit="return checkPasswordMatch()">
 					<input type="hidden" name="user_jointype"
-						value="${param.user_jointype ? '머뭄' : param.user_jointype}">
-					<input type="hidden" name="user_info" value="회원">
+						value="${param.user_jointype==null ? '머뭄': param.user_jointype}">
+					
 
 					<div class="form-group">
 						<label for="user_id">이메일</label> <input type="email"
 							class="form-control" id="user_id" name="user_id"
 							value="${param.user_id}" placeholder="이메일" required="required">
-						<input type="button" value="중복검사">
 					</div>
 					<div class="form-group">
 						<label for="user_pwd">비밀번호</label> <input type="password"
 							class="form-control" id="user_pwd" name="user_pwd"
-							placeholder="비밀번호" required="required" minlength="8" maxlength="10">
+							placeholder="비밀번호"  pattern="(?=.*\d)(?=.*[~`!@#$%\^&*()-+=])(?=.*[a-zA-Z]).{8,}" title="8자 이상, 숫자와 특수문자를 모두 포함해주세요." required="required">
+					</div>
+					<div class="form-group">
+						<label for="user_pwd_confirm">비밀번호확인</label> <input type="password"
+							class="form-control" id="user_pwd_confirm" name="user_pwd_confirm"
+							placeholder="비밀번호"  pattern="(?=.*\d)(?=.*[~`!@#$%\^&*()-+=])(?=.*[a-zA-Z]).{8,}" title="8자 이상, 숫자와 특수문자를 모두 포함해주세요." required="required">
 					</div>
 					<div class="form-group">
 						<label for="user_name">이름</label> <input type="text"

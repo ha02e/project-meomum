@@ -181,12 +181,12 @@
 						<div class="mb-3">
 							<label for="newPassword" class="form-label">새로운 비밀번호</label> <input
 								type="password" class="form-control" id="newPassword"
-								name="newPassword">
+								name="newPassword"  pattern="(?=.*\d)(?=.*[~`!@#$%\^&*()-+=])(?=.*[a-zA-Z]).{8,}" title="8자 이상, 숫자와 특수문자를 모두 포함해주세요." required="required">
 						</div>
 						<div class="mb-3">
 							<label for="confirmPassword" class="form-label">비밀번호 확인</label> <input
 								type="password" class="form-control" id="confirmPassword"
-								name="confirmPassword">
+								name="confirmPassword"  pattern="(?=.*\d)(?=.*[~`!@#$%\^&*()-+=])(?=.*[a-zA-Z]).{8,}" title="8자 이상, 숫자와 특수문자를 모두 포함해주세요." required="required">
 						</div>
 					</form>
 				</div>
@@ -224,6 +224,16 @@
 			$("#submitPwdChange").click(function() {
 				var newPassword = $("#newPassword").val();
 				var confirmPassword = $("#confirmPassword").val();
+				
+			      // 비밀번호가 8자 이상이며, 특수문자가 하나 이상 포함되어 있는지 확인합니다.
+		        var passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,}$/;
+		        if (!passwordRegex.test(newPassword)) {
+		            alert("비밀번호는 8자 이상이며, 영문자, 숫자, 특수문자를 모두 포함해야 합니다.");
+		            return;
+		        }
+				
+				
+				
 				if (newPassword != confirmPassword) {
 					alert("입력한 비밀번호가 일치하지 않습니다.");
 					return;
