@@ -47,6 +47,7 @@ public class NtcDAOImple implements NtcDAO {
 	@Override
 	public int getTotalCnt() {
 		int count = sqlMap.selectOne("ntcTotalCnt");
+		count=count==0?1:count;
 		return count;
 	}
 
@@ -78,5 +79,11 @@ public class NtcDAOImple implements NtcDAO {
 	public List<NtcDTO> ntcSearch(String keyword) {
 		List<NtcDTO> list = sqlMap.selectList("ntcSearch", keyword);
 		return list;
+	}
+	
+	@Override
+	public String getNtcImageName(Integer idx) {
+		String dto=sqlMap.selectOne("getNtcImageName", idx);
+		return dto;
 	}
 }
