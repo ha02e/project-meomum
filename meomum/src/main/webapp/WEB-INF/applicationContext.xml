@@ -22,7 +22,8 @@
 	<bean id="sqlSessionFactoryBean"
 		class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
-		<property name="configLocation" value="classpath:/mybatis-config.xml"></property>
+		<property name="configLocation"
+			value="classpath:/mybatis-config.xml"></property>
 	</bean>
 
 	<bean id="sqlSessionTemplate"
@@ -68,14 +69,18 @@
 			<ref bean="sqlSessionTemplate" />
 		</constructor-arg>
 	</bean>
+
+	
 	<bean id="orderDAO" class="com.mm.order.model.OrderDAOImple">
 		<constructor-arg>
 			<ref bean="sqlSessionTemplate"/>
-		</constructor-arg>	
+		</constructor-arg>
 	</bean>
 	<bean id="loveDAO" class="com.mm.love.model.LoveDAOImple">
 		<constructor-arg>
+
 			<ref bean="sqlSessionTemplate" />
 		</constructor-arg>
 	</bean>
+
 </beans>

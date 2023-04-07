@@ -44,7 +44,7 @@
     b.svc_regdate, a.svc_state, c.svc_days, c.svc_time
     FROM svc_member a, svc_detail b, svc_date c
     WHERE a.svc_idx = b.svc_idx and a.svc_idx=c.svc_idx
-    <if test="minDate != null and maxDate != null">
+   <if test="minDate != null and maxDate != null">
         AND svc_regdate BETWEEN COALESCE(#{minDate}, '1900-01-01') AND COALESCE(#{maxDate}, '9999-12-31')
     </if>
     <if test="minDate != null and maxDate == null">
@@ -72,39 +72,6 @@
 	</select>
 
 	
-	
-<!-- 	<select id="svcSelectDetail" parameterType="Map" resultType="com.mm.svc.model.SvcSelectAllDTO">
-		SELECT a.svc_idx, a.user_idx, a.user_name, a.user_tel,
-		b.svc_regdate,a.svc_state,c.svc_days,c.svc_time
-		FROM svc_member a, svc_detail b,svc_date c
-		WHERE a.svc_idx = b.svc_idx and a.svc_idx=c.svc_idx
-	<if test="minDate != null and maxDate != null">
-		AND svc_regdate BETWEEN #{minDate} AND #{maxDate}
-	</if>
-	<if test="keyword!=null and category==1">
-		AND user_name LIKE '%'||#{keyword}||'%'
-	</if>
-	<if test="keyword!=null and category==2">
-		AND user_tel LIKE '%'||#{keyword}||'%'
-	</if>
-	<if test="state.size()!=0">
-	<foreach item="arr" index="index" collection="state"
-		open=" AND svc_state IN (" separator="," close=")">
-		#{arr}
-	</foreach>
-	</if>
-	<if test="minDate == null">
-        AND 1=1
-    </if>
-    <if test="maxDate == null">
-        AND 1=1
-    </if>
-    <if test="keyword == null">
-        AND 1=1
-    </if>
-		ORDER BY a.svc_idx desc
-	</select>  -->
-	
 	<!-- 공통: 방문 예약 상세 정보 -->
 	<select id="svcContent" parameterType="String" resultType="com.mm.svc.model.SvcContentDTO">
 		SELECT a.*,b.user_name,
@@ -119,20 +86,20 @@
 	<!-- 방문예약 정보 수정 -->
 	<update id="svcMemUpdate" parameterType="com.mm.svc.model.SvcMemDTO">
 		UPDATE svc_member
-		SET user_name = #{user_name,jdbcType=VARCHAR},
-		user_tel=#{user_tel,jdbcType=VARCHAR},
-		user_pcode=#{user_pcode,jdbcType=VARCHAR},
-		user_addr=#{user_addr,jdbcType=VARCHAR},
+		SET user_name = #{user_name},
+		user_tel=#{user_tel},
+		user_pcode=#{user_pcode},
+		user_addr=#{user_addr},
 		user_detail=nvl(#{user_detail},'-'),
-		svc_state=#{svc_state,jdbcType=VARCHAR}
+		svc_state=#{svc_state}
 		WHERE svc_idx = #{svc_idx}
 	</update>
 
 	<update id="svcDetailUpdate" parameterType="com.mm.svc.model.SvcDetailDTO">
 		UPDATE svc_detail
-		SET svc_type=#{svc_type,jdbcType=VARCHAR},
-		svc_py=#{svc_py,jdbcType=VARCHAR},
-		svc_area=#{svc_area,jdbcType=VARCHAR},
+		SET svc_type=#{svc_type},
+		svc_py=#{svc_py},
+		svc_area=#{svc_area},
 		svc_req=nvl(#{svc_req},'-'),
 		svc_memo=nvl(#{svc_memo},'-')
 		WHERE svc_idx = #{svc_idx}
@@ -140,11 +107,19 @@
 
 	<update id="svcDateUpdate" parameterType="com.mm.svc.model.SvcDateDTO">
 		UPDATE svc_date
-		SET svc_days=#{svc_days,jdbcType=VARCHAR},
-		svc_time=#{svc_time,jdbcType=VARCHAR}
+		SET svc_days=#{svc_days},
+		svc_time=#{svc_time}
 		WHERE svc_idx = #{svc_idx}
 	</update>
 
+	<!-- 관리자: 서비스 견적 추가 -->
+	<insert id="svcIngInsert" parameterType="com.mm.svc.model.SvcIngDTO">
+		INSERT INTO svc_ing 
+		VALUES (svc_ing_idx.nextval,#{svc_idx},#{user_idx},#{svc_datetime}, #{estimated},#{discount},#{type},#{total},#{pay_state})
+	</insert>
+	
+	
+	
 	<!--마이페이지 : 방문 예약 신청 내역 -->
 	<select id="svcUserList" parameterType="Integer" resultType="com.mm.svc.model.SvcSelectAllDTO">
 	SELECT a.svc_idx, a.user_idx, a.user_name, a.user_tel, b.svc_regdate, a.svc_state, c.svc_days, c.svc_time

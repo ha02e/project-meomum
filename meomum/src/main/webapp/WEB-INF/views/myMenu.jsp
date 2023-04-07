@@ -70,7 +70,7 @@
 						<div id="collapseThree" class="collapse" data-parent="#accordionExample">
 							<div class="card-body">
 								<ul>
-									<li><a href="#">구독상품</a></li>
+									<li><a href="myOrderList.do?user_idx=${sessionScope.ssInfo.user_idx}">구독상품</a></li>
 									<li><a href="#">장바구니</a></li>
 									<li><a href="#">찜한 목록</a></li>
 									<li><a href="#">주문/배송 내역</a></li>

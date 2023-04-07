@@ -7,15 +7,21 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<!-- <link href="/docs/5.2/dist/css/bootstrap.min.css" rel="stylesheet" >
-App CSS  
-<link id="theme-style" rel="stylesheet" href="assets/css/portal_a.css">
-<link rel="stylesheet" type="text/css" href="css/mainLayout_a.css"> -->
+<link href="/docs/5.2/dist/css/bootstrap.min.css" rel="stylesheet" >
 
+<link id="theme-style" rel="stylesheet" href="assets/css/portal_a.css">
+<link rel="stylesheet" type="text/css" href="css/mainLayout_a.css"> 
+<style>
+.title{
+	text-align: center;
+	font-weight: bold;
+	margin: 30px 0;
+}
+</style>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
 <script>
-//전체 체크박스 클릭시 전체 체크박스 선택
+	//"전체" 체크박스 클릭시 체크박스 모두 선택
 	$(function() {
 		$('input[name="svc_state"]').click(
 				function() {
@@ -27,8 +33,8 @@ App CSS
 							$('input[name="svc_state"]').not(this).prop(
 									"checked", false);
 						}
-					}
-				});
+				}
+			});
 	});
 
 	//세부 검색 기능
@@ -70,7 +76,7 @@ App CSS
 			"keyword" : keyword,
 			"state" : arr
 		};
-		console.log(allData);
+
 		$.ajax({
 			url : "svcSearch.do",
 			data :allData,
@@ -112,8 +118,12 @@ App CSS
 
 </head>
 <body>
-<%-- 	<%@include file="/WEB-INF/views/header_a.jsp"%> --%>
+<%@include file="/WEB-INF/views/header_a.jsp"%> 
+<div class="app-wrapper">
+	    <div class="app-content pt-3 p-md-3 p-lg-4">
+		    <div class="container-xl">
 	<!-- 세부 검색 -->
+	<h2 class="title">방문 견적 예약 리스트 </h2>
 	<section>
 		<article>
 			<form name="searchDetail">
@@ -145,6 +155,7 @@ App CSS
 							</li>
 							<div>
 								<input type="button" value="검색" onclick="selectDetail()">
+								<input type="reset" value="초기화"> 
 							</div>
 						</ul>
 					</fieldset>
@@ -191,8 +202,12 @@ App CSS
 			<input type="submit" value="선택 삭제">
 		</fieldset>
 	</section>
-
+</div>
+</div>
 	<%@include file="/WEB-INF/views/footer_a.jsp"%>
+</div>
+
+
 	   <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
