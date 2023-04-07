@@ -45,6 +45,7 @@ public class MemberController {
 		
 		ModelAndView mav = new ModelAndView();
 		String msg = result>0?"회원가입이 완료되었습니다.":"회원가입에 실패하였습니다.문의1234-1234";
+		mav.addObject("link", "index.do");
 		mav.addObject("msg", msg);
 		mav.setViewName("msg");
 		
@@ -115,7 +116,7 @@ public class MemberController {
 		return "redirect:/index.do";
 	}
 	
-	/*회원 정보 수정 페이지 이동*/
+	/*회원 정보 수정을 위한 비밀번호 입력 페이지 이동*/
 	@RequestMapping(value="/infoEdit.do",method = RequestMethod.GET)
 	public ModelAndView infoEditForm(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
@@ -132,9 +133,9 @@ public class MemberController {
 
 		return mav;
 	}
-	/*회원 정보 수정 페이지 이동*/
+	/*회원 정보 수정 가능한 폼 페이지로 이동*/
 	@RequestMapping(value="/infoEdit.do",method = RequestMethod.POST)
-	public ModelAndView infoEditFormOK(@RequestParam(value = "user_idx")int user_idx,
+	public ModelAndView infoEditFormOK(HttpSession session,
 									@RequestParam(value = "user_ok",defaultValue = "NO")String user_ok) {
 	
 		
@@ -146,9 +147,10 @@ public class MemberController {
 			mav.setViewName("mainMsg");
 			return mav;
 		}
-  
-
-			MemberDTO userInfo = mdao.getuserInfo(user_idx);
+		
+        MemberDTO sdto =(MemberDTO) session.getAttribute("ssInfo");
+        int user_idx = sdto.getUser_idx();
+		MemberDTO userInfo = mdao.getuserInfo(user_idx);
 					
 			mav.addObject("info",userInfo);
 			mav.setViewName("member/infoEdit");
@@ -334,6 +336,35 @@ public class MemberController {
 	String user_id = mdao.findID(input_name, input_tel);
 	ModelAndView mav = new ModelAndView();
 	mav.addObject("user_id",user_id);
+    mav.setViewName("mmJson");
+    return mav;
+	}
+	
+	/**회원 비밀번호 찾기*/
+	@RequestMapping(value="/findPWD.do",method = RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView findPWD(@RequestParam("input_name")String input_name,
+								@RequestParam("input_tel")String input_tel,
+								@RequestParam("input_id")String input_id) {
+
+
+	Integer user_idx = mdao.findPWD(input_name, input_tel,input_id);
+	ModelAndView mav = new ModelAndView();
+	mav.addObject("user_idx",user_idx);
+    mav.setViewName("mmJson");
+    return mav;
+	}
+	
+	/**회원가입 아이디 중복 검사*/
+	@RequestMapping(value="/idCheck.do",method = RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView idCheck(@RequestParam("input_id")String input_id) {
+
+
+	boolean result = mdao.memberIdcheck(input_id);
+	ModelAndView mav = new ModelAndView();
+	
+    mav.addObject("result", result); 
     mav.setViewName("mmJson");
     return mav;
 	}

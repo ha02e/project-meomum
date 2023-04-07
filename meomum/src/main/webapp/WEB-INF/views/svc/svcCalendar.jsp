@@ -47,79 +47,63 @@
 			<div class="container pt-5">
 				<h3 class="text-center mb-4">전체 스케줄 보기</h3>
 
+
+
+
 				<!--카드 -->
-				<div class="row text-center justify-content-center">
-					<div class="d-flex col-md-8">
-						<!-- 카드 1 시작 -->
-						<div class="card col-md-4 mx-2">
-							<div class="card-body">
-								<div class="row align-items-center gx-0">
-									<div class="col">
-										<!-- Title -->
-										<h6 class="text-uppercase text-muted mb-2">방문격적</h6>
-										<!-- Heading -->
-										<span class="h2 text-center">5명</span>
-										<!-- Badge -->
-										<span class="badge bg-success-soft mt-n1"></span>
-									</div>
-									<div class="col-auto">
-										<!-- Icon -->
-										<span class="h2 fe fe-dollar-sign text-muted mb-0"></span>
-									</div>
-								</div>
-								<!-- / .row -->
-							</div>
-						</div>
-						<!-- 카드 1 끝 -->
-						<!-- 카드 1 시작 -->
-						<div class="card col-md-4 mx-2">
-							<div class="card-body">
-								<div class="row align-items-center gx-0">
-									<div class="col">
-										<!-- Title -->
-										<h6 class="text-uppercase text-muted mb-2">서비스 예정 고객</h6>
-										<!-- Heading -->
-										<span class="h2 mb-0"> 5명 </span>
-										<!-- Badge -->
-										<span class="badge bg-success-soft mt-n1"> +3.5% </span>
-									</div>
-									<div class="col-auto">
-										<!-- Icon -->
-										<span class="h2 fe fe-dollar-sign text-muted mb-0"></span>
-									</div>
-								</div>
-								<!-- / .row -->
-							</div>
-						</div>
-						<!-- 카드 1 끝 -->
-						<!-- 카드 1 시작 -->
-						<div class="card col-md-4 mx-2">
-							<div class="card-body">
-								<div class="row align-items-center gx-0">
-									<div class="col">
-										<!-- Title -->
-										<h6 class="text-uppercase text-muted mb-2">서비스 완료</h6>
-										<!-- Heading -->
-										<span class="h2 mb-0"> 5명 </span>
-										<!-- Badge -->
-										<span class="badge bg-success-soft mt-n1"> +3.5% </span>
-									</div>
-									<div class="col-auto">
-										<!-- Icon -->
-										<span class="h2 fe fe-dollar-sign text-muted mb-0"></span>
-									</div>
-								</div>
-								<!-- / .row -->
-							</div>
-						</div>
-						<!-- 카드 1 끝 -->
-					</div>
-				</div>
-
-
-
-
-
+				 <div class="row g-4 mb-4">
+				    <div class="col-6 col-lg-3">
+					    <div class="app-card app-card-stat shadow-sm h-100">
+						    <div class="app-card-body p-3 p-lg-4">
+							    <h4 class="stats-type mb-1">Total Sales</h4>
+							    <div class="stats-figure">$12,628</div>
+							    <div class="stats-meta text-success">
+								    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-up" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+</svg> 20%</div>
+						    </div><!--//app-card-body-->
+						    <a class="app-card-link-mask" href="#"></a>
+					    </div><!--//app-card-->
+				    </div><!--//col-->
+				    
+				    <div class="col-6 col-lg-3">
+					    <div class="app-card app-card-stat shadow-sm h-100">
+						    <div class="app-card-body p-3 p-lg-4">
+							    <h4 class="stats-type mb-1">Expenses</h4>
+							    <div class="stats-figure">$2,250</div>
+							    <div class="stats-meta text-success">
+								    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-down" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
+</svg> 5% </div>
+						    </div><!--//app-card-body-->
+						    <a class="app-card-link-mask" href="#"></a>
+					    </div><!--//app-card-->
+				    </div><!--//col-->
+				    <div class="col-6 col-lg-3">
+					    <div class="app-card app-card-stat shadow-sm h-100">
+						    <div class="app-card-body p-3 p-lg-4">
+							    <h4 class="stats-type mb-1">Projects</h4>
+							    <div class="stats-figure">23</div>
+							    <div class="stats-meta">
+								    Open</div>
+						    </div><!--//app-card-body-->
+						    <a class="app-card-link-mask" href="#"></a>
+					    </div><!--//app-card-->
+				    </div><!--//col-->
+				    <div class="col-6 col-lg-3">
+					    <div class="app-card app-card-stat shadow-sm h-100">
+						    <div class="app-card-body p-3 p-lg-4">
+							    <h4 class="stats-type mb-1">Invoices</h4>
+							    <div class="stats-figure">6</div>
+							    <div class="stats-meta">New</div>
+						    </div><!--//app-card-body-->
+						    <a class="app-card-link-mask" href="#"></a>
+					    </div><!--//app-card-->
+				    </div><!--//col-->
+			    </div><!--//row-->
+			 
+	
+<!-- 카드끝 -->
 
 
 
@@ -143,7 +127,7 @@
 		<%@include file="../footer_a.jsp"%>
 	</div>
 
-
+</div>
 
 
 
@@ -165,7 +149,7 @@
 										googleCalendarApiKey : "AIzaSyD3SeaUMvA1AdhujE_RLpRCFrRO4_oKzpw",
 										eventSources : [ {
 											googleCalendarId : 'ko.south_korea#holiday@group.v.calendar.google.com',
-											backgroundColor : '#EFEFEF',
+											backgroundColor : 'red',
 											textColor : 'black'
 
 										} ],
