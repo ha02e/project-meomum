@@ -2,7 +2,9 @@ package com.mm.controller;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,27 +23,19 @@ public class LoveController {
 	//찜 추가
 	@RequestMapping(value="loveInsert.do", method=RequestMethod.POST)
 	@ResponseBody
-	public ModelAndView loveInsert(
-			@RequestParam("pro_idx") int pro_idx,
-			HttpSession session) {
-		
-		ModelAndView mav= new ModelAndView();
-		
-		session.getAttribute("ssInfo");
-		MemberDTO sdto=(MemberDTO) session.getAttribute("ssInfo");
-		
-		String msg=null;
-		
-		int user_idx=sdto.getUser_idx();
-		LoveDTO dto=new LoveDTO();
-		
-			dto.setUser_idx(user_idx);
-			dto.setPro_idx(pro_idx);
-
-			loveDao.loveInsert(dto);
-			mav.setViewName("mmJson");
-			return mav;
+	public ModelAndView loveAdd(
+			@RequestParam(name="pro_idx",defaultValue="1") int pro_idx,
+			@RequestParam(name="user_idx",defaultValue="1") int user_idx) {
 	
+	
+	ModelAndView mav= new ModelAndView();
+	System.out.println(pro_idx+"pro");
+	System.out.println(user_idx+"user");
+	loveDao.loveInsert(pro_idx, user_idx);
+	mav.setViewName("mmJson");
+	return mav;
+
+
 	}
 	
 }

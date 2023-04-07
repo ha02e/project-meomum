@@ -6,7 +6,7 @@
 
 <mapper namespace="com.mm.love">
 
-<insert id="loveInsert" parameterType="com.mm.love.model.LoveDTO">
+<insert id="loveInsert" parameterType="map">
 		insert into love values(
 		love_num_idx.nextval,
 		#{pro_idx},
