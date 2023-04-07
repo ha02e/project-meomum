@@ -44,7 +44,7 @@
     b.svc_regdate, a.svc_state, c.svc_days, c.svc_time
     FROM svc_member a, svc_detail b, svc_date c
     WHERE a.svc_idx = b.svc_idx and a.svc_idx=c.svc_idx
-    <if test="minDate != null and maxDate != null">
+   <if test="minDate != null and maxDate != null">
         AND svc_regdate BETWEEN COALESCE(#{minDate}, '1900-01-01') AND COALESCE(#{maxDate}, '9999-12-31')
     </if>
     <if test="minDate != null and maxDate == null">
@@ -70,6 +70,7 @@
     </if>
     ORDER BY a.svc_idx desc
 	</select>
+
 	
 	<!-- 공통: 방문 예약 상세 정보 -->
 	<select id="svcContent" parameterType="String" resultType="com.mm.svc.model.SvcContentDTO">

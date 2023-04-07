@@ -6,6 +6,11 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+.title{
+	text-align: center;
+	font-weight: bold;
+	margin: 30px 0;
+}
 textarea {
 	width: 50%;
 	height: 6.25em;
@@ -102,11 +107,16 @@ $(function() {
 
 </head>
 <body>
-	<h1>방문 견적 예약</h1>
+<%@include file="/WEB-INF/views/header_a.jsp"%> 
+	
+	<div class="app-wrapper">
+	    <div class="app-content pt-3 p-md-3 p-lg-4">
+		    <div class="container-xl">
+		    <h2 class="title">방문 견적 예약 : ${dto.svc_idx}</h2>
 	<form name="asvcUpdate" action="asvcUpdate.do" method="post">
+	<input type="hidden" name="user_idx" value="${dto.user_idx}" id="user_idx">
 		<ul>
-			<li>예약번호 <input type="text" name="svc_idx"
-				value="${dto.svc_idx}" readonly>
+			<li>예약번호 <input type="text" name="svc_idx" id="svc_idx" value="${dto.svc_idx}" readonly>
 			</li>
 
 			<li>거주형태 <select name="svc_type">
@@ -192,7 +202,8 @@ $(function() {
 		</ul>
 
 		<hr>
-		서비스 희망일: 데이터데이터
+		서비스 희망일:~~해당 부분 추가중입니다<br>
+		(정보추가 버튼 누르면 팝업창 뜨고 데이터베이스에 정보 넣는 것까지만 지금 구현했습니다)~~
 
 		결제내역
 		<table border="1 solid black" cellspacing="0">
@@ -205,11 +216,11 @@ $(function() {
 			</thead>
 			<tbody>
 				<tr>
-					<td>데이터</td>
-					<td>데이터</td>
-					<td>데이터</td>
-					<td>데이터</td>
-					<td>데이터</td>
+					<td>작업중입니다!</td>
+					<td>작업중입니다!</td>
+					<td>작업중입니다!</td>
+					<td>작업중입니다!</td>
+					<td>작업중입니다!</td>
 				</tr>
 			</tbody>
 		</table>
@@ -226,6 +237,10 @@ $(function() {
 			<input type="reset" value="초기화">
 		</div>
 	</form>
+</div>
+</div>
+<%@include file="/WEB-INF/views/footer_a.jsp"%>
+</div>
 
 	<!-- 현재 시간보다 이전 시간 선택 불가 제약 -->
 	<script>

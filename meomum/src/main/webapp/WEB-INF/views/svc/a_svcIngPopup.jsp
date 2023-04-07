@@ -6,11 +6,11 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<body>
+<body onload="setValue()">
 	<h2>결제</h2>
 	<form name="svcIngInsert" action="svcIngInsert.do" method="post">
-	<input type="hidden" name="svc_idx">
-	<input type="hidden" name="user_idx">
+	<input type="hidden" name="svc_idx" id="svc_idx" >
+	<input type="hidden" name="user_idx" id="user_idx">
 		<ul>
 			<li>서비스 일자 <input type="datetime-local" name="svc_datetime" id="svc_datetime"></li>
 
@@ -26,7 +26,7 @@
 			</select>
 			</li>
 
-			<li>결제금액<input type="text" name="total" id="pay_total"></li>
+			<li>결제금액<input type="text" name="total" id="total"></li>
 
 			<li>결제상태 <select name="pay_state">
 					<option value="견적완료">견적완료</option>
@@ -42,7 +42,13 @@
 		</div>
 	</form>
 	
+	<script>
+	function setValue(){
+		document.getElementById("svc_idx").value = opener.document.getElementById("svc_idx").value;
+		document.getElementById("user_idx").value = opener.document.getElementById("user_idx").value;
+	}
 	
+	</script>
 	<script>
 		//견적금액과 할인금액을 계산해서 결제금액 출력
 		function getTotal() {

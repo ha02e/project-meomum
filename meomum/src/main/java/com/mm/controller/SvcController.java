@@ -93,10 +93,10 @@ public class SvcController {
 	
 	/**관리자-서비스 견적 추가 팝업창*/
 	@RequestMapping("/asvcIngPopup.do")
-	public String svcPopup() {
+	public String asvcIngPopup() {
 		return "svc/a_svcIngPopup";
 	}
-	
+
 	/**관리자-서비스 견적 추가*/
 	@RequestMapping("/svcIngInsert.do")
 	public ModelAndView svcIngInsert(SvcIngDTO dto) {
@@ -128,7 +128,7 @@ public class SvcController {
 		}
 		
 		List<SvcSelectAllDTO> list = svcDao.svcSelectDetail(minDate,maxDate,category,keyword,arr);
-		System.out.println("컨트롤러 list"+list);
+
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("list", list);
 		mav.setViewName("mmJson");
