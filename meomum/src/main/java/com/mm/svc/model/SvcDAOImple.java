@@ -55,6 +55,11 @@ public class SvcDAOImple implements SvcDAO {
 	@Override
 	public List<SvcSelectAllDTO> svcSelectDetail(String minDate, String maxDate, int category, String keyword, List<String> state) {
 		Map map = new HashMap();
+		map.put("minDate",minDate);
+		map.put("maxDate",maxDate);
+		map.put("keyword", keyword);
+		map.put("category", category);
+		map.put("state",state);
 		
 		List<SvcSelectAllDTO> lists = sqlMap.selectList("svcSelectDetail", map);
 		return lists;
@@ -82,6 +87,13 @@ public class SvcDAOImple implements SvcDAO {
 	@Override
 	public int svcDateUpdate(SvcDateDTO dto) {
 		int count = sqlMap.update("svcDateUpdate", dto);
+		return count;
+	}
+	
+	/**관리자: 서비스 견적 내용 추가*/
+	@Override
+	public int svcIngInsert(SvcIngDTO dto) {
+		int count = sqlMap.insert("svcIngInsert",dto);
 		return count;
 	}
 	

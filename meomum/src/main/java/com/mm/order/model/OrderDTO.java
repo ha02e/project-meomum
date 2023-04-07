@@ -184,10 +184,6 @@ public class OrderDTO {
 	public void setOrder_tos(String order_tos) {
 		this.order_tos = order_tos;
 	}
-	
-	
-	
-	
-	
+
 	
 }

@@ -128,7 +128,6 @@
 						<c:if test="${!empty review.thumb}">
 							<div class="fileDel">
 								<span>${review.thumb}</span>
-								<button class="btn btn-sm btn-outline-danger"><i class="bi bi-x-circle"></i>&nbsp;삭제</button>
 							</div>
 						</c:if>
 						<div>
