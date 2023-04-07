@@ -18,6 +18,7 @@ import com.mm.member.model.MemberDTO;
 @Controller
 public class LoveController {
 
+	@Autowired
 	private LoveDAO loveDao;
 	
 	//찜 추가
@@ -34,8 +35,5 @@ public class LoveController {
 	loveDao.loveInsert(pro_idx, user_idx);
 	mav.setViewName("mmJson");
 	return mav;
-
-
 	}
-	
 }

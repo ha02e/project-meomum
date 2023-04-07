@@ -268,8 +268,6 @@
 
 
 function loveInsert(pro_idx,user_idx) {
-	 alert(pro_idx);
-	 alert(user_idx);
 	  $.ajax({
 	    type: "POST",
 	    url: "loveInsert.do",
@@ -282,8 +280,6 @@ function loveInsert(pro_idx,user_idx) {
 	    },
 	    error: function(jqXHR, textStatus, errorThrown) {
 	      swal("찜 실패", "찜을 저장하는 동안 문제가 발생했습니다.", "error");
-	      console.log(pro_idx);
-	      console.log(user_idx);
 	    }
 	  });
 	}

@@ -86,9 +86,9 @@ function updateShippingCost() {
 				</tr>
 			</c:if>
 			
-			<c:set var="totalShippingCost" value="0" />
-			
+		<form name="cartForm" method="post" action="orderList.do">
 			<c:forEach var="list" items="${lists}">		
+			<c:set var="totalSubPrice" value="${totalSubPrice + (list.cart_amount * list.pro_subprice)}" />
 			<c:set var="totalShippingCost" value="${totalShippingCost + (list.cart_amount * list.pro_delprice)}" />
 					<tr>
 						<td>
@@ -106,8 +106,6 @@ function updateShippingCost() {
 						<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.pro_subprice }" />원</td>
 						<td>${list.pro_month }개월</td>
 						
-						
-					<form name="cartNum" action="cartNumUpdate.do">
 						<td>
 							<div class="wrap-num-product flex-w m-l-auto m-r-0">
 							
@@ -129,14 +127,11 @@ function updateShippingCost() {
 								</div>
 							
 							</div>
-							
-							<input type="submit" value="수량 변경">
+							<button type="submit" formaction="cartNumUpdate.do">수량 변경</button>
 						</td>
-					</form>
-						
 						<td>
-						<div><span id="subPrice_${list.cart_amount}">${list.pro_subprice}</span>원</div>
-    					<div><span id="allPrice_${list.cart_amount}">${list.pro_allprice}</span>원</div>
+						<div><span id="subPrice">${list.cart_amount * list.pro_subprice}</span>원</div>
+    					<div><span id="allPrice">${list.cart_amount * list.pro_allprice}</span>원</div>
 						</td>
 						
 						<!-- 장바구니 삭제 -->
@@ -145,20 +140,24 @@ function updateShippingCost() {
 								<img src="images/icon/icon-close2.png" alt="DELETE" class="delete-icon">
 							</a>
 						</td>
-
 					</tr>
-					</c:forEach>
-					
-					
+					</c:forEach>				
 					<tr>
-					<td></td>
-					<td>총 구독 가격 ()원</td>
-					<td>총 배송비 <span id="shipping-cost"><fmt:formatNumber type="number" maxFractionDigits="3" value="${totalShippingCost}" />원</span></td>
+						<td><div>월 구독 가격 <fmt:formatNumber type="number" maxFractionDigits="3" value="${totalSubPrice}" />원</div></td>
+						<td><div>| 총 배송비 <fmt:formatNumber type="number" maxFractionDigits="3" value="${totalShippingCost}" />원</div></td>
+					</tr>
+					<tr>
+						<td>
+						<input type="hidden" name="pro_idx" value="${list.pro_idx}" >
+						<input type="hidden" name="cart_amount" value="${list.cart_amount}" >
+						<input type="hidden" name="totalSubPrice" value="${totalSubPrice}" >
+						<input type="hidden" name="totalShippingCost" value="${totalShippingCost}" >	
+						<button type="submit" formaction="orderList.do">결제하기</button>
+						</td>
 					</tr>
 				</table>
+			</form>		
 
-
-d
 <script>
   function deleteCartItem(cartIdx) {
     $.ajax({

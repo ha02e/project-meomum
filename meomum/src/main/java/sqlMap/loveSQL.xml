@@ -5,13 +5,11 @@
 
 
 <mapper namespace="com.mm.love">
-
 <insert id="loveInsert" parameterType="map">
 		insert into love values(
 		love_num_idx.nextval,
 		#{pro_idx},
 		#{user_idx},
 		1)
-</insert>
-
+</insert> 
 </mapper>
