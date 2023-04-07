@@ -153,7 +153,7 @@ function updateShippingCost() {
 					<tr>
 					<td></td>
 					<td>총 구독 가격 ()원</td>
-					<td>총 배송비 <span id="shipping-cost"><fmt:formatNumber type="number" maxFractionDigits="3" value="${totalShippingCost}" />원</td>
+					<td>총 배송비 <span id="shipping-cost"><fmt:formatNumber type="number" maxFractionDigits="3" value="${totalShippingCost}" />원</span></td>
 					</tr>
 				</table>
 

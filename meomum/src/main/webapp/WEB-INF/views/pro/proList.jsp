@@ -47,6 +47,7 @@
 	<link rel="stylesheet" type="text/css" href="css/proUtil.css">
 	<link rel="stylesheet" type="text/css" href="css/proMain.css">
 <!--===============================================================================================-->
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 </head>
 <%@include file="/WEB-INF/views/header.jsp" %>
 <body class="animsition">
@@ -195,9 +196,11 @@
                     </div>
 						
 						
+						<input type="hidden" id="pro_idx" name="pro_idx" value="${list.pro_idx }">
+                        <input type="hidden" id="user_idx" name="user_idx" value="${sessionScope.ssInfo.user_idx}">
+                   
                     <div class="block2-txt-child2 flex-r p-t-3">
-                    	<input type="hidden" id="pro_idx" name="pro_idx" value="${list.pro_idx }">
-                        <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+                        <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" onclick="loveInsert(${list.pro_idx },${sessionScope.ssInfo.user_idx})">
                             <img class="icon-heart1 dis-block trans-04" src="images/icon/icon-heart-01.png" alt="ICON">
                             <img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icon/icon-heart-02.png" alt="ICON">
                         </a>
@@ -216,7 +219,7 @@
 
 	
 <!--===============================================================================================-->	
-	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+
 <!--===============================================================================================-->
 	<script src="vendor/animsition/js/animsition.min.js"></script>
 <!--===============================================================================================-->
@@ -261,32 +264,33 @@
 	<script src="vendor/isotope/isotope.pkgd.min.js"></script>
 <!--===============================================================================================-->
 	<script src="vendor/sweetalert/sweetalert.min.js"></script>
-	<script>
-	$('.js-addwish-b2').each(function(){
-	    $(this).on('click', function(){
-	        $.ajax({
-	            url: 'loveInsert.do',
-	            type: 'POST',
-	            data: {pro_idx: $("#pro_idx").val();
+<script>
 
-	            	},
-	            success: function(response){
-	                $('.js-addwish-b2').each(function(){
-	                    var clicked_pro_idx = $(this).closest('.block2-txt').find('input[name="pro_idx"]').val();
-	                    if(clicked_pro_idx == pro_idx) {
-	                        $(this).addClass('js-addedwish-b2');
-	                        $(this).off('click');
-	                    }
-	                });
-	            },
-	            error: function(){
-	        
-	                alert(pro_idx+'오류가 발생했습니다.');
-	            }
-	        });
-	    });
-	});
-	</script>
+
+function loveInsert(pro_idx,user_idx) {
+	 alert(pro_idx);
+	 alert(user_idx);
+	  $.ajax({
+	    type: "POST",
+	    url: "loveInsert.do",
+	    data: {
+	      pro_idx: pro_idx,
+	      user_idx: user_idx
+	    },
+	    success: function(data) {
+	      swal("찜 완료", response.message, "success");
+	    },
+	    error: function(jqXHR, textStatus, errorThrown) {
+	      swal("찜 실패", "찜을 저장하는 동안 문제가 발생했습니다.", "error");
+	      console.log(pro_idx);
+	      console.log(user_idx);
+	    }
+	  });
+	}
+
+
+
+</script>
 <!--===============================================================================================-->
 	<script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	<script>
