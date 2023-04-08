@@ -4,6 +4,7 @@ import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -31,6 +32,9 @@ public class ProController {
 	
 	@Autowired
 	private ProDAO proDao;
+	
+	@Autowired
+	private ServletContext servletContext;
 
 	
 	//관리자 상품 등록으로 이동
@@ -140,7 +144,7 @@ public class ProController {
 	    try {
 	        byte bytes[] = upload.getBytes();
 	        String fileName = upload.getOriginalFilename();
-	        String path= "c:/student_java/cool/meomum/src/main/webapp/images/";
+	        String path= "/webapp/items/";
 	        //String rootPath = req.getSession().getServletContext().getRealPath("/");
 	       // String filepath = rootPath+"/items/"+fileName;
 	        
@@ -176,7 +180,7 @@ public class ProController {
 	public ModelAndView proAdminList(@RequestParam(value="cp",defaultValue="1")int cp) {
 		
 		int totalCnt=proDao.getTotalCnt();
-		int listSize=5;
+		int listSize=10;
 		int pageSize=5;
 		
 		String pageStr=com.mm.module.PageModule.makePage("proAdmin.do", totalCnt, listSize, pageSize, cp);
@@ -196,6 +200,45 @@ public class ProController {
 		@RequestMapping("/proDel.do")
 		public ModelAndView proDel(@RequestParam("pro_idx") int pro_idx) {
 			int result = proDao.proDelete(pro_idx);
+			
+			ProDTO dto = new ProDTO();
+			
+			String oldFile=dto.getPro_thumb();
+			String oldFile1=dto.getPro_img1();
+			String oldFile2=dto.getPro_img2();
+			String oldFile3=dto.getPro_content();
+			
+			String path=servletContext.getRealPath("/items");
+			
+			if (oldFile != null) { 
+				File old = new File(path + "/" + oldFile);
+				if (old.exists()) {
+					old.delete();
+				}
+			}
+			
+			if (oldFile1 != null) { 
+				File old = new File(path + "/" + oldFile1);
+				if (old.exists()) {
+					old.delete();
+				}
+			}
+			
+			if (oldFile2 != null) { 
+				File old = new File(path + "/" + oldFile2);
+				if (old.exists()) {
+					old.delete();
+				}
+			}
+			
+			if (oldFile3 != null) { 
+				File old = new File(path + "/" + oldFile3);
+				if (old.exists()) {
+					old.delete();
+				}
+			}
+			
+			
 			String msg=result>=0?"삭제 성공":"삭제 실패";
 			String link ="proAdmin.do";
 			ModelAndView mav=new ModelAndView();
@@ -203,7 +246,7 @@ public class ProController {
 			mav.addObject("link", link);
 			mav.setViewName("pro/proMsg");
 			return mav;
-			}
+		}
 	
 	
 	/*상품 삭제
