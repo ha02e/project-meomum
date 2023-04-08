@@ -31,8 +31,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	    	searching: false;
 	    });
 	  }
-	});
-
+});
 </script>
 
 <style>
@@ -60,6 +59,12 @@ thead th a{
 	border-radius:2px;
 }
 </style>
+
+<script>
+function trackingOpen(){
+	window.open('http://info.sweettracker.co.kr/tracking/4');
+}
+</script>
 </head>
 
 <body class="app"> 
@@ -147,7 +152,7 @@ thead th a{
 												</c:when>
 												<c:when test="${dto.order_status eq 4}">
 													<div>배송완료</div>
-													<a class="btn-sm app-btn-secondary" href="#">배송조회</a>
+													<button class="btn-sm app-btn-secondary" onclick="trackingOpen()">배송조회</button>
 												</c:when>
 												<c:when test="${dto.order_status eq 5}">
 													<div class="text-danger">반납신청</div>
