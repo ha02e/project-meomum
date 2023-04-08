@@ -15,22 +15,28 @@
 	</select>
 	
 	
-	<select id="orderReport" parameterType="Map" resultType="com.mm.order.model.OrderDTO">
+	<select id="orderReport" parameterType="Map" resultType="com.mm.order.model.OrderReportDTO">
 		select * from
-			(select rownum as rnum, a.*from(
-			select a.order_idx, d.pro_name, b.user_name, b.user_tel, a.amount, a.order_status
-			from orders a, 
-			    member b, 
-			    order_pro c, 
-			    product d
-			where a.user_idx=b.user_idx
-			    and b.user_idx=c.user_idx
-			    and c.pro_idx=d.pro_idx
-			)a )b
+			(select rownum as rnum, e.*from(
+			select a.order_idx, d.pro_name, c.user_name, c.user_tel, a.amount, a.order_status, a.order_date
+				from orders a,
+				     order_pro b,
+				     member c,
+				     product d
+				where a.order_idx=b.order_idx
+				    and b.pro_idx=d.pro_idx
+				    and b.user_idx=c.user_idx
+			)e )f
 		where rnum<![CDATA[>=]]>#{start} and rnum<![CDATA[<=]]>#{end}
 	</select>
 	<select id="reportTotalCnt" resultType="Integer">
 		select count(*) from
-			orders
+			orders a,
+			order_pro b,
+			member c,
+			product d
+		where a.order_idx=b.order_idx
+			and b.pro_idx=d.pro_idx
+			and b.user_idx=c.user_idx
 	</select>
   </mapper>

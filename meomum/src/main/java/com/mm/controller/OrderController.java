@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.mm.order.model.OrderDAO;
 import com.mm.order.model.OrderDTO;
+import com.mm.order.model.OrderReportDTO;
 import com.mm.pro.model.ProDTO;
 
 @Controller
@@ -52,13 +53,13 @@ public class OrderController {
 		return mav;
 	}
 
-	public List<OrderDTO> reportPage(int cp, int ls) {
+	public List<OrderReportDTO> reportPage(int cp, int ls) {
 		int start = (cp - 1) * ls + 1;
 		int end = cp * ls;
 		Map map = new HashMap();
 		map.put("start", start);
 		map.put("end", end);
-		List<OrderDTO> lists = orderDao.orderReport(map);
+		List<OrderReportDTO> lists = orderDao.orderReport(map);
 		return lists;
 	}
 
@@ -70,7 +71,7 @@ public class OrderController {
 
 		String pageStr = com.mm.module.PageModule.makePage("orderReport_a.do", totalCnt, listSize, pageSize, cp);
 
-		List<OrderDTO> lists = reportPage(cp, pageSize);
+		List<OrderReportDTO> lists = reportPage(cp, pageSize);
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("lists", lists);
