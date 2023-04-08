@@ -138,17 +138,18 @@ public class ProController {
 	
 	//파일 복사?
 	public void copyInto(MultipartFile upload, HttpServletRequest req) {
-	   
-		System.out.println("파일명: " + upload.getOriginalFilename());
 	    
 	    try {
 	        byte bytes[] = upload.getBytes();
-	        String fileName = upload.getOriginalFilename();
-	        String path= "/webapp/items/";
-	        //String rootPath = req.getSession().getServletContext().getRealPath("/");
+	        
+	        
+	        String filePath= "/items/";
+	        String foolPath = req.getSession().getServletContext().getRealPath(filePath);
+	        
+	       
 	       // String filepath = rootPath+"/items/"+fileName;
 	        
-	        File outfile = new File(path+fileName);
+	        File outfile = new File(foolPath);
 	        
 	        FileOutputStream fos = new FileOutputStream(outfile);
 	        
