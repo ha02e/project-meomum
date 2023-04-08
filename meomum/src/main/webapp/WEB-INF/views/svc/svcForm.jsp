@@ -143,6 +143,11 @@ $(function() {
 			</textarea> <br> 
 			<input type="checkbox" name="svc_pia" value="Y">개인정보 수집 및 이용에 동의합니다
 			</li>
+			<div>
+			유의사항! 
+			방문 일자 2일 전에는 수정 불가한 점 참고 부탁드립니다.
+			피치 못할 사정으로 취소 시, 02-1234-4567로 전화부탁드립니다. 
+			</div>
 		</ul>
 		
 		<div>
