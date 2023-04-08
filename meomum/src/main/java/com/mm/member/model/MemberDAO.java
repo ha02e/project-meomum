@@ -28,6 +28,7 @@ public interface MemberDAO {
 	public String findID(String user_name, String user_tel);
 	public Integer findPWD(String user_name, String user_tel,String user_id);
 	public boolean memberIdcheck(String input_id);
-
+	public int dropSelectInfo(int user_idx);
+	public int deleteMember(int user_idx,String user_id);	
 
 }

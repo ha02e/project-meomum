@@ -138,12 +138,9 @@
 </script>
 </head>
 <body>
-
-
 	<%@include file="/WEB-INF/views/header.jsp"%>
 
-
-	<div class="container " style="overflow: auto;">
+	<div class="container">
 		<div class="row justify-content-center">
 			<div class="col-lg-6">
 
@@ -175,7 +172,6 @@
 							</div>
 
 							<button type="submit" class="btn btn-primary btn-block">로그인</button>
-
 						</form>
 					</div>
 
@@ -185,9 +181,7 @@
 								href="#" data-bs-toggle="modal" data-bs-target="#idFindModal">아이디찾기</a>
 							<span class="mx-2">|</span> <a href="#" data-bs-toggle="modal"
 								data-bs-target="#passwordFindModal">비밀번호 찾기</a>
-
 						</div>
-
 						<div>
 							<div>간편로그인</div>
 							<div>
@@ -197,17 +191,14 @@
 								</a>
 							</div>
 						</div>
-
+						<br><br><br><br>
 					</div>
-
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<%@include file="/WEB-INF/views/footer.jsp"%>
-
-
+<!-- --------------------모달창----------------------------------- -->
 	<!-- 회원 아이디찾기시작 -->
 	<div class="modal fade" id="idFindModal" tabindex="-1"
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -244,7 +235,6 @@
 		</div>
 	</div>
 	<!-- 회원 아이디찾기 끝 -->
-
 	<!-- 회원 아이디 안내 -->
 	<div class="modal fade" id="showID" tabindex="-1"
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -270,15 +260,11 @@
 						data-bs-toggle="modal" data-bs-target="#passwordFindModal"
 						onclick="$('#passwordFindModal').find('#inputp_id').val($('#userIdSpan').text())">비밀번호
 						찾기</button>
-
-
 				</div>
 			</div>
 		</div>
 	</div>
 	<!-- 회원 아이디찾기 끝 -->
-
-
 	<!-- 회원 비밀번호 찾기 시작 -->
 	<div class="modal fade" id="passwordFindModal" tabindex="-1"
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -308,7 +294,6 @@
 								placeholder="휴대폰 번호 (ex. 010-1234-5678)" required="required">
 						</div>
 					</form>
-
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
@@ -319,8 +304,6 @@
 		</div>
 	</div>
 	<!-- 회원 비밀번호 찾기 끝 -->
-
-
 	<!-- 새 비밀번호 입력 모달창 -->
 	<div class="modal fade" id="resetPasswordModal" tabindex="-1"
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -357,6 +340,10 @@
 			</div>
 		</div>
 	</div>
+	
+	
+	
+	<%@include file="/WEB-INF/views/footer.jsp"%>
 
 </body>
 </html>

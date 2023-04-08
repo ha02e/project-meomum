@@ -1,7 +1,7 @@
 package com.mm.controller;
 
 
-import java.util.HashMap;
+import java.util.HashMap;	
 
 import java.util.List;
 
@@ -11,16 +11,14 @@ import javax.servlet.http.HttpSession;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
+import com.mm.member.model.MailSendService;
 import com.mm.member.model.MemberDAO;
 import com.mm.member.model.MemberDTO;
 import com.mm.member.model.MemberListDTO;
@@ -29,6 +27,9 @@ import com.mm.member.model.MemberListDTO;
 public class MemberController {
 	@Autowired
 	private MemberDAO mdao;
+	@Autowired
+	private MailSendService mailService;
+	
 	
 	/*회원가입 페이지 이동*/
 	@RequestMapping(value="/memberJoin.do",method = RequestMethod.GET)
@@ -141,7 +142,12 @@ public class MemberController {
 	
 		
 		ModelAndView mav = new ModelAndView();
-		
+		if(session.getAttribute("ssInfo")==null) {
+			mav.addObject("msg", "잘못된 접근입니다.");
+			mav.addObject("gopage","location.href='index.do';");
+			mav.setViewName("mainMsg");
+			return mav;
+		}
 		if(!user_ok.equals("OK")) {
 			mav.addObject("msg", "잘못된 접근입니다.");
 			mav.addObject("gopage","location.href='index.do';");
@@ -369,6 +375,51 @@ public class MemberController {
     mav.setViewName("mmJson");
     return mav;
 	}
+	
+	
+	@RequestMapping("/userJoin")
+	public void userJoin() {
+		
+	}
+	
+	/**이메일 인증*/
+	@RequestMapping("/mailCheck.do")
+	@ResponseBody
+	public String mailCheck (@RequestParam("email")String email) {
+
+		return mailService.joinEmail(email);
+	}
+	
+	/**회원 탈퇴*/
+	
+	@RequestMapping(value = "/memberDrop.do",method = RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView memberDrop(@RequestParam("user_idx")int user_idx,@RequestParam("user_id")String user_id) {
+		
+		ModelAndView mav = new ModelAndView();
+		int serviceIng = mdao.dropSelectInfo(user_idx);
+		
+		mav.setViewName("mmJson");
+		
+		if(serviceIng!=0) {
+			System.out.println(serviceIng);
+			mav.addObject("msg", "현재 진행중인 서비스를 완료하고 탈퇴할 수 있습니다.");
+			return mav;
+		}else {
+			int result = mdao.deleteMember(user_idx, user_id);
+			
+			if(result>0) {
+				mav.addObject("msg","탈퇴되었습니다. 머뭄을 이용해주셔서 감사합니다.");
+				mav.addObject("drop", true);
+				
+			}else {
+				mav.addObject("msg","탈퇴에 실패하였습니다.");
+			}
+		}
+		return mav;
+		
+	}
+
 	
 }
 

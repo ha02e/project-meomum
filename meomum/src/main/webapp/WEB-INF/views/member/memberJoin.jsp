@@ -8,66 +8,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 <script type="text/javascript" src="/meomum/js/request.js"></script>
-
-<script>
-function allCheck() {
-	  var chkArr = document.getElementsByName("tos");
-	  var chkArr2 = document.getElementsByName("user_pia");
-	  var allChk = document.getElementsByName("allcheck")[0];
-
-	  if (allChk.checked) {
-	    for (var i = 0; i < chkArr.length; i++) {
-	      chkArr[i].checked = true;
-	    }
-	    for (var i = 0; i < chkArr2.length; i++) {
-	      chkArr2[i].checked = true;
-	    }
-	  } else {
-	    for (var i = 0; i < chkArr.length; i++) {
-	      chkArr[i].checked = false;
-	    }
-	    for (var i = 0; i < chkArr2.length; i++) {
-	      chkArr2[i].checked = false;
-	    }
-	  }
-	}
-	
-	
-function checkPasswordMatch() {
-	  var input_id = document.getElementById("user_id").value;
-	  var password = document.getElementById("user_pwd").value;
-	  var confirmPassword = document.getElementById("user_pwd_confirm").value;
-
-	  if (password != confirmPassword) {
-	    alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
-	    return false;
-	  }
-
-	  var xhr = new XMLHttpRequest();
-	  xhr.onreadystatechange = function () {
-	    if (xhr.readyState == XMLHttpRequest.DONE) {
-	      if (xhr.status == 200) {
-	        var result = JSON.parse(xhr.responseText).result;
-	        if (result) {
-	         
-	            document.getElementById("memberJoin").submit();
-	        } else {
-	          
-	          alert('이미 등록되어있는 아이디입니다.');
-	        }
-	      } else {
-	        alert('전송에 실패하였습니다.');
-	      }
-	    }
-	  };
-
-	  xhr.open("POST", "idCheck.do", true);
-	  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	  xhr.send("input_id=" + input_id);
-	  return false;
-	}
-</script>
 
 </head>
 <body>
@@ -82,11 +24,25 @@ function checkPasswordMatch() {
 						value="${param.user_jointype==null ? '머뭄': param.user_jointype}">
 					
 
-					<div class="form-group">
-						<label for="user_id">이메일</label> <input type="email"
-							class="form-control" id="user_id" name="user_id"
-							value="${param.user_id}" placeholder="이메일" required="required">
-					</div>
+					<div class="form-group email-form">
+    <label for="user_id" class="sr-only">이메일</label> 
+  <div class="input-group">
+    <input type="email" class="form-control" id="user_id" name="user_id" value="${param.user_id}" placeholder="이메일" required="required">
+    <div class="input-group-append">
+      <button type="button" class="btn btn-primary" onclick="emailcheck()" id="mail-Check-Btn">인증
+     </button>
+</div>
+      
+  </div>
+  <div class="input-group">
+    <input class="form-control mail-check-input" placeholder="인증번호 6자리를 입력해주세요!" disabled="disabled" maxlength="6" id="emailOkpwd">
+    <div class="input-group-append">
+      <button type="button" class="btn btn-secondary" disabled onclick="emailOkpwdCheck()">인증번호 확인</button>
+    </div>
+  </div>
+</div>
+
+
 					<div class="form-group">
 						<label for="user_pwd">비밀번호</label> <input type="password"
 							class="form-control" id="user_pwd" name="user_pwd"
@@ -148,8 +104,8 @@ function checkPasswordMatch() {
 			</div>
 		</div>
 	</div>
-
-
+	
+	
 	<!-- 이용약관 Modal -->
 	<div class="modal fade" id="exampleModal" tabindex="-1"
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -160,10 +116,10 @@ function checkPasswordMatch() {
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
 						aria-label="Close"></button>
 				</div>
-				<div class="modal-body">여러분을 환영합니다. JUN 서비스 및 제품(이하 ‘서비스’)을
-					이용해 주셔서 감사합니다. 본 약관은 다양한 JUN 서비스의 이용과 관련하여 JUN 서비스를 제공하는 JUN
-					주식회사(이하 ‘JUN’)와 이를 이용하는 JUN 서비스 회원(이하 ‘회원’) 또는 비회원과의 관계를 설명하며, 아울러
-					여러분의 JUN 서비스 이용에 도움이 될 수 있는 유익한 정보를 포함하고 있습니다. JUN 서비스를 이용하시거나 JUN
+				<div class="modal-body">여러분을 환영합니다.<br>머뭄 서비스 및 제품(이하 ‘머뭄’)을
+					이용해 주셔서 감사합니다. 본 약관은 다양한 머뭄의 이용과 관련하여 머뭄 서비스를 제공하는 머뭄
+					주식회사(이하 ‘머뭄’)와 이를 이용하는 머뭄 서비스 회원(이하 ‘회원’) 또는 비회원과의 관계를 설명하며, 아울러
+					여러분의 머뭄 서비스 이용에 도움이 될 수 있는 유익한 정보를 포함하고 있습니다. 머뭄 서비스를 이용하시거나 머뭄
 					서비스 회원으로 가입하실 경우 여러분은 본 약관 및 관련 운영 정책을 확인하거나 동의하게 되므로, 잠시 시간을 내시어
 					주의 깊게 살펴봐 주시기 바랍니다.</div>
 				<div class="modal-footer">
@@ -176,26 +132,8 @@ function checkPasswordMatch() {
 	</div>
 
 
-	<!-- 확인용 스크립트 -->
-	<script>
-    window.addEventListener('load', () => {
-      const forms = document.getElementsByClassName('validation-form');
-
-      Array.prototype.filter.call(forms, (form) => {
-        form.addEventListener('submit', function (event) {
-          if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-          }
-
-          form.classList.add('was-validated');
-        }, false);
-      });
-    }, false);
-  </script>
-
-
 	<%@include file="/WEB-INF/views/footer.jsp"%>
+	
 </body>
 <!-- 우편번호 검색용 -->
 <script
@@ -213,4 +151,156 @@ function checkPasswordMatch() {
     	}).open();
     }
 </script>
+
+<script>
+
+window.onload = function() {
+	  var user_id = document.querySelector('#user_id').value;
+
+	  if (user_id != null&&!(user_id==="")) {
+	    document.querySelector('.mail-check-input').value = '인증 완료';
+	    document.querySelector('.mail-check-input').disabled = true;
+	    document.querySelector('.btn-secondary').disabled =  true;
+	    document.querySelector('#mail-Check-Btn').disabled = true;
+	    document.querySelector('#user_id').readOnly = true;
+	  }
+	}
+
+
+
+function allCheck() {
+	  var chkArr = document.getElementsByName("tos");
+	  var chkArr2 = document.getElementsByName("user_pia");
+	  var allChk = document.getElementsByName("allcheck")[0];
+
+	  if (allChk.checked) {
+	    for (var i = 0; i < chkArr.length; i++) {
+	      chkArr[i].checked = true;
+	    }
+	    for (var i = 0; i < chkArr2.length; i++) {
+	      chkArr2[i].checked = true;
+	    }
+	  } else {
+	    for (var i = 0; i < chkArr.length; i++) {
+	      chkArr[i].checked = false;
+	    }
+	    for (var i = 0; i < chkArr2.length; i++) {
+	      chkArr2[i].checked = false;
+	    }
+	  }
+	}
+	
+function checkPasswordMatch() {
+	  var input_id = document.getElementById("user_id").value;
+	  var password = document.getElementById("user_pwd").value;
+	  var confirmPassword = document.getElementById("user_pwd_confirm").value;
+
+	  if (password != confirmPassword) {
+	    alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+	    return false;
+	  }
+
+	  // 이메일 인증 체크
+	  if (document.querySelector('.mail-check-input').value !== '인증 완료') {
+	    alert('이메일 인증이 완료되지 않았습니다.');
+	    return false;
+	  }
+
+	  document.getElementById("memberJoin").submit();
+	  return false;
+	}
+	
+function validateEmail(email) {
+    var re = /\S+@\S+\.\S+/;
+    return re.test(email);
+}
+
+
+var email;
+var code;
+var spinner;
+
+function emailcheck() {
+    
+    email = document.getElementById("user_id").value;
+    
+    if (!validateEmail(email)) {
+        alert('올바른 이메일 형식이 아닙니다.');
+        return;
+    }
+    
+    var idCheckParam = 'input_id=' + email;
+    
+    // id 중복 체크 요청
+    sendRequest('idCheck.do', idCheckParam, 'POST', idcheckResult);
+    
+}
+
+function idcheckResult() {
+
+    if (XHR.readyState == 4) {
+
+        if (XHR.status == 200) {
+            var mailCheckParam = 'email=' + email;
+            var data = XHR.responseText;
+            var result = JSON.parse(data).result;
+
+            if (result) {
+            	
+            	
+                sendRequest('mailCheck.do', mailCheckParam, 'GET', mailCheckResult);
+                
+                document.getElementById("mail-Check-Btn").innerHTML = "인증 중...";
+                document.getElementById("mail-Check-Btn").disabled = true;
+            } else {
+                alert('이미 등록되어있는 아이디 입니다.\n다른 이메일을 입력해주세요.');
+            }
+        } else {
+            alert('중복 확인에 실패하였습니다.');
+        }
+        
+    }
+
+
+
+}
+
+function mailCheckResult() {
+
+    if (XHR.readyState == 4) {
+        if (XHR.status == 200) {
+            var data = XHR.responseText;
+            code = JSON.parse(data);
+            document.querySelector('.mail-check-input').disabled = false;
+            document.querySelector('.btn-secondary').disabled = false;
+            alert(email + '로 인증번호가 발송되었습니다.');
+            document.getElementById("mail-Check-Btn").innerHTML = "인증";
+            document.getElementById("mail-Check-Btn").disabled = false;
+        } else {
+            alert('인증번호 전송에 실패하였습니다.');
+            document.getElementById("mail-Check-Btn").innerHTML = "인증";
+            document.getElementById("mail-Check-Btn").disabled = false;
+        }
+    }
+}
+
+
+function emailOkpwdCheck(){
+	
+var input_emailOkpwd = document.getElementById("emailOkpwd").value;
+
+    if (input_emailOkpwd == code) {
+    	
+       alert('인증되었습니다.');
+       document.querySelector('.mail-check-input').value = '인증 완료';
+       document.querySelector('.mail-check-input').disabled = true;
+       document.querySelector('.btn-secondary').disabled =  true;
+       document.querySelector('#mail-Check-Btn').disabled = true;
+       document.querySelector('#user_id').readOnly = true;
+    } else {
+    	  alert('인증번호가 일치하지 않습니다.');
+    }
+}
+</script>
+
 </html>
