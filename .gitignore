@@ -1,5 +1,4 @@
 #기본적인 metadata, 세팅파일, 서버, 클래스, 백업, 프로젝트, 로그 파일 제외
-.metadata
 .settings
 Servers
 *.bak

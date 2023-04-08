@@ -81,38 +81,6 @@ public class SvcController {
 	}
 	
 	
-	/**관리자-예약 상세 보기*/
-	@RequestMapping("/asvcContent.do")
-	public ModelAndView asvcInfo(@RequestParam("svc_idx")String idx) {
-		SvcContentDTO dto = svcDao.svcContent(idx);
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("dto",dto);
-		mav.setViewName("svc/a_svcContent");
-		return mav;
-	}
-	
-	/**관리자-서비스 견적 추가 팝업창*/
-	@RequestMapping("/asvcIngPopup.do")
-	public String asvcIngPopup() {
-		return "svc/a_svcIngPopup";
-	}
-
-	/**관리자-서비스 견적 추가*/
-	@RequestMapping("/svcIngInsert.do")
-	public ModelAndView svcIngInsert(SvcIngDTO dto) {
-		int result = svcDao.svcIngInsert(dto);
-		String msg = result>0? "정보가 추가되었습니다":"다시 시도해주세요";
-		String link = result>0? "asvcContent.do":"asvcIngPopup.do";
-		
-		ModelAndView mav = new ModelAndView();
-		
-		mav.addObject("msg",msg);
-		mav.addObject("link",link);
-		mav.setViewName("/msg");
-
-		return mav;
-	}
-	
 	/**관리자-예약 세부 검색*/
 	@RequestMapping("/svcSearch.do")
 	@ResponseBody
@@ -134,9 +102,53 @@ public class SvcController {
 		mav.setViewName("mmJson");
 		return mav;
 	}
+	
+	/**관리자-예약 상세 보기*/
+	@RequestMapping("/asvcContent.do")
+	public ModelAndView asvcInfo(@RequestParam("svc_idx")String idx) {
+		SvcContentDTO dto = svcDao.svcContent(idx);
+		SvcIngDTO ingDto = svcDao.svcIngContent(idx);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("dto",dto);
+		mav.addObject("ingdto", ingDto);
+		mav.setViewName("svc/a_svcContent");
+		return mav;
+	}
+	
+
+	/**관리자-서비스 견적 추가 팝업창으로 이동*/
+	@RequestMapping("/asvcIngPopup.do")
+	public String asvcIngPopup() {
+		return "svc/a_svcIngPopup";
+	}
+
+	/**관리자-서비스 견적 추가*/
+	@RequestMapping("/svcIngInsert.do")
+	public ModelAndView svcIngInsert(SvcIngDTO dto) {
+		int result = svcDao.svcIngInsert(dto);
+		String link = result>0? "asvcContent.do?svc_idx="+dto.getSvc_idx():"asvcIngPopup.do";
+		
+		ModelAndView mav = new ModelAndView();
+		
+		mav.addObject("link",link);
+		mav.setViewName("svc/a_svcIngPopup");
+
+		return mav;
+	}
+	
+	/**관리자-서비스 견적 상세 보기*/
+	@RequestMapping("asvcIngContent.do")
+	public ModelAndView svcIngContent(@RequestParam("svc_idx")String idx) {
+		SvcIngDTO ingDto = svcDao.svcIngContent(idx);
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("ingdto", ingDto);
+		mav.setViewName("svc/a_svcIngContent");
+		return mav;
+	}
 
 
-	/**관리자 페이지-예약 수정*/
+	/**관리자 페이지-방문 견적 수정*/
 	@RequestMapping("/asvcUpdate.do")
 	public ModelAndView asvcUpdate(SvcMemDTO memDto,SvcDetailDTO detailDto, SvcDateDTO dateDto) {
 		int memUpdate = svcDao.svcMemUpdate(memDto);
@@ -155,6 +167,24 @@ public class SvcController {
 		
 		return mav;
 	}
+	
+	/**관리자-서비스 신청 수정*/
+	@RequestMapping("/asvcIngUpdate.do")
+	public ModelAndView asvcIngUpdate(SvcIngDTO dto) {
+		int result = svcDao.svcIngUpdate(dto);
+		
+		String msg = result>0?"정보가 수정되었습니다":"다시 시도해주세요";
+		String link = result>0? "asvcContent.do?svc_idx="+dto.getSvc_idx():"asvcIngPopup.do";
+		
+		ModelAndView mav = new ModelAndView();
+		
+		mav.addObject("msg", msg);
+		mav.addObject("link",link);
+		mav.setViewName("svc/a_svcIngContent");
+		return mav;
+	}
+
+	/**관리자-서비스 신청 삭제*/
 
 	/**마이페이지-방문 견적 내역*/
 	@RequestMapping("/svcList.do")
@@ -198,7 +228,6 @@ public class SvcController {
 		int detailUpdate = svcDao.svcDetailUpdate(detailDto);
 		int dateUpdate = svcDao.svcDateUpdate(dateDto);
 		
-		
 		int result = memUpdate+detailUpdate+dateUpdate;
 		
 		String msg = result>0?"방문견적 예약이 수정되었습니다":"다시 시도해주세요";
@@ -214,7 +243,6 @@ public class SvcController {
 	}
 	
 
-	
 	/**사용자-방문견적 예약 취소*/
 	@RequestMapping("/svcDelete.do")
 	public ModelAndView svcDelete(@RequestParam("svc_idx")String svc_idx) {
