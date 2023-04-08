@@ -12,7 +12,7 @@
 /.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/meomum/*
 !/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/meomum/images/
 
-
+/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/meomum/resources/ckimage/*
 
 
 #기본적인 metadata, 세팅파일, 서버, 클래스, 백업, 프로젝트, 로그 파일 제외
