@@ -30,7 +30,7 @@ public class OrderDAOImple implements OrderDAO {
 	}
 
 	@Override
-	public List<OrderDTO> myOrderList(Integer idx) {
+	public List<OrderDTO> myOrderList(int idx) {
 		List<OrderDTO> list = sqlMap.selectList("myOrderList", idx);
 		return list;
 	}
@@ -47,4 +47,11 @@ public class OrderDAOImple implements OrderDAO {
 		count = count == 0 ? 1 : count;
 		return count;
 	}
+	
+	@Override
+	public OrderReportDTO orderData(int order_idx) {
+		OrderReportDTO odto=sqlMap.selectOne("orderData", order_idx);
+		return odto;
+	}
+	
 }

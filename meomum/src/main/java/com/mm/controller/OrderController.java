@@ -7,9 +7,11 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mm.order.model.OrderDAO;
@@ -45,7 +47,7 @@ public class OrderController {
 	}
 
 	@RequestMapping("/myOrderList.do")
-	public ModelAndView myOrderList(@RequestParam("user_idx") Integer idx) {
+	public ModelAndView myOrderList(@RequestParam("user_idx")int idx) {
 		List<OrderDTO> list = orderDao.myOrderList(idx);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("list", list);
@@ -81,4 +83,13 @@ public class OrderController {
 		return mav;
 	}
 
+	
+	 @GetMapping("/orderData")
+	 @ResponseBody
+	 public OrderReportDTO getOrderData(@RequestParam("order_idx")int order_idx) {
+		 System.out.println("요청이 도착했습니다.");
+		 	OrderReportDTO orderData = orderDao.orderData(order_idx);
+		    return orderData;
+	 }
+	
 }
