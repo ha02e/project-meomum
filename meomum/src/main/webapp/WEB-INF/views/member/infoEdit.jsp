@@ -25,6 +25,10 @@
 	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" src="/meomum/js/request.js"></script>
 <!--  -->
+
+
+
+
 <style>
 /*헤더 이미지용 url에 이미지 추가하면 됩니다.*/
 .page-header {
@@ -45,16 +49,11 @@
 	color: #fff;
 	text-align: center;
 }
-
-.page-title {
-	color: #fff;
-	font-size: 40px;
-	font-weight: 400;
-	letter-spacing: -1px;
-}
-
 /**헤더 이미지용 끝*/
 </style>
+
+
+
 </head>
 <body>
 	<%@include file="/WEB-INF/views/header.jsp"%>
@@ -72,7 +71,7 @@
 	</div>
 	<!-- 헤더 이미지 끝 -->
 
-	<section class="shop spad">
+
 		<div class="container">
 			<div class="row">
 				<%@include file="../myMenu.jsp"%>
@@ -80,8 +79,8 @@
 					<div class="row justify-content-center">
 						<div class="card">
 							<div class="card-body">
-								<h4 class="card-title mb-4 text-center">나의 정보 수정</h4>
 
+								<h4 class="card-title mb-4 text-center">나의 정보 수정</h4>
 
 								<form name="userInfo_Update" action="infoEditOK.do" method="post">
 									<input type="hidden" name="user_idx"
@@ -121,25 +120,6 @@
 									<div class="form-group">
 										<label for="user_tel">연락처</label>
 										<div class="input-group">
-											<!--  
-				        <select class="form-control" id="tel_first" name="tel_first">
-				            <option value="010">010</option>
-				            <option value="011">011</option>
-				            <option value="016">016</option>
-				            <option value="017">017</option>
-				            <option value="018">018</option>
-				            <option value="019">019</option>
-				        </select>
-				        <div class="input-group-prepend">
-				            <span class="input-group-text"><i class="fas fa-minus"></i></span>
-				        </div>
-				        <input type="tel" class="form-control" id="user_tel2" name="user_tel2" placeholder="중간 번호">
-				        <div class="input-group-prepend">
-				            <span class="input-group-text"><i class="fas fa-minus"></i></span>
-				        </div>
-				        <input type="tel" class="form-control" id="user_tel3" name="user_tel3" placeholder="끝 번호">
-				    </div>
-				</div>-->
 										</div>
 										<input type="tel" class="form-control" name="user_tel"
 											placeholder="-제외하고 입력" value="${info.user_tel}" required="required">
@@ -156,13 +136,23 @@
 								</form>
 							</div>
 							<!-- 본문 작성 끝 -->
+							
+							
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</section>
 
+	<%@include file="/WEB-INF/views/footer.jsp"%>
+
+
+
+
+
+
+
+<!-- ----------------------------------------------------------------------------------------- -->
 
 	<!-- 비밀번호 변경 모달 -->
 	<div class="modal fade" id="pwdChange" tabindex="-1"
@@ -200,8 +190,7 @@
 	</div>
 
 	<!-- 비밀번호 변경 모달끝  -->
-	
-	<%@include file="../footer.jsp"%>
+
 	
 	
 	<script>

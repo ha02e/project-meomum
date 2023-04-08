@@ -36,8 +36,8 @@ public class OrderDAOImple implements OrderDAO {
 	}
 
 	@Override
-	public List<OrderDTO> orderReport(Map map) {
-		List<OrderDTO> lists = sqlMap.selectList("orderReport", map);
+	public List<OrderReportDTO> orderReport(Map map) {
+		List<OrderReportDTO> lists = sqlMap.selectList("orderReport", map);
 		return lists;
 	}
 

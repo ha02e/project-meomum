@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
@@ -8,72 +9,85 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
-<link href="/docs/5.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
  
-<!-- App CSS -->  
-<link id="theme-style" rel="stylesheet" href="assets/css/portal_a.css"> <!-- 관리자헤더 css -->
-<link href="assets/css/jquery.orderReport.min.css" rel="stylesheet"> <!-- 관리자주문배송내역 css -->
+<!-- 관리자 헤더 CSS -->  
+<link id="theme-style" rel="stylesheet" href="assets/css/portal_a.css">
 <link rel="stylesheet" type="text/css" href="css/mainLayout_a.css">
 
+<!-- 데이터테이블 css&js -->
+<link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" type="text/css">
+<script src="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+	  var table = document.getElementById("order-table");
+	  if (table) {
+	    $(table).DataTable({
+	    	lengthChange: false,
+	    	info: false,
+	    	paging: false,
+	    	order: [ [ 0, "desc" ] ],
+	    	responsive: true,
+	    	searching: false
+	    });
+	  }
+});
+</script>
+
 <style>
-
-/** 정렬 화살표 관련 */
-table.dataTable thead .sorting {
-    background-image: url(images/icon/sort_both.png);
+.datatable-input{
+	margin:0 4px 0 10px;
+	width:250px;
+	height:40px;
 }
-table.dataTable thead .sorting_asc {
-    background-image: url(images/icon/sort_asc.png);
+.datatable-selector{
+	height:40px;
 }
-
-table.dataTable thead .sorting_desc {
-    background-image: url("images/icon/sort_desc.png")
-}
-
-table.dataTable thead .sorting_asc_disabled {
-    background-image: url("images/icon/sort_asc_disabled.png")
-}
-
-table.dataTable thead .sorting_desc_disabled {
-    background-image: url("images/icon/sort_desc_disabled.png")
+.button{
+	border-radius:2px;
+	height:40px;
 }
 
 
-/** 페이징 관련 */
-.dataTables_wrapper .dataTables_paginate .paginate_button.current {
-  border-radius: 50%;
-  color: #593bdb !important;
-  background: rgba(89, 59, 219, 0.1);
-  border: 0 !important; }
+.datatable-table{
+	margin:20px 0 10px 0;
+}
+.datatable-table > tbody > tr > th{
+	padding:1rem 0;
+}
+.datatable-table > tbody > tr > td{
+	font-size: .875rem;
+	padding:1rem 0;
+}
+thead th a{
+	text-align: center;
+	cursor: pointer;
+}
+.order-num{
+	color: #0055FF;
+}
+.state div{
+	padding: 0.2rem 0;
+	width:40%;
+	text-align: center;
+}
+.modal{
+	width:100%;
+}
+.btn-sm{
+	padding: 0.2rem 0.8rem;
+}
 
-.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-  border-radius: 50%;
-  color: #593bdb !important;
-  background: rgba(89, 59, 219, 0.1);
-  border: 0; }
-
-.dataTables_wrapper .dataTables_paginate .paginate_button {
-  border: 0; }
-
-.dataTables_wrapper .dataTables_paginate .paginate_button.previous:hover {
-  background: transparent; }
-
-.dataTables_wrapper .dataTables_paginate .paginate_button.next:hover {
-  background: transparent; }
-
-
-/** 검색 관련 */
-.dataTables_wrapper input[type="search"], .dataTables_wrapper input[type="text"], .dataTables_wrapper select {
-  border: 1px solid #e2e2e2;
-  padding: .3rem 0.5rem;
-  color: #715d5d;
-  border-radius: 5px; }
-  [data-theme-version="dark"] .dataTables_wrapper input[type="search"], [data-theme-version="dark"] .dataTables_wrapper input[type="text"], [data-theme-version="dark"] .dataTables_wrapper select {
-    background: #2A2C32;
-    border-color: #424D63;
-    color: #fff; }
-    
+.paging{
+	margin:20px;
+}
 </style>
 
+<script>
+function trackingOpen(){
+	window.open('http://info.sweettracker.co.kr/tracking/4','tracking','width=400px,height=600px');
+}
+</script>
 </head>
 
 <body class="app"> 
@@ -86,109 +100,183 @@ table.dataTable thead .sorting_desc_disabled {
 		<div class="container-xl">
 			<h2 class="title">주문/배송 내역</h2>
 			<div class="card">
-				<div class="card-body">
-					<div class="table-responsive">
-						<div id="example_wrapper" class="dataTables_wrapper">
-						
-						<table id="example" class="display dataTable" style="min-width: 845px" role="grid" aria-describedby="example_info">
-							<thead>
-								<tr role="row" class="text-center">
-									<th class="sorting_desc" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-sort="descending" aria-label="Name: activate to sort column descending">주문번호</th>
-									<th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending">구독상품</th>
-									<th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending">주문자</th>
-									<th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending">연락처</th>
-									<th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending">총주문액</th>
-									<th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending">상태</th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:if test="${empty lists}">
-									<tr>
-										<td colspan="6" class="text-center">
-											주문/배송 내역이 없습니다.
-										</td>
-									</tr>
-								</c:if>
-								<c:forEach var="dto" items="${lists}">
-									<tr class="odd text-center" role="row">
-										<td class="sorting_1">${dto.order_idx}</td>
-										<td>상품이름 불러올 예정</td>
-										<td>회원번호${dto.user_idx}로 불러올 예정</td>
-										<td>회원번호${dto.user_idx}로 불러올 예정</td>
-										<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${dto.amount}" />원</td>
-										<td>
+			<div class="card-body">
+			
+				<div class="datatable-container">
+				<div class="datatable-top d-flex justify-content-center align-items-center">
+					<div class="datatable-dropdown">
+			        	<select class="datatable-selector">
+				        	<option value="a" selected="">전체</option>
+				        	<option value="b">주문번호</option>
+				        	<option value="c">구독상품</option>
+				        	<option value="d">주문자</option>
+			      		</select>
+			        </div>
+					<div class="datatable-search">
+			            <input class="datatable-input" placeholder="검색어를 입력해주세요..." type="search">
+			            <button type="submit" class="btn app-btn-secondary button">검색</button>
+			        </div>
+			    </div>  
+				<table class="datatable-table" id="order-table">
+				<thead>
+					<tr>
+						<th data-sortable="true"style="width:14%;" aria-sort="descending" class="datatable-descending" >
+							<a href="#" class="datatable-sorter">주문번호</a>
+						</th>
+						<th data-sortable="true" style="width:22%;">
+							<a href="#" class="datatable-sorter">구독상품</a>
+						</th>
+						<th data-sortable="true" style="width:10%">
+							<a href="#" class="datatable-sorter">주문자</a></th>
+						<th data-sortable="true" style="width:16%">
+							<a href="#" class="datatable-sorter">주문자 연락처</a>
+						</th>
+						<th data-sortable="true" style="width:10%">
+							<a href="#" class="datatable-sorter">주문날짜</a>
+						</th>
+						<th data-sortable="true" style="width:12%">
+							<a href="#" class="datatable-sorter">총주문액</a>
+						</th>
+						<th data-filterable="true" style="width: 16%;">
+							<a href="#" class="datatable-filter">상태</a>
+						</th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					<c:if test="${empty lists}">
+						<tr>
+							<td colspan="6" class="text-center">
+								주문/배송 내역이 없습니다.
+							</td>
+						</tr>
+					</c:if>
+					
+					<c:forEach var="dto" items="${lists}" varStatus="status">
+									<tr data-index="${status.count}">
+										<td class="sorting_${status.count} order-num text-center">${dto.order_idx}</td>
+										<td>${dto.pro_name}</td>
+										<td class="text-center">${dto.user_name}</td>
+										<td class="text-center">${dto.user_tel}</td>
+										<td class="text-center">${dto.order_date}</td>
+										<td class="text-center"><fmt:formatNumber type="number" maxFractionDigits="3" value="${dto.amount}" />원</td>
+										<td class="state d-flex justify-content-around">
 											<c:choose>
 												<c:when test="${dto.order_status eq 1}">
-													<span>상품준비중</span>
-													<button class="btn btn-sm btn-outline-success"><i class="bi bi-x-circle"></i>&nbsp;배송처리</button>
+													<div class="text-warning">상품준비중</div>
+													<button type="button" class="btn-sm app-btn-secondary" data-bs-toggle="modal" data-bs-target="#shippingModal" data-bs-whatever="@mdo">배송처리</button>
 												</c:when>
 												<c:when test="${dto.order_status eq 2}">
-													<span>배송중</span>
-													<button class="btn btn-sm btn-outline-success"><i class="bi bi-x-circle"></i>&nbsp;배송조회</button>
+													<div class="text-success">배송중</div>
+													<a class="btn-sm app-btn-secondary" href="#">배송조회</a>
 												</c:when>
 												<c:when test="${dto.order_status eq 3}">
-													<span>주문취소</span>
+													<div class="text-danger">주문취소</div>
 												</c:when>
 												<c:when test="${dto.order_status eq 4}">
-													<span>배송완료</span>
-													<button class="btn btn-sm btn-outline-success"><i class="bi bi-x-circle"></i>&nbsp;배송조회</button>
+													<div>배송완료</div>
+													<button class="btn-sm app-btn-secondary" onclick="trackingOpen()">배송조회</button>
 												</c:when>
 												<c:when test="${dto.order_status eq 5}">
-													<span>반납신청</span>
-													<button class="btn btn-sm btn-outline-success"><i class="bi bi-x-circle"></i>&nbsp;반납처리</button>
+													<div class="text-danger">반납신청</div>
+													<a class="btn-sm app-btn-danger" href="#">반납처리</a>
 												</c:when>
-												<c:when test="${dto.order_status eq 5}">반납진행</c:when>
-												<c:when test="${dto.order_status eq 5}">반납완료</c:when>
+												<c:when test="${dto.order_status eq 6}">반납진행</c:when>
+												<c:when test="${dto.order_status eq 7}">반납완료</c:when>
 											</c:choose>
 										</td>
 									</tr>
-								</c:forEach>
-							</tbody>
+									
+									
+									<div class="modal fade" id="shippingModal" tabindex="-1" aria-labelledby="shippingModalLabel" aria-hidden="true">
+													  <div class="modal-dialog">
+													    <div class="modal-content">
+													      <div class="modal-header">
+													        <h1 class="modal-title fs-5" id="shippingModalLabel">배송처리</h1>
+													        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+													      </div>
+													      <form action="shipping.do" name="shipping" method="post">
+													      <div class="modal-body">
+													          <div class="mb-3">
+													            <label for="recipient-name" class="col-form-label">택배사</label>
+													            <select class="custom-select form-control" id="shipInfo" disabled>
+																	<option selected="">CJ대한통운</option>
+																</select>
+													          </div>
+													          <div class="mb-3">
+													            <label for="message-text" class="col-form-label">운송장번호</label>
+													            <input type="text" class="form-control" id="shipNum">
+													          </div>
+													          <div class="mb-3">
+													            <label for="message-text" class="col-form-label">수취인</label>
+													            <input type="text" class="form-control" id="receiver">
+													          </div>
+													          <div class="mb-3">
+													            <label for="message-text" class="col-form-label">수취인 연락처</label>
+													            <input type="text" class="form-control" id="receiverTel">
+													          </div>
+													          <div class="mb-3">
+													            <label for="message-text" class="col-form-label">배송지</label>
+													            <input type="text" class="form-control" id="receiver">
+													          </div>
+													      </div>
+													      <div class="modal-footer">
+													        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+													        <button type="submit" class="btn btn-primary">배송처리</button>
+													      </div>
+													      </form>
+													    </div>
+													  </div>
+													</div>												
+													<script>
+													const exampleModal = document.getElementById('exampleModal')
+													exampleModal.addEventListener('show.bs.modal', event => {
+													  // Button that triggered the modal
+													  const button = event.relatedTarget
+													  // Extract info from data-bs-* attributes
+													  const recipient = button.getAttribute('data-bs-whatever')
+													  // If necessary, you could initiate an AJAX request here
+													  // and then do the updating in a callback.
+													  //
+													  // Update the modal's content.
+													  const modalTitle = exampleModal.querySelector('.modal-title')
+													  const modalBodyInput = exampleModal.querySelector('.modal-body input')
+
+													  modalTitle.textContent = `New message to ${recipient}`
+													  modalBodyInput.value = recipient
+													})
+													</script>
+					</c:forEach>
+						
+				</tbody>
+						
+			</table>
+			</div>
+				
+				</div>
+				</div>
+				
+				
 							
-							<tfoot>
-								<tr>
-									<th colspan="6" class="text-center">
-										<nav aria-label="Page navigation example">
-											<ul class="pagination pagination-sm justify-content-center">
-												${pageStr}
-											</ul>
-										</nav>
-									</th>
-
-								</tr>
-							</tfoot>
-                                    </table>
-                                    <!--
-                                    <div class="dataTables_info" id="example_info" role="status" aria-live="polite"></div>
-                                    
-                                    <div class="dataTables_paginate paging_simple_numbers" id="example_paginate">
-                                    	<nav aria-label="Page navigation example">
-											<ul class="pagination pagination-sm justify-content-center">
-												${pageStr}
-											</ul>
-										</nav>
-                                    </div>  -->
-                                    
-                                </div>
-                            </div>
-                        </div>
-
+			</div>
+			
+			
+			<div class="container-xl paging">
+					<nav aria-label="Page navigation example">
+						<ul class="pagination pagination-sm justify-content-center">
+						${pageStr}
+						</ul>
+				</nav>
 
 			</div>
+		
 		</div>
-	</div>
 
 <%@include file="../footer_a.jsp"%>    
 </div><!--//app-wrapper-->    					
 
 <!-- Javascript -->          
-<script src="assets/js/orderReport-global.min.js"></script>  <!-- 정렬 관련 js -->
-<script src="assets/js/jquery.orderReport.min.js"></script>
-<script src="assets/js/orderReport.init.js"></script>
-
-<!-- Page Specific JS -->
-<!-- <script src="assets/js/app.js"></script> --> 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
