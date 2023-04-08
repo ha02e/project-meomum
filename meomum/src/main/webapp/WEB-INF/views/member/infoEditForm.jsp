@@ -33,7 +33,7 @@
 .page-header {
 	background: linear-gradient(rgba(36, 39, 38, 0.5), rgba(36, 39, 38, 0.5)),
 		rgba(36, 39, 38, 0.5)
-		url(https://cdn.aitimes.com/news/photo/202210/147215_155199_1614.jpg)
+		url(https://cdn.pixabay.com/photo/2016/06/24/10/47/house-1477041_960_720.jpg)
 		no-repeat center;
 	background-size: cover;
 	margin: 0;
@@ -47,13 +47,6 @@
 	z-index: 1;
 	color: #fff;
 	text-align: center;
-}
-
-.page-title {
-	color: #fff;
-	font-size: 40px;
-	font-weight: 400;
-	letter-spacing: -1px;
 }
 
 /**헤더 이미지용 끝*/
@@ -74,16 +67,16 @@
 		</div>
 	</div>
 	<!-- 헤더 이미지 끝 -->
-
-	<section class="shop spad">
 		<div class="container">
 			<div class="row justify-content-center">
 				<%@include file="../myMenu.jsp"%>
+				
 				<div class="col-xl-9 col-md-9">
+					<br><br>
+								<h4 class="card-title mb-4 text-center">나의 정보 수정</h4>
 					<div class="row justify-content-center">
 						<div class="card text-center">
 							<div class="card-body">
-								<h4 class="card-title mb-4 text-center">나의 정보 수정</h4>
 								<form class="form-inline justify-content-center" method="POST" action="infoEdit.do" id="myForm">
 									<div class="form-group mr-3">
 								
@@ -101,19 +94,19 @@
 				</div>
 			</div>
 		</div>
-	</section>
+		<%@include file="/WEB-INF/views/footer.jsp"%>
 	
 <script type="text/javascript">
 function pwdCheck(){
 	var input_pwd = encodeURIComponent(document.getElementById('input_pwd').value);
 	var user_pwd =  encodeURIComponent("${sessionScope.ssInfo.user_pwd}");
 
-	if(input_pwd===user_pwd){	
-		console.log(input_pwd + "===" + user_pwd);
-	    document.getElementById('myForm').submit(); // 폼을 전송합니다.
-	}else{
-		alert('비밀번호가 일치하지 않습니다.');
-	}
+	if(input_pwd == user_pwd){   
+		   console.log(input_pwd + "===" + user_pwd);
+		   document.getElementById('myForm').submit(); // 폼을 전송합니다.
+		}else{
+		   alert('비밀번호가 일치하지 않습니다.');
+		}
 	
 }
 

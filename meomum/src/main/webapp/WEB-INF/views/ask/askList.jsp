@@ -29,13 +29,6 @@
 	text-align: center;
 }
 
-.page-title {
-	color: #fff;
-	font-size: 40px;
-	font-weight: 400;
-	letter-spacing: -1px;
-}
-
 /**헤더 이미지용 끝*/
 </style>
 <script type="text/javascript">
