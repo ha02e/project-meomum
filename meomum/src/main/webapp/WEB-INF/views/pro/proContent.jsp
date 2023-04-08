@@ -76,31 +76,31 @@
 							<div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
 
 							<div class="slick3 gallery-lb">
-								<div class="item-slick3" data-thumb="/meomum/items/${lists[0].pro_thumb}">
+								<div class="item-slick3" data-thumb="/meomum/images/items/${lists[0].pro_thumb}">
 									<div class="wrap-pic-w pos-relative">
-										<img src="/meomum/items/${lists[0].pro_thumb}" alt="IMG-PRODUCT">
+										<img src="/meomum/images/items/${lists[0].pro_thumb}" alt="IMG-PRODUCT">
 
-										<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="/meomum/items/${lists[0].pro_thumb}">
+										<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="/meomum/images/items/${lists[0].pro_thumb}">
 											<i class="fa fa-expand"></i>
 										</a>
 									</div>
 								</div>
 
-								<div class="item-slick3" data-thumb="/meomum/items/${lists[0].pro_img1}">
+								<div class="item-slick3" data-thumb="/meomum/images/items/${lists[0].pro_img1}">
 									<div class="wrap-pic-w pos-relative">
-										<img src="/meomum/items/${lists[0].pro_img1}" alt="IMG-PRODUCT">
+										<img src="/meomum/images/items/${lists[0].pro_img1}" alt="IMG-PRODUCT">
 
-										<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="/meomum/items/${lists[0].pro_img1}">
+										<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="/meomum/images/items/${lists[0].pro_img1}">
 											<i class="fa fa-expand"></i>
 										</a>
 									</div>
 								</div>
 
-								<div class="item-slick3" data-thumb="/meomum/items/${lists[0].pro_img2}">
+								<div class="item-slick3" data-thumb="/meomum/images/items/${lists[0].pro_img2}">
 									<div class="wrap-pic-w pos-relative">
-										<img src="/meomum/items/${lists[0].pro_img2}" alt="IMG-PRODUCT">
+										<img src="/meomum/images/items/${lists[0].pro_img2}" alt="IMG-PRODUCT">
 
-										<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="/meomum/items/${lists[0].pro_img2}">
+										<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="/meomum/images/items/${lists[0].pro_img2}">
 											<i class="fa fa-expand"></i>
 										</a>
 									</div>
@@ -219,7 +219,7 @@
 			<div class="tab-pane fade show active" id="description" role="tabpanel">
 				<div class="how-pos2 p-lr-15-md text-center">
 					<p>
-					<img class="stext-102 cl6" src="/meomum/items/${lists[0].pro_content}" alt="AVATAR">
+					<img class="stext-102 cl6" src="/meomum/images/items/${lists[0].pro_content}" alt="AVATAR">
 					</p>
 				</div>
 			</div>

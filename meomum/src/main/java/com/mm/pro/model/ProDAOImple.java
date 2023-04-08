@@ -100,12 +100,13 @@ private SqlSessionTemplate sqlMap;
 		}
 	
 	
+	//파일 이름 찾기
 	@Override
-		public boolean proFindFile(String filename) {
+		public String proFindFile(Integer idx) {
 		
-		int result =  sqlMap.selectOne("proFindFile", filename);
+		String result =  sqlMap.selectOne("proFindFile", idx);
 		 
-		return result>0?true:false;
+		return result;
 		}
 	
 	

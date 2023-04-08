@@ -11,7 +11,7 @@ import java.util.*;
 	public List<ProDTO> proFind2(String proF);
 	public List<ProDTO> proUpdateList(int pro_idx);
 	public int proUpdate(ProDTO dto);
-	public boolean proFindFile(String filename);
+	public String proFindFile(Integer idx);
 	
 	public ProDTO proSelect(int pro_idx);
 	public int proAmountUpdate(ProDTO dto);

@@ -97,7 +97,7 @@ function sortUsers(orderby) {
 						</c:if>
 						<c:forEach var="list" items="${lists}">
 							<tr>
-								<td><img alt="thumbnail" src="/meomum/items/${list.pro_thumb}" style="width:40px; height:40px;"></td>
+								<td><img alt="thumbnail" src="/meomum/images/items/${list.pro_thumb}" style="width:40px; height:40px;"></td>
 								<td>${list.pro_idx}</td>
 								<td>
 									<c:choose> 
@@ -134,7 +134,17 @@ function sortUsers(orderby) {
 								<td>${list.pro_month }</td>
 								<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.pro_subprice }" />원</td>
 								<td>${list.pro_date }</td>
-								<td><a href="proUpdateForm.do?pro_idx=${list.pro_idx}">수정</a> | <a href="#" onclick="confirmDel(${list.pro_idx})">삭제</a></td>
+								<td>
+								<form method="POST" action="proDel.do">
+								<input type="hidden" name="pro_idx" value="${list.pro_idx }">
+								<input type="hidden" name="pro_thumb" value="${list.pro_thumb }">
+								<input type="hidden" name="pro_img1" value="${list.pro_img1 }">
+								<input type="hidden" name="pro_img2" value="${list.pro_img2 }">
+								<input type="hidden" name="pro_content" value="${list.pro_content }">
+								 <button type="button" onclick="location.href='proUpdateForm.do?pro_idx=${list.pro_idx}'">수정</button> 
+								 <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</button>
+								</form>
+								</td>
 							</tr>
 						</c:forEach>
 					</tbody>

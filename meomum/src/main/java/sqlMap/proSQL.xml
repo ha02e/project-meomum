@@ -95,12 +95,11 @@
 		where pro_idx=#{pro_idx}
 	</update>
 	
-	<select id="proFindFile" parameterType="String" resultType="Integer">
-	    SELECT COUNT(*) FROM product 
-	    WHERE pro_thumb = #{fileName} 
-	    OR pro_img1 = #{fileName} 
-	    OR pro_img2 = #{fileName} 
-	    OR pro_content = #{fileName}
+	<select id="proFindFile" parameterType="Integer" resultType="String">
+	    SELECT pro_thumb
+	    FROM product 
+	    WHERE pro_idx=#{pro_idx}
+	    
 	</select>
 	
 </mapper> 

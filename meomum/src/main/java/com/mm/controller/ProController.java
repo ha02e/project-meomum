@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.Mapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,7 +22,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.mm.ask.model.AskDTO;
 import com.mm.member.model.MemberDTO;
 import com.mm.pro.model.ProDAO;
 import com.mm.pro.model.ProDAOImple;
@@ -116,11 +116,17 @@ public class ProController {
 	    dto.setPro_content(pro_content.getOriginalFilename());
 	    dto.setPro_subprice(pro_subprice);
 	    dto.setPro_allprice(pro_allprice);
+	    
+	    String name1=pro_thumb.getOriginalFilename();
+	    String name2=pro_img1.getOriginalFilename();
+	    String name3=pro_img2.getOriginalFilename();
+	    String name4=pro_content.getOriginalFilename();
+	    
 	    //사진 물리 저장
-	    copyInto(pro_thumb, req);
-	    copyInto(pro_img1, req);
-	    copyInto(pro_img2, req);
-	    copyInto(pro_content, req);
+	    copyInto(pro_thumb, req,name1);
+	    copyInto(pro_img1, req,name2);
+	    copyInto(pro_img2, req,name3);
+	    copyInto(pro_content, req,name4);
 
 	    //정보 저장
 	    int result = proDao.proInsert(dto);
@@ -137,19 +143,19 @@ public class ProController {
 	
 	
 	//파일 복사?
-	public void copyInto(MultipartFile upload, HttpServletRequest req) {
+	public void copyInto(MultipartFile upload, HttpServletRequest req,String fileName) {
 	    
 	    try {
 	        byte bytes[] = upload.getBytes();
 	        
 	        
-	        String filePath= "/items/";
-	        String foolPath = req.getSession().getServletContext().getRealPath(filePath);
+	        String filePath= "/images/items/"+fileName;
+	        String fullPath = req.getSession().getServletContext().getRealPath(filePath);
 	        
 	       
 	       // String filepath = rootPath+"/items/"+fileName;
 	        
-	        File outfile = new File(foolPath);
+	        File outfile = new File(fullPath);
 	        
 	        FileOutputStream fos = new FileOutputStream(outfile);
 	        
@@ -198,47 +204,41 @@ public class ProController {
 	}
 	
 	//상품 삭제
-		@RequestMapping("/proDel.do")
-		public ModelAndView proDel(@RequestParam("pro_idx") int pro_idx) {
+	@RequestMapping(value="/proDel.do", method = RequestMethod.POST)
+		public ModelAndView proDel(
+				ProDTO dto,
+				HttpServletRequest req,
+				@RequestParam("pro_idx") int pro_idx) {
+		
 			int result = proDao.proDelete(pro_idx);
 			
-			ProDTO dto = new ProDTO();
 			
-			String oldFile=dto.getPro_thumb();
-			String oldFile1=dto.getPro_img1();
-			String oldFile2=dto.getPro_img2();
-			String oldFile3=dto.getPro_content();
+			String rootPath = req.getSession().getServletContext().getRealPath("/");
+			String p = rootPath + "/images/items/" + dto.getPro_thumb();
+			String p1 = rootPath + "/images/items/" + dto.getPro_img1();
+			String p2 = rootPath + "/images/items/" + dto.getPro_img2();
+			String p3 = rootPath + "/images/items/" + dto.getPro_content();
 			
-			String path=servletContext.getRealPath("/items");
 			
-			if (oldFile != null) { 
-				File old = new File(path + "/" + oldFile);
+				File old = new File(p);
 				if (old.exists()) {
 					old.delete();
 				}
-			}
-			
-			if (oldFile1 != null) { 
-				File old = new File(path + "/" + oldFile1);
-				if (old.exists()) {
-					old.delete();
+		
+				File old1 = new File(p1);
+				if (old1.exists()) {
+					old1.delete();
 				}
-			}
 			
-			if (oldFile2 != null) { 
-				File old = new File(path + "/" + oldFile2);
-				if (old.exists()) {
-					old.delete();
+				File old2 = new File(p2);
+				if (old2.exists()) {
+					old2.delete();
 				}
-			}
-			
-			if (oldFile3 != null) { 
-				File old = new File(path + "/" + oldFile3);
-				if (old.exists()) {
-					old.delete();
+	
+				File old3 = new File(p3);
+				if (old3.exists()) {
+					old3.delete();
 				}
-			}
-			
 			
 			String msg=result>=0?"삭제 성공":"삭제 실패";
 			String link ="proAdmin.do";
