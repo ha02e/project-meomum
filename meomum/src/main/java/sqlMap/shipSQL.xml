@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mm.ship">
+	<select id="shipForm" parameterType="Map" resultType="com.mm.shipping.model.ShipFormDTO">
+		select b.ship_info, b.ship_num, a.receiver, a.receiver_tel, 
+        		concat(concat(a.order_pcode,a.order_addr),a.order_detail) ship_addr, 
+       			a.order_msg, b.man_name, b.man_tel, b.ship_date, c.pro_idx, c.pro_amount
+		from orders a,
+    		shipping b,
+    		order_pro c
+		where a.order_idx=b.order_idx
+   			and b.order_idx=c.order_idx
+	</select>
+</mapper>
