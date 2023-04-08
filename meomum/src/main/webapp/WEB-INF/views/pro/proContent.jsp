@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -119,15 +120,19 @@
 						</h4>
 
 						<span class="mtext-106 cl2">
-							정가 ${lists[0].pro_price}원 | 월 ${lists[0].pro_subprice}원 | ${lists[0].pro_month}개월 구독 가격
+							정가 <fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_price}" />원
 						</span>
+						
+						<div class="mtext-106 cl2">
+							월 <fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_subprice}" />원 | ${lists[0].pro_month}개월 구독 가격
+						</div>
 
 						<p class="stext-102 cl3 p-t-23">
-							배송비 ${lists[0].pro_delprice}원
+							배송비 <fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_delprice}" />원
 						</p>
 						
 						<span class="mtext-106 cl2">
-							총 ${lists[0].pro_allprice}원
+							총 구독 가격 <fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_allprice}" />원
 						</span>
 						
 						<!--  -->

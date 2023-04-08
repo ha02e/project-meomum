@@ -53,7 +53,7 @@ public class CartController {
 			        
 			        count= cartDao.cartCheck(pro_idx);
 			        
-			        if(count>=1) {
+			        if(count<=1) {
 			            msg="이미 장바구니에 있는 물건입니다. 장바구니로 이동하시겠습니까?";
 			            link="proCart.do?user_idx="+user_idx;
 			            mav.addObject("msg",msg);

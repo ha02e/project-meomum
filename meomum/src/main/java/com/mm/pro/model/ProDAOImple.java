@@ -98,4 +98,15 @@ private SqlSessionTemplate sqlMap;
 			int count=sqlMap.update("proStateUpdate", dto);
 			return count;
 		}
+	
+	
+	@Override
+		public boolean proFindFile(String filename) {
+		
+		int result =  sqlMap.selectOne("proFindFile", filename);
+		 
+		return result>0?true:false;
+		}
+	
+	
 }

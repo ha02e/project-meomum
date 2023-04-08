@@ -35,7 +35,7 @@ function addConfirm() {
 			<div class="container pt-5">
 				<h2 class="text-center mb-4">상품 등록</h2>
 			
-				<form name="addPro" action="addPro.do" enctype="multipart/form-data" method="post" onsubmit="return addConfirm();">
+				<form name="addPro" action="proAdd.do" enctype="multipart/form-data" method="post" onsubmit="return addConfirm();">
 		<ul>
 			<li>대표 사진
 			<input type="file" name="pro_thumb">

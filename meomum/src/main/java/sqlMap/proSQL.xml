@@ -26,7 +26,10 @@
 	<select id="proList" parameterType="Map" resultType="com.mm.pro.model.ProDTO">
 	 select * from
 	(select rownum as rnum,a.* from
-	(select * from product order by pro_idx desc) a) b 
+	(select * from product order by pro_idx desc
+	) a
+	
+	) b 
 	where rnum <![CDATA[>=]]>#{start}
 	and rnum<![CDATA[<=]]>#{end}
  	</select>
@@ -91,5 +94,13 @@
 		set pro_state=#{pro_state}, pro_amount=#{pro_amount}
 		where pro_idx=#{pro_idx}
 	</update>
+	
+	<select id="proFindFile" parameterType="String" resultType="Integer">
+	    SELECT COUNT(*) FROM product 
+	    WHERE pro_thumb = #{fileName} 
+	    OR pro_img1 = #{fileName} 
+	    OR pro_img2 = #{fileName} 
+	    OR pro_content = #{fileName}
+	</select>
 	
 </mapper> 
