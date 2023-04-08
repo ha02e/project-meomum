@@ -1,6 +1,6 @@
 package com.mm.controller;
 
-import java.io.File;	
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -180,15 +180,15 @@ public class AskController {
 	/**간단문의 파일 저장하기*/
 	public void copyInto(MultipartFile file, HttpServletRequest req,String fileName) {
 	    try {
-	    	 byte[] bytes = file.getBytes();
+	        byte[] bytes = file.getBytes();
 
-	         String filePath = "/images/askFile/" + fileName;
-	         String fullPath = req.getServletContext().getRealPath(filePath);
+	        String rootPath = req.getSession().getServletContext().getRealPath("/");
+	        String filePath = rootPath + "/images/askFile/" + fileName;
+	        File outFile = new File(filePath);
 
-	         File outFile = new File(fullPath);
-	         FileOutputStream fos = new FileOutputStream(outFile);
-	         fos.write(bytes);
-	         fos.close();
+	        FileOutputStream fos = new FileOutputStream(outFile);
+	        fos.write(bytes);
+	        fos.close();
 	    } catch (IOException e) {
 	        // TODO Auto-generated catch block
 	        e.printStackTrace();
