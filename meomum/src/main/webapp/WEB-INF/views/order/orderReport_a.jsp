@@ -80,22 +80,13 @@ thead th a{
 }
 
 
-.modal{
-	width:100%;
-}
-.modal-body hr{
-	margin:30px 0 20px 0;
-	color:#000000;
-}
-.modal-body label{
-	color: #333333;
-}
-#orderMsg{
-	resize:none;
-}
 </style>
 
 <script>
+function shipFormOpen(url, name, options) {
+  window.open(url, name, options);
+}
+
 function trackingOpen(){
 	window.open('http://info.sweettracker.co.kr/tracking/4','tracking','width=400px,height=600px');
 }
@@ -177,7 +168,8 @@ function trackingOpen(){
 								<c:choose>
 									<c:when test="${dto.order_status eq 1}">
 										<div class="text-warning">상품준비중</div>
-										<button type="button" class="btn-sm app-btn-secondary" data-bs-toggle="modal" data-bs-target="#shippingModal" data-bs-whatever="@mdo">배송처리</button>
+										<a href="#" onclick="shipFormOpen('shipForm.do?order_idx=${dto.order_idx}', 'shipForm', 'width=540,height=600'); return false;">배송처리</a>
+										<!-- <button type="button" class="btn-sm app-btn-secondary" onclick="shipFormOpen()">배송처리</button>-->
 									</c:when>
 									<c:when test="${dto.order_status eq 2}">
 										<div class="text-success">배송중</div>
@@ -188,79 +180,17 @@ function trackingOpen(){
 									</c:when>
 									<c:when test="${dto.order_status eq 4}">
 										<div>배송완료</div>
-										<button class="btn-sm app-btn-secondary" onclick="trackingOpen()">배송조회</button>										</c:when>
-												<c:when test="${dto.order_status eq 5}">
-													<div class="text-danger">반납신청</div>
-													<a class="btn-sm app-btn-danger" href="#">반납처리</a>
-												</c:when>
-												<c:when test="${dto.order_status eq 6}">반납진행</c:when>
-												<c:when test="${dto.order_status eq 7}">반납완료</c:when>
-											</c:choose>
+										<button class="btn-sm app-btn-secondary" onclick="trackingOpen()">배송조회</button>
+									</c:when>
+									<c:when test="${dto.order_status eq 5}">										
+										<div class="text-danger">반납신청</div>
+										<a class="btn-sm app-btn-danger" href="#">반납처리</a>
+									</c:when>
+									<c:when test="${dto.order_status eq 6}">반납진행</c:when>
+									<c:when test="${dto.order_status eq 7}">반납완료</c:when>
+								</c:choose>
 							</td>
-						</tr>
-									
-						<!-- 배송처리 모달 콘텐츠 -->
-						<div class="modal fade" id="shippingModal" tabindex="-1" aria-labelledby="shippingModalLabel" aria-hidden="true">
-							<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h1 class="modal-title fs-5" id="shippingModalLabel">배송처리</h1>
-										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-									</div>
-									
-									<form action="shipping.do" name="shipping" method="post">
-									<div class="modal-body">
-										<div class="mb-3">
-											<label for="recipient-name" class="col-form-label">택배사</label>
-												<select class="custom-select form-control" id="shipInfo" disabled>
-													<option selected="">CJ대한통운</option>
-												</select>
-										</div>
-										<div class="mb-3">
-											<label for="message-text" class="col-form-label">운송장번호</label>
-											<input type="text" class="form-control" id="shipNum">
-										</div>
-													          
-										<hr>
-											          
-										<div class="mb-3">
-											<label for="message-text" class="col-form-label">수취인</label>
-											<input type="text" class="form-control" id="receiver">
-										</div>
-										<div class="mb-3">
-											<label for="message-text" class="col-form-label">수취인 연락처</label>
-											<input type="text" class="form-control" id="receiverTel">
-										</div>
-										<div class="mb-3">
-											<label for="message-text" class="col-form-label">배송지</label>
-											<input type="text" class="form-control" id="receiver">
-										</div>
-										<div class="mb-3">
-								        	<label for="message-text" class="col-form-label">배송 메시지</label>
-								        	<textarea class="form-control h-25" id="orderMsg" rows="4" readonly></textarea>
-								        </div>
-								        
-										<hr>
-													          
-										<div class="mb-3">
-											<label for="message-text" class="col-form-label">배송기사</label>
-											<input type="text" class="form-control" id="receiver">
-										</div>
-										<div class="mb-3">
-											<label for="message-text" class="col-form-label">배송기사 연락처</label>
-											<input type="text" class="form-control" id="receiverTel">
-										</div>
-									</div>
-									
-									<div class="modal-footer">
-										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-										<button type="submit" class="btn btn-primary">배송처리</button>
-									</div>
-									</form>
-												
-								</div>
-							</div>
-						</div><!-- 배송처리 모달 콘텐츠 부분 -->											
+						</tr>									
 							
 						</c:forEach>
 						

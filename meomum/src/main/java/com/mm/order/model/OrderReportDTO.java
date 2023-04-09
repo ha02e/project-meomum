@@ -4,7 +4,9 @@ import java.sql.Date;
 
 public class OrderReportDTO {
 	private String order_idx;
+	private int pro_idx;
 	private String pro_name;
+	private int user_idx;
 	private String user_name;
 	private String user_tel;
 	private int amount;
@@ -21,12 +23,14 @@ public class OrderReportDTO {
 	}
 
 
-	public OrderReportDTO(String order_idx, String pro_name, String user_name, String user_tel, int amount,
-			int order_status, Date order_date, String receiver, String receiver_tel, String order_msg,
-			String ship_addr) {
+	public OrderReportDTO(String order_idx, int pro_idx, String pro_name, int user_idx, String user_name,
+			String user_tel, int amount, int order_status, Date order_date, String receiver, String receiver_tel,
+			String order_msg, String ship_addr) {
 		super();
 		this.order_idx = order_idx;
+		this.pro_idx = pro_idx;
 		this.pro_name = pro_name;
+		this.user_idx = user_idx;
 		this.user_name = user_name;
 		this.user_tel = user_tel;
 		this.amount = amount;
@@ -49,6 +53,16 @@ public class OrderReportDTO {
 	}
 
 
+	public int getPro_idx() {
+		return pro_idx;
+	}
+
+
+	public void setPro_idx(int pro_idx) {
+		this.pro_idx = pro_idx;
+	}
+
+
 	public String getPro_name() {
 		return pro_name;
 	}
@@ -56,6 +70,16 @@ public class OrderReportDTO {
 
 	public void setPro_name(String pro_name) {
 		this.pro_name = pro_name;
+	}
+
+
+	public int getUser_idx() {
+		return user_idx;
+	}
+
+
+	public void setUser_idx(int user_idx) {
+		this.user_idx = user_idx;
 	}
 
 
@@ -148,6 +172,5 @@ public class OrderReportDTO {
 		this.ship_addr = ship_addr;
 	}
 
-	
-	
+
 }

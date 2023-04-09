@@ -83,13 +83,14 @@ public class OrderController {
 		return mav;
 	}
 
-	
-	 @GetMapping("/orderData")
-	 @ResponseBody
-	 public OrderReportDTO getOrderData(@RequestParam("order_idx")int order_idx) {
-		 System.out.println("요청이 도착했습니다.");
-		 	OrderReportDTO orderData = orderDao.orderData(order_idx);
-		    return orderData;
-	 }
+	@RequestMapping("/shipForm.do")
+	public ModelAndView shippingForm(@RequestParam("order_idx")int order_idx) {
+		OrderReportDTO dto=orderDao.orderData(order_idx);
+		
+		ModelAndView mav=new ModelAndView();
+		mav.addObject("dto", dto);
+		mav.setViewName("shipping/shipForm");
+		return mav;
+	}
 	
 }
