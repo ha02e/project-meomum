@@ -115,6 +115,12 @@ public class SvcDAOImple implements SvcDAO {
 		return count;
 	}
 	
+//	@Override
+//	public int svcStateUpdate(SvcMemDTO dto) {
+//		int count = sqlMap.update("svcStateUpdate",dto);
+//		return count;
+//	}
+	
 	/**마이페이지 : 방문 예약 신청 내역*/
 	@Override
 	public List<SvcSelectAllDTO> svcUserList(int user_idx) {
@@ -122,17 +128,24 @@ public class SvcDAOImple implements SvcDAO {
 		return list;
 	}
 	
+	/**마이페이지 : 정리일상 진행 내역*/
+	@Override
+	public List<SvcIngDTO> svcIngList(int user_idx) {
+		List<SvcIngDTO> list = sqlMap.selectList("svcIngList",user_idx);
+		return list;
+	}
+	
 	/**마이페이지: 예약 삭제(방문 견적 신청)*/
 	//예약 상태 변경(svc_member)
 	@Override
-	public int svcStateCancle(String svc_idx) {
-		int count = sqlMap.update("svcStateCancle", svc_idx);
+	public int svcStateCancle(SvcContentDTO dto) {
+		int count = sqlMap.update("svcStateCancle", dto);
 		return count;
 	}
 	//예약 날짜 비활성화(svc_date)
 	@Override
-	public int svcDateCancle(String svc_idx) {
-		int count = sqlMap.update("svcDateCancle", svc_idx);
+	public int svcDateCancle(SvcContentDTO dto) {
+		int count = sqlMap.update("svcDateCancle", dto);
 		return count;
 	}
 }

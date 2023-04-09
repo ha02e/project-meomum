@@ -9,7 +9,8 @@ var size = 'width=' + width + ', height=' + height + ', left=' + left + ', top='
 
 var svc_idx = document.getElementById("svc_idx").value;
 
-var url = "asvcIngContent.do?svc_idx="+svc_idx;
 window.name = "a_svcIngContent";
-svcIngContent = window.open(url,'popup',size);
+var url = "asvcIngContent.do?svc_idx="+svc_idx;
+
+svcIngContent = window.open(url,'Ingpopup',size);
 }

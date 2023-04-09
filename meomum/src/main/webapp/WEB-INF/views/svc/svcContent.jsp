@@ -13,6 +13,7 @@
 	<form>
 		<h3>예약 정보</h3>
 		<ul>
+			<li>${dto.svc_state}</li>
 			<li>예약번호: ${dto.svc_idx}</li>
 
 			<c:if test="${dto.svc_state ne '예약취소'}">
@@ -50,10 +51,13 @@
 					<c:param name="svc_idx">${dto.svc_idx}</c:param>
 				</c:url>
 				<a href="${updateUrl}" class="btn btn-primary">예약 수정</a>
-				<c:url var="deleteUrl" value="svcDelete.do">
+				
+				<c:url var="cancleUrl" value="svcCancle.do">
 					<c:param name="svc_idx">${dto.svc_idx}</c:param>
+					<c:param name="svc_days" value="${dto.svc_days}"/>
+					<c:param name="svc_time" value="${dto.svc_time}"/>
 				</c:url>
-				<a href="${deleteUrl}" class="btn btn-dark">예약 취소</a>
+				<a href="${cancleUrl}" class="btn btn-dark">예약 취소</a>
 			</c:if>
 
 		</div>
