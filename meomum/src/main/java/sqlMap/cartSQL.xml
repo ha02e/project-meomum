@@ -12,9 +12,10 @@
 		)
 	</insert>
 	
-	<select id="cartFind" parameterType="integer" resultType="integer">
+	<select id="cartCheck" parameterType="map" resultType="integer">
 	select count(*) from cart
 	where pro_idx=#{pro_idx}
+	and user_idx=#{user_idx}
 	</select>
 	
 	<select id="cartList" parameterType="integer" resultType="com.mm.cart.model.CartDTO">
@@ -30,7 +31,7 @@
 	where cart_idx=#{cart_idx}
 	</delete>
 	
-	<update id="cartNumUpdate" parameterType="com.mm.cart.model.CartDTO">
+	<update id="cartNumUpdate" parameterType="map">
     update cart
     set cart_amount=#{cart_amount}
     where cart_idx=#{cart_idx}

@@ -51,9 +51,9 @@ public class CartController {
 			        dto.setCart_amount(cart_amount);
 			        dto.setUser_idx(user_idx);
 			        
-			        count= cartDao.cartCheck(pro_idx);
+			        count= cartDao.cartCheck(pro_idx,user_idx);
 			        
-			        if(count<=1) {
+			        if(count>=1) {
 			            msg="이미 장바구니에 있는 물건입니다. 장바구니로 이동하시겠습니까?";
 			            link="proCart.do?user_idx="+user_idx;
 			            mav.addObject("msg",msg);
@@ -133,28 +133,18 @@ public class CartController {
 		
 	
 		//장바구니 수량 조절
-		@RequestMapping(value="cartNumUpdate.do")
+		@RequestMapping(value="cartNumUpdate.do", method=RequestMethod.POST)
+		@ResponseBody
 		public ModelAndView cartNumUpdate(@RequestParam("cart_idx")int cart_idx,
-				@RequestParam("cart_amount") int cart_amount,
-				HttpSession session) {
+				@RequestParam("cart_amount") int cart_amount) {
+			
+			System.out.println(cart_amount+"수량/"+cart_idx+"카트 번호/");
 			
 			ModelAndView mav= new ModelAndView();
 			
-			session.getAttribute("ssInfo");
-			MemberDTO sdto =(MemberDTO) session.getAttribute("ssInfo");
-			int user_idx =sdto.getUser_idx();
-			
-			CartDTO dto=new CartDTO();
-			dto.setCart_amount(cart_amount);
-			dto.setCart_idx(cart_idx);
-			System.out.println(cart_amount+"/"+cart_idx+"/"+user_idx);
-			int result=cartDao.cartNumUpdate(dto);
-			
-			String msg=result>=0?"수정 성공":"수정 실패";
-	      	String link = "proCart.do?user_idx="+user_idx;
-	      	mav.addObject("msg", msg);
-	        mav.addObject("link", link);
-	        mav.setViewName("pro/proMsg");
+			cartDao.cartNumUpdate(cart_amount,cart_idx);
+			System.out.println(cart_amount+"수량2/"+cart_idx+"카트 번호/");
+			mav.setViewName("mmJson");
 	        return mav;
 			}
 		

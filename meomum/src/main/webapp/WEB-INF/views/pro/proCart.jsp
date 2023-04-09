@@ -86,7 +86,7 @@ function updateShippingCost() {
 				</tr>
 			</c:if>
 			
-		<form name="cartForm" method="get" action="orderList.do">
+		
 			<c:forEach var="list" items="${lists}">		
 			<c:set var="totalSub" value="${totalSub + (list.cart_amount * list.pro_subprice)}" />
 			<c:set var="totalDel" value="${totalDel + (list.cart_amount * list.pro_delprice)}" />
@@ -117,8 +117,8 @@ function updateShippingCost() {
 							<!-- 수량 조절 -->
 								
 								<input class="mtext-104 cl3 txt-center num-product" type="number" min="1" max="10" name="cart_amount"
-								value="${list.cart_amount }" onchange="updatePrice(this, ${list.pro_subprice}, ${list.pro_allprice})">
-								<input type="hidden" name="cart_idx" value="${list.cart_idx }">
+								value="${list.cart_amount}" id="update_amount" onchange="updatePrice(this, ${list.pro_subprice}, ${list.pro_allprice})">
+								
 								
 							
 							<!-- 플러스 -->
@@ -127,7 +127,8 @@ function updateShippingCost() {
 								</div>
 							
 							</div>
-							<button type="submit" formaction="cartNumUpdate.do">수량 변경</button>
+							<input type="hidden" id="update_idx" name="cart_idx" value="${list.cart_idx}">
+							<input type="button" onclick="cartNumUpdate()" value="수량 변경">
 						</td>
 						<td>
 						<div><span id="subPrice-${list.cart_idx}"><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.cart_amount * list.pro_subprice}" />원
@@ -147,6 +148,7 @@ function updateShippingCost() {
 						<td><div id="totalSub-${list.cart_idx }">월 구독 가격 <fmt:formatNumber type="number" maxFractionDigits="3" value="${totalSub}" />원</div></td>
 						<td><div id="totalDel-${list.cart_idx}">| 총 배송비 <fmt:formatNumber type="number" maxFractionDigits="3" value="${totalDel}" />원</div></td>
 					</tr>
+					<form name="cartForm" method="get" action="orderList.do">
 					<tr>
 						<td>
 						<input type="hidden" name="pro_idx" value="${list.pro_idx}" >
@@ -156,12 +158,38 @@ function updateShippingCost() {
 						<button type="submit" formaction="orderList.do">결제하기</button>
 						</td>
 					</tr>
+					</form>		
 				</table>
-			</form>		
-
+			
 
 
 <script>
+function cartNumUpdate() {
+	  const update_idx = $("update_idx").val();
+	  const update_amount = $("update_amount").val();
+	  
+	  alert(update_idx);
+	  alert(update_amount);
+	  
+	  $.ajax({
+	    url: "cartNumUpdate.do",
+	    type: "POST",
+	    data: {
+	      cart_idx: update_idx,
+	      cart_amount: update_amount
+	    },
+	    success: function (response) {
+	      alert("상품이 변경되었습니다.");
+	      location.reload();
+	    },
+	    error: function (xhr, status, error) {
+	      alert("실패하였습니다.");
+	      console.log(update_idx);
+	      console.log(update_amount);
+	    },
+	  });
+	}
+
   function deleteCartItem(cartIdx) {
     $.ajax({
       url: "cartDelete.do",
