@@ -88,14 +88,14 @@
 		m.user_tel,
 		m.joindate,
 		COUNT(DISTINCT sd.svc_idx) AS svcCount,
-		COUNT(DISTINCT od.svc_idx) AS
+		COUNT(DISTINCT od.order_idx) AS
 		orderCount,
 		COUNT(DISTINCT r.review_idx) AS reviewCount,
 		m.user_memo
 		FROM member m
-		LEFT JOIN svc_date sd ON m.user_idx = sd.user_idx
+		LEFT JOIN svc_member sd ON m.user_idx = sd.user_idx
 		LEFT
-		JOIN svc_detail od ON m.user_idx = od.user_idx
+		JOIN orders od ON m.user_idx = od.user_idx
 		LEFT JOIN review r ON
 		m.user_idx = r.user_idx
 		<if test="fvalue != null">
@@ -230,7 +230,36 @@
 	</select>
 	
 	<select id="memberIdcheck" parameterType="String" resultType="String">
-		select user_id from member where user_id = #{user_id}
+		SELECT user_id
+		FROM member
+		WHERE user_id = #{user_id}
+		UNION
+		SELECT user_id
+		FROM member_drop
+		WHERE user_id = #{user_id}
 	
 	</select>
+	
+	<select id="dropSelectInfo" parameterType="Integer" resultType="Integer" >
+		SELECT COUNT(*)
+		FROM member
+		WHERE user_idx = #{user_idx} 
+		AND user_idx IN (
+		    SELECT user_idx
+		    FROM svc_member
+		    WHERE svc_state NOT IN ('예약취소', '작업완료')
+		)
+		AND user_idx IN (
+		    SELECT user_idx
+		    FROM orders
+		    WHERE order_status NOT IN (3, 4, 7)
+		)
+	</select>
+	<delete id="deleteMember" parameterType="Integer">
+		delete from member where user_idx = #{user_idx}
+		</delete>
+		
+	<insert id="insertMemberDrop" parameterType="Map" >
+		insert into member_drop values(member_drop_drop_idx.nextval,#{user_idx},#{user_id},sysdate,'Y')
+	</insert>
 </mapper> 
