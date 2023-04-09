@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<body onload="setValue()">
+<body onload="getValue()">
 	<h2>결제</h2>
 	<form name="svcIngInsert" action="svcIngInsert.do" method="post"  onsubmit="sendValue()">
 	<input type="hidden" name="svc_idx" id="svc_idx" >
@@ -45,38 +45,19 @@
 	
 	<script>
 	/**a_svcConted.jsp에 입력된 값 입력하기*/
-	function setValue(){
+	function getValue(){
 		document.getElementById("svc_idx").value = opener.document.getElementById("svc_idx").value;
 		document.getElementById("user_idx").value = opener.document.getElementById("user_idx").value;
 	}
+	</script>
 	
-	/**견적금액과 할인금액을 계산해서 결제금액 출력*/
-	function getTotal() {
-		var estimated = document.getElementById('estimated').value;
-		var discount = document.getElementById('discount').value;
-		var total = document.getElementById('total');
-
-		if (estimated && discount) {
-			var result = parseInt(estimated) - parseInt(discount);
-				total.value = result;
-			} else {
-				total.value = "";
-			}
-		}
-
-	/**datetime-local 오늘 이전 날짜는 불가하도록 지정*/
-	var dateElement = document.getElementById('svc_datetime');
-	var now = new Date();
-	var date = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0,-8);
-	dateElement.value = date;
-	dateElement.setAttribute("min", date);
-
-	function setMinDate() {
-		if (dateElement.value < date) {
-			dateElement.value = date;
-		}
-	}
+	<!-- 견적금액과 할인금액을 계산해서 결제금액 출력 -->
+	<script src="js/svc/getTotal.js"></script>
 	
+	<!-- datetime-local 오늘 이전 날짜는 불가하도록 지정 -->
+	<script src="js/svc/setMinDatetimeLocal.js"></script>
+	
+	<script>
 	/**a_svcContent.jsp에 값 보내기*/
 	 function sendValue(){
 		    var svcDatetime = document.getElementById('svc_datetime').value;
@@ -91,11 +72,12 @@
 		    opener.document.getElementById('estimated').value = estimated;
 		    opener.document.getElementById('discount').value = discount;
 		    opener.document.getElementById('total').value = total;
-		    opener.document.getElementById('pay_state').value = payState;    
+		    opener.document.getElementById('pay_state').value = payState; 
 		} 
 	
 	function popupClose(){
 		window.opener.location.reload();
+		/* opener.document.getElementById('pay_state').value = pdocument.getElementById('pay_state').value; */
 		window.close();
 	}
 	</script>
