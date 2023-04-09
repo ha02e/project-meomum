@@ -49,9 +49,14 @@ public class OrderDAOImple implements OrderDAO {
 	}
 	
 	@Override
-	public OrderReportDTO orderData(int order_idx) {
+	public OrderReportDTO orderData(String order_idx) {
 		OrderReportDTO odto=sqlMap.selectOne("orderData", order_idx);
 		return odto;
 	}
 	
+	@Override
+	public int shipStartUpdate(String order_idx) {
+		int count=sqlMap.update("shipStartUpdate", order_idx);
+		return count;
+	}
 }

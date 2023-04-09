@@ -84,7 +84,7 @@ public class OrderController {
 	}
 
 	@RequestMapping("/shipForm.do")
-	public ModelAndView shippingForm(@RequestParam("order_idx")int order_idx) {
+	public ModelAndView shippingForm(@RequestParam("order_idx")String order_idx) {
 		OrderReportDTO dto=orderDao.orderData(order_idx);
 		
 		ModelAndView mav=new ModelAndView();
