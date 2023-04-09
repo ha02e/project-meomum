@@ -9,7 +9,9 @@ public interface OrderDAO {
 
 	public ProDTO orderList(int idx);
 	public int orderInsert(OrderDTO dto);
-	public List<OrderDTO> myOrderList(Integer idx);
+	public List<OrderDTO> myOrderList(int idx);
 	public List<OrderReportDTO> orderReport(Map map);
 	public int reportTotalCnt();
+	public OrderReportDTO orderData(String order_idx);
+	public int shipStartUpdate(String order_idx);
 }

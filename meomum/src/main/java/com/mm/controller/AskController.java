@@ -118,17 +118,17 @@ public class AskController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		String today = sdf.format(calendar.getTime());
 		
-		String originalFileName = today+"_"+file.getOriginalFilename();
-		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
-		String fileNameWithoutExtension = originalFileName.substring(0, originalFileName.lastIndexOf("."));
-
+		String extension = "." + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
+		String originalFileName = today + "_" + dto.getAsk_writer()+"고객 첨부";
+		
+		
 		// 중복 방지를 위해 파일 이름에 숫자를 붙임
 		int num = 0;
-		String fileName = originalFileName;
+		String fileName = originalFileName+extension;
 		
 			while (adao.existsFile(fileName)) {
 			    num++;
-			    fileName = fileNameWithoutExtension + "_" + num + extension;
+			    fileName = originalFileName +"_"+num + extension;
 			}
 		dto.setAsk_file(fileName);
 		

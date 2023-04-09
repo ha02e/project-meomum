@@ -135,6 +135,12 @@
 									</div>
 								</form>
 							</div>
+							
+							<div class="text-end" 
+							     data-bs-toggle="modal" 
+							     data-bs-target="#member_drop" >
+							     회원 탈퇴하기
+							</div>
 							<!-- 본문 작성 끝 -->
 							
 							
@@ -190,8 +196,51 @@
 	</div>
 
 	<!-- 비밀번호 변경 모달끝  -->
-
 	
+	
+<!-- 회원 탈퇴 모달 ---------------------------------------------------------- -->
+<div class="modal fade" id="member_drop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">회원탈퇴</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+    <div class="card">
+        <div class="card-body">
+            <p>회원탈퇴 시 처리내용
+머뭄 포인트는 소멸되며 환불되지 않습니다.<br>
+머뭄 구매 정보와 서비스 이용내역이 사라집니다.<br>
+소비자보호에 관한 법률 제6조에 의거,계약 또는 청약철회 등에 관한 기록은 5년, 대금결제 및 재화등의 공급에 관한 기록은 5년, 소비자의 불만 또는 분쟁처리에 관한 기록은 3년 동안 보관됩니다.<br>
+ 동 개인정보는 법률에 의한 보유 목적 외에 다른 목적으로는 이용되지 않습니다.<p>
+<p>회원탈퇴 시 게시물 관리
+회원탈퇴 후 머뭄에 입력한 게시물 및 댓글은 삭제되지 않으며, 회원정보 삭제로 인해 작성자 본인을 확인할 수 없으므로 게시물 편집 및 삭제 처리가 원천적으로 불가능 합니다. 게시물 삭제를 원하시는 경우에는 먼저 해당 게시물을 삭제 하신 후, 탈퇴를 신청하시기 바랍니다.
+</p>
+<p>
+회원탈퇴 후 재가입 규정
+탈퇴 회원이 재가입하더라도 기존의 머뭄 포인트는 이미 소멸되었기 때문에 양도되지 않습니다.
+<br><strong>기존 가입했던 이메일로는 다시 가입할 수 없습니다.</strong></p>
+        </div>
+    </div>
+   
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="checkConfirm" name="checkConfirm" required="required">
+        <input type="hidden" id="user_id" value="${sessionScope.ssInfo.user_id}">
+        <input type="hidden" id="user_idx" value="${sessionScope.ssInfo.user_idx}">
+        <label class="form-check-label" for="checkConfirm" >탈퇴 내용 확인에 동의합니다.</label>
+    </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+        <button type="button" class="btn btn-primary" onclick="dropmember()">탈퇴하기</button>
+      </div>
+    </div>
+  </div>
+</div>
+	
+	
+	<!-- ---------------------------------회원 탈퇴모달 끝 -->
 	
 	<script>
 		/**주소검색*/
@@ -248,6 +297,50 @@
 				});
 			});
 		});
+		
+		
+		
+		/**회원 탈퇴*/
+		function dropmember(){
+			
+			var checkbox = document.getElementById('checkConfirm');
+			
+			var user_idx = document.getElementById('user_idx').value;
+			var user_id = document.getElementById('user_id').value;
+	
+
+			if (!checkbox.checked) {
+			    alert('탈퇴 내용 확인에 동의하셔야 탈퇴가 가능합니다.');
+			    return;
+			}
+
+
+				var param = 'user_idx=' +user_idx +'&user_id='+user_id;
+				sendRequest('memberDrop.do', param, 'POST', dropmemberResult);
+
+	}
+
+	function dropmemberResult() {
+		if (XHR.readyState == 4) {
+			if (XHR.status == 200) {
+				var data = XHR.responseText;
+				var msg = JSON.parse(data).msg;
+				var success= JSON.parse(data).drop;
+				
+				alert(msg);
+				
+				if(success){
+					location.href='logout.do';
+				}
+				
+				
+			
+			} else {
+				alert('전송에 실패하였습니다.');
+			}
+		}
+	}
+		
 	</script>
 </body>
 

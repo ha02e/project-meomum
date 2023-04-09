@@ -5,7 +5,7 @@
 
 
 <mapper namespace="com.mm.svc">
-	<!-- 방문예약 신청시 실행 -->
+	<!-- 방문예약 신청 -->
 	<insert id="svcMemInsert"
 		parameterType="com.mm.svc.model.SvcMemDTO">
 		INSERT INTO svc_member
@@ -24,7 +24,7 @@
 		VALUES(svc_date_idx.nextval,('S'||TO_CHAR(SYSDATE, 'YYYYMMDD-')||svc_member_idx.currval),#{user_idx},#{svc_days},#{svc_time})
 	</insert>
 
-
+	<!-- 예약 시간 제약 -->
 	<select id="svcTimeSelect" parameterType="String" resultType="String">
 		SELECT svc_time FROM svc_date WHERE svc_days = #{svc_days}
 	</select>
@@ -72,7 +72,7 @@
 	</select>
 
 	
-	<!-- 공통: 방문 예약 상세 정보 -->
+	<!-- 관리자/사용자: 방문 예약 상세 정보(견적 신청) -->
 	<select id="svcContent" parameterType="String" resultType="com.mm.svc.model.SvcContentDTO">
 		SELECT a.*,b.user_name,
 		b.user_tel,b.user_pcode,b.user_addr,b.user_detail,b.svc_state,c.svc_days,c.svc_time
@@ -81,9 +81,21 @@
 		LEFT JOIN svc_date c on b.svc_idx = c.svc_idx
 		WHERE b.svc_idx = #{svc_idx}
 	</select>
+	
+	<!-- 관리자/사용자: 방문 예약 상세 정보(서비스 진행) -->
+	<select id="svcIngContent" parameterType="String" resultType="com.mm.svc.model.SvcIngDTO">
+		SELECT *
+		FROM svc_ing 
+		WHERE svc_idx = #{svc_idx}
+	</select>
 
-
-	<!-- 방문예약 정보 수정 -->
+	<!-- 관리자: 서비스 견적 추가 -->
+	<insert id="svcIngInsert" parameterType="com.mm.svc.model.SvcIngDTO">
+		INSERT INTO svc_ing 
+		VALUES (svc_ing_idx.nextval,#{svc_idx},#{user_idx},nvl(#{svc_datetime},'-'), #{estimated},#{discount},#{type},#{total},#{pay_state})
+	</insert>
+	
+	<!-- 관리자/사용자: 방문 예약 정보 수정(견적 신청) -->
 	<update id="svcMemUpdate" parameterType="com.mm.svc.model.SvcMemDTO">
 		UPDATE svc_member
 		SET user_name = #{user_name},
@@ -111,14 +123,24 @@
 		svc_time=#{svc_time}
 		WHERE svc_idx = #{svc_idx}
 	</update>
-
-	<!-- 관리자: 서비스 견적 추가 -->
-	<insert id="svcIngInsert" parameterType="com.mm.svc.model.SvcIngDTO">
-		INSERT INTO svc_ing 
-		VALUES (svc_ing_idx.nextval,#{svc_idx},#{user_idx},#{svc_datetime}, #{estimated},#{discount},#{type},#{total},#{pay_state})
-	</insert>
 	
+	<!-- 관리자/사용자: 방문 예약 정보 수정(견적 신청) -->
+	<update id="svcIngUpdate" parameterType="com.mm.svc.model.SvcIngDTO">
+		UPDATE svc_ing
+		SET svc_datetime = #{svc_datetime},
+			estimated = #{estimated},
+			discount = #{discount},
+			type = #{type},
+			total = #{total},
+			pay_state = #{pay_state}
+		WHERE svc_idx = #{svc_idx}
+	</update>
 	
+<!-- 	<update id="svcStateUpdate" parameterType="com.mm.svc.model.SvcMemDTO"> 
+		UPDATE svc_member
+		SET svc_state = #{svc_state}
+		WHERE svc_idx =#{svc_idx}
+	</update> -->
 	
 	<!--마이페이지 : 방문 예약 신청 내역 -->
 	<select id="svcUserList" parameterType="Integer" resultType="com.mm.svc.model.SvcSelectAllDTO">
@@ -126,21 +148,31 @@
 	FROM svc_member a
 	LEFT JOIN svc_detail b ON a.svc_idx = b.svc_idx
 	LEFT JOIN svc_date c ON a.svc_idx = c.svc_idx
-	WHERE a.user_idx = #{user_idx} and a.svc_state='예약확정' or a.svc_state='예약취소'
+	WHERE a.user_idx = #{user_idx} and (a.svc_state='예약확정' or a.svc_state='예약취소')
 	ORDER BY a.svc_idx DESC
 	</select>
 	
-	<!-- 사용자: 방문 예약 취소 -->
-	<update id="svcStateCancle" parameterType="String">
+	<!--마이페이지: 정리일상 현황 내역 -->
+	<select id="svcIngList" parameterType="Integer" resultType="com.mm.svc.model.SvcIngDTO">
+	SELECT *
+	FROM svc_ing
+	WHERE user_idx = #{user_idx}
+	ORDER BY  svc_ing_idx DESC
+	</select>
+	
+	<!-- 마이페이지: 방문 예약 취소 -->
+	<update id="svcStateCancle" parameterType="com.mm.svc.model.SvcContentDTO">
 	UPDATE svc_member
 	SET svc_state='예약취소'
 	WHERE svc_idx=#{svc_idx}
 	</update>
 	
-	<delete id="svcDateCancle" parameterType="String">
+	<update id="svcDateCancle" parameterType="com.mm.svc.model.SvcContentDTO">
 	UPDATE svc_date
 	SET svc_days='C'||#{svc_days},
 		svc_time='C'||#{svc_time}
 	WHERE svc_idx=#{svc_idx}
-	</delete>
+	</update>
+	
+
 </mapper>

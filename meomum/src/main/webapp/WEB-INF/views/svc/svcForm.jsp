@@ -19,49 +19,7 @@ textarea {
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
 <!-- 예약 완료된 시간 비활성화 -->
-<script>
-$(function() {
-	function timeSelect(){
-	    
-		//시간 선택 버튼 모두 활성화
-	    $('#timeA, #timeB, #timeC').prop('disabled', false);
-		
-	  //컨트롤러로 사용자가 선택한 날짜 전송
-	    $.ajax({
-	      url: "svcTimeSelect.do",
-	      data: {
-	        svc_days: $("#svc_days").val()
-	      },
-	      dataType: 'json',
-	      method: "get"
-	    }).done(function(data) {
-	      console.log(data);
-			
-	    //컨트롤러에서 전달받은 값이 timeA,B,C와 같으면 버튼 비활성화
-	      if (data != null) {
-	        for (let i = 0; i < data.times.length; i++) {
-	          if (data.times[i] == $("#timeA").val()) {
-	            $('#timeA').prop('disabled', true);
-	          } else if (data.times[i] == $("#timeB").val()) {
-	            $('#timeB').prop('disabled', true);
-	          } else {
-	            $('#timeC').prop('disabled', true);
-	          }
-	        }
-	      }
-	    }).fail(function() {
-	      alert('다시 시도해주세요');
-	    });
-	};
-
-	timeSelect();
-
-	$("#svc_days").change(function(){
-		timeSelect();
-	});
-});
-</script>
-
+<script src="js/svc/timeSelect.js"></script>
 </head>
 
 <body>
@@ -143,6 +101,11 @@ $(function() {
 			</textarea> <br> 
 			<input type="checkbox" name="svc_pia" value="Y">개인정보 수집 및 이용에 동의합니다
 			</li>
+			<div>
+			유의사항! 
+			방문 일자 2일 전에는 수정 불가한 점 참고 부탁드립니다.
+			피치 못할 사정으로 취소 시, 02-1234-4567로 전화부탁드립니다. 
+			</div>
 		</ul>
 		
 		<div>
@@ -167,34 +130,9 @@ $(function() {
 	
 	<!-- 카카오 주소 API -->
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-	<script>
-		function findAddr(){
-			var width = 500; //팝업의 너비
-			var height = 600; //팝업의 높이
+	<script src="js/svc/findAddr.js"> </script>
 	
-			new daum.Postcode({
-		 		width: width,
-		 		height: height,
-        		oncomplete: function(data) {
-            		var zonecode = data.zonecode;
-            		var roadAddr = data.roadAddress; // 도로명 주소 변수
-            		var jibunAddr = data.jibunAddress; // 지번 주소 변수
 
-            		document.getElementById('user_pcode').value = zonecode;
-            		
-            		if(roadAddr !== ''){
-                		document.getElementById('user_addr').value = roadAddr;
-            		} 
-            		else if(jibunAddr !== ''){
-                		document.getElementById('user_addr').value = jibunAddr;
-            		}
-        		}
-    		}).open({
-        		left: (window.screen.width / 2) - (width / 2),
-        		top: (window.screen.height / 2) - (height / 2)
-    	});
-	}
-</script>
 <%@include file="/WEB-INF/views/footer.jsp"%>
 </body>
 

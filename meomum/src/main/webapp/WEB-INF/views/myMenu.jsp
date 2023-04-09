@@ -55,7 +55,7 @@
 								<ul>
 									<li><a href="myAskList.do">간단 견적 문의 내역</a></li>
 									<li><a href="svcList.do">방문 견적 예약 내역</a></li>
-									<li><a href="#">정리일상 진행 현황</a></li>
+									<li><a href="svcIngList.do">정리일상 진행 현황</a></li>
 								</ul>
 							</div>
 						</div>
