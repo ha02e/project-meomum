@@ -9,7 +9,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
-<link href="/docs/5.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
  
 <!-- 관리자 헤더 CSS -->  
 <link id="theme-style" rel="stylesheet" href="assets/css/portal_a.css">
@@ -27,42 +27,65 @@ document.addEventListener("DOMContentLoaded", function() {
 	    	info: false,
 	    	paging: false,
 	    	order: [ [ 0, "desc" ] ],
-	    	responsive: true
-	    	searching: false;
+	    	responsive: true,
+	    	searching: false
 	    });
 	  }
 });
 </script>
 
 <style>
-
-.state div{
-	width:40%;
-	text-align: center;
+.datatable-input{
+	margin:0 4px 0 10px;
+	width:250px;
+	height:40px;
 }
-.datatable-table td{
-	cursor: pointer;
+.datatable-selector{
+	height:40px;
+}
+.button{
+	border-radius:2px;
+	height:40px;
+}
+
+
+.datatable-table{
+	margin:20px 0 10px 0;
+}
+.datatable-table > tbody > tr > th{
+	padding:1rem 0;
+}
+.datatable-table > tbody > tr > td{
+	font-size: .875rem;
+	padding:1rem 0;
 }
 thead th a{
 	text-align: center;
+	cursor: pointer;
 }
 .order-num{
 	color: #0055FF;
 }
 .state div{
 	padding: 0.2rem 0;
+	width:40%;
+	text-align: center;
+}
+.modal{
+	width:100%;
 }
 .btn-sm{
 	padding: 0.2rem 0.8rem;
 }
-.button{
-	border-radius:2px;
+
+.paging{
+	margin:20px;
 }
 </style>
 
 <script>
 function trackingOpen(){
-	window.open('http://info.sweettracker.co.kr/tracking/4');
+	window.open('http://info.sweettracker.co.kr/tracking/4','tracking','width=400px,height=600px');
 }
 </script>
 </head>
@@ -80,7 +103,7 @@ function trackingOpen(){
 			<div class="card-body">
 			
 				<div class="datatable-container">
-				<div class="datatable-top d-flex justify-content-end align-middle">
+				<div class="datatable-top d-flex justify-content-center align-items-center">
 					<div class="datatable-dropdown">
 			        	<select class="datatable-selector">
 				        	<option value="a" selected="">전체</option>
@@ -90,22 +113,22 @@ function trackingOpen(){
 			      		</select>
 			        </div>
 					<div class="datatable-search">
-			            <input class="datatable-input" placeholder="검색어를 입력해주세요" type="search">
+			            <input class="datatable-input" placeholder="검색어를 입력해주세요..." type="search">
 			            <button type="submit" class="btn app-btn-secondary button">검색</button>
 			        </div>
 			    </div>  
 				<table class="datatable-table" id="order-table">
 				<thead>
 					<tr>
-						<th data-sortable="true"style="width:12%;" aria-sort="descending" class="datatable-descending" >
+						<th data-sortable="true"style="width:14%;" aria-sort="descending" class="datatable-descending" >
 							<a href="#" class="datatable-sorter">주문번호</a>
 						</th>
-						<th data-sortable="true" style="width:26%;">
+						<th data-sortable="true" style="width:22%;">
 							<a href="#" class="datatable-sorter">구독상품</a>
 						</th>
 						<th data-sortable="true" style="width:10%">
 							<a href="#" class="datatable-sorter">주문자</a></th>
-						<th data-sortable="true" style="width:14%">
+						<th data-sortable="true" style="width:16%">
 							<a href="#" class="datatable-sorter">주문자 연락처</a>
 						</th>
 						<th data-sortable="true" style="width:10%">
@@ -141,7 +164,7 @@ function trackingOpen(){
 											<c:choose>
 												<c:when test="${dto.order_status eq 1}">
 													<div class="text-warning">상품준비중</div>
-													<a class="btn-sm app-btn-secondary" href="#">배송처리</a>
+													<button type="button" class="btn-sm app-btn-secondary" data-bs-toggle="modal" data-bs-target="#shippingModal" data-bs-whatever="@mdo">배송처리</button>
 												</c:when>
 												<c:when test="${dto.order_status eq 2}">
 													<div class="text-success">배송중</div>
@@ -163,6 +186,66 @@ function trackingOpen(){
 											</c:choose>
 										</td>
 									</tr>
+									
+									
+									<div class="modal fade" id="shippingModal" tabindex="-1" aria-labelledby="shippingModalLabel" aria-hidden="true">
+													  <div class="modal-dialog">
+													    <div class="modal-content">
+													      <div class="modal-header">
+													        <h1 class="modal-title fs-5" id="shippingModalLabel">배송처리</h1>
+													        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+													      </div>
+													      <form action="shipping.do" name="shipping" method="post">
+													      <div class="modal-body">
+													          <div class="mb-3">
+													            <label for="recipient-name" class="col-form-label">택배사</label>
+													            <select class="custom-select form-control" id="shipInfo" disabled>
+																	<option selected="">CJ대한통운</option>
+																</select>
+													          </div>
+													          <div class="mb-3">
+													            <label for="message-text" class="col-form-label">운송장번호</label>
+													            <input type="text" class="form-control" id="shipNum">
+													          </div>
+													          <div class="mb-3">
+													            <label for="message-text" class="col-form-label">수취인</label>
+													            <input type="text" class="form-control" id="receiver">
+													          </div>
+													          <div class="mb-3">
+													            <label for="message-text" class="col-form-label">수취인 연락처</label>
+													            <input type="text" class="form-control" id="receiverTel">
+													          </div>
+													          <div class="mb-3">
+													            <label for="message-text" class="col-form-label">배송지</label>
+													            <input type="text" class="form-control" id="receiver">
+													          </div>
+													      </div>
+													      <div class="modal-footer">
+													        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+													        <button type="submit" class="btn btn-primary">배송처리</button>
+													      </div>
+													      </form>
+													    </div>
+													  </div>
+													</div>												
+													<script>
+													const exampleModal = document.getElementById('exampleModal')
+													exampleModal.addEventListener('show.bs.modal', event => {
+													  // Button that triggered the modal
+													  const button = event.relatedTarget
+													  // Extract info from data-bs-* attributes
+													  const recipient = button.getAttribute('data-bs-whatever')
+													  // If necessary, you could initiate an AJAX request here
+													  // and then do the updating in a callback.
+													  //
+													  // Update the modal's content.
+													  const modalTitle = exampleModal.querySelector('.modal-title')
+													  const modalBodyInput = exampleModal.querySelector('.modal-body input')
+
+													  modalTitle.textContent = `New message to ${recipient}`
+													  modalBodyInput.value = recipient
+													})
+													</script>
 					</c:forEach>
 						
 				</tbody>
@@ -178,7 +261,7 @@ function trackingOpen(){
 			</div>
 			
 			
-			<div class="container-xl">
+			<div class="container-xl paging">
 					<nav aria-label="Page navigation example">
 						<ul class="pagination pagination-sm justify-content-center">
 						${pageStr}

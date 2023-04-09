@@ -1,16 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%-- <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %> --%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-.title{
+.title {
 	text-align: center;
 	font-weight: bold;
 	margin: 30px 0;
 }
+
 textarea {
 	width: 50%;
 	height: 6.25em;
@@ -107,140 +109,158 @@ $(function() {
 
 </head>
 <body>
-<%@include file="/WEB-INF/views/header_a.jsp"%> 
-	
+	<%@include file="/WEB-INF/views/header_a.jsp"%>
+
 	<div class="app-wrapper">
-	    <div class="app-content pt-3 p-md-3 p-lg-4">
-		    <div class="container-xl">
-		    <h2 class="title">방문 견적 예약 : ${dto.svc_idx}</h2>
-	<form name="asvcUpdate" action="asvcUpdate.do" method="post">
-	<input type="hidden" name="user_idx" value="${dto.user_idx}" id="user_idx">
-		<ul>
-			<li>예약번호 <input type="text" name="svc_idx" id="svc_idx" value="${dto.svc_idx}" readonly>
-			</li>
+		<div class="app-content pt-3 p-md-3 p-lg-4">
+			<div class="container-xl">
+				<h2 class="title">방문 견적 예약 : ${dto.svc_idx}</h2>
+				<form name="asvcUpdate" action="asvcUpdate.do" method="post">
+					<input type="hidden" name="user_idx" value="${dto.user_idx}"
+						id="user_idx">
+					<ul>
+						<li>예약번호 <input type="text" name="svc_idx" id="svc_idx"
+							value="${dto.svc_idx}" readonly>
+						</li>
 
-			<li>거주형태 <select name="svc_type">
-					<option value="아파트" ${dto.svc_type =="아파트"?"selected":""}>아파트</option>
-					<option value="빌라" ${dto.svc_type =="빌라"?"selected":""}>빌라</option>
-					<option value="주택" ${dto.svc_type =="주택"?"selected":""}>주택</option>
-					<option value="복층" ${dto.svc_type =="복층"?"selected":""}>복층</option>
-					<option value="오피스텔" ${dto.svc_type =="오피스텔"?"selected":""}>오피스텔</option>
-					<option value="기타" ${dto.svc_type =="기타"?"selected":""}>기타</option>
-			</select>
-			</li>
+						<li>거주형태 <select name="svc_type">
+								<option value="아파트" ${dto.svc_type =="아파트"?"selected":""}>아파트</option>
+								<option value="빌라" ${dto.svc_type =="빌라"?"selected":""}>빌라</option>
+								<option value="주택" ${dto.svc_type =="주택"?"selected":""}>주택</option>
+								<option value="복층" ${dto.svc_type =="복층"?"selected":""}>복층</option>
+								<option value="오피스텔" ${dto.svc_type =="오피스텔"?"selected":""}>오피스텔</option>
+								<option value="기타" ${dto.svc_type =="기타"?"selected":""}>기타</option>
+						</select>
+						</li>
 
-			<li>서비스 영역 <input type="checkbox" name="svc_area" value="전체"
-				${dto.svc_area.contains("전체")?"checked":""}>전체 <input
-				type="checkbox" name="svc_area" value="주방"
-				${dto.svc_area.contains("주방")?"checked":""}>주방 <input
-				type="checkbox" name="svc_area" value="침실"
-				${dto.svc_area.contains("침실")?"checked":""}>침실 <input
-				type="checkbox" name="svc_area" value="화장실"
-				${dto.svc_area.contains("화장실")?"checked":""}>화장실 <input
-				type="checkbox" name="svc_area" value="자녀방"
-				${dto.svc_area.contains("자녀방")?"checked":""}>자녀방 <input
-				type="checkbox" name="svc_area" value="옷장"
-				${dto.svc_area.contains("옷장")?"checked":""}>옷장 <input
-				type="checkbox" name="svc_area" value="기타"
-				${dto.svc_area.contains("기타")?"checked":""}>기타
-			</li>
+						<li>서비스 영역 <input type="checkbox" name="svc_area" value="전체"
+							${dto.svc_area.contains("전체")?"checked":""}>전체 <input
+							type="checkbox" name="svc_area" value="주방"
+							${dto.svc_area.contains("주방")?"checked":""}>주방 <input
+							type="checkbox" name="svc_area" value="침실"
+							${dto.svc_area.contains("침실")?"checked":""}>침실 <input
+							type="checkbox" name="svc_area" value="화장실"
+							${dto.svc_area.contains("화장실")?"checked":""}>화장실 <input
+							type="checkbox" name="svc_area" value="자녀방"
+							${dto.svc_area.contains("자녀방")?"checked":""}>자녀방 <input
+							type="checkbox" name="svc_area" value="옷장"
+							${dto.svc_area.contains("옷장")?"checked":""}>옷장 <input
+							type="checkbox" name="svc_area" value="기타"
+							${dto.svc_area.contains("기타")?"checked":""}>기타
+						</li>
 
 
-			<li>거주 평수(공급면적) <input type="text" name="svc_py"
-				value="${dto.svc_py}">
-			</li>
+						<li>거주 평수(공급면적) <input type="text" name="svc_py"
+							value="${dto.svc_py}">
+						</li>
 
-			<li>성함 <input type="text" name="user_name"
-				value="${dto.user_name}">
-			</li>
-			<li>휴대전화 <input type="text" name="user_tel"
-				value="${dto.user_tel}">
-			</li>
+						<li>성함 <input type="text" name="user_name"
+							value="${dto.user_name}">
+						</li>
+						<li>휴대전화 <input type="text" name="user_tel"
+							value="${dto.user_tel}">
+						</li>
 
-			<li>지역 <input id="user_pcode" type="text" name="user_pcode"
-				readonly value="${dto.user_pcode}"><br>
-				<div onclick="findAddr()">우편번호찾기</div> <input id="user_addr"
-				type="text" name="user_addr" readonly value="${dto.user_addr}"><br>
-				<input type="text" name="user_detail" placeholder="상세 주소"
-				value="${dto.user_detail}">
-			</li>
+						<li>지역 <input id="user_pcode" type="text" name="user_pcode"
+							readonly value="${dto.user_pcode}"><br>
+							<div onclick="findAddr()">우편번호찾기</div> <input id="user_addr"
+							type="text" name="user_addr" readonly value="${dto.user_addr}"><br>
+							<input type="text" name="user_detail" placeholder="상세 주소"
+							value="${dto.user_detail}">
+						</li>
 
-			<li>방문 희망일자 ${dto.svc_days} &nbsp;&nbsp; ${dto.svc_time}</li>
+						<li>방문 희망일자 ${dto.svc_days} &nbsp;&nbsp; ${dto.svc_time}</li>
 
-			<label class="detail" for="detail">수정</label>
-			<input type="checkbox" id="detail">
-			<div id="detaildiv">
-				<input id="svc_days" type="date" name="svc_days"
-					value="${dto.svc_days}" onclick="setMinDate()"> <input
-					id="timeA" type="radio" name="svc_time" value="10:00"
-					${dto.svc_time =="10:00"?"checked":""}>10:00<span></span> <input
-					id="timeB" type="radio" name="svc_time" value="13:00"
-					${dto.svc_time =="13:00"?"checked":""}>13:00<span></span> <input
-					id="timeC" type="radio" name="svc_time" value="16:00"
-					${dto.svc_time =="16:00"?"checked":""}>16:00<span></span>
+						<label class="detail" for="detail">수정</label>
+						<input type="checkbox" id="detail">
+						<div id="detaildiv">
+							<input id="svc_days" type="date" name="svc_days"
+								value="${dto.svc_days}" onclick="setMinDate()"> <input
+								id="timeA" type="radio" name="svc_time" value="10:00"
+								${dto.svc_time =="10:00"?"checked":""}>10:00<span></span>
+							<input id="timeB" type="radio" name="svc_time" value="13:00"
+								${dto.svc_time =="13:00"?"checked":""}>13:00<span></span>
+							<input id="timeC" type="radio" name="svc_time" value="16:00"
+								${dto.svc_time =="16:00"?"checked":""}>16:00<span></span>
+						</div>
+						<li>예약상태 <select name="svc_state">
+								<option value="예약확정" ${dto.svc_state =="예약확정"?"selected":""}>예약확정</option>
+								<option value="예약취소" ${dto.svc_state =="예약취소"?"selected":""}>예약취소</option>
+								<option value="견적완료" ${dto.svc_state =="견적완료"?"selected":""}>견적완료</option>
+								<option value="결제대기" ${dto.svc_state =="결제대기"?"selected":""}>결제대기</option>
+								<option value="결제완료" ${dto.svc_state =="결제완료"?"selected":""}>결제완료</option>
+								<option value="결제취소" ${dto.svc_state =="결제취소"?"selected":""}>결제취소</option>
+								<option value="작업완료" ${dto.svc_state =="작업완료"?"selected":""}>작업완료</option>
+						</select>
+						</li>
+
+
+						<li>요청사항<br> <textarea name="svc_req" rows="5" cols="35">${dto.svc_req}</textarea>
+						</li>
+
+						<li>서비스 인지 경로 <input type="text" value="${dto.svc_know}"
+							readonly>
+						</li>
+						<li>관리자 메모<br> <textarea name="svc_memo" rows="5" cols="35">${dto.svc_memo}</textarea>
+						</li>
+					</ul>
+
+					<hr>
+					<c:if test="${empty ingdto}">
+					서비스 희망일:<input type="text" name="svc_datetime" id="svc_datetime" readonly>
+					</c:if>
+					<c:if test="${not empty ingdto}">
+					서비스 희망일:<input type="text" name="svc_datetime" id="svc_datetime" value="${ingdto.svc_datetime}" readonly>
+					</c:if>
+					<table border="1 solid black" cellspacing="0">
+						<thead>
+							<th>결제방식</th>
+							<th>견적금액</th>
+							<th>할인금액</th>
+							<th>결제금액</th>
+							<th>확인/취소</th>
+						</thead>
+						<tbody>
+						<c:if test="${empty ingdto}">
+							<tr>
+								<td><input type="text" name="type" id="type" readonly></td>
+								<td><input type="text" name="estimated" id="estimated" readonly></td>
+								<td><input type="text" name="discount" id="discount" readonly></td>
+								<td><input type="text" name="total" id="total" readonly></td>
+								<td><input type="text" name="pay_state" id="pay_state" readonly></td>
+							</tr>
+							<tr>
+								<td colspan="5">
+								<script src="js/svcIngPopup.js"></script>
+								<input type="button" value="견적 추가" onclick="svcIng()"></td>
+							</tr>
+						</c:if>
+						<c:if test="${not empty ingdto}">
+						<tr>
+								<td><input type="text" name="type" id="type" value="${ingdto.type}"readonly></td>
+								<td><input type="text" name="estimated" id="estimated" value="${ingdto.estimated}" readonly></td>
+								<td><input type="text" name="discount" id="discount" value="${ingdto.discount}" readonly></td>
+								<td><input type="text" name="total" id="total" value="${ingdto.total}" readonly></td>
+								<td><input type="text" name="pay_state" id="pay_state" value="${ingdto.pay_state}" readonly></td>
+							</tr>
+							<tr>
+								<td colspan="5">
+								<script src="js/svcIngContent.js"></script>
+								<input type="button" value="수정" onclick="svcIngContent()"></td>
+						</tr>
+						</c:if>
+						</tbody>
+					</table>
+					<hr>
+					<div>
+						<input type="submit" value="저장하기"> 
+						<input type="reset" value="초기화">
+					</div>
+				</form>
 			</div>
-			<li>예약상태 <select name="svc_state">
-					<option value="예약확정" ${dto.svc_state =="예약확정"?"selected":""}>예약확정</option>
-					<option value="예약취소" ${dto.svc_state =="예약취소"?"selected":""}>예약취소</option>
-					<option value="견적완료" ${dto.svc_state =="견적완료"?"selected":""}>견적완료</option>
-					<option value="결제대기" ${dto.svc_state =="결제대기"?"selected":""}>결제대기</option>
-					<option value="결제완료" ${dto.svc_state =="결제완료"?"selected":""}>결제완료</option>
-					<option value="결제취소" ${dto.svc_state =="결제취소"?"selected":""}>결제취소</option>
-					<option value="작업완료" ${dto.svc_state =="작업완료"?"selected":""}>작업완료</option>
-			</select>
-			</li>
-
-
-			<li>요청사항<br> <textarea name="svc_req" rows="5" cols="35">${dto.svc_req}</textarea>
-			</li>
-
-			<li>서비스 인지 경로 <input type="text" value="${dto.svc_know}"
-				readonly>
-			</li>
-			<li>관리자 메모<br> <textarea name="svc_memo" rows="5" cols="35">${dto.svc_memo}</textarea>
-			</li>
-		</ul>
-
-		<hr>
-		서비스 희망일:~~해당 부분 추가중입니다<br>
-		(정보추가 버튼 누르면 팝업창 뜨고 데이터베이스에 정보 넣는 것까지만 지금 구현했습니다)~~
-
-		결제내역
-		<table border="1 solid black" cellspacing="0">
-			<thead>
-				<th>결제방식</th>
-				<th>견적금액</th>
-				<th>할인금액</th>
-				<th>결제금액</th>
-				<th>확인/취소</th>
-			</thead>
-			<tbody>
-				<tr>
-					<td>작업중입니다!</td>
-					<td>작업중입니다!</td>
-					<td>작업중입니다!</td>
-					<td>작업중입니다!</td>
-					<td>작업중입니다!</td>
-				</tr>
-			</tbody>
-		</table>
-		<div>
-			<script src="js/svcIngPopup.js"></script>
-			<input type="button" value="정보 추가" onclick="svcIng()">
-			<!-- onclick시 서비스 진행 idx,예약번호idx 넘기기-->
-			<!-- 서비스 진행일자, 견적금액, 할인금액, 결제 금액, 결제 상태 넘기기-->
 		</div>
-		<hr>
-
-		<div>
-			<input type="submit" value="저장하기"> 
-			<input type="reset" value="초기화">
-		</div>
-	</form>
-</div>
-</div>
-<%@include file="/WEB-INF/views/footer_a.jsp"%>
-</div>
+		<%@include file="/WEB-INF/views/footer_a.jsp"%>
+	</div>
 
 	<!-- 현재 시간보다 이전 시간 선택 불가 제약 -->
 	<script>
@@ -289,9 +309,9 @@ $(function() {
 	</script>
 
 	<script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-      crossorigin="anonymous">
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+		crossorigin="anonymous">
 	</script>
 </body>
 
