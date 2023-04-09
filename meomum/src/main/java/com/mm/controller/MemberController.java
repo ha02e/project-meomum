@@ -358,6 +358,7 @@ public class MemberController {
 	Integer user_idx = mdao.findPWD(input_name, input_tel,input_id);
 	ModelAndView mav = new ModelAndView();
 	mav.addObject("user_idx",user_idx);
+	mav.addObject("user_id",input_id);
     mav.setViewName("mmJson");
     return mav;
 	}
@@ -376,11 +377,6 @@ public class MemberController {
     return mav;
 	}
 	
-	
-	@RequestMapping("/userJoin")
-	public void userJoin() {
-		
-	}
 	
 	/**이메일 인증*/
 	@RequestMapping("/mailCheck.do")
@@ -418,6 +414,32 @@ public class MemberController {
 		}
 		return mav;
 		
+	}
+	
+	
+	/*임시 비밀번호 발급*/
+	@RequestMapping(value="/pwdChangeEmail.do",method = RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView pwdChangeEmail(@RequestParam("user_idx")int user_idx,@RequestParam("user_id")String user_id ) {
+
+	
+		String newPwd = mailService.pwdChange(user_id);
+		ModelAndView mav = new ModelAndView();
+	    
+		mav.setViewName("mmJson");
+		
+		if(newPwd.equals("")||newPwd==null) {
+			mav.addObject("msg", "임시 비밀번호가 발급되었습니다.");
+			
+		}else {
+			int result = mdao.updatePWD(newPwd, user_idx);
+			if(result>0) {
+				mav.addObject("msg", "임시 비밀번호가 전송되었습니다.");
+			}else {
+				mav.addObject("msg", "임시 비밀번호 발급에 실패하였습니다.");
+			}
+		}
+		return mav;
 	}
 
 	

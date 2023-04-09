@@ -12,10 +12,11 @@ import org.springframework.stereotype.Component;
 
 
 @Component
-public class MailSendService {
+public class MailSendService{
 	@Autowired
 	private JavaMailSenderImpl mailSender;
-	private int authNumber; 
+	private int authNumber;
+	private String authPWDNumber; 
 	
 	/**이메일 인증*/
 
@@ -47,7 +48,9 @@ public class MailSendService {
 	
 	}
 	
-	//이메일 전송 메소드
+	
+	
+	//임시 비밀번호 이메일 전송 메소드
 	public void mailSend(String setFrom, String toMail, String title, String content) { 
 		MimeMessage message = mailSender.createMimeMessage();
 		// true 매개값을 전달하면 multipart 형식의 메세지 전달이 가능.문자 인코딩 설정도 가능하다.
@@ -65,6 +68,46 @@ public class MailSendService {
 		}
 	}
 
+	
+
+/**임시비밀번호 발급*/	
+	public void makeRandomPWD() {
+		
+		char[] charSet = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
+                'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+
+        String str = "";
+
+        // 문자 배열 길이의 값을 랜덤으로 10개를 뽑아 구문을 작성함
+        int idx = 0;
+        for (int i = 0; i < 10; i++) {
+            idx = (int) (charSet.length * Math.random());
+            str += charSet[idx];
+        }
+		
+	
+		System.out.println("임시비밀번호  : " + str);
+		authPWDNumber = str;
+	}
+	
+	public String pwdChange(String email) {
+
+		makeRandomPWD();
+		String setFrom = "wldnssj@gmail.com"; // email-config에 설정한 자신의 이메일 주소를 입력 
+		String toMail = email;
+		String title = "머뭄 임시 비밀번호 입니다."; // 이메일 제목 
+		String content = 
+				"홈페이지를 방문해주셔서 감사합니다." + 	//html 형식으로 작성 ! 
+                "<br><br>" + 
+			    "고객님의 임시 비밀번호는 " + authPWDNumber + "입니다." + 
+			    "<br>" + 
+			    "기존의 비밀번호는 사용할 수 없으며 해당 비밀번호로 로그인후 변경해 주시기 바랍니다. "; //이메일 내용 삽입
+		mailSend(setFrom, toMail, title, content);
+		
+		return authPWDNumber;
+	
+	}
+	
 
 
 }

@@ -88,14 +88,14 @@
 		m.user_tel,
 		m.joindate,
 		COUNT(DISTINCT sd.svc_idx) AS svcCount,
-		COUNT(DISTINCT od.svc_idx) AS
+		COUNT(DISTINCT od.order_idx) AS
 		orderCount,
 		COUNT(DISTINCT r.review_idx) AS reviewCount,
 		m.user_memo
 		FROM member m
-		LEFT JOIN svc_date sd ON m.user_idx = sd.user_idx
+		LEFT JOIN svc_member sd ON m.user_idx = sd.user_idx
 		LEFT
-		JOIN svc_detail od ON m.user_idx = od.user_idx
+		JOIN orders od ON m.user_idx = od.user_idx
 		LEFT JOIN review r ON
 		m.user_idx = r.user_idx
 		<if test="fvalue != null">
