@@ -55,6 +55,14 @@ public class OrderController {
 		return mav;
 	}
 
+	
+	@RequestMapping("/orderReport.do")
+	public String orderReport() {
+		return "order/orderReport";
+	}
+	
+	
+	
 	public List<OrderReportDTO> reportPage(int cp, int ls) {
 		int start = (cp - 1) * ls + 1;
 		int end = cp * ls;
