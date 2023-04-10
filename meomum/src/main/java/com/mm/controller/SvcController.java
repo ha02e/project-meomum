@@ -1,8 +1,8 @@
 package com.mm.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
-
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,10 +20,16 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.mm.member.model.MemberDAO;
 import com.mm.member.model.MemberDTO;
+import com.mm.point.model.PointDAO;
+import com.mm.point.model.ResultDTO;
 import com.mm.svc.model.SvcContentDTO;
 import com.mm.svc.model.SvcDAO;
 import com.mm.svc.model.SvcMemDTO;
 import com.mm.svc.model.SvcSelectAllDTO;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import com.mm.svc.model.SvcDetailDTO;
 import com.mm.svc.model.SvcIngDTO;
 import com.mm.svc.model.SvcDateDTO;
@@ -34,10 +41,20 @@ public class SvcController {
 	@Autowired
 	private SvcDAO svcDao;
 	private MemberDAO mdao;
+	private PointDAO pdao;
 	
 	@RequestMapping("/svc.do")
-	public String svc() {
-		return "svc/svcForm";
+	public ModelAndView svc(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		
+		if(session.getAttribute("ssInfo")==null) {
+			mav.addObject("msg", "로그인 후 이용가능합니다");
+			mav.addObject("link", "login.do");
+			mav.setViewName("svc/msg");
+		}else {
+			mav.setViewName("svc/svcForm");
+		}
+		return mav;
 	}
 	
 	/**방문 견적 신청*/
@@ -54,7 +71,7 @@ public class SvcController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("msg",msg);
 		mav.addObject("link",link);
-		mav.setViewName("/msg");
+		mav.setViewName("svc/msg");
 		return mav;
 	}
 	
@@ -72,10 +89,15 @@ public class SvcController {
 	
 	/**관리자 페이지-예약 리스트*/
 	@RequestMapping("/asvcList.do")
-	public ModelAndView asvcList() {
-		List<SvcSelectAllDTO> list = svcDao.svcAdminList();
+	public ModelAndView asvcList(@RequestParam(value="cp",defaultValue="1")int cp) {
+		int totalCnt = svcDao.getTotalCnt();
+		int listSize = 10;
+		int pageSize = 5;
+		String pageStr = com.mm.module.PageModule.makePage("asvcList.do", totalCnt, listSize, pageSize, cp);
+		List<SvcSelectAllDTO> list = svcDao.svcAdminList(cp,listSize);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("svcDTO", list);
+		mav.addObject("pageStr", pageStr);
 		mav.setViewName("svc/a_svcList");
 		return mav;
 	}
@@ -139,7 +161,7 @@ public class SvcController {
 	
 	/**관리자-서비스 견적 상세 보기*/
 	@RequestMapping("asvcIngContent.do")
-	public ModelAndView svcIngContent(@RequestParam("svc_idx")String idx) {
+	public ModelAndView asvcIngContent(@RequestParam("svc_idx")String idx) {
 		SvcIngDTO ingDto = svcDao.svcIngContent(idx);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("ingdto", ingDto);
@@ -163,30 +185,24 @@ public class SvcController {
 		mav.addObject("msg",msg);
 		mav.addObject("link",link);
 		
-		mav.setViewName("/msg");
+		mav.setViewName("svc/msg");
 		
 		return mav;
 	}
 	
 	/**관리자-서비스 신청 수정*/
 	@RequestMapping("/asvcIngUpdate.do")
-	public ModelAndView asvcIngUpdate(SvcIngDTO dto) {
-		int result = svcDao.svcIngUpdate(dto);
-		
-		String msg = result>0?"정보가 수정되었습니다":"다시 시도해주세요";
-		String link = result>0? "asvcContent.do?svc_idx="+dto.getSvc_idx():"asvcIngPopup.do";
-		
+	public ModelAndView asvcIngUpdate(SvcIngDTO dto,SvcMemDTO memDto) {
+		int ingUpdate = svcDao.svcIngUpdate(dto);
+		/* int memUpdate = svcDao.svcStateUpdate(memDto); */
 		ModelAndView mav = new ModelAndView();
-		
-		mav.addObject("msg", msg);
-		mav.addObject("link",link);
+	
 		mav.setViewName("svc/a_svcIngContent");
 		return mav;
 	}
 
-	/**관리자-서비스 신청 삭제*/
 
-	/**마이페이지-방문 견적 내역*/
+	/**마이페이지-방문 견적 내역 리스트*/
 	@RequestMapping("/svcList.do")
 	public ModelAndView svcUserList(HttpSession session) {
 		session.getAttribute("ssInfo");
@@ -201,13 +217,54 @@ public class SvcController {
 		return mav;
 	}
 	
-	/**마이페이지-예약 상세 보기*/
+	/**마이페이지-정리일상 진행 리스트*/
+	@RequestMapping("/svcIngList.do")
+	public ModelAndView svcIngList(HttpSession session) {
+		session.getAttribute("ssInfo");
+		MemberDTO sdto =(MemberDTO) session.getAttribute("ssInfo");
+		
+		int user_idx = sdto.getUser_idx();
+		List<SvcIngDTO> list = svcDao.svcIngList(user_idx);
+		ModelAndView mav = new ModelAndView();
+		
+		mav.addObject("list", list);
+		mav.setViewName("svc/svcIngList");
+		return mav;
+		
+	}
+	
+	/**마이페이지-예약 상세 보기(방문 견적 신청 내역)*/
 	@RequestMapping("/svcContent.do")
 	public ModelAndView svcInfo(@RequestParam("svc_idx")String idx) {
 		SvcContentDTO dto = svcDao.svcContent(idx);
+		
 		ModelAndView mav = new ModelAndView();
+		
 		mav.addObject("dto",dto);
 		mav.setViewName("svc/svcContent");
+
+		return mav;
+	}
+	
+	/**마이페이지-예약 상세 보기(정리일상 진행 현황)*/
+	@RequestMapping("/svcIngContent.do")
+	public ModelAndView svcIngContent_a(@RequestParam("svc_idx")String idx,@RequestParam("user_idx")int user_idx) {
+		SvcContentDTO dto = svcDao.svcContent(idx);
+		SvcIngDTO ingdto = svcDao.svcIngContent(idx);
+		System.out.println(user_idx);
+		/* int point = pdao.pointTotal(user_idx); */
+	/*	ResultDTO rdto = pdao.pointTotal(user_idx);
+		System.out.println(rdto);*/
+		ModelAndView mav = new ModelAndView();
+		
+		mav.addObject("dto",dto);
+
+		mav.addObject("ingdto",ingdto);
+		/* mav.addObject("point",point); */
+		/* mav.addObject("rdto", rdto); */
+	
+		mav.setViewName("svc/svcIngContent");
+	
 		return mav;
 	}
 	
@@ -237,17 +294,17 @@ public class SvcController {
 		mav.addObject("msg",msg);
 		mav.addObject("link",link);
 		
-		mav.setViewName("/msg");
+		mav.setViewName("svc/msg");
 		
 		return mav;
 	}
 	
 
 	/**사용자-방문견적 예약 취소*/
-	@RequestMapping("/svcDelete.do")
-	public ModelAndView svcDelete(@RequestParam("svc_idx")String svc_idx) {
-		int stateResult=svcDao.svcStateCancle(svc_idx);
-		int dateResult = svcDao.svcDateCancle(svc_idx);
+	@RequestMapping("/svcCancle.do")
+	public ModelAndView svcDelete(@ModelAttribute SvcContentDTO dto) {
+		int stateResult=svcDao.svcStateCancle(dto);
+		int dateResult = svcDao.svcDateCancle(dto);
 		
 		ModelAndView mav = new ModelAndView();
 		
@@ -257,8 +314,103 @@ public class SvcController {
 		mav.addObject("msg",msg);
 		mav.addObject("link",link);
 		
-		mav.setViewName("/msg");
+		mav.setViewName("svc/msg");
 		
 		return mav;
+	}
+	
+	/**예약시간 가져오기*/
+	@RequestMapping(value="/svcCalendar.do")
+	public ModelAndView SvcCalendarForm() {
+		
+		Calendar cal = Calendar.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("M월");
+		String thisMonth = sdf.format(cal.getTime());
+		String month = sdf2.format(cal.getTime());
+		
+		List<SvcSelectAllDTO> list = svcDao.svcAdminLista();
+		List<SvcIngDTO> svcing = svcDao.svcIngCalList();
+		
+		JSONArray jsonArray = new JSONArray();
+		int svcing_count = 0;
+		int svc_cancel = 0;
+		int svc_count = 0;
+		for(SvcIngDTO dto: svcing) {
+			
+			// SVC_DATETIME 컬럼값을 문자열로 받아와서 이번달과 같은지 비교하기
+			String svcDatetime = dto.getSvc_datetime(); // 예시로 dto에서 가져온 값
+			if (svcDatetime.substring(0, 7).equals(thisMonth)) {
+				svcing_count ++; // 
+			}
+			JSONObject jsonObject = new JSONObject();
+			
+			dto.getSvc_datetime();
+			String name= svcDao.sveIngCalName(dto.svc_idx);
+			
+			jsonObject.put("title", name+"님 서비스 진행");
+			jsonObject.put("start", dto.getSvc_datetime()+":00");
+			jsonObject.put("backgroundColor", "red");
+			jsonObject.put("textColor","white" ); // 폰트 색상을 지정
+			jsonObject.put("borderColor", "red");
+			jsonObject.put("borderWidth", "1px");
+			jsonObject.put("url", "asvcContent.do?svc_idx="+dto.getSvc_idx());
+			jsonObject.put("className", "serviceTitle");
+
+			
+			jsonArray.add(jsonObject);
+			
+			
+		}
+		
+		for (SvcSelectAllDTO dto : list) {
+			String svcDays = dto.getSvc_days().substring(0, 7);
+		    if (svcDays.equals(thisMonth)) {
+		    	svc_count++;
+		    }
+			if(dto.getSvc_state().equals("예약취소")) {
+				svc_cancel++;
+			}
+			
+			JSONObject jsonObject = new JSONObject();
+			if (!dto.getSvc_time().startsWith("C")) { // dto.getSvc_time()의 값이 "C"로 시작하지 않는 경우에만 실행
+				  jsonObject.put("title", dto.getUser_name() + "님 방문견적");
+				  jsonObject.put("start", dto.getSvc_days() + "T" + dto.getSvc_time()+":00");
+				
+			 String timeStr = dto.getSvc_time();
+			  int hour = Integer.parseInt(timeStr.substring(0, 2));
+
+			    
+			  if (hour == 10) {
+			    jsonObject.put("className", "time1");
+			  } else if (hour == 13) {
+			   
+		        jsonObject.put("className", "time2");
+			  } else {
+			   
+		        jsonObject.put("className", "time3");
+			  }
+	
+			  jsonObject.put("borderWidth", "1px");
+			  jsonObject.put("url", "asvcContent.do?svc_idx="+dto.getSvc_idx());
+		
+			  jsonArray.add(jsonObject);
+			}
+			  
+		}
+		String jsonStr = jsonArray.toString();
+
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("svcing_count",svcing_count);
+		mav.addObject("svc_cancel",svc_cancel);
+		mav.addObject("svc_count",svc_count);
+		mav.addObject("month",month);
+		
+		
+			mav.addObject("svcDTO", list);
+		    mav.addObject("svcJson", jsonStr); // jsonStr을 svcJson이라는 이름으로 전달
+		    mav.setViewName("svc/svcCalendar");
+		    return mav;
 	}
 }

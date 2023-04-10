@@ -55,7 +55,7 @@
 								<ul>
 									<li><a href="myAskList.do">간단 견적 문의 내역</a></li>
 									<li><a href="svcList.do">방문 견적 예약 내역</a></li>
-									<li><a href="#">정리일상 진행 현황</a></li>
+									<li><a href="svcIngList.do">정리일상 진행 현황</a></li>
 								</ul>
 							</div>
 						</div>
@@ -71,7 +71,7 @@
 									<li><a href="myOrderList.do?user_idx=${sessionScope.ssInfo.user_idx}">구독상품</a></li>
 									<li><a href="#">장바구니</a></li>
 									<li><a href="#">찜한 목록</a></li>
-									<li><a href="#">주문/배송 내역</a></li>
+									<li><a href="orderReport.do">주문/배송 내역</a></li>
 									<li><a href="#">취소/환불 내역</a></li>
 								</ul>
 							</div>

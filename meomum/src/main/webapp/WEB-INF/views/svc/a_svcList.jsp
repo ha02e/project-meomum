@@ -20,7 +20,7 @@
 </style>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
-<script src="js/a_svcList.js"></script>
+<script src="js/svc/a_svcList.js"></script>
 
 </head>
 <body>
@@ -84,6 +84,9 @@
 					<th>상태</th>
 				</tr>
 				<thead>
+				
+
+				
 				<tbody id="tableBody">
 				<c:if test="${empty svcDTO}">
 					<tr>
@@ -106,6 +109,12 @@
 				</tbody>
 			</table>
 			<input type="submit" value="선택 삭제">
+			<nav class="d-flex justify-content-between align-items-center">
+				<div class="col-10 justify-content-center align-items-start text-center">
+					<span class="pagination pagination-sm justify-content-center">
+						${pageStr} </span>
+				</div>
+			</nav>
 		</fieldset>
 	</section>
 </div>

@@ -43,57 +43,24 @@
 		</div>
 	</form>
 	
+	<!-- 견적금액과 할인금액을 계산해서 결제금액 출력 -->
+	<script src="js/svc/getTotal.js"></script>
+	
+	<!-- datetime-local 오늘 이전 날짜는 불가하도록 지정 -->
+	<script src="js/svc/setMinDatetimeLocal.js"></script>
+	
+	
 	<script>
-	//스크립트가 아예 안됨(수정)
-	/**견적금액과 할인금액을 계산해서 결제금액 출력*/
-	function getTotal() {
-		var estimated = document.getElementById('estimated').value;
-		var discount = document.getElementById('discount').value;
-		var total = document.getElementById('total');
-		
-		dateElement.addEventListener('input', function() {
-			if (estimated && discount) {
-				var result = parseInt(estimated) - parseInt(discount);
-					total.value = result;
-				} else {
-					total.value = "";
-				}
-		  });
-		}
-		
+		/**수정한 값 a_svcContent.jsp에 반영*/
+/* 		function parentReload() {
+			
+			opener.document.getElementById('svc_state').value = pdocument.getElementById('pay_state').value;
+		} */
 
-	/**datetime-local 오늘 이전 날짜는 불가하도록 지정*/
-	var estimated = document.getElementById('estimated');
-	  var discount = document.getElementById('discount');
-	  var total = document.getElementById('total');
-	
-	  estimated.addEventListener('input', function() {
-	    getTotal();
-	  });
-	
-	  discount.addEventListener('input', function() {
-	    getTotal();
-	  });
-	
-	  function getTotal() {
-	    if (estimated.value && discount.value) {
-	      var result = parseInt(estimated.value) - parseInt(discount.value);
-	      total.value = result;
-	    } else {
-	      total.value = "";
-	    }
-	  }
-	}
-		
-	/**a_svcContent.jsp에 값 보내기*/
-	 function parentReload(){
+		function popupClose() {
 			window.opener.location.reload();
-			alert('${msg}');
-		} 
-	
-	function popupClose(){
-		window.close();
-	}
+			window.close();
+		}
 	</script>
 
 </body>

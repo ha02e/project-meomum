@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mm.shipping">
+	<insert id="shipInsert" parameterType="com.mm.shipping.model.ShippingDTO">
+		insert into
+			shipping
+		values(
+			ship_idx.nextval,
+			#{user_idx},
+			'일반배송',
+			#{order_idx},
+			#{pro_idx},
+			#{ship_info},
+			#{ship_num},
+			#{man_name},
+			#{man_tel},
+			sysdate,
+			sysdate+2
+		)
+	</insert>
+</mapper>

@@ -62,6 +62,8 @@
 			</div>
 		</div>
 	</div>
+	
+	
 	<div class="container my-5">
 		<div class="row justify-content-center">
 			<div class="col-md-8">
@@ -86,8 +88,8 @@
 					<thead class="thead-light">
 						<tr>
 							<th scope="col">번호</th>
-							<th scope="col">제목</th>
 							<th scope="col">카테고리</th>
+							<th scope="col">제목</th>
 							<th scope="col">작성자</th>
 							<th scope="col">등록일</th>
 							<th scope="col">조회</th>
@@ -107,8 +109,8 @@
 										<c:url var="contentUrl" value="ntcContent.do">
 											<c:param name="ntc_idx" value="${lists.ntc_idx}" />
 										</c:url>
-										<td><a href="${contentUrl }">${lists.ntc_title}</a></td>
 										<td>${lists.ntc_ctg}</td>
+										<td><a href="${contentUrl }">${lists.ntc_title}</a></td>
 										<td>관리자</td>
 										<td>${lists.ntc_date}</td>
 										<td>${lists.ntc_viewCnt}</td>
@@ -129,6 +131,11 @@
 			</div>
 		</div>
 	</div>
+	
+	
+	</ul>
+	
+	
 	<%@include file="/WEB-INF/views/footer.jsp"%>
 </body>
 </html>

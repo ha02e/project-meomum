@@ -62,50 +62,8 @@ input#detail:checked+div#detaildiv {
 
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
-
-<script>
-$(function() {
-	function timeSelect(){		
-		//span 태그 내 텍스트 빈 문자열
-		$('#timeA+span, #timeB+span, #timeC+span').text("");
-		
-	  //컨트롤러로 사용자가 선택한 날짜 전송
-	    $.ajax({
-	      url: "svcTimeSelect.do",
-	      data: {
-	        svc_days: $("#svc_days").val()
-	      },
-	      dataType: 'json',
-	      method: "get"
-	    }).done(function(data) {
-	      console.log(data);
-			
-	    //컨트롤러에서 전달받은 값이 timeA,B,C와 같으면 버튼 빨강색으로 변화
-	    if (data != null) {
-  			for (let i = 0; i < data.times.length; i++) {
-    			if (data.times[i] == $("#timeA").val()) {
-     				$('#timeA+span').text('예약불가');
-      				$('#timeA+span').css('color','red');
-    			} else if (data.times[i] == $("#timeB").val()) {
-     				$('#timeB+span').text('예약불가');
-      				$('#timeB+span').css('color','red');
-    			} else {
-      				$('#timeC+span').text('예약불가');
-      				$('#timeC+span').css('color','red');
-    			}
-  			}
-		}
-	   }).fail(function() {
-	      alert('다시 시도해주세요');
-	   });
-	}
-	timeSelect();
-
-	$("#svc_days").change(function(){
-		timeSelect();
-	});
-});
-</script>
+<!-- 예약 완료된 시간 표시 -->
+<script src="js/svc/a_timeSelect.js"></script>
 
 </head>
 <body>
@@ -183,7 +141,7 @@ $(function() {
 							<input id="timeC" type="radio" name="svc_time" value="16:00"
 								${dto.svc_time =="16:00"?"checked":""}>16:00<span></span>
 						</div>
-						<li>예약상태 <select name="svc_state">
+						<li>예약상태 <select name="svc_state" id="svc_state">
 								<option value="예약확정" ${dto.svc_state =="예약확정"?"selected":""}>예약확정</option>
 								<option value="예약취소" ${dto.svc_state =="예약취소"?"selected":""}>예약취소</option>
 								<option value="견적완료" ${dto.svc_state =="견적완료"?"selected":""}>견적완료</option>
@@ -231,7 +189,7 @@ $(function() {
 							</tr>
 							<tr>
 								<td colspan="5">
-								<script src="js/svcIngPopup.js"></script>
+								<script src="js/svc/IngPopup.js"></script>
 								<input type="button" value="견적 추가" onclick="svcIng()"></td>
 							</tr>
 						</c:if>
@@ -245,7 +203,7 @@ $(function() {
 							</tr>
 							<tr>
 								<td colspan="5">
-								<script src="js/svcIngContent.js"></script>
+								<script src="js/svc/IngContent.js"></script>
 								<input type="button" value="수정" onclick="svcIngContent()"></td>
 						</tr>
 						</c:if>
@@ -277,36 +235,8 @@ $(function() {
 	</script>
 
 	<!-- 카카오 주소 API -->
-	<script
-		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-	<script>
-		function findAddr(){
-			var width = 500; //팝업의 너비
-			var height = 600; //팝업의 높이
-	
-			new daum.Postcode({
-		 		width: width,
-		 		height: height,
-        		oncomplete: function(data) {
-            		var zonecode = data.zonecode;
-            		var roadAddr = data.roadAddress; // 도로명 주소 변수
-            		var jibunAddr = data.jibunAddress; // 지번 주소 변수
-
-            		document.getElementById('user_pcode').value = zonecode;
-            		
-            		if(roadAddr !== ''){
-                		document.getElementById('user_addr').value = roadAddr;
-            		} 
-            		else if(jibunAddr !== ''){
-                		document.getElementById('user_addr').value = jibunAddr;
-            		}
-        		}
-    		}).open({
-        		left: (window.screen.width / 2) - (width / 2),
-        		top: (window.screen.height / 2) - (height / 2)
-    	});
-	}
-	</script>
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script src="js/svc/findAddr.js"> </script>
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"

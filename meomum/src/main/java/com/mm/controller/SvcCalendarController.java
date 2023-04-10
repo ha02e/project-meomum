@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class SvcCalendarController {
-	@RequestMapping(value="/svcCalendar.do")
+	@RequestMapping(value="/svcCalendars.do")
 	public String SvcCalendarForm() {
 		return "svc/svcCalendar";
 	}

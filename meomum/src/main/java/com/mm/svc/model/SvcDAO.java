@@ -10,7 +10,8 @@ public interface SvcDAO {
 	
 	public List<String> svcTimeSelect(String userdate);
 	
-	public List<SvcSelectAllDTO> svcAdminList();
+	public List<SvcSelectAllDTO> svcAdminList(int cp,int ls);
+	public int getTotalCnt();
 	
 	public SvcContentDTO svcContent(String idx);
 	public SvcIngDTO svcIngContent(String idx);
@@ -19,13 +20,20 @@ public interface SvcDAO {
 	public int svcDetailUpdate(SvcDetailDTO dto);
 	public int svcDateUpdate(SvcDateDTO dto);
 	public int svcIngUpdate(SvcIngDTO dto);
+	/* public int svcStateUpdate(SvcMemDTO dto); */
 	
 	public int svcIngInsert(SvcIngDTO dto);
 	
 	public List<SvcSelectAllDTO> svcUserList(int user_idx);
+	public List<SvcIngDTO> svcIngList(int user_idx);
 	
-	public int svcStateCancle(String svc_idx);
-	public int svcDateCancle(String svc_idx);
+	public int svcStateCancle(SvcContentDTO dto);
+	public int svcDateCancle(SvcContentDTO dto);
+	public List<SvcSelectAllDTO> svcAdminLista();
 	
 	public List<SvcSelectAllDTO> svcSelectDetail(String minDate, String maxDate, int category, String keyword, List<String> state);
+
+	public List<SvcIngDTO> svcIngCalList();
+	public String sveIngCalName(String svc_idx);
+
 }

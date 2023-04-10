@@ -4,14 +4,29 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.*;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
+import com.fasterxml.jackson.annotation.JacksonInject;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
 
 public class MemberDAOImple implements MemberDAO {
+	
+
 	private SqlSessionTemplate sqlMap;
 
+	
 	public MemberDAOImple(SqlSessionTemplate sqlMap) {
 		super();
 		this.sqlMap = sqlMap;
@@ -298,7 +313,7 @@ public class MemberDAOImple implements MemberDAO {
 		
 		Map map = new HashMap();
 		map.put("user_name", user_name);
-		map.put("user_tel", user_tel);
+	map.put("user_tel", user_tel);
 		map.put("user_id", user_id);
 		
 		Integer user_idx = sqlMap.selectOne("findPWD", map);
@@ -311,4 +326,30 @@ public class MemberDAOImple implements MemberDAO {
 		boolean result = sqlMap.selectOne("memberIdcheck", input_id)==null?true:false;
 		return result;
 	}
+	
+	
+	/**회원 탈퇴시 서비스 이용 중인게 있는지 확인*/
+	@Override
+	public int dropSelectInfo(int user_idx) {
+		int result = sqlMap.selectOne("dropSelectInfo",user_idx);
+		
+	return result;
+	}
+	
+	/**회원 탈퇴*/
+	@Override
+	public int deleteMember(int user_idx,String user_id) {
+		int result = sqlMap.delete("deleteMember",user_idx);
+		
+		if(result>0) {
+			Map map = new HashMap();
+			map.put("user_idx", user_idx);
+			map.put("user_id", user_id);
+			
+			sqlMap.insert("insertMemberDrop",map);
+		}
+		return result;
+	}
+
+	
 }

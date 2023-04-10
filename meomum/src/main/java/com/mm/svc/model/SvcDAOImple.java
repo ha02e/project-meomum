@@ -47,9 +47,29 @@ public class SvcDAOImple implements SvcDAO {
 	
 	/**관리자: 방문 견적 예약 신청자 리스트*/
 	@Override
-	public List<SvcSelectAllDTO> svcAdminList() {
-		List<SvcSelectAllDTO> list = sqlMap.selectList("svcAdminList");
+	public List<SvcSelectAllDTO> svcAdminList(int cp, int ls) {
+		int start = (cp-1)*ls+1;
+		int end = cp*ls;
+		Map map = new HashMap();
+		map.put("start", start);
+		map.put("end", end);
+		List<SvcSelectAllDTO> list = sqlMap.selectList("svcAdminList",map);
 		return list;
+	}
+	
+	/**관리자: 방문 견적 예약 신청자 리스트(캘린더)*/
+	@Override
+	public List<SvcSelectAllDTO> svcAdminLista() {
+		List<SvcSelectAllDTO> list = sqlMap.selectList("svcAdminLista");
+		return list;
+	}
+	
+	/**관리자:방문 견적 예약 신청자 리스트(총 게시글)*/
+	@Override
+	public int getTotalCnt() {
+		int count = sqlMap.selectOne("svcAdminListCnt");
+		count = count==0?1:count;
+		return count;
 	}
 	
 	/**관리자: 방문 예약 신청자 세부 검색*/
@@ -115,6 +135,12 @@ public class SvcDAOImple implements SvcDAO {
 		return count;
 	}
 	
+//	@Override
+//	public int svcStateUpdate(SvcMemDTO dto) {
+//		int count = sqlMap.update("svcStateUpdate",dto);
+//		return count;
+//	}
+	
 	/**마이페이지 : 방문 예약 신청 내역*/
 	@Override
 	public List<SvcSelectAllDTO> svcUserList(int user_idx) {
@@ -122,17 +148,39 @@ public class SvcDAOImple implements SvcDAO {
 		return list;
 	}
 	
+	/**마이페이지 : 정리일상 진행 내역*/
+	@Override
+	public List<SvcIngDTO> svcIngList(int user_idx) {
+		List<SvcIngDTO> list = sqlMap.selectList("svcIngList",user_idx);
+		return list;
+	}
+	
 	/**마이페이지: 예약 삭제(방문 견적 신청)*/
 	//예약 상태 변경(svc_member)
 	@Override
-	public int svcStateCancle(String svc_idx) {
-		int count = sqlMap.update("svcStateCancle", svc_idx);
+	public int svcStateCancle(SvcContentDTO dto) {
+		int count = sqlMap.update("svcStateCancle", dto);
 		return count;
 	}
 	//예약 날짜 비활성화(svc_date)
 	@Override
-	public int svcDateCancle(String svc_idx) {
-		int count = sqlMap.update("svcDateCancle", svc_idx);
+	public int svcDateCancle(SvcContentDTO dto) {
+		int count = sqlMap.update("svcDateCancle", dto);
 		return count;
+	}
+	
+	/**캘린더 서비스 진행 고객 가져오기*/
+	@Override
+	public List<SvcIngDTO> svcIngCalList() {
+		List<SvcIngDTO> lists = sqlMap.selectList("svcIngCalList");
+		
+	
+		return lists;
+	}
+	/**캘린더 서비스 진행 고객 이름만 가져오기*/
+	@Override
+	public String sveIngCalName(String svc_idx) {
+		String user_name = sqlMap.selectOne("sveIngCalName", svc_idx);
+		return user_name;
 	}
 }

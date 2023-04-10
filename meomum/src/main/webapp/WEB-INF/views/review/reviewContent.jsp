@@ -61,7 +61,7 @@ element.style {
 						</c:forEach>
 					</li>
 					<li><i class="bi bi-clock"></i>${dto.writedate}</li>
-                  	<li><i class="bi bi-hand-index"></i>${dto.readnum}</li>
+                  	<li><i class="bi bi-eye-fill"></i>${dto.readnum}</li>
                 </ul>
               </div>
 
