@@ -162,7 +162,7 @@ function updateShippingCost() {
 					<form name="cartForm" method="get" action="orderList.do">
 					<tr>
 						<td>
-						<input type="hidden" name="pro_idx" value="${list.pro_idx}" >
+						<input type="hidden" name="pro_idx" id="pro_idx" value="${list.pro_idx}" >
 						<input type="hidden" name="cart_amount" value="${list.cart_amount}" >
 						<input type="hidden" name="totalSubPrice" value="${totalSubPrice}" >
 						<input type="hidden" name="totalDel" value="${totalDel}" >	
@@ -186,21 +186,22 @@ $('#selectAll').click(function() {
 
 	// 총 가격 업데이트 함수
 	function updateTotalPrice() {
+		
 	  var totalSub = 0;
 	  var totalDel = 0;
+	  
 	  $('input[name="selectOne"]:checked').each(function() {
-	    var cartIdx = $(this).closest('tr').attr('data-cart-idx');
+	    var cartIdx = $("#pro_idx").val();
 	    var cartAmount = parseInt($('.update_amount_' + cartIdx).val());
 	    var subPrice = parseInt($('#subPrice-' + cartIdx).text().replace(/[^0-9.]/g, ''));
-	    var allPrice = parseInt($('#allPrice-' + cartIdx).text().replace(/[^0-9.]/g, ''));
-	    
+
 	    alert(cartIdx);
 	    alert(cartAmount);
 	    alert(subPrice);
-	    alert(allPrice);
 	    
 	    totalSub += subPrice * cartAmount;
-	    totalDel += allPrice * cartAmount - subPrice * cartAmount;
+	    totalDel += 20000 * cartAmount;
+	  
 	  });
 	  $('#checkSub').text('체크한 상품의 총 구독 가격: ' + totalSub.toLocaleString() + '원');
 	  $('#checkDel').text(' | 체크한 상품의 배송비: ' + totalDel.toLocaleString() + '원');

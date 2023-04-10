@@ -99,7 +99,8 @@ function sortUsers(orderby) {
 							<tr>
 								<td><img alt="thumbnail" src="/meomum/images/items/${list.pro_thumb}" style="width:40px; height:40px;"></td>
 								<td>${list.pro_idx}</td>
-								<td>
+								<td class="cell">
+									<span class="badge bg-success">
 									<c:choose> 
 										<c:when test="${list.pro_cate == 1}">
 											침대
@@ -117,6 +118,7 @@ function sortUsers(orderby) {
 											조명
 										</c:when>
 									</c:choose>
+									</span>
 								</td>
 								<td><a href="proContent.do?pro_idx=${list.pro_idx}">${list.pro_name }</a></td>	
 								<td>${list.pro_amount}</td>
@@ -141,8 +143,8 @@ function sortUsers(orderby) {
 								<input type="hidden" name="pro_img1" value="${list.pro_img1 }">
 								<input type="hidden" name="pro_img2" value="${list.pro_img2 }">
 								<input type="hidden" name="pro_content" value="${list.pro_content }">
-								 <button type="button" onclick="location.href='proUpdateForm.do?pro_idx=${list.pro_idx}'">수정</button> 
-								 <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</button>
+								 <button type="button" class="btn-sm app-btn-secondary" onclick="location.href='proUpdateForm.do?pro_idx=${list.pro_idx}'">수정</button> 
+								 <button type="submit" class="btn-sm app-btn-secondary" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</button>
 								</form>
 								</td>
 							</tr>
