@@ -5,6 +5,12 @@
 <html>
 <head>
 <title>[관리자] 상품 수정</title>
+
+<link href="/docs/5.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+<!-- App CSS -->  
+<link id="theme-style" rel="stylesheet" href="assets/css/portal_a.css">
+<link rel="stylesheet" type="text/css" href="css/mainLayout_a.css">
+
 <script>
 function calPrice(){
 	const proprice = Number(document.getElementById("pro_price").value);
@@ -17,8 +23,14 @@ function calPrice(){
 }
 </script>
 </head>
+<body class="app">
+	<%@include file="/WEB-INF/views/header_a.jsp"%>
 	<form name="proUpdate" action="proUpdate.do" method="post">
-	<h2>상품 수정하기</h2>
+	
+	<div class="app-wrapper">
+		<div class="app-content pt-3 p-md-3 p-lg-4">
+			<div class="container pt-5">
+				<h2 class="text-center mb-4">상품 수정하기</h2>
 	
 		<input type="hidden" name="pro_idx" value="${lists[0].pro_idx}">
 		<ul>
@@ -66,8 +78,7 @@ function calPrice(){
 			</li>
 			
 			<li>재고 상태
-			<input type="radio" name="pro_state" value="0"  ${lists[0].pro_state == 0 ? 'checked' : ''}>판매 중
-			<input type="radio" name="pro_state" value="1"  ${lists[0].pro_state == 1 ? 'checked' : ''}>품절
+			${lists[0].pro_state == 0 ? '판매 중' : '품절'}
 			</li>
 			
 			<li>구독 개월 수
@@ -88,5 +99,17 @@ function calPrice(){
 		</ul>
 		</form>
 		
+				</div>
+			</div>
+		
+		<%@include file="/WEB-INF/views/footer_a.jsp"%>
+		
+		</div>
+		
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+	crossorigin="anonymous">
+</script>	
 </body>
 </html>

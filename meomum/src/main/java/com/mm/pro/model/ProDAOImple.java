@@ -112,4 +112,15 @@ private SqlSessionTemplate sqlMap;
 			int count=sqlMap.update("proAmountShipUpdate", order_idx);
 			return count;
 		}
+	
+	//파일 이름 찾기
+	@Override
+		public String proFindFile(Integer idx) {
+		
+		String result =  sqlMap.selectOne("proFindFile", idx);
+		 
+		return result;
+		}
+	
+	
 }

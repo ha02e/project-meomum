@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mm.cart.model.CartDAO;
 import com.mm.member.model.MailSendService;
 import com.mm.member.model.MemberDAO;
 import com.mm.member.model.MemberDTO;
@@ -29,6 +30,8 @@ public class MemberController {
 	private MemberDAO mdao;
 	@Autowired
 	private MailSendService mailService;
+	@Autowired
+	private CartDAO cdao;
 	
 	
 	/*회원가입 페이지 이동*/
@@ -82,7 +85,8 @@ public class MemberController {
 			}
 		
 			MemberDTO dto = mdao.getsessionInfo(input_id);
-			
+	        int cartnum = cdao.userCartCount(dto.getUser_idx());
+            session.setAttribute("cart", cartnum);
 			session.setAttribute("ssInfo", dto);
 			session.setMaxInactiveInterval(120*60); //
 			
@@ -186,7 +190,10 @@ public class MemberController {
 
 		}else {
 			MemberDTO dto = mdao.getsessionInfo((String)userInfo.get("email"));
-			
+
+            int cartnum = cdao.userCartCount(dto.getUser_idx());
+        
+            session.setAttribute("cart", cartnum);
 			session.setAttribute("ssInfo", dto);
 			
 			if(dto.getUser_info().equals("회원")) {

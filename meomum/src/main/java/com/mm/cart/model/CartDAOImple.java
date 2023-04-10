@@ -25,8 +25,11 @@ public class CartDAOImple implements CartDAO {
 	
 	//장바구니 중복 확인
 	@Override
-	public int cartCheck(int pro_idx) {
-		int count=sqlMap.selectOne("cartFind",pro_idx);
+	public int cartCheck(int pro_idx,int user_idx) {
+		Map map=new HashMap();
+		map.put("pro_idx", pro_idx);
+		map.put("user_idx", user_idx);	
+		int count=sqlMap.selectOne("cartCheck",map);
 		return count;
 	}
 	
@@ -47,10 +50,18 @@ public class CartDAOImple implements CartDAO {
 	
 	//장바구니 수량 조절
 	@Override
-	public int cartNumUpdate(CartDTO dto) {
-		int count=sqlMap.update("cartNumUpdate",dto);
+	public int cartNumUpdate(int cart_amount, int cart_idx) {
+		Map map=new HashMap();
+		map.put("cart_amount", cart_amount);
+		map.put("cart_idx", cart_idx);
+		int count=sqlMap.update("cartNumUpdate",map);
 		return count;
 	}
+	   @Override
+	    public int userCartCount(int user_idx) {
+	        int result = sqlMap.selectOne("userCartCount", user_idx);
+	        return result;
+	    }
 	
 
 }

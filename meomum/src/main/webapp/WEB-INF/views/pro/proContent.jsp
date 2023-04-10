@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -75,31 +76,31 @@
 							<div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
 
 							<div class="slick3 gallery-lb">
-								<div class="item-slick3" data-thumb="/meomum/items/${lists[0].pro_thumb}">
+								<div class="item-slick3" data-thumb="/meomum/images/items/${lists[0].pro_thumb}">
 									<div class="wrap-pic-w pos-relative">
-										<img src="/meomum/items/${lists[0].pro_thumb}" alt="IMG-PRODUCT">
+										<img src="/meomum/images/items/${lists[0].pro_thumb}" alt="IMG-PRODUCT">
 
-										<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="/meomum/items/${lists[0].pro_thumb}">
+										<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="/meomum/images/items/${lists[0].pro_thumb}">
 											<i class="fa fa-expand"></i>
 										</a>
 									</div>
 								</div>
 
-								<div class="item-slick3" data-thumb="/meomum/items/${lists[0].pro_img1}">
+								<div class="item-slick3" data-thumb="/meomum/images/items/${lists[0].pro_img1}">
 									<div class="wrap-pic-w pos-relative">
-										<img src="/meomum/items/${lists[0].pro_img1}" alt="IMG-PRODUCT">
+										<img src="/meomum/images/items/${lists[0].pro_img1}" alt="IMG-PRODUCT">
 
-										<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="/meomum/items/${lists[0].pro_img1}">
+										<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="/meomum/images/items/${lists[0].pro_img1}">
 											<i class="fa fa-expand"></i>
 										</a>
 									</div>
 								</div>
 
-								<div class="item-slick3" data-thumb="/meomum/items/${lists[0].pro_img2}">
+								<div class="item-slick3" data-thumb="/meomum/images/items/${lists[0].pro_img2}">
 									<div class="wrap-pic-w pos-relative">
-										<img src="/meomum/items/${lists[0].pro_img2}" alt="IMG-PRODUCT">
+										<img src="/meomum/images/items/${lists[0].pro_img2}" alt="IMG-PRODUCT">
 
-										<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="/meomum/items/${lists[0].pro_img2}">
+										<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="/meomum/images/items/${lists[0].pro_img2}">
 											<i class="fa fa-expand"></i>
 										</a>
 									</div>
@@ -119,15 +120,19 @@
 						</h4>
 
 						<span class="mtext-106 cl2">
-							정가 ${lists[0].pro_price}원 | 월 ${lists[0].pro_subprice}원 | ${lists[0].pro_month}개월 구독 가격
+							정가 <fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_price}" />원
 						</span>
+						
+						<div class="mtext-106 cl2">
+							월 <fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_subprice}" />원 | ${lists[0].pro_month}개월 구독 가격
+						</div>
 
 						<p class="stext-102 cl3 p-t-23">
-							배송비 ${lists[0].pro_delprice}원
+							배송비 <fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_delprice}" />원
 						</p>
 						
 						<span class="mtext-106 cl2">
-							총 ${lists[0].pro_allprice}원
+							총 구독 가격 <fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_allprice}" />원
 						</span>
 						
 						<!--  -->
@@ -143,7 +148,8 @@
 											<i class="fs-16 zmdi zmdi-minus"></i>
 										</div>
 
-										<input class="mtext-104 cl3 txt-center num-product" type="number" name="cart_amount" value="1">
+										<input class="mtext-104 cl3 txt-center num-product" type="number" name="cart_amount" value="1"
+										min="1" max="10">
 
 										<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
 											<i class="fs-16 zmdi zmdi-plus"></i>
@@ -214,7 +220,7 @@
 			<div class="tab-pane fade show active" id="description" role="tabpanel">
 				<div class="how-pos2 p-lr-15-md text-center">
 					<p>
-					<img class="stext-102 cl6" src="/meomum/items/${lists[0].pro_content}" alt="AVATAR">
+					<img class="stext-102 cl6" src="/meomum/images/items/${lists[0].pro_content}" alt="AVATAR">
 					</p>
 				</div>
 			</div>
