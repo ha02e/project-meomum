@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.mm.order.model.OrderDAO;
 import com.mm.order.model.OrderDTO;
+import com.mm.order.model.OrderProDTO;
 import com.mm.order.model.OrderReportDTO;
 import com.mm.pro.model.ProDTO;
 
@@ -35,9 +36,20 @@ public class OrderController {
 		return mav;
 	}
 
-	@RequestMapping(value = "/orderTest.do", method = RequestMethod.GET)
-	public ModelAndView orderTest(OrderDTO dto) {
+	@RequestMapping(value = "/order.do", method = RequestMethod.GET)
+	public ModelAndView order(OrderDTO dto) {
 		int result = orderDao.orderInsert(dto);
+		String msg = result > 0 ? "성공" : "실패";
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("msg", msg);
+		mav.addObject("goUrl", "/meomum/index.do");
+		mav.setViewName("ntc/ntcMsg");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/orderPro.do", method = RequestMethod.GET)
+	public ModelAndView orderPro(OrderProDTO dto) {
+		int result =orderDao.order_proInsert(dto);
 		String msg = result > 0 ? "성공" : "실패";
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("msg", msg);
