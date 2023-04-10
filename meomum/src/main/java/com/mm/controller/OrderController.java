@@ -39,7 +39,7 @@ public class OrderController {
 		return mav;
 	}
 
-	@RequestMapping(value = "/orderForm.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/orderForm.do", method = RequestMethod.POST)
 	public ModelAndView order(OrderDTO dto,OrderProDTO dto2) {
 		int result = orderDao.orderInsert(dto);
 		int result2 = orderDao.order_proInsert(dto2);

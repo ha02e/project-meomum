@@ -79,7 +79,7 @@
 	</div>
 
 	<div class="form-group">
-		<form name="orderForm" action="orderForm.do" method="get">
+		<form name="orderForm" action="orderForm.do" method="post">
 			<input type="hidden" name="user_idx"
 				value="${sessionScope.ssInfo.user_idx}"> 
 				<input type="hidden" id="orderIdxInput" name="order_idx" value="${uid}" />
@@ -178,7 +178,6 @@
 				<label for="using_point">포인트</label> <input type="number"
 					name="using_point" value="${0}" class="form-control">
 			</div>
-			<input type="submit">
 		</form>
 
 		<!-- 결제하기 버튼 생성 -->
@@ -223,8 +222,6 @@
 						console.log(rsp);
 
 						var msg = '결제가 완료되었습니다.';
-						msg += '고유id:' + rsp.imp_uid;
-						msg += '상점거래id:' + rsp.merchant_uid;
 						
 						document.orderForm.submit();
 						
@@ -232,8 +229,7 @@
 
 					} else {
 						console.log(rsp);
-						console.log(makeMerchantUid);
-						
+						var msg = '결제가 실패되었습니다.';
 						
 						location.href = "/meomum/proList.do";
 					}
