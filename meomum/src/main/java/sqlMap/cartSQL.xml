@@ -36,6 +36,9 @@
     set cart_amount=#{cart_amount}
     where cart_idx=#{cart_idx}
     </update>
-	
+    
+	  <select id= "userCartCount" parameterType="Integer" resultType="Integer">
+        select count(*) from cart where user_idx = #{user_idx}
+    </select>
 
   </mapper>

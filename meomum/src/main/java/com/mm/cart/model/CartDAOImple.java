@@ -57,6 +57,11 @@ public class CartDAOImple implements CartDAO {
 		int count=sqlMap.update("cartNumUpdate",map);
 		return count;
 	}
+	   @Override
+	    public int userCartCount(int user_idx) {
+	        int result = sqlMap.selectOne("userCartCount", user_idx);
+	        return result;
+	    }
 	
 
 }

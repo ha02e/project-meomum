@@ -68,6 +68,10 @@ public class CartController {
 			            if (result > 0) {
 			                msg = "장바구니에 추가되었습니다. 확인하시겠습니까?";
 			                link = "proCart.do?user_idx="+user_idx;
+			                
+			                int cartnum = cartDao.userCartCount(dto.getUser_idx());
+			                session.setAttribute("cart", cartnum);
+			                
 			                mav.addObject("msg", msg);
 			                mav.addObject("link", link);
 			                mav.addObject("pro_idx", pro_idx);
@@ -125,9 +129,15 @@ public class CartController {
 		//장바구니 삭제
 		@RequestMapping(value="cartDelete.do", method = RequestMethod.POST)
 		@ResponseBody
-		public ModelAndView cartDelete(@RequestParam("cart_idx")int cart_idx){
+		public ModelAndView cartDelete(@RequestParam("cart_idx")int cart_idx,HttpSession session){
 			ModelAndView mav = new ModelAndView();
 			cartDao.cartDelete(cart_idx);
+			
+			 MemberDTO sdto =(MemberDTO) session.getAttribute("ssInfo");
+		     int user_idx = sdto.getUser_idx();
+            int cartnum = cartDao.userCartCount(user_idx);
+            session.setAttribute("cart", cartnum);
+			
 			mav.setViewName("mmJson");
 			return mav;
 		}

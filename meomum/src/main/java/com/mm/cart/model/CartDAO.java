@@ -9,4 +9,5 @@ public interface CartDAO {
 	public List<CartDTO> cartList(int user_idx);
 	public int cartDelete(int cart_idx);
 	public int cartNumUpdate(int cart_amount, int cart_idx);
+    public int userCartCount(int user_idx);
 }
