@@ -74,8 +74,11 @@ img {
 			<c:set var="totalSub" value="${totalSub + (list.cart_amount * list.pro_subprice)}" />
 			<c:set var="totalDel" value="${totalDel + (list.cart_amount * list.pro_delprice)}" />
 					<tr>
-						<td>
+						<td class="cart_info_td">
 						<input type="checkbox" name="selectOne" id="selectOne" checked="checked">
+						<input type="hidden" class="individual_cartamount_input" value="${list.cart_amount }">
+						<input type="hidden" class="individual_prosubprice_input" value="${list.pro_subprice }">
+						<input type="hidden" class="individual_prodelprice_input" value="${list.pro_delprice }">
 						</td>
 						
 						<td>
@@ -88,7 +91,6 @@ img {
 						
 						<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.pro_subprice }" />원</td>
 						<td>${list.pro_month }개월
-						<input type="hidden"  data-cart_idx="${list.cart_idx }" id="cart_idx" >
 						</td>
 						
 						<td>
@@ -134,6 +136,10 @@ img {
 					<tr>
 						<td><div id="totalSub-${list.cart_idx }">월 구독 가격 <fmt:formatNumber type="number" maxFractionDigits="3" value="${totalSub}" />원</div></td>
 						<td><div id="totalDel-${list.cart_idx}">| 총 배송비 <fmt:formatNumber type="number" maxFractionDigits="3" value="${totalDel}" />원</div></td>
+						
+						<td><span class="totalDel_span"></span></td>
+						<td><span class="totalSub_span"></span></td>
+					
 					</tr>
 					<tr>
 					<td colspan="2">
@@ -156,38 +162,33 @@ img {
 				
 				
 <script>
-$('#selectAll').click(function() {
-	  $('input[name="selectOne"]').prop('checked', $(this).prop('checked'));
-	  updateTotalPrice();
-	});
+$(document).ready(function(){
+	
+});
 
-	// 각 상품 체크박스 클릭 시, 총 가격 업데이트
-	$('input[name="selectOne"]').click(function() {
-	  updateTotalPrice();
-	});
 
-	// 총 가격 업데이트 함수
-	function updateTotalPrice() {
-		
-	  var totalSub = 0;
-	  var totalDel = 0;
-	  
-	  $('input[name="selectOne"]:checked').each(function() {
-		var cartIdx = $(this).data('cart_idx');
-	    var cartAmount = parseInt($('#update_amount_'+cartIdx).val());
-	    var subPrice = parseInt($('#subPrice-' + cartIdx).text().replace(/[^0-9.]/g, ''));
+let totalSub= 0 ; //총 가격 (총 구독 가격)
+let totalCount= 0; //총 갯수
+let totalDel= 0; //총 배송비
+let finalTotalPrice= 0; //최종 가격 (배송비+구독가)
 
-	    alert(cartIdx);
-	    alert(cartAmount);
-	    alert(subPrice);
-	    
-	    totalSub += subPrice * cartAmount;
-	    totalDel += 20000 * cartAmount;
-	  
-	  });
-	  $('#checkSub').text('체크한 상품의 총 구독 가격: ' + totalSub.toLocaleString() + '원');
-	  $('#checkDel').text(' | 체크한 상품의 배송비: ' + totalDel.toLocaleString() + '원');
-	}
+$(".cart_info_td").each(function(index,element)){
+	
+	totalCount+= parseInt($(element).find(".individual_cartamount_input").val());
+	totalSub+= parseInt($(element).find(".individual_prosubprice_input").val());
+	totalDel+= parseInt($(element).find(".individual_prodelprice_input").val());
+	
+});
+
+totalDel= totalCount*totalDel;
+finalTotalPrice = totalSub + totalDel;
+
+//배송비 출력
+$(".totalDel_span").text(totalDel.toLocaleString());
+
+//총 가격 출력
+$(".totalSub_span").text(totalSub.toLocaleString());
+
 </script>
 
 <script>
