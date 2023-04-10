@@ -77,7 +77,8 @@
 					<div class="row justify-content-center">
 						<div class="card text-center">
 							<div class="card-body">
-								<form class="form-inline justify-content-center" method="POST" action="infoEdit.do" id="myForm">
+								<form class="form-inline justify-content-center" method="POST" action="infoEdit.do" id="myForm"
+								onkeypress="return event.keyCode != 13;">
 									<div class="form-group mr-3">
 								
 										<label for="password-input">비밀번호</label> <input
@@ -99,10 +100,11 @@
 <script type="text/javascript">
 function pwdCheck(){
 	var input_pwd = encodeURIComponent(document.getElementById('input_pwd').value);
-	var user_pwd =  encodeURIComponent("${sessionScope.ssInfo.user_pwd}");
 
-	if(input_pwd == user_pwd){   
-		   console.log(input_pwd + "===" + user_pwd);
+	var user_pwd =  '${sessionScope.ssInfo.user_pwd}';
+
+	
+	if(input_pwd === user_pwd){   
 		   document.getElementById('myForm').submit(); // 폼을 전송합니다.
 		}else{
 		   alert('비밀번호가 일치하지 않습니다.');

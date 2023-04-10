@@ -37,7 +37,7 @@
   <div class="input-group">
     <input class="form-control mail-check-input" placeholder="인증번호 6자리를 입력해주세요!" disabled="disabled" maxlength="6" id="emailOkpwd">
     <div class="input-group-append">
-      <button type="button" class="btn btn-secondary" disabled onclick="emailOkpwdCheck()">인증번호 확인</button>
+      <button type="button" class="btn btn-secondary" disabled onclick="emailOkpwdCheck()" id="btn-secondary">인증번호 확인</button>
     </div>
   </div>
 </div>
@@ -201,7 +201,7 @@ function checkPasswordMatch() {
 	  }
 
 	  // 이메일 인증 체크
-	  if (document.querySelector('.mail-check-input').value !== '인증 완료') {
+	  if (document.querySelector('.mail-check-input').value !== '인증 완료' || !document.querySelector('#mail-Check-Btn').disabled) {
 	    alert('이메일 인증이 완료되지 않았습니다.');
 	    return false;
 	  }

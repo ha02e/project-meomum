@@ -43,9 +43,7 @@ public class MemberController {
 	/*회원가입 확인*/
 	@RequestMapping(value = "/memberJoin.do",method = RequestMethod.POST)
 	public ModelAndView memberJoinSubmit(MemberDTO dto) {
-		if(dto.getAddr_detail()==null) {
-			dto.setAddr_detail("");
-		}
+
 		int result = mdao.insertJoin(dto);
 		
 		ModelAndView mav = new ModelAndView();
