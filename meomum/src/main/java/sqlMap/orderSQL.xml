@@ -15,10 +15,42 @@
 	</select>
 	
 	
+	<select id="myOrderReport" parameterType="Map" resultType="com.mm.order.model.OrderReportDTO">
+		select * from
+			(select rownum as rnum, e.*from(
+				select a.order_idx, d.pro_name, c.user_name, c.user_tel, a.amount, a.order_status, a.order_date,
+            			a.receiver, a.receiver_tel, a.order_msg,
+            			(a.order_pcode||' '||a.order_addr||' '||a.order_detail) ship_addr
+				from orders a,
+				     order_pro b,
+				     member c,
+				     product d
+				where a.order_idx=b.order_idx
+				    and b.pro_idx=d.pro_idx
+				    and b.user_idx=c.user_idx
+				    and b.user_idx=#{user_idx}
+			)e )f
+		where rnum<![CDATA[>=]]>#{start} and rnum<![CDATA[<=]]>#{end}
+	</select>
+	<select id="myReportTotalCnt" parameterType="Integer" resultType="Integer">
+		select count(*) from
+			orders a,
+			order_pro b,
+			member c,
+			product d
+		where a.order_idx=b.order_idx
+			and b.pro_idx=d.pro_idx
+			and b.user_idx=c.user_idx
+			and b.user_idx=#{user_idx}
+	</select>
+	
+	
 	<select id="orderReport" parameterType="Map" resultType="com.mm.order.model.OrderReportDTO">
 		select * from
 			(select rownum as rnum, e.*from(
-			select a.order_idx, d.pro_name, c.user_name, c.user_tel, a.amount, a.order_status, a.order_date
+				select a.order_idx, d.pro_name, c.user_name, c.user_tel, a.amount, a.order_status, a.order_date,
+            			a.receiver, a.receiver_tel, a.order_msg,
+            			(a.order_pcode||' '||a.order_addr||' '||a.order_detail) ship_addr
 				from orders a,
 				     order_pro b,
 				     member c,
@@ -39,4 +71,24 @@
 			and b.pro_idx=d.pro_idx
 			and b.user_idx=c.user_idx
 	</select>
+	
+	<select id="orderData" parameterType="String" resultType="com.mm.order.model.OrderReportDTO">
+		select a.order_idx, b.pro_idx , d.pro_name, a.user_idx, c.user_name, c.user_tel, a.amount, a.order_status, a.order_date,
+            a.receiver, a.receiver_tel, a.order_msg,
+            ('['||a.order_pcode||'] '||a.order_addr||' '||a.order_detail) ship_addr
+				from orders a,
+				     order_pro b,
+				     member c,
+				     product d
+				where a.order_idx=b.order_idx
+				    and b.pro_idx=d.pro_idx
+				    and b.user_idx=c.user_idx
+				    and a.order_idx=#{order_idx}
+	</select>
+	
+	<update id="shipStartUpdate" parameterType="String">
+		update orders
+		set order_status=2
+		where order_idx=#{order_idx}
+	</update>
   </mapper>

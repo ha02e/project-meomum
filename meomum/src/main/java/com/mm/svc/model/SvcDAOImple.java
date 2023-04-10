@@ -161,4 +161,19 @@ public class SvcDAOImple implements SvcDAO {
 		int count = sqlMap.update("svcDateCancle", dto);
 		return count;
 	}
+	
+	/**캘린더 서비스 진행 고객 가져오기*/
+	@Override
+	public List<SvcIngDTO> svcIngCalList() {
+		List<SvcIngDTO> lists = sqlMap.selectList("svcIngCalList");
+		
+	
+		return lists;
+	}
+	/**캘린더 서비스 진행 고객 이름만 가져오기*/
+	@Override
+	public String sveIngCalName(String svc_idx) {
+		String user_name = sqlMap.selectOne("sveIngCalName", svc_idx);
+		return user_name;
+	}
 }

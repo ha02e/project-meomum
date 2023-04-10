@@ -198,5 +198,13 @@
 	WHERE svc_idx=#{svc_idx}
 	</update>
 	
+	<!-- 캘린더용 -->
+	<select id="svcIngCalList" resultType="com.mm.svc.model.SvcIngDTO">
+		select * from svc_ing
+	</select>
+	
+	<select id="sveIngCalName" resultType="String" parameterType="String">
+		select user_name from svc_member where svc_idx = #{svc_idx}
+	</select>
 
 </mapper>

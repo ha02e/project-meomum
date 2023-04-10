@@ -75,19 +75,23 @@
 					<h5 class="text-center">등록된 후기가 없습니다.</h5>
 				</c:if>
 				<c:forEach var="dto" items="${lists}">
+					<c:url var="contentUrl" value="reviewContent.do">
+						<c:param name="review_idx">${dto.review_idx}</c:param>
+					</c:url>
 					<div class="col">
 						<div class="card h-100">
 						<div class="card-body img">
 							<c:if test="${not empty dto.thumb}">
+								<a href="${contentUrl}">
 									<img src="/meomum/images/reviewImg/${dto.thumb}" alt="Card image cap" />
+								</a>
 							</c:if>
 							<c:if test="${empty dto.thumb}">
-								<img class="card-img-top" src="/meomum/images/noimage.jpg" alt="Card image cap" />
+								<a href="${contentUrl}">
+									<img class="card-img-top" src="/meomum/images/noimage.jpg" alt="Card image cap" />
+								</a>
 							</c:if>
 						</div>
-						<c:url var="contentUrl" value="reviewContent.do">
-							<c:param name="review_idx">${dto.review_idx}</c:param>
-						</c:url>
 						<div class="card-body">
 							<h5 class="card-title text-truncate"><a href="${contentUrl}">${dto.subject}</a></h5>
 						</div>
