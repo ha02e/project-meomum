@@ -17,5 +17,6 @@
 		<mapper resource="sqlMap/loveSQL.xml" />
 		<mapper resource="sqlMap/pointSQL.xml" />
 		<mapper resource="sqlMap/shipSQL.xml"/>
+		<mapper resource="sqlMap/paymentSQL.xml"/>
 	</mappers>
 </configuration>

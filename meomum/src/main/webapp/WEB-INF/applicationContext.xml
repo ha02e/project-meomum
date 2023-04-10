@@ -84,7 +84,12 @@
 			<ref bean="sqlSessionTemplate" />
 		</constructor-arg>
 	</bean>
-		<bean id="shipDAO" class="com.mm.shipping.model.ShippingDAOImple">
+	<bean id="shipDAO" class="com.mm.shipping.model.ShippingDAOImple">
+		<constructor-arg>
+			<ref bean="sqlSessionTemplate" />
+		</constructor-arg>
+	</bean>
+	<bean id="paymentDAO" class="com.mm.payment.model.PaymentDAOImple">
 		<constructor-arg>
 			<ref bean="sqlSessionTemplate" />
 		</constructor-arg>

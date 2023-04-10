@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,7 +21,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.mm.member.model.MemberDAO;
 import com.mm.member.model.MemberDTO;
+import com.mm.payment.model.PaymentDAO;
+import com.mm.payment.model.PaymentDTO;
 import com.mm.point.model.PointDAO;
+import com.mm.point.model.PointDTO;
 import com.mm.point.model.ResultDTO;
 import com.mm.svc.model.SvcContentDTO;
 import com.mm.svc.model.SvcDAO;
@@ -40,8 +44,12 @@ public class SvcController {
 	
 	@Autowired
 	private SvcDAO svcDao;
+	@Autowired
 	private MemberDAO mdao;
+	@Autowired
 	private PointDAO pdao;
+	@Autowired
+	private PaymentDAO payDao;
 	
 	@RequestMapping("/svc.do")
 	public ModelAndView svc(HttpSession session) {
@@ -50,7 +58,7 @@ public class SvcController {
 		if(session.getAttribute("ssInfo")==null) {
 			mav.addObject("msg", "로그인 후 이용가능합니다");
 			mav.addObject("link", "login.do");
-			mav.setViewName("svc/msg");
+			mav.setViewName("msg");
 		}else {
 			mav.setViewName("svc/svcForm");
 		}
@@ -71,7 +79,24 @@ public class SvcController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("msg",msg);
 		mav.addObject("link",link);
-		mav.setViewName("svc/msg");
+		mav.setViewName("msg");
+		return mav;
+	}
+	
+	@RequestMapping(value="/svcPay.do")
+	public ModelAndView svcPay(@RequestBody PaymentDTO dto) {
+		System.out.println(dto);
+		int result = payDao.paymentInsert(dto);
+		System.out.println("컨트롤러:"+result);
+		ModelAndView mav = new ModelAndView();
+		
+		String msg = result>0?"결제가 완료되었습니다":"다시 시도해주세요";
+		String link = result>0?"svcIngList.do":"svcIngContent.do";
+		
+		mav.addObject("msg", msg);
+		mav.addObject("link", link);
+		mav.setViewName("mmJson");
+		
 		return mav;
 	}
 	
@@ -185,7 +210,7 @@ public class SvcController {
 		mav.addObject("msg",msg);
 		mav.addObject("link",link);
 		
-		mav.setViewName("svc/msg");
+		mav.setViewName("msg");
 		
 		return mav;
 	}
@@ -251,17 +276,15 @@ public class SvcController {
 	public ModelAndView svcIngContent_a(@RequestParam("svc_idx")String idx,@RequestParam("user_idx")int user_idx) {
 		SvcContentDTO dto = svcDao.svcContent(idx);
 		SvcIngDTO ingdto = svcDao.svcIngContent(idx);
-		System.out.println(user_idx);
-		/* int point = pdao.pointTotal(user_idx); */
-	/*	ResultDTO rdto = pdao.pointTotal(user_idx);
-		System.out.println(rdto);*/
+
+		PointDTO rdto = pdao.pointTotal(user_idx);
+		
 		ModelAndView mav = new ModelAndView();
 		
 		mav.addObject("dto",dto);
 
 		mav.addObject("ingdto",ingdto);
-		/* mav.addObject("point",point); */
-		/* mav.addObject("rdto", rdto); */
+		mav.addObject("rdto", rdto);
 	
 		mav.setViewName("svc/svcIngContent");
 	
@@ -294,7 +317,7 @@ public class SvcController {
 		mav.addObject("msg",msg);
 		mav.addObject("link",link);
 		
-		mav.setViewName("svc/msg");
+		mav.setViewName("msg");
 		
 		return mav;
 	}
@@ -314,7 +337,7 @@ public class SvcController {
 		mav.addObject("msg",msg);
 		mav.addObject("link",link);
 		
-		mav.setViewName("svc/msg");
+		mav.setViewName("msg");
 		
 		return mav;
 	}
