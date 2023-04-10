@@ -50,6 +50,13 @@
 
 		document.getElementsByName("receiver_tel")[0].value = nameInput.value;
 	}
+	
+	var nameInput = document.getElementById("buyer_email");
+
+	if (nameInput.value !== document.getElementById("buyer_email")) {
+
+		document.getElementsByName("buyer_email")[0].value = nameInput.value;
+	}
 </script>
 
 
@@ -72,18 +79,20 @@
 	</div>
 
 	<div class="form-group">
-		<form name="orderPro" action="orderPro.do" method="get">
-		<input type="hidden" name="user_idx"
-					value="${sessionScope.ssInfo.user_idx}">
-		<input type="hidden" id="orderIdxInput" name="order_idx" value="${uid}" />
-			
+		<form name="orderForm" action="orderForm.do" method="get">
+			<input type="hidden" name="user_idx"
+				value="${sessionScope.ssInfo.user_idx}"> 
+				<input type="hidden" id="orderIdxInput" name="order_idx" value="${uid}" />
+
 			<h2>구매 상품 정보</h2>
 			<c:if test="${empty dto}">
 				<div>존재하지 않거나 삭제된 상품입니다.</div>
 			</c:if>
 
-			<div>상품번호:${dto.pro_idx}
-			<input type="hidden" name="pro_idx" value="${dto.pro_idx}" /></div>
+			<div>
+				상품번호:${dto.pro_idx} <input type="hidden" name="pro_idx"
+					value="${dto.pro_idx}" />
+			</div>
 			<div>
 				<div>상품이름:${dto.pro_name}</div>
 				<div>
@@ -102,8 +111,9 @@
 					value="${dto.pro_delprice}" />
 				원
 			</div>
-			<div>수량:${param.cart_amount}개
-			<input type="hidden" name="pro_amount" value="${param.cart_amount}" />
+			<div>
+				수량:${param.cart_amount}개 <input type="hidden" name="pro_amount"
+					value="${param.cart_amount}" />
 			</div>
 			<div>
 				합계:
@@ -111,14 +121,13 @@
 					value="${(dto.pro_subprice*param.cart_amount)+dto.pro_delprice}" />
 				원
 			</div>
-		</form>
-		<form name="order" action="order.do" method="get">
+		
 			<div>
-
+			
 				<h2>배송 정보를 입력해주세요.</h2>
 				<h3>계약자 정보</h3>
 				<input type="hidden" name="user_idx"
-					value="${sessionScope.ssInfo.user_idx}">
+					value="${sessionScope.ssInfo.user_idx}">	
 			</div>
 			<div>
 				<label for="order_name">고객명</label> <input type="text"
@@ -154,7 +163,7 @@
 					value="${sessionScope.ssInfo.addr_detail}" placeholder="상세주소">
 			</div>
 			<div>
-				<label for="order_detail">배송 메세지</label> <input type="text"
+				<label for="order_msg">배송 메세지</label> <input type="text"
 					class="form-control" id="order_msg" name="order_msg"
 					placeholder="배송메세지">
 			</div>
@@ -162,76 +171,78 @@
 				<label for="checkbox"> 개인정보이용동의 </label>
 				<div class="form-control">
 					개인정보 이용동의합니다.<input class="form-check-input" type="checkbox"
-						id="checkbox" value="Y" name="ask_tos" class="form-control">
+						id="checkbox" value="Y" name="order_tos" class="form-control">
 				</div>
 			</div>
 			<div>
 				<label for="using_point">포인트</label> <input type="number"
-					name="using_point" value="${0 }" class="form-control">
+					name="using_point" value="${0}" class="form-control">
 			</div>
-
-
+			<input type="submit">
 		</form>
 
 		<!-- 결제하기 버튼 생성 -->
 		<button onclick="requestPay()">결제하기</button>
-		
+
 		<script>
-	var IMP = window.IMP;
-	IMP.init("imp77686458");
+			var IMP = window.IMP;
+			IMP.init("imp77686458");
 
-	var today = new Date();
-	var year = today.getFullYear().toString();
-	var month = (today.getMonth() + 1).toString().padStart(2, "0"); // 월은 0부터 시작하므로 1을 더해줌
-	var day = today.getDate().toString().padStart(2, "0");
-	var hours = today.getHours().toString();
-	var minutes = today.getMinutes().toString();
-	var seconds = today.getSeconds().toString();
-	var milliseconds = today.getMilliseconds().toString();
-	var makeMerchantUid = year + month + day + hours + minutes + seconds
-			+ milliseconds;
+			var today = new Date();
+			var year = today.getFullYear().toString();
+			var month = (today.getMonth() + 1).toString().padStart(2, "0"); // 월은 0부터 시작하므로 1을 더해줌
+			var day = today.getDate().toString().padStart(2, "0");
+			var hours = today.getHours().toString();
+			var minutes = today.getMinutes().toString();
+			var seconds = today.getSeconds().toString();
+			var milliseconds = today.getMilliseconds().toString();
+			var makeMerchantUid = year + month + day + hours + minutes
+					+ seconds + milliseconds;
 
-	var name = "${sessionScope.ssInfo.user_name}";
-	var tp = ${dto.pro_subprice * param.cart_amount + dto.pro_delprice};
-	
-	var uid = "IMP" + makeMerchantUid
-		
-	document.getElementById('orderIdxInput').setAttribute('value', uid);
+			var name = "${sessionScope.ssInfo.user_name}";
+			var tp = ${dto.pro_subprice * param.cart_amount + dto.pro_delprice};
+			var addr=document.getElementById("order_addr").value;
+			var uid = "MM" + makeMerchantUid
 
-	function requestPay() {
-		IMP.request_pay({
-			pg : "kakaopay", //"html5_inicis",
-			pay_method : 'card',
-			merchant_uid : uid,
-			name : document.getElementById("order_name").value,
-			amount : tp,
-			buyer_email : 'Iamport@chai.finance',
-			buyer_name : 'order_name',
-			buyer_tel : document.getElementById("receiver_tel").value,
-			buyer_addr : '서울특별시 강남구 삼성동',
-			buyer_postcode : '123-456'
-		}, function(rsp) { // callback
-			if (rsp.success) {
-				console.log(rsp);
+			document.getElementById('orderIdxInput').setAttribute('value', uid);
 
-				var msg = '결제가 완료되었습니다.';
-				msg += '고유id:' + rsp.imp_uid;
-				msg += '상점거래id:' + rsp.merchant_uid;
-				document.order.submit();
-				document.orderPro.submit();
+			function requestPay() {
+				IMP.request_pay({
+					pg : "kakaopay", //"html5_inicis",
+					pay_method : 'card',
+					merchant_uid : uid,
+					name : document.getElementById("order_name").value,
+					amount : tp,
+					buyer_email : "",
+					buyer_name : document.getElementById("order_name").value,
+					buyer_tel : document.getElementById("receiver_tel").value,
+					buyer_addr : addr,
+					buyer_postcode : document.getElementById("order_pcode").value
+				}, function(rsp) { // callback
+					if (rsp.success) {
+						console.log(rsp);
 
-			} else {
-				console.log(rsp);
-				console.log(makeMerchantUid);
+						var msg = '결제가 완료되었습니다.';
+						msg += '고유id:' + rsp.imp_uid;
+						msg += '상점거래id:' + rsp.merchant_uid;
+						
+						document.orderForm.submit();
+						
+						
 
-				location.href = "/meomum/proList.do";
+					} else {
+						console.log(rsp);
+						console.log(makeMerchantUid);
+						
+						
+						location.href = "/meomum/proList.do";
+					}
+
+					alert(msg);
+				});
+
 			}
-
-			alert(msg);
-		});
-
-	}
-</script>
+		</script>
 
 	</div>
 	<%@include file="../footer.jsp"%>
