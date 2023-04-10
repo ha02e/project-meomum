@@ -438,15 +438,14 @@ public class ProController {
 			}
 		}
 		
-		
 		int result=proDao.proAmountUpdate(dto);
 		
 		String msg=result>=0?"재고 수정이 완료되었습니다.":"재고 수정에 실패하였습니다.";
 		
 		ModelAndView mav=new ModelAndView();
 		mav.addObject("msg", msg);
-		mav.addObject("link", "proAmount_a.do");
-		mav.setViewName("/msg");
+		mav.addObject("gopage","location.href='proAmount_a.do';");
+		mav.setViewName("/mainMsg");
 		return mav;
 		
 	}
