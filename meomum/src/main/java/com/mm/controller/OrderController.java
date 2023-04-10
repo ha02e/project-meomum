@@ -135,4 +135,14 @@ public class OrderController {
 		return mav;
 	}
 	
+	@RequestMapping("/orderInfoDetail.do")
+	public ModelAndView orderInfoDetail(@RequestParam("order_idx")String order_idx) {
+		OrderReportDTO dto=orderDao.orderData(order_idx);
+		
+		ModelAndView mav=new ModelAndView();
+		mav.addObject("dto", dto);
+		mav.setViewName("order/orderInfoDetail");
+		return mav;
+	}
+	
 }
