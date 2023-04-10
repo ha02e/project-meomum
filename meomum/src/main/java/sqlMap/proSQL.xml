@@ -95,6 +95,26 @@
 		where pro_idx=#{pro_idx}
 	</update>
 	
+	<select id="proAmountSelect" parameterType="Integer" resultType="Integer">
+		select pro_amount
+		from product
+		where pro_idx=#{pro_idx}
+	</select>
+	
+	<update id="proAmountShipUpdate" parameterType="String">
+		update product p
+		set p.pro_amount = (select (p.pro_amount-op.pro_amount) as remaining_amount
+							from product p,
+							    order_pro op
+							where p.pro_idx=op.pro_idx
+								and op.order_idx = #{order_idx}
+							)
+		where p.pro_idx in (select op.pro_idx
+                    		from order_pro op
+                    		where op.order_idx = #{order_idx}
+                    		)
+	</update>
+	
 	<select id="proFindFile" parameterType="Integer" resultType="String">
 	    SELECT pro_thumb
 	    FROM product 
