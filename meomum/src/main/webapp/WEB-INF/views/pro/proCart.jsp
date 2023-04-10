@@ -64,7 +64,7 @@ function updateShippingCost() {
 			<tr>
 				<td>
 				<label for="selectAll" class="form-check-label">전체 선택
-				<input type="checkbox" id="selectAll" name="selectAll" onclick="selectAll()">
+				<input type="checkbox" id="selectAll" name="selectAll" checked="checked">
 				</label>
 				</td>
 			</tr>
@@ -88,12 +88,14 @@ function updateShippingCost() {
 			</c:if>
 			
 		
+			<c:set var="totalSub" value="0" />
+			<c:set var="totalDel" value="0" />
 			<c:forEach var="list" items="${lists}">		
 			<c:set var="totalSub" value="${totalSub + (list.cart_amount * list.pro_subprice)}" />
 			<c:set var="totalDel" value="${totalDel + (list.cart_amount * list.pro_delprice)}" />
 					<tr>
 						<td>
-						<input type="checkbox" name="selectOne" checked="checked" onclick="updateFinalTotalDel()">
+						<input type="checkbox" name="selectOne" id="selectOne" checked="checked">
 						</td>
 						
 						<td>
@@ -152,7 +154,10 @@ function updateShippingCost() {
 						<td><div id="totalDel-${list.cart_idx}">| 총 배송비 <fmt:formatNumber type="number" maxFractionDigits="3" value="${totalDel}" />원</div></td>
 					</tr>
 					<tr>
-					<td><div id="finalTotalDel">진짜 마지막 배송비:</div></td>
+					<td colspan="2">
+						<div id="checkSub">체크한 상품의 총 구독 가격:</div>
+						<div id="checkDel"> | 체크한 상품의 배송비:</div>
+					</td>
 					</tr>
 					<form name="cartForm" method="get" action="orderList.do">
 					<tr>
@@ -167,35 +172,41 @@ function updateShippingCost() {
 					</form>		
 				</table>
 				
-				
+			
 <script>
-function selectAll() {
-	  const allselect = document.getElementsByName('allselect')[0];
-	  const selectOneList = document.getElementsByName('selectOne');
+$('#selectAll').click(function() {
+	  $('input[name="selectOne"]').prop('checked', $(this).prop('checked'));
+	  updateTotalPrice();
+	});
 
-	  for (let i = 0; i < selectOneList.length; i++) {
-	    selectOneList[i].checked = allselect.checked;
-	  }
+	// 각 상품 체크박스 클릭 시, 총 가격 업데이트
+	$('input[name="selectOne"]').click(function() {
+	  updateTotalPrice();
+	});
 
-	  updateFinalTotalDel();
-	}
-	
-function updateFinalTotalDel() {
-	  const selectOneList = document.getElementsByName('selectOne');
-	  let totalSub = 0;
-
-	  for (let i = 0; i < selectOneList.length; i++) {
-	    if (selectOneList[i].checked) {
-	      const cartIdx = selectOneList[i].parentNode.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.firstChild.className.split('_')[2];
-	      const subPrice = document.getElementById(`subPrice-${cartIdx}`).innerText.replace(/[^0-9]/g, '');
-	      const cartAmount = document.querySelector(`.update_amount_${cartIdx}`).value;
-	      totalSub += subPrice * cartAmount;
-	    }
-	  }
-
-	  document.getElementById('finalTotalDel').innerText = `진짜 마지막 가격: ${totalSub}원`;
+	// 총 가격 업데이트 함수
+	function updateTotalPrice() {
+	  var totalSub = 0;
+	  var totalDel = 0;
+	  $('input[name="selectOne"]:checked').each(function() {
+	    var cartIdx = $(this).closest('tr').attr('data-cart-idx');
+	    var cartAmount = parseInt($('.update_amount_' + cartIdx).val());
+	    var subPrice = parseInt($('#subPrice-' + cartIdx).text().replace(/[^0-9.]/g, ''));
+	    var allPrice = parseInt($('#allPrice-' + cartIdx).text().replace(/[^0-9.]/g, ''));
+	    
+	    alert(cartIdx);
+	    alert(cartAmount);
+	    alert(subPrice);
+	    alert(allPrice);
+	    
+	    totalSub += subPrice * cartAmount;
+	    totalDel += allPrice * cartAmount - subPrice * cartAmount;
+	  });
+	  $('#checkSub').text('체크한 상품의 총 구독 가격: ' + totalSub.toLocaleString() + '원');
+	  $('#checkDel').text(' | 체크한 상품의 배송비: ' + totalDel.toLocaleString() + '원');
 	}
 </script>
+
 
 <script>
 //수량 변경
