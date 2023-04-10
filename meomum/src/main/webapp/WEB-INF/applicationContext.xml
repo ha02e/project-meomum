@@ -81,4 +81,16 @@
 			<ref bean="sqlSessionTemplate" />
 		</constructor-arg>
 	</bean>
+	
+	<bean id="pointDao" class="com.mm.point.model.PointDAOImple">
+		<constructor-arg>
+			<ref bean="sqlSessionTemplate" />
+		</constructor-arg>
+	</bean>
+
+	<bean id="shippingDao" class="com.mm.shipping.model.ShippingDAOImple">
+		<constructor-arg>
+			<ref bean="sqlSessionTemplate" />
+		</constructor-arg>
+	</bean>
 </beans>
