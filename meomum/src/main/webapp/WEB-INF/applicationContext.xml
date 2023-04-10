@@ -69,28 +69,30 @@
 			<ref bean="sqlSessionTemplate" />
 		</constructor-arg>
 	</bean>
-
 	<bean id="orderDAO" class="com.mm.order.model.OrderDAOImple">
 		<constructor-arg>
-			<ref bean="sqlSessionTemplate" />
+			<ref bean="sqlSessionTemplate"/>
 		</constructor-arg>
 	</bean>
-
 	<bean id="loveDAO" class="com.mm.love.model.LoveDAOImple">
 		<constructor-arg>
 			<ref bean="sqlSessionTemplate" />
 		</constructor-arg>
 	</bean>
-	
-	<bean id="pointDao" class="com.mm.point.model.PointDAOImple">
+	<bean id="pointDAO" class="com.mm.point.model.PointDAOImple">
+		<constructor-arg>
+			<ref bean="sqlSessionTemplate" />
+		</constructor-arg>
+	</bean>
+	<bean id="shipDAO" class="com.mm.shipping.model.ShippingDAOImple">
+		<constructor-arg>
+			<ref bean="sqlSessionTemplate" />
+		</constructor-arg>
+	</bean>
+	<bean id="paymentDAO" class="com.mm.payment.model.PaymentDAOImple">
 		<constructor-arg>
 			<ref bean="sqlSessionTemplate" />
 		</constructor-arg>
 	</bean>
 
-	<bean id="shippingDao" class="com.mm.shipping.model.ShippingDAOImple">
-		<constructor-arg>
-			<ref bean="sqlSessionTemplate" />
-		</constructor-arg>
-	</bean>
 </beans>

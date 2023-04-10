@@ -10,16 +10,11 @@ public class PointDAOImple implements PointDAO {
 		this.sqlMap = sqlMap;
 	}
 	
-//	@Override
-//	public ResultDTO pointTotal(int user_idx) {
-//		
-//		ResultDTO dto = sqlMap.selectOne("pointTotal",user_idx);
-//		return dto;
-//	}
-	
-//	@Override
-//	public int pointTotal(int user_idx) {
-//		int point  = sqlMap.selectOne("pointTotal",user_idx);
-//		return point;
-//	}
+	@Override
+	public PointDTO pointTotal(int user_idx) {
+
+	PointDTO dto = sqlMap.selectOne("pointTotal",user_idx);
+	return dto;
+	}
+
 }

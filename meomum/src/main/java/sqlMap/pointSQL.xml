@@ -5,19 +5,12 @@
  
 <mapper namespace="com.mm.point">
 
-<!-- 	<select id="poinTotal" parameterType="Integer" resultType="Integer">
+	<select id="pointTotal" parameterType="Integer" resultType="com.mm.point.model.PointDTO">
 		SELECT distinct
-	  		(SELECT sum(point_num) FROM point WHERE user_idx = #{user_idx} AND point_use = 0) -
-	  		(SELECT sum(point_num) FROM point WHERE user_idx = #{user_idx} AND point_use = 1) 
-		FROM point
-	</select>  -->
-	
-	
-<!-- 	<select id="pointTotal" parameterType="Integer" resultType="com.mm.point.model.ResultDTO">
-		SELECT distinct
-	  		(SELECT sum(point_num) FROM point WHERE user_idx = #{user_idx} AND point_use = 0) -
-	  		(SELECT sum(point_num) FROM point WHERE user_idx = #{user_idx} AND point_use = 1) as result
-		FROM point
-	</select>  -->
+	  		((SELECT sum(point_num) FROM point WHERE user_idx = #{user_idx} AND point_use = 0) -
+	  		(SELECT sum(point_num) FROM point WHERE user_idx = #{user_idx} AND point_use = 1))as result
+		FROM dual
+	</select>
+
 
 </mapper>
