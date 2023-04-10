@@ -15,6 +15,6 @@
 		<mapper resource="sqlMap/cartSQL.xml" />
 		<mapper resource="sqlMap/orderSQL.xml" />
 		<mapper resource="sqlMap/loveSQL.xml" />
-		<mapper resource="sqlMap/shipSQL.xml" />
+		<mapper resource="sqlMap/pointSQL.xml" />
 	</mappers>
 </configuration>

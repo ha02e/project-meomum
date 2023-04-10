@@ -6,9 +6,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
 	<!-- jQuery -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+    
+    <script>
+    $(function(){
+    	$('input[name="pointTotal"]')
+    });
+    </script>
     <!-- iamport.payment.js -->
     <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 	<script>
@@ -24,23 +29,23 @@
 	  console.log(user_name);
 	  var user_tel = document.getElementById('user_tel').value;
 	  console.log(user_tel);
+	  var user_email = document.getElementById('user_email').value;
+	  console.log(user_email);
 	  var url = "http://localhost:9090/meomum/svcIngContent.do?svc_idx=" + svcIdx;
 	  
-	  // form 태그에서 submit 이벤트를 막습니다.
 	  event.preventDefault();
 
 	  IMP.request_pay({
-	    pg : "html5_inicis",
+	    pg : "html5_inicis",//kakaopay
 	    pay_method : 'card',
-	    merchant_uid: svcIdx, 
-	    name : '정리일상',
-	    amount : 1,
-	    buyer_email : '-',
-	    buyer_name : user_name,
-	    buyer_tel : user_tel,
-	    //buyer_addr : '서울특별시 강남구 삼성동',
-	    //buyer_postcode : '123-456',
-	    //m_redirect_url : url // URL query string으로 svc_idx 값을 전달
+        merchant_uid: '00006', 
+        name : '정리일상',
+        amount : total,
+        buyer_email : user_email,
+        buyer_name : user_name,
+        buyer_tel : user_tel,
+        /* buyer_addr : '서울특별시 강남구 삼성동',
+        buyer_postcode : '123-456' */
 	  }, function (rsp) { // callback
 	    if (rsp.success) {
 	      console.log(rsp);
@@ -50,8 +55,7 @@
 	      alert('실패');
 	    }
 
-	    // IMP.request_pay() 함수에서 m_redirect_url로 수동으로 이동합니다.
-	    //window.location.href = url;
+
 	  });
 	}
 </script>
@@ -59,9 +63,10 @@
 <body>
 	<%@include file="../header.jsp"%>
 	<h1>방문 견적 예약</h1>
-
+	
 		<h3>예약 정보</h3>
 		<ul>
+			<input type="hidden" id="user_email" value="${sessionScope.ssInfo.user_id}">
 			<li>${dto.svc_state}</li>
 			<li>예약번호: <input type="text" id="svc_idx" value="${ingdto.svc_idx}" readonly></li>
 
@@ -92,7 +97,9 @@
 			<hr>
 			<h3>견적금액</h3>
 
-			<li>총 결제 금액: <input type="text" id="total" value="${ingdto.total}"></li>
+			<li>견적금액: <input type="text" id="total" value="${ingdto.total}"></li>
+<%-- 			<li>포인트 <input type="text" id="result" value="${rdto.result}"></li> --%>
+			<li>총 결제 금액<input type="text" id="real_total"></li>
 		</ul>
 
 		<div class="float-right">
