@@ -15,4 +15,7 @@ import java.util.*;
 	public ProDTO proSelect(int pro_idx);
 	public int proAmountUpdate(ProDTO dto);
 	public int proStateUpdate(ProDTO dto);
+	
+	public int proAmountSelect(int pro_idx);
+	public int proAmountShipUpdate(String order_idx);
 }
