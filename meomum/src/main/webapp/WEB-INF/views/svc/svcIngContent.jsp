@@ -54,8 +54,6 @@
 	      console.log(rsp);
 	      alert('실패');
 	    }
-
-
 	  });
 	}
 </script>

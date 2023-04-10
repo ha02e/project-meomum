@@ -329,7 +329,7 @@ public class SvcController {
 		String thisMonth = sdf.format(cal.getTime());
 		String month = sdf2.format(cal.getTime());
 		
-		List<SvcSelectAllDTO> list = svcDao.svcAdminList();
+		List<SvcSelectAllDTO> list = svcDao.svcAdminLista();
 		List<SvcIngDTO> svcing = svcDao.svcIngCalList();
 		
 		JSONArray jsonArray = new JSONArray();
