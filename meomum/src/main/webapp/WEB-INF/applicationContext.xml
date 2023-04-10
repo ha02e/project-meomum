@@ -69,11 +69,6 @@
 			<ref bean="sqlSessionTemplate" />
 		</constructor-arg>
 	</bean>
-<<<<<<< HEAD
-	<bean id="orderDAO" class="com.mm.order.model.OrderDAOImple">
-		<constructor-arg>
-			<ref bean="sqlSessionTemplate"/>
-=======
 
 	<bean id="orderDAO" class="com.mm.order.model.OrderDAOImple">
 		<constructor-arg>
@@ -84,23 +79,6 @@
 	<bean id="loveDAO" class="com.mm.love.model.LoveDAOImple">
 		<constructor-arg>
 			<ref bean="sqlSessionTemplate" />
->>>>>>> 02436c44957a8740408e4d2d2daa77059d8af24e
 		</constructor-arg>
 	</bean>
-	<bean id="loveDAO" class="com.mm.love.model.LoveDAOImple">
-		<constructor-arg>
-			<ref bean="sqlSessionTemplate" />
-		</constructor-arg>
-	</bean>
-	<bean id="pointDAO" class="com.mm.point.model.PointDAOImple">
-		<constructor-arg>
-			<ref bean="sqlSessionTemplate" />
-		</constructor-arg>
-	</bean>
-		<bean id="shipDAO" class="com.mm.shipping.model.ShippingDAOImple">
-		<constructor-arg>
-			<ref bean="sqlSessionTemplate" />
-		</constructor-arg>
-	</bean>
-
 </beans>
