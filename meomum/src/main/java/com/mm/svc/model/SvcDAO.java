@@ -30,4 +30,8 @@ public interface SvcDAO {
 	public int svcDateCancle(SvcContentDTO dto);
 	
 	public List<SvcSelectAllDTO> svcSelectDetail(String minDate, String maxDate, int category, String keyword, List<String> state);
+
+	public List<SvcIngDTO> svcIngCalList();
+	public String sveIngCalName(String svc_idx);
+
 }

@@ -34,6 +34,19 @@ public class OrderDAOImple implements OrderDAO {
 		List<OrderDTO> list = sqlMap.selectList("myOrderList", idx);
 		return list;
 	}
+	
+	@Override
+	public List<OrderReportDTO> myOrderReport(Map map) {
+		List<OrderReportDTO> lists = sqlMap.selectList("myOrderReport", map);
+		return lists;
+	}
+
+	@Override
+	public int myReportTotalCnt(int user_idx) {
+		int count = sqlMap.selectOne("myReportTotalCnt",user_idx);
+		count = count == 0 ? 1 : count;
+		return count;
+	}
 
 	@Override
 	public List<OrderReportDTO> orderReport(Map map) {
