@@ -39,13 +39,14 @@ img {
 <%@include file="../header.jsp"%> 
 
 	<!-- Shoping Cart -->
+		
 		<table>
 			
 			<tr>
 				<td>
-				<label for="selectAll" class="form-check-label">전체 선택
-				<input type="checkbox" id="selectAll" name="selectAll" checked="checked">
-				</label>
+					<div class="all_check_input_div">
+						<input type="checkbox" class="all_check_input input_size_20" checked="checked"><span class="all_chcek_span">전체선택</span>
+					</div>
 				</td>
 			</tr>
 			
@@ -68,17 +69,14 @@ img {
 			</c:if>
 			
 		
-			<c:set var="totalSub" value="0" />
-			<c:set var="totalDel" value="0" />
+		
 			<c:forEach var="list" items="${lists}">		
-			<c:set var="totalSub" value="${totalSub + (list.cart_amount * list.pro_subprice)}" />
-			<c:set var="totalDel" value="${totalDel + (list.cart_amount * list.pro_delprice)}" />
 					<tr>
 						<td class="cart_info_td">
-						<input type="checkbox" name="selectOne" id="selectOne" checked="checked">
-						<input type="hidden" class="individual_cartamount_input" value="${list.cart_amount }">
-						<input type="hidden" class="individual_prosubprice_input" value="${list.pro_subprice }">
-						<input type="hidden" class="individual_prodelprice_input" value="${list.pro_delprice }">
+							<input type="checkbox" class="individual_cart_checkbox input_size_20" checked="checked">				
+							<input type="hidden" class="individual_cartamount_input" value="${list.cart_amount }">
+							<input type="hidden" class="individual_prosubprice_input" value="${list.pro_subprice }">
+							<input type="hidden" class="individual_prodelprice_input" value="${list.pro_delprice }">
 						</td>
 						
 						<td>
@@ -134,22 +132,15 @@ img {
 					</tr>
 					</c:forEach>				
 					<tr>
-						<td><div id="totalSub-${list.cart_idx }">월 구독 가격 <fmt:formatNumber type="number" maxFractionDigits="3" value="${totalSub}" />원</div></td>
-						<td><div id="totalDel-${list.cart_idx}">| 총 배송비 <fmt:formatNumber type="number" maxFractionDigits="3" value="${totalDel}" />원</div></td>
+						<td><div>월 구독 가격: <span class="totalSub"></span>원 | </div></td>
+						<td><div>총 구매 개수: <span class="totalCount"></span>개 | </div></td>	
+						<td><div>총 배송비: <span class="totalDel"></span>원 | </div></td>	
+						<td>월 구독 가격+총 배송비: <span class="finalTotalPrice"></span>원</td>
 						
-						<td><span class="totalDel_span"></span></td>
-						<td><span class="totalSub_span"></span></td>
-					
-					</tr>
-					<tr>
-					<td colspan="2">
-						<div id="checkSub">체크한 상품의 총 구독 가격:</div>
-						<div id="checkDel"> | 체크한 상품의 배송비:</div>
-					</td>
 					</tr>
 					<form name="cartForm" method="get" action="orderList.do">
 					<tr>
-						<td>
+						<td colspan="5">
 						<input type="hidden" name="pro_idx" id="pro_idx" value="${list.pro_idx}" >
 						<input type="hidden" name="cart_amount" value="${list.cart_amount}" >
 						<input type="hidden" name="totalSubPrice" value="${totalSubPrice}" >
@@ -162,33 +153,64 @@ img {
 				
 				
 <script>
-$(document).ready(function(){
+$(document).ready(function() {
+	
+	setTotalInfo();
 	
 });
 
 
-let totalSub= 0 ; //총 가격 (총 구독 가격)
-let totalCount= 0; //총 갯수
-let totalDel= 0; //총 배송비
-let finalTotalPrice= 0; //최종 가격 (배송비+구독가)
+$(".individual_cart_checkbox").on("change", function(){
+	//총 주문 정보 세팅
+	setTotalInfo($(".cart_info_td"));
+});
 
-$(".cart_info_td").each(function(index,element)){
+
+$(".all_check_input").on("click", function(){
 	
-	totalCount+= parseInt($(element).find(".individual_cartamount_input").val());
-	totalSub+= parseInt($(element).find(".individual_prosubprice_input").val());
-	totalDel+= parseInt($(element).find(".individual_prodelprice_input").val());
+	if($(".all_check_input").prop("checked")){
+		$(".individual_cart_checkbox").prop('checked',true);
+	} else{
+		$(".individual_cart_checkbox").prop('checked',false);
+	}
+	
+	setTotalInfo($(".cart_info_td"));
 	
 });
 
-totalDel= totalCount*totalDel;
-finalTotalPrice = totalSub + totalDel;
 
-//배송비 출력
-$(".totalDel_span").text(totalDel.toLocaleString());
+function setTotalInfo(){
+	  let totalSub = 0; // 총 가격 (총 구독 가격)
+	  let totalCount = 0; // 총 갯수
+	  let totalDel = 0; // 총 배송비
+	  let finalTotalPrice = 0; // 최종 가격 (배송비+구독가)
 
-//총 가격 출력
-$(".totalSub_span").text(totalSub.toLocaleString());
+	  $(".cart_info_td").each(function(index, element) {
+		  
+		if($(element).find(".individual_cart_checkbox").is(":checked")==true){
+	    let cart_amount = parseInt($(element).find(".individual_cartamount_input").val());
+	    let pro_subprice = parseInt($(element).find(".individual_prosubprice_input").val());
+	    let pro_delprice = parseInt($(element).find(".individual_prodelprice_input").val());
+	    
+	 	totalCount += cart_amount
+	    totalSub += cart_amount * pro_subprice;
+	    totalDel += cart_amount * pro_delprice;
+	    finalTotalPrice = totalSub + totalDel;
+		}
+	  });
+	  
+	  // 배송비 출력
+	  $(".totalDel").text(totalDel.toLocaleString());
 
+	  // 총 가격 출력
+	  $(".totalSub").text(totalSub.toLocaleString());
+	  
+	  // 총 구매 개수
+	  $(".totalCount").text(totalCount.toLocaleString());
+	  
+	  // 배송비+월 구독 가격
+	  $(".finalTotalPrice").text(finalTotalPrice.toLocaleString());
+}
 </script>
 
 <script>
