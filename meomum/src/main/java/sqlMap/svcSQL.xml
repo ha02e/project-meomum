@@ -30,14 +30,38 @@
 	</select>
 
 	<!-- 관리자: 방문 예약 리스트 -->
-	<select id="svcAdminList" resultType="com.mm.svc.model.SvcSelectAllDTO">
-		SELECT a.svc_idx, a.user_idx, a.user_name, a.user_tel,
-		b.svc_regdate,a.svc_state,c.svc_days,c.svc_time
-		FROM svc_member a, svc_detail b,svc_date c
-		WHERE a.svc_idx = b.svc_idx and a.svc_idx=c.svc_idx
-		ORDER BY a.svc_idx desc
+	<select id="svcAdminList" parameterType="Map" resultType="com.mm.svc.model.SvcSelectAllDTO">
+	SELECT *
+	FROM (SELECT rownum as rnum,d.* from
+	    (SELECT
+	        a.svc_idx, a.user_idx, a.user_name, a.user_tel,
+	        b.svc_regdate,a.svc_state,
+	        c.svc_days,c.svc_time
+	    FROM
+	        svc_member a, svc_detail b,svc_date c
+	    WHERE
+	        a.svc_idx = b.svc_idx and a.svc_idx=c.svc_idx
+	    ORDER BY
+	        a.svc_idx desc) d
+	) e
+	WHERE rnum <![CDATA[>= ]]>
+	#{start} and rnum <![CDATA[<=]]> #{end}
 	</select>
-	
+
+
+	<select id="svcAdminListCnt" resultType="Integer">
+		SELECT count(*) 
+		FROM (SELECT
+	        a.svc_idx, a.user_idx, a.user_name, a.user_tel,
+	        b.svc_regdate,a.svc_state,
+	        c.svc_days,c.svc_time
+	    FROM
+	        svc_member a, svc_detail b,svc_date c
+	    WHERE
+	        a.svc_idx = b.svc_idx and a.svc_idx=c.svc_idx) 
+
+	</select>
+
 	<!-- 관리자: 세부 검색  -->
 	<select id="svcSelectDetail" parameterType="Map" resultType="com.mm.svc.model.SvcSelectAllDTO">
     SELECT a.svc_idx, a.user_idx, a.user_name, a.user_tel,

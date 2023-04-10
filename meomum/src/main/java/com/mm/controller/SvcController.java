@@ -20,6 +20,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.mm.member.model.MemberDAO;
 import com.mm.member.model.MemberDTO;
+import com.mm.point.model.PointDAO;
+import com.mm.point.model.ResultDTO;
 import com.mm.svc.model.SvcContentDTO;
 import com.mm.svc.model.SvcDAO;
 import com.mm.svc.model.SvcMemDTO;
@@ -35,6 +37,7 @@ public class SvcController {
 	@Autowired
 	private SvcDAO svcDao;
 	private MemberDAO mdao;
+	private PointDAO pdao;
 	
 	@RequestMapping("/svc.do")
 	public ModelAndView svc(HttpSession session) {
@@ -82,10 +85,15 @@ public class SvcController {
 	
 	/**관리자 페이지-예약 리스트*/
 	@RequestMapping("/asvcList.do")
-	public ModelAndView asvcList() {
-		List<SvcSelectAllDTO> list = svcDao.svcAdminList();
+	public ModelAndView asvcList(@RequestParam(value="cp",defaultValue="1")int cp) {
+		int totalCnt = svcDao.getTotalCnt();
+		int listSize = 10;
+		int pageSize = 5;
+		String pageStr = com.mm.module.PageModule.makePage("asvcList.do", totalCnt, listSize, pageSize, cp);
+		List<SvcSelectAllDTO> list = svcDao.svcAdminList(cp,listSize);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("svcDTO", list);
+		mav.addObject("pageStr", pageStr);
 		mav.setViewName("svc/a_svcList");
 		return mav;
 	}
@@ -236,15 +244,20 @@ public class SvcController {
 	
 	/**마이페이지-예약 상세 보기(정리일상 진행 현황)*/
 	@RequestMapping("/svcIngContent.do")
-	public ModelAndView svcIngContent_a(@RequestParam("svc_idx")String idx) {
+	public ModelAndView svcIngContent_a(@RequestParam("svc_idx")String idx,@RequestParam("user_idx")int user_idx) {
 		SvcContentDTO dto = svcDao.svcContent(idx);
 		SvcIngDTO ingdto = svcDao.svcIngContent(idx);
+		System.out.println(user_idx);
+		/* int point = pdao.pointTotal(user_idx); */
+	/*	ResultDTO rdto = pdao.pointTotal(user_idx);
+		System.out.println(rdto);*/
 		ModelAndView mav = new ModelAndView();
 		
 		mav.addObject("dto",dto);
-		System.out.println(dto.getSvc_state());
-		System.out.println(dto.getSvc_idx());
+
 		mav.addObject("ingdto",ingdto);
+		/* mav.addObject("point",point); */
+		/* mav.addObject("rdto", rdto); */
 	
 		mav.setViewName("svc/svcIngContent");
 	

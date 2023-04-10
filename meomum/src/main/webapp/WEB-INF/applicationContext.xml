@@ -78,7 +78,11 @@
 	</bean>
 	<bean id="loveDAO" class="com.mm.love.model.LoveDAOImple">
 		<constructor-arg>
-
+			<ref bean="sqlSessionTemplate" />
+		</constructor-arg>
+	</bean>
+		<bean id="pointDAO" class="com.mm.point.model.PointDAOImple">
+		<constructor-arg>
 			<ref bean="sqlSessionTemplate" />
 		</constructor-arg>
 	</bean>

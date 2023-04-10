@@ -10,7 +10,8 @@ public interface SvcDAO {
 	
 	public List<String> svcTimeSelect(String userdate);
 	
-	public List<SvcSelectAllDTO> svcAdminList();
+	public List<SvcSelectAllDTO> svcAdminList(int cp,int ls);
+	public int getTotalCnt();
 	
 	public SvcContentDTO svcContent(String idx);
 	public SvcIngDTO svcIngContent(String idx);

@@ -121,7 +121,7 @@
 	</div>
 
 	<div class="form-group">
-		<form name="test" action="orderTest.do" method="get">
+	
 			<h2>구매 상품 정보</h2>
 			<c:if test="${empty dto}">
 				<div>존재하지 않거나 삭제된 상품입니다.</div>
@@ -193,11 +193,10 @@
 			</div>
 			<div>
 				<label for="using_point">포인트</label> <input type="number"
-					name="using_point" value="${0 }" class="form-control">
+					name="using_point" value="${0}" class="form-control">
 			</div>
 		
 			
-		</form>
 		
 		<!-- 결제하기 버튼 생성 -->
 			<button onclick="requestPay()">결제하기</button>

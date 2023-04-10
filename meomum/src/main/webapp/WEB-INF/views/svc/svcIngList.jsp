@@ -48,6 +48,7 @@
 								<p class="card-text">
 									<c:url var="contentUrl" value="svcIngContent.do">
 										<c:param name="svc_idx">${list.svc_idx}</c:param>
+										<c:param name="user_idx">${sessionScope.ssInfo.user_idx}</c:param>
 									</c:url>
 									<a href="${contentUrl}">예약번호:${list.svc_idx}</a>
 								</p>

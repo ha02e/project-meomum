@@ -47,9 +47,22 @@ public class SvcDAOImple implements SvcDAO {
 	
 	/**관리자: 방문 견적 예약 신청자 리스트*/
 	@Override
-	public List<SvcSelectAllDTO> svcAdminList() {
-		List<SvcSelectAllDTO> list = sqlMap.selectList("svcAdminList");
+	public List<SvcSelectAllDTO> svcAdminList(int cp, int ls) {
+		int start = (cp-1)*ls+1;
+		int end = cp*ls;
+		Map map = new HashMap();
+		map.put("start", start);
+		map.put("end", end);
+		List<SvcSelectAllDTO> list = sqlMap.selectList("svcAdminList",map);
 		return list;
+	}
+	
+	/**관리자:방문 견적 예약 신청자 리스트(총 게시글)*/
+	@Override
+	public int getTotalCnt() {
+		int count = sqlMap.selectOne("svcAdminListCnt");
+		count = count==0?1:count;
+		return count;
 	}
 	
 	/**관리자: 방문 예약 신청자 세부 검색*/
