@@ -7,21 +7,24 @@
   	select * from product where pro_idx= #{pro_idx}
   	</select>
   	<insert id="orderInsert" parameterType="com.mm.order.model.OrderDTO">
-  		insert into orders values(31, #{user_idx}, #{order_idx}, sysdate, sysdate+ INTERVAL '1' MONTH, #{order_pcode}, 'r', 'r', #{order_addr}, #{order_detail}, 'r', 1, sysdate, 1, 1, sysdate, 'y')
+  		insert into orders values(#{order_idx}, #{user_idx}, #{order_name}, sysdate, sysdate + INTERVAL '1' MONTH, #{order_pcode}, 'r', 'r', #{order_addr}, #{order_detail}, #{order_msg}, 1, sysdate, 1, 1, sysdate, #{order_tos})
 	</insert>
 	<insert id="order_proInsert" parameterType="com.mm.order.model.OrderProDTO">
   		insert into order_pro values(#{order_idx},#{user_idx},#{pro_idx},#{pro_amount})
 	</insert>
 
 	<select id="myOrderList" parameterType="Integer" resultType="com.mm.order.model.OrderDTO">
-		select * from orders where user_idx=#{user_idx}
+		SELECT *FROM orders o
+		JOIN order_pro op ON o.order_idx = op.order_idx
+		JOIN product p ON op.pro_idx = p.pro_idx
+		WHERE o.user_idx = #{user_idx}
 	</select>
 	
 	
 	<select id="myOrderReport" parameterType="Map" resultType="com.mm.order.model.OrderReportDTO">
 		select * from
 			(select rownum as rnum, e.*from(
-				select a.order_idx, d.pro_name, c.user_name, c.user_tel, a.amount, a.order_status, a.order_date,
+				select a.order_idx, d.pro_name, b.pro_amount, c.user_name, c.user_tel, a.amount, a.order_status, a.order_date,
             			a.receiver, a.receiver_tel, a.order_msg,
             			(a.order_pcode||' '||a.order_addr||' '||a.order_detail) ship_addr
 				from orders a,
@@ -51,7 +54,7 @@
 	<select id="orderReport" parameterType="Map" resultType="com.mm.order.model.OrderReportDTO">
 		select * from
 			(select rownum as rnum, e.*from(
-				select a.order_idx, d.pro_name, c.user_name, c.user_tel, a.amount, a.order_status, a.order_date,
+				select a.order_idx, d.pro_name, b.pro_amount, c.user_name, c.user_tel, a.amount, a.order_status, a.order_date,
             			a.receiver, a.receiver_tel, a.order_msg,
             			(a.order_pcode||' '||a.order_addr||' '||a.order_detail) ship_addr
 				from orders a,

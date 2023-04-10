@@ -178,10 +178,10 @@ ul {
 						style="margin-right: 15px;"></span>
 					</a>
 
-					<a href="#" class="position-relative"> <i class="bi bi-cart2"
+					<a href="proCart.do?user_idx=${sessionScope.ssInfo.user_idx}" class="position-relative"> <i class="bi bi-cart2"
 						style="font-size: 2em;"></i> <span
 						class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-						style="font-size: 0.5em;"> 9+ </span>
+						style="font-size: 0.5em;">${sessionScope.cart}</span>
 					</a>
 
 				</c:if>

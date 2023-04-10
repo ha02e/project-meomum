@@ -34,37 +34,19 @@ img {
   height: 10px;
 }
 </style>
-<script>
-function updateShippingCost() {
-    let totalShippingCost = 0;
-    let amountInputs = document.querySelectorAll('.num-product');
-    let delPriceInputs = document.querySelectorAll('.pro-delprice');
-    for(let i = 0; i < amountInputs.length; i++) {
-      let amount = parseInt(amountInputs[i].value);
-      let delPrice = parseFloat(delPriceInputs[i].value);
-      totalShippingCost += amount * delPrice;
-    }
-    document.getElementById('shipping-cost').innerText = totalShippingCost.toFixed(3) + '원';
-  }
 
-  let amountInputs = document.querySelectorAll('.num-product');
-  for(let i = 0; i < amountInputs.length; i++) {
-    amountInputs[i].addEventListener('change', function() {
-      updateShippingCost();
-    });
-  }
-</script>
 <body>
 <%@include file="../header.jsp"%> 
 
 	<!-- Shoping Cart -->
+		
 		<table>
 			
 			<tr>
 				<td>
-				<label for="selectAll" class="form-check-label">전체 선택
-				<input type="checkbox" id="selectAll" name="selectAll">
-				</label>
+					<div class="all_check_input_div">
+						<input type="checkbox" class="all_check_input input_size_20" checked="checked"><span class="all_chcek_span">전체선택</span>
+					</div>
 				</td>
 			</tr>
 			
@@ -86,25 +68,28 @@ function updateShippingCost() {
 				</tr>
 			</c:if>
 			
-		<form name="cartForm" method="get" action="orderList.do">
+		
+		
 			<c:forEach var="list" items="${lists}">		
-			<c:set var="totalSub" value="${totalSub + (list.cart_amount * list.pro_subprice)}" />
-			<c:set var="totalDel" value="${totalDel + (list.cart_amount * list.pro_delprice)}" />
 					<tr>
-						<td>
-						<input type="checkbox" id="selectOne" name="selectOne" value="ok">
+						<td class="cart_info_td">
+							<input type="checkbox" class="individual_cart_checkbox input_size_20" checked="checked">				
+							<input type="hidden" class="individual_cartamount_input" value="${list.cart_amount }">
+							<input type="hidden" class="individual_prosubprice_input" value="${list.pro_subprice }">
+							<input type="hidden" class="individual_prodelprice_input" value="${list.pro_delprice }">
 						</td>
 						
 						<td>
 							<div>
-								<img src="/meomum/items/${list.pro_thumb}" alt="IMG-PRODUCT">
+								<img src="/meomum/images/items/${list.pro_thumb}" alt="IMG-PRODUCT">
 							</div>
 						</td>
 						
 						<td>${list.pro_name}</td>
 						
 						<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.pro_subprice }" />원</td>
-						<td>${list.pro_month }개월</td>
+						<td>${list.pro_month }개월
+						</td>
 						
 						<td>
 							<div class="wrap-num-product flex-w m-l-auto m-r-0">
@@ -116,9 +101,11 @@ function updateShippingCost() {
 
 							<!-- 수량 조절 -->
 								
-								<input class="mtext-104 cl3 txt-center num-product" type="number" min="1" max="10" name="cart_amount"
-								value="${list.cart_amount }" onchange="updatePrice(this, ${list.pro_subprice}, ${list.pro_allprice})">
-								<input type="hidden" name="cart_idx" value="${list.cart_idx }">
+								<input class="mtext-104 cl3 txt-center num-product update_amount_${list.cart_idx}" 
+								type="number" min="1" max="10" name="cart_amount"
+								value="${list.cart_amount}" id="update_amount_${list.cart_idx}" 
+								onchange="updatePrice(this, ${list.pro_subprice}, ${list.pro_allprice})">
+								
 								
 							
 							<!-- 플러스 -->
@@ -127,12 +114,13 @@ function updateShippingCost() {
 								</div>
 							
 							</div>
-							<button type="submit" formaction="cartNumUpdate.do">수량 변경</button>
+							<input type="button" onclick="cartNumUpdate(${list.cart_idx}, document.querySelectorAll('.update_amount_${list.cart_idx}')[0].value)" value="수량 변경">
+
 						</td>
 						<td>
-						<div><span id="subPrice-${list.cart_idx}"><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.cart_amount * list.pro_subprice}" />원
+						<div>월 <span id="subPrice-${list.cart_idx}"><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.cart_amount * list.pro_subprice}" />원
 						</span></div>
-    					<div><span id="allPrice-${list.cart_idx}"><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.cart_amount * list.pro_allprice}" />원</span></div>
+    					<div>총 <span id="allPrice-${list.cart_idx}"><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.cart_amount * list.pro_allprice}" />원</span></div>
 						</td>
 						
 						<!-- 장바구니 삭제 -->
@@ -144,24 +132,133 @@ function updateShippingCost() {
 					</tr>
 					</c:forEach>				
 					<tr>
-						<td><div id="totalSub-${list.cart_idx }">월 구독 가격 <fmt:formatNumber type="number" maxFractionDigits="3" value="${totalSub}" />원</div></td>
-						<td><div id="totalDel-${list.cart_idx}">| 총 배송비 <fmt:formatNumber type="number" maxFractionDigits="3" value="${totalDel}" />원</div></td>
+						<td><div>월 구독 가격: <span class="totalSub"></span>원 | </div></td>
+						<td><div>총 구매 개수: <span class="totalCount"></span>개 | </div></td>	
+						<td><div>총 배송비: <span class="totalDel"></span>원 | </div></td>	
+						<td>월 구독 가격+총 배송비: <span class="finalTotalPrice"></span>원</td>
+						
 					</tr>
+					<form name="cartForm" method="get" action="orderList.do">
 					<tr>
-						<td>
-						<input type="hidden" name="pro_idx" value="${list.pro_idx}" >
+						<td colspan="5">
+						<input type="hidden" name="pro_idx" id="pro_idx" value="${list.pro_idx}" >
 						<input type="hidden" name="cart_amount" value="${list.cart_amount}" >
 						<input type="hidden" name="totalSubPrice" value="${totalSubPrice}" >
 						<input type="hidden" name="totalDel" value="${totalDel}" >	
 						<button type="submit" formaction="orderList.do">결제하기</button>
 						</td>
 					</tr>
+					</form>		
 				</table>
-			</form>		
+				
+				
+<script>
+$(document).ready(function() {
+	
+	setTotalInfo();
+	
+});
 
 
+$(".individual_cart_checkbox").on("change", function(){
+	//총 주문 정보 세팅
+	setTotalInfo($(".cart_info_td"));
+});
+
+
+$(".all_check_input").on("click", function(){
+	
+	if($(".all_check_input").prop("checked")){
+		$(".individual_cart_checkbox").prop('checked',true);
+	} else{
+		$(".individual_cart_checkbox").prop('checked',false);
+	}
+	
+	setTotalInfo($(".cart_info_td"));
+	
+});
+
+
+function setTotalInfo(){
+	  let totalSub = 0; // 총 가격 (총 구독 가격)
+	  let totalCount = 0; // 총 갯수
+	  let totalDel = 0; // 총 배송비
+	  let finalTotalPrice = 0; // 최종 가격 (배송비+구독가)
+
+	  $(".cart_info_td").each(function(index, element) {
+		  
+		if($(element).find(".individual_cart_checkbox").is(":checked")==true){
+	    let cart_amount = parseInt($(element).find(".individual_cartamount_input").val());
+	    let pro_subprice = parseInt($(element).find(".individual_prosubprice_input").val());
+	    let pro_delprice = parseInt($(element).find(".individual_prodelprice_input").val());
+	    
+	 	totalCount += cart_amount
+	    totalSub += cart_amount * pro_subprice;
+	    totalDel += cart_amount * pro_delprice;
+	    finalTotalPrice = totalSub + totalDel;
+		}
+	  });
+	  
+	  // 배송비 출력
+	  $(".totalDel").text(totalDel.toLocaleString());
+
+	  // 총 가격 출력
+	  $(".totalSub").text(totalSub.toLocaleString());
+	  
+	  // 총 구매 개수
+	  $(".totalCount").text(totalCount.toLocaleString());
+	  
+	  // 배송비+월 구독 가격
+	  $(".finalTotalPrice").text(finalTotalPrice.toLocaleString());
+}
+</script>
 
 <script>
+function updateShippingCost() {
+//전체 월 구독 가격, 전체 배송비인 듯
+    let totalShippingCost = 0;
+    let amountInputs = document.querySelectorAll('.num-product');
+    let delPriceInputs = document.querySelectorAll('.pro-delprice');
+   
+    for(let i = 0; i < amountInputs.length; i++) {
+      let amount = parseInt(amountInputs[i].value);
+      let delPrice = parseFloat(delPriceInputs[i].value);
+      totalShippingCost += amount * delPrice;
+    }
+    document.getElementById('shipping-cost').innerText = totalShippingCost.toFixed(3) + '원';
+  }
+
+  let amountInputs = document.querySelectorAll('.num-product');
+  for(let i = 0; i < amountInputs.length; i++) {
+    amountInputs[i].addEventListener('change', function() {
+      updateShippingCost();
+    });
+  }
+</script>
+
+<script>
+//수량 변경
+function cartNumUpdate(update_idx,update_amount) {
+	  $.ajax({
+	    url: "cartNumUpdate.do",
+	    type: "POST",
+	    data: {
+	      cart_idx: update_idx,
+	      cart_amount: update_amount
+	    },
+	    success: function (response) {
+	      alert("수량이 변경되었습니다.");
+	      location.reload();
+	    },
+	    error: function (xhr, status, error) {
+	      alert("실패하였습니다. 고객 센터로 연락해 주세요.");
+	    },
+	  });
+	}
+</script>
+
+<script>
+//장바구니 삭제
   function deleteCartItem(cartIdx) {
     $.ajax({
       url: "cartDelete.do",
@@ -178,36 +275,7 @@ function updateShippingCost() {
   }
 </script>
 
-<script>
-function updatePrice(input, subprice, allprice) {
-    var cartIdx = input.nextElementSibling.value;
-    var cartAmount = input.value;
-    var subPrice = cartAmount * subprice;
-    var allPrice = cartAmount * allprice;
-    
-    // 하위 요소에서 ID를 이용하여 값을 업데이트합니다.
-    document.getElementById("subPrice-" + cartIdx).innerHTML = subPrice + "원";
-    document.getElementById("allPrice-" + cartIdx).innerHTML = allPrice + "원";
-}
-</script>
 
-
-<script>
-  const allCheckbox = document.querySelector('#selectAll');
-  const selectOneCheckboxes = document.querySelectorAll('input[name=selectOne]');
-
-  allCheckbox.addEventListener('click', () => {
-    selectOneCheckboxes.forEach((checkbox) => {
-      checkbox.checked = allCheckbox.checked;
-    });
-  });
-
-  // 모든 체크박스를 선택하도록 설정
-  allCheckbox.checked = true;
-  selectOneCheckboxes.forEach((checkbox) => {
-    checkbox.checked = true;
-  });
-</script>
 
 	<script src="js/main.js"></script>
 <%@include file="../footer.jsp"%> 

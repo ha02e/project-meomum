@@ -161,10 +161,13 @@
     <!-- Search product -->
   <form name="itemFind" action="itemFind.do">
     <div class="dis-flex panel-search w-full p-t-10 p-b-15">
-      <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product" placeholder="Search">
-      <button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
+      
+      <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="proF" >
+      <button type="submit" 
+      class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
         <i class="zmdi zmdi-search"></i>
       </button>
+      
     </div>
   </form>
 </div>
@@ -177,7 +180,7 @@
             <!-- Block2 -->
             <div class="block2">
                 <div class="block2-pic hov-img0">
-                    <img src="/meomum/items/${list.pro_thumb}" alt="IMG-PRODUCT">
+                    <a href="proContent.do?pro_idx=${list.pro_idx}"><img src="/meomum/images/items/${list.pro_thumb}" alt="IMG-PRODUCT"></a>
 
                     <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
                        ${list.pro_month }개월
@@ -211,8 +214,8 @@
    			 </c:forEach>
 		</div>
 		<!-- page -->
-		<div class="flex-c-m flex-w w-full p-t-38">
-				${pageStr }
+			<div class="flex-c-m flex-w w-full p-t-38">
+					${pageStr }
 			</div>		
 	</div>
 </div>
@@ -225,16 +228,6 @@
 <!--===============================================================================================-->
 	<script src="vendor/bootstrap/js/popper.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/select2/select2.min.js"></script>
-	<script>
-		$(".js-select2").each(function(){
-			$(this).select2({
-				minimumResultsForSearch: 20,
-				dropdownParent: $(this).next('.dropDownSelect2')
-			});
-		})
-	</script>
 <!--===============================================================================================-->
 	<script src="vendor/daterangepicker/moment.min.js"></script>
 	<script src="vendor/daterangepicker/daterangepicker.js"></script>
@@ -265,8 +258,6 @@
 <!--===============================================================================================-->
 	<script src="vendor/sweetalert/sweetalert.min.js"></script>
 <script>
-
-
 function loveInsert(pro_idx,user_idx) {
 	  $.ajax({
 	    type: "POST",
@@ -283,10 +274,21 @@ function loveInsert(pro_idx,user_idx) {
 	    }
 	  });
 	}
-
-
-
 </script>
+
+<script>
+$(".filter-tope-group button:not(:first-child)").click(function() {
+	  // 요소를 숨깁니다.
+	  $(".flex-c-m.flex-w.w-full.p-t-38").hide();
+	});
+
+	// "전체" 버튼을 클릭할 때 실행됩니다.
+	$(".filter-tope-group button:first-child").click(function() {
+	  // 요소를 보여줍니다.
+	  $(".flex-c-m.flex-w.w-full.p-t-38").show();
+	});
+</script>
+
 <!--===============================================================================================-->
 	<script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	<script>

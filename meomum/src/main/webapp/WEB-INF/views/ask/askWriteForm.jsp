@@ -68,16 +68,9 @@
         <c:if test="${!empty sessionScope.ssInfo}">
           <input type="hidden" class="form-control input-group-text-fixed" id="password" name="ask_pwd" required="required">
         </c:if>
-         <div class="input-group mb-3">
-          <label for="password" class="input-group-text col-3 text-center">보안방지</label>
-          <input type="text" class="form-control input-group-text-fixed" id="password">
-        </div>
 		  <div class="input-group mb-3">
-		  <label class="input-group-text col-3 text-center" for="checkbox">
-		    개인정보이용동의
-		  </label>
 		  <input class="form-check-input" type="checkbox" id="checkbox" value="Y" name="ask_tos" required="required">개인정보 이용동의합니다.
-		  <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">내용보기</a>
+		  <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"> (내용보기)</a>
 		</div>
 
         <div class="d-flex justify-content-center">
@@ -98,20 +91,21 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h1 class="modal-title fs-5" id="exampleModalLabel">머뭄 이용약관 동의</h1>
+					<h1 class="modal-title fs-5" id="exampleModalLabel">머뭄 개인정보 처리 방침</h1>
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
 						aria-label="Close"></button>
 				</div>
-				<div class="modal-body">여러분을 환영합니다. JUN 서비스 및 제품(이하 ‘서비스’)을
-					이용해 주셔서 감사합니다. 본 약관은 다양한 JUN 서비스의 이용과 관련하여 JUN 서비스를 제공하는 JUN
-					주식회사(이하 ‘JUN’)와 이를 이용하는 JUN 서비스 회원(이하 ‘회원’) 또는 비회원과의 관계를 설명하며, 아울러
-					여러분의 JUN 서비스 이용에 도움이 될 수 있는 유익한 정보를 포함하고 있습니다. JUN 서비스를 이용하시거나 JUN
+				<div class="modal-body">
+					여러분을 환영합니다. <br>
+					머뭄서비스 및 제품(이하 ‘서비스’)을
+					이용해 주셔서 감사합니다. 본 약관은 다양한  머뭄 서비스의 이용과 관련하여  머뭄 서비스를 제공하는  머뭄
+					주식회사(이하 ‘ 머뭄’)와 이를 이용하는  머뭄 서비스 회원(이하 ‘회원’) 또는 비회원과의 관계를 설명하며, 아울러
+					여러분의  머뭄 서비스 이용에 도움이 될 수 있는 유익한 정보를 포함하고 있습니다.  머뭄 서비스를 이용하시거나  머뭄
 					서비스 회원으로 가입하실 경우 여러분은 본 약관 및 관련 운영 정책을 확인하거나 동의하게 되므로, 잠시 시간을 내시어
 					주의 깊게 살펴봐 주시기 바랍니다.</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
-						data-bs-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary" data-bs-dismiss="modal">확인</button>
+						data-bs-dismiss="modal">닫기</button>
 				</div>
 			</div>
 		</div>

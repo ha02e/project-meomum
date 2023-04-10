@@ -1,18 +1,25 @@
 package com.mm.controller;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
+import javax.servlet.ServletContext;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.Mapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mm.member.model.MemberDTO;
@@ -25,6 +32,9 @@ public class ProController {
 	
 	@Autowired
 	private ProDAO proDao;
+	
+	@Autowired
+	private ServletContext servletContext;
 
 	
 	//관리자 상품 등록으로 이동
@@ -76,11 +86,10 @@ public class ProController {
 	}
 	
 	
-	
 	//파일 저장 실행
-	@RequestMapping("/addPro.do")
+	@RequestMapping("/proAdd.do")
 	public ModelAndView fileUpload(
-			@RequestParam("pro_thumb") MultipartFile pro_thumb,
+	        @RequestParam("pro_thumb") MultipartFile pro_thumb,
 	        @RequestParam("pro_img1") MultipartFile pro_img1, 
 	        @RequestParam("pro_img2") MultipartFile pro_img2,
 	        @RequestParam("pro_cate") int pro_cate,
@@ -91,62 +100,72 @@ public class ProController {
 	        @RequestParam("pro_state") int pro_state,
 	        @RequestParam("pro_month") int pro_month,
 	        @RequestParam("pro_content") MultipartFile pro_content,
-	        @RequestParam("pro_allprice") int pro_allprice)
-		{
-		
-		 ProDTO dto = new ProDTO();
-		    dto.setPro_thumb(pro_thumb.getOriginalFilename());
-		    dto.setPro_img1(pro_img1.getOriginalFilename());
-		    dto.setPro_img2(pro_img2.getOriginalFilename());
-		    dto.setPro_cate(pro_cate);
-		    dto.setPro_name(pro_name);
-		    dto.setPro_price(pro_price);
-		    dto.setPro_amount(pro_amount);
-		    dto.setPro_state(pro_state);
-		    dto.setPro_month(pro_month);
-		    dto.setPro_content(pro_content.getOriginalFilename());
-		    dto.setPro_subprice(pro_subprice);
-		    dto.setPro_allprice(pro_allprice);
-	
-		//사진 물리 저장
-		copyInto(pro_thumb);
-		copyInto(pro_img1);
-		copyInto(pro_img2);
-		copyInto(pro_content);
-		
-		//정보 저장
-		int result=proDao.proInsert(dto);
-				
-		String msg=result>=0?"등록 성공":"등록 실패";
-		String link=result>0?"proAdmin.do":"proForm.do";
-		ModelAndView mav=new ModelAndView();
-		mav.addObject("msg", msg);
-		mav.addObject("link", link);
-		mav.setViewName("pro/proMsg");
-		return mav;		
-		
+	        @RequestParam("pro_allprice") int pro_allprice,
+	        HttpServletRequest req) {
+	    
+	    ProDTO dto = new ProDTO();
+	    dto.setPro_thumb(pro_thumb.getOriginalFilename());
+	    dto.setPro_img1(pro_img1.getOriginalFilename());
+	    dto.setPro_img2(pro_img2.getOriginalFilename());
+	    dto.setPro_cate(pro_cate);
+	    dto.setPro_name(pro_name);
+	    dto.setPro_price(pro_price);
+	    dto.setPro_amount(pro_amount);
+	    dto.setPro_state(pro_state);
+	    dto.setPro_month(pro_month);
+	    dto.setPro_content(pro_content.getOriginalFilename());
+	    dto.setPro_subprice(pro_subprice);
+	    dto.setPro_allprice(pro_allprice);
+	    
+	    String name1=pro_thumb.getOriginalFilename();
+	    String name2=pro_img1.getOriginalFilename();
+	    String name3=pro_img2.getOriginalFilename();
+	    String name4=pro_content.getOriginalFilename();
+	    
+	    //사진 물리 저장
+	    copyInto(pro_thumb, req,name1);
+	    copyInto(pro_img1, req,name2);
+	    copyInto(pro_img2, req,name3);
+	    copyInto(pro_content, req,name4);
+
+	    //정보 저장
+	    int result = proDao.proInsert(dto);
+
+	    String msg = result >= 0 ? "등록 성공" : "등록 실패";
+	    String link = result > 0 ? "proAdmin.do" : "proForm.do";
+	    ModelAndView mav = new ModelAndView();
+	    mav.addObject("msg", msg);
+	    mav.addObject("link", link);
+	    mav.setViewName("pro/proMsg");
+	    return mav;        
 	}
 	
 	
 	
 	//파일 복사?
-	public void copyInto(MultipartFile upload) {
-		
-		System.out.println("파일명: "+upload.getOriginalFilename());
-		try {
-			byte bytes[]=upload.getBytes();
-			
-			String path="c:/student_java/cool/meomum/src/main/webapp/items/";
-			File outfile=new File(path+upload.getOriginalFilename());
-			
-			FileOutputStream fos=new FileOutputStream(outfile);
-			fos.write(bytes);
-			fos.close();
-			
-			} catch(IOException e) {
-				e.printStackTrace();
-			}	
+	public void copyInto(MultipartFile upload, HttpServletRequest req,String fileName) {
+	    
+	    try {
+	        byte bytes[] = upload.getBytes();
+	        
+	        
+	        String filePath= "/images/items/"+fileName;
+	        String fullPath = req.getSession().getServletContext().getRealPath(filePath);
+	        
+	       
+	       // String filepath = rootPath+"/items/"+fileName;
+	        
+	        File outfile = new File(fullPath);
+	        
+	        FileOutputStream fos = new FileOutputStream(outfile);
+	        
+	        fos.write(bytes);
+	        fos.close();
+	    } catch(IOException e) {
+	        e.printStackTrace();
+	    }
 	}
+
 	
 	
 	
@@ -168,7 +187,7 @@ public class ProController {
 	public ModelAndView proAdminList(@RequestParam(value="cp",defaultValue="1")int cp) {
 		
 		int totalCnt=proDao.getTotalCnt();
-		int listSize=5;
+		int listSize=10;
 		int pageSize=5;
 		
 		String pageStr=com.mm.module.PageModule.makePage("proAdmin.do", totalCnt, listSize, pageSize, cp);
@@ -184,20 +203,102 @@ public class ProController {
 		return mav;
 	}
 	
-	
 	//상품 삭제
+	@RequestMapping(value="/proDel.do", method = RequestMethod.POST)
+		public ModelAndView proDel(
+				ProDTO dto,
+				HttpServletRequest req,
+				@RequestParam("pro_idx") int pro_idx) {
+		
+			int result = proDao.proDelete(pro_idx);
+			
+			
+			String rootPath = req.getSession().getServletContext().getRealPath("/");
+			String p = rootPath + "/images/items/" + dto.getPro_thumb();
+			String p1 = rootPath + "/images/items/" + dto.getPro_img1();
+			String p2 = rootPath + "/images/items/" + dto.getPro_img2();
+			String p3 = rootPath + "/images/items/" + dto.getPro_content();
+			
+			
+				File old = new File(p);
+				if (old.exists()) {
+					old.delete();
+				}
+		
+				File old1 = new File(p1);
+				if (old1.exists()) {
+					old1.delete();
+				}
+			
+				File old2 = new File(p2);
+				if (old2.exists()) {
+					old2.delete();
+				}
+	
+				File old3 = new File(p3);
+				if (old3.exists()) {
+					old3.delete();
+				}
+			
+			String msg=result>=0?"삭제 성공":"삭제 실패";
+			String link ="proAdmin.do";
+			ModelAndView mav=new ModelAndView();
+			mav.addObject("msg", msg);
+			mav.addObject("link", link);
+			mav.setViewName("pro/proMsg");
+			return mav;
+		}
+	
+	
+	/*상품 삭제
 	@RequestMapping("/proDel.do")
-	public ModelAndView proDel(@RequestParam("pro_idx") int pro_idx) {
+	public ModelAndView proDel(@RequestParam("pro_idx") int pro_idx,
+			MultipartHttpServletRequest req,
+			@RequestBody ProDTO dto) {
 		int result = proDao.proDelete(pro_idx);
+		
+		
+		String rootPath = req.getSession().getServletContext().getRealPath("/");
+		 ProDTO dto=new ProDTO(); String thumb=dto.getPro_thumb();
+	
+		String filePath=rootPath+"/images/items/"+dto.getPro_thumb();
+		String filePath1=rootPath+"/images/items/"+dto.getPro_img1();
+		String filePath2=rootPath+"/images/items/"+dto.getPro_img2();
+		String filePath3=rootPath+"/images/items/"+dto.getPro_content();
+		
+		File f = new File(filePath);
+		File f1 = new File(filePath1);
+		File f2 = new File(filePath2);
+		File f3 = new File(filePath3);
+		
+		
+		if (f.exists()) {
+			f.delete();
+		}
+		
+		if (f1.exists()) {
+			f1.delete();
+		}
+		
+		if (f2.exists()) {
+			f2.delete();
+		}
+		
+		if (f3.exists()) {
+			f3.delete();
+		}
+		
+		
 		String msg=result>=0?"삭제 성공":"삭제 실패";
 		String link ="proAdmin.do";
 		ModelAndView mav=new ModelAndView();
 		mav.addObject("msg", msg);
-		mav.addObject("msg", link);
+		mav.addObject("link", link);
 		mav.setViewName("pro/proMsg");
 		return mav;
 		}
 	
+	*/
 	
 	
 	//상품 검색
@@ -337,15 +438,14 @@ public class ProController {
 			}
 		}
 		
-		
 		int result=proDao.proAmountUpdate(dto);
 		
 		String msg=result>=0?"재고 수정이 완료되었습니다.":"재고 수정에 실패하였습니다.";
 		
 		ModelAndView mav=new ModelAndView();
 		mav.addObject("msg", msg);
-		mav.addObject("link", "proAmount_a.do");
-		mav.setViewName("/msg");
+		mav.addObject("gopage","location.href='proAmount_a.do';");
+		mav.setViewName("/mainMsg");
 		return mav;
 		
 	}
@@ -401,6 +501,17 @@ public class ProController {
 		mav.setViewName("/msg");
 		return mav;
 		
+	}
+	
+	//사용자 상품 리스트 검색
+	@RequestMapping(value="itemFind.do")
+	public ModelAndView proItemFind(
+			@RequestParam("proF")String proF) {
+		ModelAndView mav = new ModelAndView();
+		List<ProDTO> lists=proDao.proFind2(proF);
+		mav.addObject("lists", lists);
+		mav.setViewName("pro/proList");
+		return mav;
 	}
 
 	

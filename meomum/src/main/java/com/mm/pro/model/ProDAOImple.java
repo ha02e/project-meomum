@@ -98,4 +98,29 @@ private SqlSessionTemplate sqlMap;
 			int count=sqlMap.update("proStateUpdate", dto);
 			return count;
 		}
+	
+	//배송처리 시 기존 상품재고 조회
+	@Override
+		public int proAmountSelect(int pro_idx) {
+			int amount=sqlMap.selectOne("proAmountSelect", pro_idx);
+			return amount;
+		}	
+	
+	//배송처리 시 상품 재고 수정
+	@Override
+		public int proAmountShipUpdate(String order_idx) {
+			int count=sqlMap.update("proAmountShipUpdate", order_idx);
+			return count;
+		}
+	
+	//파일 이름 찾기
+	@Override
+		public String proFindFile(Integer idx) {
+		
+		String result =  sqlMap.selectOne("proFindFile", idx);
+		 
+		return result;
+		}
+	
+	
 }
