@@ -57,6 +57,13 @@ public class SvcDAOImple implements SvcDAO {
 		return list;
 	}
 	
+	/**관리자: 방문 견적 예약 신청자 리스트(캘린더)*/
+	@Override
+	public List<SvcSelectAllDTO> svcAdminLista() {
+		List<SvcSelectAllDTO> list = sqlMap.selectList("svcAdminLista");
+		return list;
+	}
+	
 	/**관리자:방문 견적 예약 신청자 리스트(총 게시글)*/
 	@Override
 	public int getTotalCnt() {
