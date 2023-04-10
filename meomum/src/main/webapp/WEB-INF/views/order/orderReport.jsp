@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
     
 <!DOCTYPE html>
 <html>
@@ -78,52 +79,53 @@
 											</tr>
 										</thead>
 										<tbody>
+										<c:if test="${empty lists}">
 											<tr>
-												<td class="cell">#15346</td>
-												<td class="cell"><span class="truncate">Lorem ipsum dolor sit amet eget volutpat erat</span></td>
-												<td class="cell">John Sanders</td>
-												<td class="cell"><span>17 Oct</span><span class="note">2:16 PM</span></td>
-												<td class="cell"><span class="badge bg-success">Paid</span></td>
+												<td class="cell text-center" colspan="5">주문하신 상품이 없습니다.</td>
 											</tr>
+										</c:if>
+										<c:forEach var="dto" items="${lists}">
 											<tr>
-												<td class="cell">#15345</td>
-												<td class="cell"><span class="truncate">Consectetur adipiscing elit</span></td>
-												<td class="cell">Dylan Ambrose</td>
-												<td class="cell"><span class="cell-data">16 Oct</span><span class="note">03:16 AM</span></td>
-												<td class="cell"><span class="badge bg-warning">Pending</span></td>
+												<td class="cell">${dto.order_idx}</td>
+												<td class="cell">${dto.pro_name}</td>
+												<td class="cell"><fmt:formatNumber type="number" maxFractionDigits="3" value="${dto.amount}" />원</td>
+												<td class="cell">${dto.order_date}</td>
+												<td class="cell">
+													<c:choose>
+														<c:when test="${dto.order_status eq 1}">
+															<div class="text-warning">상품준비중</div>
+														</c:when>
+														<c:when test="${dto.order_status eq 2}">
+															<div class="text-success">배송중</div>
+															<form action="http://info.sweettracker.co.kr/tracking/4" method="post">
+																<input type="hidden" id="t_key" name="t_key" value="sjLmbhJEhPXnO5neAx7FNg">
+																<input type="hidden" id="t_code" name="t_code" value="04">
+																<input type="hidden" id="t_invoice" name="t_invoice" value="566250609912">
+																<button type="submit" class="btn-sm app-btn-secondary">배송조회</button>
+															</form>
+														</c:when>
+														<c:when test="${dto.order_status eq 3}">
+															<div class="text-danger">주문취소</div>
+														</c:when>
+														<c:when test="${dto.order_status eq 4}">
+															<div>배송완료</div>
+															<form action="http://info.sweettracker.co.kr/tracking/4" method="post">
+																<input type="hidden" id="t_key" name="t_key" value="sjLmbhJEhPXnO5neAx7FNg">
+																<input type="hidden" id="t_code" name="t_code" value="04">
+																<input type="hidden" id="t_invoice" name="t_invoice" value="566250609912">
+																<button type="submit" id="btnSubmit" class="btn-sm app-btn-secondary">배송조회</button>
+															</form>
+														</c:when>
+														<c:when test="${dto.order_status eq 5}">										
+															<div class="text-danger">반납신청</div>
+														</c:when>
+														<c:when test="${dto.order_status eq 6}">반납진행</c:when>
+														<c:when test="${dto.order_status eq 7}">반납완료</c:when>
+													</c:choose>
+												</td>
 											</tr>
-											<tr>
-												<td class="cell">#15344</td>
-												<td class="cell"><span class="truncate">Pellentesque diam imperdiet</span></td>
-												<td class="cell">Teresa Holland</td>
-												<td class="cell"><span class="cell-data">16 Oct</span><span class="note">01:16 AM</span></td>
-												<td class="cell"><span class="badge bg-success">Paid</span></td>
-											</tr>
-											
-											<tr>
-												<td class="cell">#15343</td>
-												<td class="cell"><span class="truncate">Vestibulum a accumsan lectus sed mollis ipsum</span></td>
-												<td class="cell">Jayden Massey</td>
-												<td class="cell">$199.00</td>
-												<td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-											</tr>
-											
-											<tr>
-												<td class="cell">#15342</td>
-												<td class="cell"><span class="truncate">Justo feugiat neque</span></td>
-												<td class="cell">Reina Brooks</td>
-												<td class="cell"><span class="cell-data">12 Oct</span><span class="note">04:23 PM</span></td>
-												<td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-											</tr>
-											
-											<tr>
-												<td class="cell">#15341</td>
-												<td class="cell"><span class="truncate">Morbi vulputate lacinia neque et sollicitudin</span></td>
-												<td class="cell">Raymond Atkins</td>
-												<td class="cell">$678.26</td>
-												<td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-											</tr>
-		
+										</c:forEach>
+										
 										</tbody>
 									</table>
 						        </div><!--//table-responsive-->

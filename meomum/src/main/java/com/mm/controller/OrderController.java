@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mm.member.model.MemberDTO;
 import com.mm.order.model.OrderDAO;
 import com.mm.order.model.OrderDTO;
 import com.mm.order.model.OrderReportDTO;
@@ -55,14 +58,42 @@ public class OrderController {
 		return mav;
 	}
 
-	
+	/** 마이페이지 주문배송내역 */
+	public List<OrderReportDTO> myReportPage(int cp, int ls,int user_idx) {
+		int start = (cp - 1) * ls + 1;
+		int end = cp * ls;
+		Map map = new HashMap();
+		map.put("start", start);
+		map.put("end", end);
+		map.put("user_idx", user_idx);
+		List<OrderReportDTO> lists = orderDao.myOrderReport(map);
+		return lists;
+	}
+
 	@RequestMapping("/orderReport.do")
-	public String orderReport() {
-		return "order/orderReport";
+	public ModelAndView myOrderReport(@RequestParam(value = "cp", defaultValue = "1") int cp, 
+										HttpSession session) {
+		
+		MemberDTO mdto=(MemberDTO)session.getAttribute("ssInfo");
+		int user_idx=mdto.getUser_idx();
+		
+		int totalCnt = orderDao.myReportTotalCnt(user_idx);
+		int listSize = 5;
+		int pageSize = 5;
+
+		String pageStr = com.mm.module.PageModule.makePage("orderReport.do", totalCnt, listSize, pageSize, cp);
+
+		List<OrderReportDTO> lists = myReportPage(cp, pageSize,user_idx);
+
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("lists", lists);
+		mav.setViewName("order/orderReport");
+		mav.addObject("pageStr", pageStr);
+
+		return mav;
 	}
 	
-	
-	
+	/** 관리자페이지 주문배송내역 */
 	public List<OrderReportDTO> reportPage(int cp, int ls) {
 		int start = (cp - 1) * ls + 1;
 		int end = cp * ls;
