@@ -34,27 +34,7 @@ img {
   height: 10px;
 }
 </style>
-<script>
-function updateShippingCost() {
-    let totalShippingCost = 0;
-    let amountInputs = document.querySelectorAll('.num-product');
-    let delPriceInputs = document.querySelectorAll('.pro-delprice');
-   
-    for(let i = 0; i < amountInputs.length; i++) {
-      let amount = parseInt(amountInputs[i].value);
-      let delPrice = parseFloat(delPriceInputs[i].value);
-      totalShippingCost += amount * delPrice;
-    }
-    document.getElementById('shipping-cost').innerText = totalShippingCost.toFixed(3) + '원';
-  }
 
-  let amountInputs = document.querySelectorAll('.num-product');
-  for(let i = 0; i < amountInputs.length; i++) {
-    amountInputs[i].addEventListener('change', function() {
-      updateShippingCost();
-    });
-  }
-</script>
 <body>
 <%@include file="../header.jsp"%> 
 
@@ -107,7 +87,9 @@ function updateShippingCost() {
 						<td>${list.pro_name}</td>
 						
 						<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.pro_subprice }" />원</td>
-						<td>${list.pro_month }개월</td>
+						<td>${list.pro_month }개월
+						<input type="hidden"  data-cart_idx="${list.cart_idx }" id="cart_idx" >
+						</td>
 						
 						<td>
 							<div class="wrap-num-product flex-w m-l-auto m-r-0">
@@ -172,7 +154,7 @@ function updateShippingCost() {
 					</form>		
 				</table>
 				
-			
+				
 <script>
 $('#selectAll').click(function() {
 	  $('input[name="selectOne"]').prop('checked', $(this).prop('checked'));
@@ -191,8 +173,8 @@ $('#selectAll').click(function() {
 	  var totalDel = 0;
 	  
 	  $('input[name="selectOne"]:checked').each(function() {
-	    var cartIdx = $("#pro_idx").val();
-	    var cartAmount = parseInt($('.update_amount_' + cartIdx).val());
+		var cartIdx = $(this).data('cart_idx');
+	    var cartAmount = parseInt($('#update_amount_'+cartIdx).val());
 	    var subPrice = parseInt($('#subPrice-' + cartIdx).text().replace(/[^0-9.]/g, ''));
 
 	    alert(cartIdx);
@@ -208,6 +190,28 @@ $('#selectAll').click(function() {
 	}
 </script>
 
+<script>
+function updateShippingCost() {
+//전체 월 구독 가격, 전체 배송비인 듯
+    let totalShippingCost = 0;
+    let amountInputs = document.querySelectorAll('.num-product');
+    let delPriceInputs = document.querySelectorAll('.pro-delprice');
+   
+    for(let i = 0; i < amountInputs.length; i++) {
+      let amount = parseInt(amountInputs[i].value);
+      let delPrice = parseFloat(delPriceInputs[i].value);
+      totalShippingCost += amount * delPrice;
+    }
+    document.getElementById('shipping-cost').innerText = totalShippingCost.toFixed(3) + '원';
+  }
+
+  let amountInputs = document.querySelectorAll('.num-product');
+  for(let i = 0; i < amountInputs.length; i++) {
+    amountInputs[i].addEventListener('change', function() {
+      updateShippingCost();
+    });
+  }
+</script>
 
 <script>
 //수량 변경
