@@ -80,10 +80,13 @@
 
 	<div class="form-group">
 		<form name="orderForm" action="orderForm.do" method="post">
+			
+			<!-- 구독상품에 넘겨야할 파라미터들 -->
 			<input type="hidden" name="user_idx"
 				value="${sessionScope.ssInfo.user_idx}"> 
-				<input type="hidden" id="orderIdxInput" name="order_idx" value="${uid}" />
-
+			<input type="hidden" id="orderIdxInput" name="order_idx" value="${uid}" />
+			<input type="hidden" name="pro_month" value="${dto.pro_month }">
+			<!--  -->
 			<h2>구매 상품 정보</h2>
 			<c:if test="${empty dto}">
 				<div>존재하지 않거나 삭제된 상품입니다.</div>
@@ -160,7 +163,7 @@
 			<div>
 				<label for="order_detail">상세주소</label> <input type="text"
 					class="form-control" id="order_detail" name="order_detail"
-					value="${sessionScope.ssInfo.addr_detail}" placeholder="상세주소">
+					value="${sessionScope.ssInfo.addr_detail}" placeholder="상세주소" required="required">
 			</div>
 			<div>
 				<label for="order_msg">배송 메세지</label> <input type="text"
@@ -169,10 +172,10 @@
 			</div>
 			<div>
 				<label for="checkbox"> 개인정보이용동의 </label>
-				<div class="form-control">
+					<div class="form-control">
 					개인정보 이용동의합니다.<input class="form-check-input" type="checkbox"
-						id="checkbox" value="Y" name="order_tos" class="form-control">
-				</div>
+ 					id="checkbox" value="Y"  name="order_tos" class="form-control" required="required">
+					</div>
 			</div>
 			<div>
 				<label for="using_point">포인트</label> <input type="number"
@@ -201,7 +204,7 @@
 			var name = "${sessionScope.ssInfo.user_name}";
 			var tp = ${dto.pro_subprice * param.cart_amount + dto.pro_delprice};
 			var addr=document.getElementById("order_addr").value;
-			var uid = "MM" + makeMerchantUid
+			var uid = "OMM" + makeMerchantUid
 
 			document.getElementById('orderIdxInput').setAttribute('value', uid);
 
