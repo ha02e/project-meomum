@@ -39,10 +39,12 @@ public class OrderController {
 		return mav;
 	}
 
-	@RequestMapping(value = "/order.do", method = RequestMethod.GET)
-	public ModelAndView order(OrderDTO dto) {
+	@RequestMapping(value = "/orderForm.do", method = RequestMethod.GET)
+	public ModelAndView order(OrderDTO dto,OrderProDTO dto2) {
 		int result = orderDao.orderInsert(dto);
-		String msg = result > 0 ? "성공" : "실패";
+		int result2 = orderDao.order_proInsert(dto2);
+		int total=result+result2;
+		String msg = total > 0 ? "폼1 저장" : "실패";
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("msg", msg);
 		mav.addObject("goUrl", "/meomum/index.do");
@@ -53,7 +55,7 @@ public class OrderController {
 	@RequestMapping(value = "/orderPro.do", method = RequestMethod.GET)
 	public ModelAndView orderPro(OrderProDTO dto) {
 		int result =orderDao.order_proInsert(dto);
-		String msg = result > 0 ? "성공" : "실패";
+		String msg = result > 0 ? "폼2 저장" : "실패";
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("msg", msg);
 		mav.addObject("goUrl", "/meomum/index.do");
