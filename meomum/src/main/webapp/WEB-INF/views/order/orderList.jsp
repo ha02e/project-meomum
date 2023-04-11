@@ -185,9 +185,8 @@
 				class="form-control">
 		</div>
 		<div>
-			<label for="point_total">사용 가능포인트</label> <input type="text"
-				id="point_total" value="${result}" readonly> <input
-				type="checkbox" id="check" onclick="checkPt()">전액사용
+			<label for="point_total">사용 가능포인트</label> <input type="text" id="point_total" value="${result}" readonly> 
+			<input type="checkbox" id="check" onclick="checkPt()">전액사용
 		</div>
 		<div>
 			<label for="point_num">포인트 사용</label> <input type="text"
@@ -340,7 +339,7 @@
 							            alert('orderPro 테이블 성공');
 							            $.ajax({
 							    	          type: 'POST',
-							    	          url: "insertPoint.do",
+							    	          url: "orderPoint.do",
 							    	          data: JSON.stringify(PointDTO),
 							    	          contentType: "application/json",
 							    	          success: function (data) {

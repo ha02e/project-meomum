@@ -45,8 +45,7 @@ public class OrderController {
 	private PointDAO pdao;
 
 	@RequestMapping("/orderList.do")
-	public ModelAndView orderList(@RequestParam("pro_idx") int idx, HttpSession session) {
-
+	public ModelAndView orderList(@RequestParam("pro_idx") int idx,HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 
 		if (session.getAttribute("ssInfo") == null) {
@@ -55,9 +54,15 @@ public class OrderController {
 			mav.addObject("goUrl", "login.do");
 			mav.setViewName("ntc/ntcMsg");
 		} else {
-
+			session.getAttribute("ssInfo");
+			MemberDTO sdto =(MemberDTO) session.getAttribute("ssInfo");
+			int user_idx = sdto.getUser_idx();
+			System.out.println(user_idx);
 			ProDTO dto = orderDao.orderList(idx);
+			int result = pdao.pointTotal(user_idx);
+			System.out.println(result);
 			mav.addObject("dto", dto);
+			mav.addObject("result", result);
 			mav.setViewName("order/orderList");
 		}
 
@@ -250,15 +255,15 @@ public class OrderController {
 	
 	
 	/**사용자: 구독일상 결제(point 테이블 insert)*/
-	@RequestMapping(value="/insertPoint.do")
-	public ModelAndView svcPay(@RequestBody PointDTO pdto) {
+	@RequestMapping(value="/orderPoint.do")
+	public ModelAndView orderPay(@RequestBody PointDTO pdto) {
 		
 		int result = pdao.pointInsert(pdto);
 		ModelAndView mav = new ModelAndView();
 		
-		String msg = result>0?"결제가 완료되었습니다":"다시 시도해주세요";
-		String link = result>0?"svcIngList.do":"svcIngContent.do";
-		
+		String msg = result > 0 ? "결제가 완료되었습니다" : "다시 시도해주세요";
+		String link = result > 0 ? "index.do" : "proList.do";
+
 		mav.addObject("msg", msg);
 		mav.addObject("link", link);
 		mav.setViewName("mmJson");
