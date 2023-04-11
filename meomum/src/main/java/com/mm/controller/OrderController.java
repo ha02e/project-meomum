@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -104,36 +105,36 @@ public class OrderController {
 	}
 
 	//결제부분 시작//
-	@RequestMapping(value = "/orderPay.do")
-	public ModelAndView svcPay(@RequestBody PaymentDTO dto) {
-		System.out.println(dto);
-		int result = payDao.paymentInsert(dto);
-		ModelAndView mav = new ModelAndView();
-
-		String msg = result > 0 ? "결제가 완료되었습니다" : "다시 시도해주세요";
-		String link = result > 0 ? "index.do" : "proList.do";
-
-		mav.addObject("msg", msg);
-		mav.addObject("link", link);
-		mav.setViewName("mmJson");
-
-		return mav;
-	}
-	@RequestMapping(value = "/orderPro.do")
-	public ModelAndView orderPay(@RequestBody OrderProDTO dto) {
-		
-		int result = orderDao.order_proInsert(dto);
-		ModelAndView mav = new ModelAndView();
-
-		String msg = result > 0 ? "결제가 완료되었습니다" : "다시 시도해주세요";
-		String link = result > 0 ? "index.do" : "proList.do";
-
-		mav.addObject("msg", msg);
-		mav.addObject("link", link);
-		mav.setViewName("mmJson");
-
-		return mav;
-	}
+//	@RequestMapping(value = "/orderPay.do")
+//	public ModelAndView svcPay(@RequestBody PaymentDTO dto) {
+//		System.out.println(dto);
+//		int result = payDao.paymentInsert(dto);
+//		ModelAndView mav = new ModelAndView();
+//
+//		String msg = result > 0 ? "결제가 완료되었습니다" : "다시 시도해주세요";
+//		String link = result > 0 ? "index.do" : "proList.do";
+//
+//		mav.addObject("msg", msg);
+//		mav.addObject("link", link);
+//		mav.setViewName("mmJson");
+//
+//		return mav;
+//	}
+//	@RequestMapping(value = "/orderPro.do")
+//	public ModelAndView orderPay(@RequestBody OrderProDTO dto) {
+//		
+//		int result = orderDao.order_proInsert(dto);
+//		ModelAndView mav = new ModelAndView();
+//
+//		String msg = result > 0 ? "결제가 완료되었습니다" : "다시 시도해주세요";
+//		String link = result > 0 ? "index.do" : "proList.do";
+//
+//		mav.addObject("msg", msg);
+//		mav.addObject("link", link);
+//		mav.setViewName("mmJson");
+//
+//		return mav;
+//	}
 	
 	//결제부분 끝//
 	/** 마이페이지 구독중인 상품 */
@@ -256,22 +257,46 @@ public class OrderController {
 		return mav;
 	}
 	
+//	
+//	/**사용자: 구독일상 결제(point 테이블 insert)*/
+//	@RequestMapping(value="/orderPoint.do")
+//	public ModelAndView orderPay(@RequestBody PointDTO pdto) {
+//		
+//		int result = pdao.pointInsert(pdto);
+//		ModelAndView mav = new ModelAndView();
+//		
+//		String msg = result > 0 ? "결제가 완료되었습니다" : "다시 시도해주세요";
+//		String link = result > 0 ? "index.do" : "proList.do";
+//
+//		mav.addObject("msg", msg);
+//		mav.addObject("link", link);
+//		mav.setViewName("mmJson");
+//		
+//		return mav;
+//	}
 	
-	/**사용자: 구독일상 결제(point 테이블 insert)*/
-	@RequestMapping(value="/orderPoint.do")
-	public ModelAndView orderPay(@RequestBody PointDTO pdto) {
-		
-		int result = pdao.pointInsert(pdto);
-		ModelAndView mav = new ModelAndView();
-		
-		String msg = result > 0 ? "결제가 완료되었습니다" : "다시 시도해주세요";
-		String link = result > 0 ? "index.do" : "proList.do";
+	//dto 3개 전달받아 결제
+	@RequestMapping(value="/totalOrders.do")
+	public ModelAndView totalOrder(@RequestBody Map<String, Object> requestData) {
+		ObjectMapper objectMapper=new ObjectMapper();
+	    PointDTO pdto = objectMapper.convertValue(requestData.get("pdto"), PointDTO.class);
+	    PaymentDTO paydto = objectMapper.convertValue(requestData.get("paydto"), PaymentDTO.class);
+	    OrderProDTO odto = objectMapper.convertValue(requestData.get("odto"), OrderProDTO.class);
+	    
+	    int result1 = pdao.pointInsert(pdto);
+	    int result2 = payDao.paymentInsert(paydto);
+	    int result3 = orderDao.order_proInsert(odto);
+			    
+	    ModelAndView mav = new ModelAndView();
+	    String msg = (result1 > 0 && result2 > 0 && result3 > 0) ? "결제가 완료되었습니다" : "다시 시도해주세요";
+	    String link = (result1 > 0 && result2 > 0 && result3 > 0) ? "index.do" : "proList.do";
 
-		mav.addObject("msg", msg);
-		mav.addObject("link", link);
-		mav.setViewName("mmJson");
-		
-		return mav;
+	    mav.addObject("msg", msg);
+	    mav.addObject("link", link);
+	    mav.setViewName("mmJson");
+			
+	    return mav;
 	}
+
 
 }
