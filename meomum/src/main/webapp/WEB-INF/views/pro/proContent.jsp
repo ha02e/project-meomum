@@ -370,9 +370,9 @@ function updatePrice(input, subprice, allprice, delprice) {
     var totalDel = cartAmount * delprice;
     
     // 하위 요소에서 ID를 이용하여 값을 업데이트합니다.
-    document.getElementById("subPrice").innerHTML = "총 월 구독 가격 :"subPrice.toLocaleString() + "원";
-    document.getElementById("allPrice").innerHTML = "총 구독 가격 :"+allPrice.toLocaleString() + "원";
-    document.getElementById("totalDel").innerHTML = "총 배송비 :"+totalDel.toLocaleString() + "원";
+    document.getElementById("subPrice").innerHTML = "총 월 구독 가격 :"+ subPrice.toLocaleString() + "원";
+    document.getElementById("allPrice").innerHTML = "총 구독 가격 :"+ allPrice.toLocaleString() + "원";
+    document.getElementById("totalDel").innerHTML = "총 배송비 :"+ totalDel.toLocaleString() + "원";
 }
  /*
   function updatePrice(input, subPrice, allPrice) {
