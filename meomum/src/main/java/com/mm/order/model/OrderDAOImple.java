@@ -36,6 +36,7 @@ public class OrderDAOImple implements OrderDAO {
 	@Override
 	public int mySubsProTotalCnt(int user_idx) {
 		int count=sqlMap.selectOne("mySubsProTotalCnt", user_idx);
+		count = count == 0 ? 1 : count;
 		return count;
 	}
 	

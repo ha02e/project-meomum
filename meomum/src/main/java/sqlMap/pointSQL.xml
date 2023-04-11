@@ -5,12 +5,32 @@
  
 <mapper namespace="com.mm.point">
 
-	<select id="pointTotal" parameterType="Integer" resultType="com.mm.point.model.PointDTO">
+<!-- 	<select id="pointTotal" parameterType="Integer" resultType="com.mm.point.model.PointDTO">
 		SELECT distinct
 	  		((SELECT sum(point_num) FROM point WHERE user_idx = #{user_idx} AND point_use = 0) -
 	  		(SELECT sum(point_num) FROM point WHERE user_idx = #{user_idx} AND point_use = 1))as result
 		FROM dual
+	</select> -->
+	
+	<!--포인트 조회 -->
+	<select id="pointTotal" resultType="Integer">
+	SELECT DISTINCT
+	    CASE
+	        WHEN (SELECT MAX(point_num) FROM point WHERE user_idx = 32 AND point_use = 1) IS NULL THEN
+	            COALESCE((SELECT SUM(point_num) FROM point WHERE user_idx = 32 AND point_use = 0), 0)
+	        WHEN (SELECT SUM(point_num) FROM point WHERE user_idx = 32 AND point_use = 1) = 0 THEN
+	            COALESCE((SELECT SUM(point_num) FROM point WHERE user_idx = 32 AND point_use = 0), 0)
+	        ELSE
+	            COALESCE((SELECT SUM(point_num) FROM point WHERE user_idx = 32 AND point_use = 0), 0) -
+	            COALESCE((SELECT SUM(point_num) FROM point WHERE user_idx = 32 AND point_use = 1), 0)
+	    END AS result
+	FROM dual
 	</select>
-
-
+	
+	<!-- 포인트 사용 및 적립-->
+	<insert id="pointInsert" parameterType="com.mm.point.model.PointDTO">
+		INSERT 
+		INTO point
+		VALUES (point_idx.nextval, #{cate_idx},#{user_idx},#{point_use},sysdate,#{point_info},#{point_num})
+	</insert>
 </mapper>

@@ -20,6 +20,7 @@
 				JOIN order_pro op ON o.order_idx = op.order_idx
 				JOIN product p ON op.pro_idx = p.pro_idx
 				WHERE o.user_idx = #{user_idx}
+				order by order_date desc
 			)e )f
 		where rnum<![CDATA[>=]]>#{start} and rnum<![CDATA[<=]]>#{end}
 	</select>

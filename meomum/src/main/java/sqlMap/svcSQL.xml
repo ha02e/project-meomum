@@ -181,22 +181,58 @@
 	</update> -->
 	
 	<!--마이페이지 : 방문 예약 신청 내역 -->
-	<select id="svcUserList" parameterType="Integer" resultType="com.mm.svc.model.SvcSelectAllDTO">
-	SELECT a.svc_idx, a.user_idx, a.user_name, a.user_tel, b.svc_regdate, a.svc_state, c.svc_days, c.svc_time
-	FROM svc_member a
-	LEFT JOIN svc_detail b ON a.svc_idx = b.svc_idx
-	LEFT JOIN svc_date c ON a.svc_idx = c.svc_idx
-	WHERE a.user_idx = #{user_idx} and (a.svc_state='예약확정' or a.svc_state='예약취소')
-	ORDER BY a.svc_idx DESC
+	<select id="svcUserList" parameterType="Map" resultType="com.mm.svc.model.SvcSelectAllDTO">
+	    SELECT * 
+	    FROM (SELECT rownum as rnum,d.* FROM 
+	        (SELECT a.svc_idx, a.user_idx, a.user_name, a.user_tel, 
+	                b.svc_regdate, 
+	                a.svc_state, 
+	                c.svc_days, c.svc_time
+	            FROM svc_member a
+	            LEFT JOIN svc_detail b ON a.svc_idx = b.svc_idx
+	            LEFT JOIN svc_date c ON a.svc_idx = c.svc_idx
+	            WHERE a.user_idx = #{user_idx} and (a.svc_state='예약확정' or a.svc_state='예약취소')
+	            ORDER BY a.svc_idx DESC 
+	        ) d
+	    ) e
+	    WHERE rnum <![CDATA[>=]]> #{start} and rnum <![CDATA[<=]]> #{end}
+	</select>
+	
+	<!-- 마이페이지: 방문 예약 신청 내역(총 게시물) -->
+	<select id="svcUserListCnt" resultType="Integer">
+		SELECT count(*)
+		FROM (SELECT a.svc_idx, a.user_idx, a.user_name, a.user_tel, 
+	                b.svc_regdate, 
+	                a.svc_state, 
+	                c.svc_days, c.svc_time
+	          FROM svc_member a
+	          LEFT JOIN svc_detail b ON a.svc_idx = b.svc_idx
+	          LEFT JOIN svc_date c ON a.svc_idx = c.svc_idx
+	          WHERE a.user_idx = #{user_idx} and (a.svc_state='예약확정' or a.svc_state='예약취소'))
 	</select>
 	
 	<!--마이페이지: 정리일상 현황 내역 -->
-	<select id="svcIngList" parameterType="Integer" resultType="com.mm.svc.model.SvcIngDTO">
+	<select id="svcIngList" parameterType="Map" resultType="com.mm.svc.model.SvcIngDTO">
 	SELECT *
-	FROM svc_ing
-	WHERE user_idx = #{user_idx}
-	ORDER BY  svc_ing_idx DESC
+	FROM(SELECT rownum as rnum,a.* from
+		(SELECT * 
+		FROM svc_ing
+		WHERE user_idx = #{user_idx}
+		ORDER BY  svc_ing_idx DESC
+		)a
+	)b
+	WHERE rnum <![CDATA[>= ]]> #{start} and rnum <![CDATA[<=]]> #{end}
 	</select>
+	
+	<!--마이페이지: 정리일상 현황 내역 총 게시글 -->
+	<select id="svcIngListCnt" parameterType="Map" resultType="Integer">
+	SELECT count(*)
+	FROM(SSELECT * 
+		FROM svc_ing
+		WHERE user_idx = #{user_idx}
+	)
+	</select>
+	
 	
 	<!-- 마이페이지: 방문 예약 취소 -->
 	<update id="svcStateCancle" parameterType="com.mm.svc.model.SvcContentDTO">

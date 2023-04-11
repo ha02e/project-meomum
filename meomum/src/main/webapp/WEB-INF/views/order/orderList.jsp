@@ -203,7 +203,7 @@
 			var makeMerchantUid = year + month + day + hours + minutes
 					+ seconds + milliseconds;
 
-			var name = document.getElementById("order_name").value;
+			var oName = document.getElementById("order_name").value;
 			var uid = "OMM" + makeMerchantUid
 
 			var tp = ${dto.pro_subprice * param.cart_amount + dto.pro_delprice};

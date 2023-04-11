@@ -83,24 +83,7 @@ public class SvcController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/svcPay.do")
-	public ModelAndView svcPay(@RequestBody PaymentDTO dto) {
-		System.out.println(dto);
-		int result = payDao.paymentInsert(dto);
-		System.out.println("컨트롤러:"+result);
-		ModelAndView mav = new ModelAndView();
-		
-		String msg = result>0?"결제가 완료되었습니다":"다시 시도해주세요";
-		String link = result>0?"svcIngList.do":"svcIngContent.do";
-		
-		mav.addObject("msg", msg);
-		mav.addObject("link", link);
-		mav.setViewName("mmJson");
-		
-		return mav;
-	}
-	
-	
+
 	/**방문 견적 신청 시 예약된 시간 비활성화*/
 	@RequestMapping(value = "/svcTimeSelect.do", method = RequestMethod.GET)
 	@ResponseBody 
@@ -229,14 +212,21 @@ public class SvcController {
 
 	/**마이페이지-방문 견적 내역 리스트*/
 	@RequestMapping("/svcList.do")
-	public ModelAndView svcUserList(HttpSession session) {
+	public ModelAndView svcUserList(HttpSession session,@RequestParam(value="cp",defaultValue="1")int cp) {
 		session.getAttribute("ssInfo");
 		MemberDTO sdto =(MemberDTO) session.getAttribute("ssInfo");
-		
 		int user_idx = sdto.getUser_idx();
-		List<SvcSelectAllDTO> list = svcDao.svcUserList(user_idx);
+		
+		int totalCnt = svcDao.svcUserListCnt(user_idx);
+		int listSize = 5;
+		int pageSize = 5;
+		
+		String pageStr = com.mm.module.PageModule.makePage("svcList.do", totalCnt, listSize, pageSize, cp);
+		
+		List<SvcSelectAllDTO> list = svcDao.svcUserList(cp,listSize,user_idx);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("list", list);
+		mav.addObject("pageStr", pageStr);
 
 		mav.setViewName("svc/svcList");
 		return mav;
@@ -244,15 +234,20 @@ public class SvcController {
 	
 	/**마이페이지-정리일상 진행 리스트*/
 	@RequestMapping("/svcIngList.do")
-	public ModelAndView svcIngList(HttpSession session) {
+	public ModelAndView svcIngList(HttpSession session,@RequestParam(value="cp",defaultValue="1")int cp) {
 		session.getAttribute("ssInfo");
 		MemberDTO sdto =(MemberDTO) session.getAttribute("ssInfo");
-		
 		int user_idx = sdto.getUser_idx();
-		List<SvcIngDTO> list = svcDao.svcIngList(user_idx);
+		
+		int totalCnt = svcDao.svcIngListCnt(user_idx);
+		int listSize = 5;
+		int pageSize = 5;
+		String pageStr = com.mm.module.PageModule.makePage("svcIngList.do", totalCnt, listSize, pageSize, cp);
+		List<SvcIngDTO> list = svcDao.svcIngList(cp,listSize,user_idx);
 		ModelAndView mav = new ModelAndView();
 		
 		mav.addObject("list", list);
+		mav.addObject("pageStr", pageStr);
 		mav.setViewName("svc/svcIngList");
 		return mav;
 		
@@ -277,14 +272,14 @@ public class SvcController {
 		SvcContentDTO dto = svcDao.svcContent(idx);
 		SvcIngDTO ingdto = svcDao.svcIngContent(idx);
 
-		PointDTO rdto = pdao.pointTotal(user_idx);
-		
+		/* PointDTO rdto = pdao.pointTotal(user_idx); */
+		int result = pdao.pointTotal(user_idx);
 		ModelAndView mav = new ModelAndView();
 		
 		mav.addObject("dto",dto);
-
 		mav.addObject("ingdto",ingdto);
-		mav.addObject("rdto", rdto);
+		/* mav.addObject("rdto", rdto); */
+		mav.addObject("result", result);
 	
 		mav.setViewName("svc/svcIngContent");
 	
@@ -338,6 +333,40 @@ public class SvcController {
 		mav.addObject("link",link);
 		
 		mav.setViewName("msg");
+		
+		return mav;
+	}
+	
+	/**사용자: 정리일상 결제(payment 테이블 insert)*/
+	@RequestMapping(value="/svcPay.do")
+	public ModelAndView svcPay(@RequestBody PaymentDTO payDto) {
+		int result = payDao.paymentInsert(payDto);
+		
+		ModelAndView mav = new ModelAndView();
+		
+		String msg = result>0?"결제가 완료되었습니다":"다시 시도해주세요";
+		String link = result>0?"svcIngList.do":"svcIngContent.do";
+		
+		mav.addObject("msg", msg);
+		mav.addObject("link", link);
+		mav.setViewName("mmJson");
+		
+		return mav;
+	}
+	
+	/**사용자: 정리일상 결제(point 테이블 insert)*/
+	@RequestMapping(value="/insertPoint.do")
+	public ModelAndView svcPay(@RequestBody PointDTO pdto) {
+		
+		int result = pdao.pointInsert(pdto);
+		ModelAndView mav = new ModelAndView();
+		
+		String msg = result>0?"결제가 완료되었습니다":"다시 시도해주세요";
+		String link = result>0?"svcIngList.do":"svcIngContent.do";
+		
+		mav.addObject("msg", msg);
+		mav.addObject("link", link);
+		mav.setViewName("mmJson");
 		
 		return mav;
 	}

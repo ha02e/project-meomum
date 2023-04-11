@@ -30,9 +30,9 @@
 
 			<li>결제상태 <select name="pay_state" id="pay_state">
 					<option value="견적완료" ${ingdto.pay_state =="견적완료"?"selected":""}>견적완료</option>
-					<option value="결제대기" ${ingdto.pay_state =="결제대기"?"selected":""}>결제대기</option>
 					<option value="결제완료" ${ingdto.pay_state =="결제완료"?"selected":""}>결제완료</option>
 					<option value="결제취소" ${ingdto.pay_state =="결제취소"?"selected":""}>결제취소</option>
+					<option value="작업완료" ${ingdto.pay_state =="작업완료"?"selected":""}>작업완료</option>
 			</select>
 			</li>
 		</ul>
