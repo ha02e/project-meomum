@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.mm.order.model.OrderDAO;
 import com.mm.order.model.OrderReportDTO;
 import com.mm.turnback.model.ReturnDAO;
+import com.mm.turnback.model.ReturnDTO;
 
 
 @Controller
@@ -28,6 +29,23 @@ public class ReturnController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("dto", dto);
 		mav.setViewName("turnback/returnForm");
+		return mav;
+	}
+	
+	@RequestMapping("/returnApply.do")
+	public ModelAndView returnApply(ReturnDTO dto) {
+		int result=returnDao.returnApplyInsert(dto);
+
+		ModelAndView mav = new ModelAndView();
+		
+		String msg=result>0?"반납 신청이 완료되었습니다.":"반납 신청에 실패하였습니다.";
+		String gopage = result>0?"self.close()":"location.href='returnForm.do';";
+
+		mav.addObject("dto", dto);
+		mav.addObject("msg", msg);
+		mav.addObject("gopage", gopage);
+		mav.setViewName("/mainMsg");
+		
 		return mav;
 	}
 	

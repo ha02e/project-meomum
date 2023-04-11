@@ -16,6 +16,7 @@
 
 
 <style>
+
 /*헤더 이미지용 url에 이미지 추가하면 됩니다.*/
 .page-header {
 	background: linear-gradient(rgba(36, 39, 38, 0.5), rgba(36, 39, 38, 0.5)),

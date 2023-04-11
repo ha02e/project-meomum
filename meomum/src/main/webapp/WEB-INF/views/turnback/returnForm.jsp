@@ -18,9 +18,6 @@
 .row {
     --bs-gutter-x: 0;
 }
-.text-muted{
-	color:#dc143c !important;
-}
 
 hr{
 	margin:30px 0;
@@ -30,6 +27,10 @@ hr{
 	color:#dc143c;
 	font-weight: bold;
 }
+.returnMsg{
+	resize:none;
+}
+
 .btn-primary {
     --bs-btn-color: #fff;
     --bs-btn-bg: #85745D;
@@ -47,7 +48,12 @@ hr{
     --bs-btn-disabled-border-color: #85745D;
 }
 .form-btn button{
-	margin: 10px;
+	margin: 10px 10px 0 10px;
+}
+.card-footer p{
+	padding-top:10px;
+	color:#dc143c;
+	font-size: 0.8rem;
 }
 </style>
 
@@ -59,15 +65,13 @@ hr{
 	    <div class="card mb-4">
 	    
 			<div class="card-header d-flex justify-content-between align-items-center">
-	        	<h5 class="mb-0">반납신청</h5> <small class="text-muted float-end">* 관리자가 반납 승인 처리를 해야 반납 처리됩니다. *</small>
+	        	<h5 class="mb-0">반납신청</h5>
 	      	</div>
 	      
 			
 			<div class="card-body">
-			<form action="returnApply.do" name="shipInsert" method="post">
-			
+			<form action="returnApply.do" name="returnApply" method="post">
 				<input type="hidden" name="user_idx" value="${dto.user_idx}">
-				<input type="hidden" name="order_idx" value="${param.order_idx}">
 				<input type="hidden" name="pro_idx" value="${dto.pro_idx}">
 				
 	          	<div class="form-row mb-3">
@@ -81,19 +85,22 @@ hr{
 	          	</div>
 	          	
 				<div class="form-row mb-3">
-	           		<label class="form-label" for="order_msg"><span class="reasonTitle">반품 사유(100자 이내)</span></label>
-	           		<textarea name="order_msg" class="form-control h-25 orderMsg" rows="4" placeholder="반품 사유를 입력해주세요.&#13;&#10;관리자가 승인하면 반품이 진행됩니다."></textarea>
+	           		<label class="form-label" for="return_reason"><span class="reasonTitle">반납 사유(100자 이내)</span></label>
+	           		<textarea name="return_reason" class="form-control h-25 returnMsg" rows="4" placeholder="반납 사유를 입력해주세요."></textarea>
 				</div>
 				
 				<div class="form-row mb-3 form-btn d-flex justify-content-center">
 					<button type="button" class="btn btn-secondary" onclick="self.close()">닫기</button>
-	          		<button type="submit" class="btn btn-primary">반품신청</button>
+	          		<button type="submit" class="btn btn-primary">반납신청</button>
 	          	</div>
 	          	
 	        </form>
 	      	</div>
-	        
-      
+	      	
+	        <div class="card-footer">
+	        	<p>* 관리자가 승인하면 반납이 진행됩니다.<br>
+	        	   * 단순변심으로 인한 반납은 불가합니다. 고객센터(1234-1004)로 연락바랍니다.</p>
+      		</div>
     	</div>
 		</div>   
 	</div>
