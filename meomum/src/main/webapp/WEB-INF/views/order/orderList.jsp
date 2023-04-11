@@ -80,11 +80,11 @@
 
 	<div class="form-group">
 		<form name="orderForm" action="orderForm.do" method="post">
-			
+
 			<!-- 구독상품에 넘겨야할 파라미터들 -->
 			<input type="hidden" name="user_idx"
-				value="${sessionScope.ssInfo.user_idx}"> 
-			<input type="hidden" id="orderIdxInput" name="order_idx" value="${uid}" />
+				value="${sessionScope.ssInfo.user_idx}"> <input
+				type="hidden" id="orderIdxInput" name="order_idx" value="${uid}" />
 			<input type="hidden" name="pro_month" value="${dto.pro_month }">
 			<!--  -->
 			<h2>구매 상품 정보</h2>
@@ -124,13 +124,13 @@
 					value="${(dto.pro_subprice*param.cart_amount)+dto.pro_delprice}" />
 				원
 			</div>
-		
+
 			<div>
-			
+
 				<h2>배송 정보를 입력해주세요.</h2>
 				<h3>계약자 정보</h3>
 				<input type="hidden" name="user_idx"
-					value="${sessionScope.ssInfo.user_idx}">	
+					value="${sessionScope.ssInfo.user_idx}">
 			</div>
 			<div>
 				<label for="order_name">고객명</label> <input type="text"
@@ -163,7 +163,8 @@
 			<div>
 				<label for="order_detail">상세주소</label> <input type="text"
 					class="form-control" id="order_detail" name="order_detail"
-					value="${sessionScope.ssInfo.addr_detail}" placeholder="상세주소" required="required">
+					value="${sessionScope.ssInfo.addr_detail}" placeholder="상세주소"
+					required="required">
 			</div>
 			<div>
 				<label for="order_msg">배송 메세지</label> <input type="text"
@@ -172,10 +173,11 @@
 			</div>
 			<div>
 				<label for="checkbox"> 개인정보이용동의 </label>
-					<div class="form-control">
+				<div class="form-control">
 					개인정보 이용동의합니다.<input class="form-check-input" type="checkbox"
- 					id="checkbox" value="Y"  name="order_tos" class="form-control" required="required">
-					</div>
+						id="checkbox" value="Y" name="order_tos" class="form-control"
+						required="required">
+				</div>
 			</div>
 			<div>
 				<label for="using_point">포인트</label> <input type="number"
@@ -203,27 +205,17 @@
 
 			var name = document.getElementById("order_name").value;
 			var uid = "OMM" + makeMerchantUid
-<<<<<<< HEAD
+
 			var tp = ${dto.pro_subprice * param.cart_amount + dto.pro_delprice};
 			var bName =document.getElementById("order_name").value
 			var bTel= document.getElementById("receiver_tel").value
 			var addr= document.getElementById("order_addr").value;
 			var bPcode= document.getElementById("order_pcode").value
-=======
-			
-			var oName = "${sessionScope.ssInfo.user_name}";
-			var bName = document.getElementById('order_name').value;
-			var bTel = document.getElementById('receiver_tel').value;
-			var tp = ${dto.pro_subprice * param.cart_amount + dto.pro_delprice};
-			var addr = document.getElementById('order_addr').value;
-			var bPcode = document.getElementById('order_pcode').value;
-			var uid = "OMM" + makeMerchantUid;
 			
 			var uidx = ${sessionScope.ssInfo.user_idx};
 			var pidx = ${dto.pro_idx};
 			var pAmount = ${param.cart_amount};
 
->>>>>>> js
 			document.getElementById('orderIdxInput').setAttribute('value', uid);
 			
 			var uidx= ${sessionScope.ssInfo.user_idx};
@@ -235,11 +227,7 @@
 					pg : "kakaopay", //"html5_inicis",
 					pay_method : 'card',
 					merchant_uid : uid,
-<<<<<<< HEAD
-					name : name,
-=======
 					name : oName,
->>>>>>> js
 					amount : tp,
 					buyer_email : "",
 					buyer_name : bName,
@@ -248,11 +236,8 @@
 					buyer_postcode : bPcode
 				}, function(rsp) { // callback
 					if (rsp.success) {
-<<<<<<< HEAD
-=======
 						console.log(rsp);
-						
->>>>>>> js
+
 						var PaymentDTO ={
 			    			  	payment_idx: rsp.imp_uid, //payment_idx로 들어갈 값
 					            cate_idx: rsp.merchant_uid, //인식번호(cate_idx)
@@ -261,10 +246,7 @@
 					            amount: rsp.paid_amount, //amount 금액
 					            pay_buydate: rsp.paid_at, //pay_buydate 결제일
 					            pay_cancleDate:null,//pay_cancleDate 취소일(임시'-'로 지정)
-					            pay_state: rsp.status,//pay_state
-<<<<<<< HEAD
-						};
-=======
+					            pay_state: rsp.status,//pay_stat
 
 			    	  };
 						
@@ -272,8 +254,7 @@
 								order_idx: uid, //주문번호
 								user_idx: uidx, //유저번호
 								pro_idx: pidx, //상품번호
-								pro_amount: pAmount, //수량
-									
+								pro_amount: pAmount, //수량		
 						};
 						
 						
@@ -295,36 +276,7 @@
 				    	   
 				        alert('결제가 완료되었습니다');
 						var msg = '결제가 완료되었습니다.';
->>>>>>> js
-						
-						var OrderProDTO = {
-								order_idx:rsp.merchant_uid, //주문번호
-								user_idx: uidx,
-								pro_idx: pidx, //상품번호
-								pro_amount: amount //상품수량
-								
-						};
-						
-						$.ajax({
-					          type: 'POST',
-					          url: "orderPay.do",
-					          data: JSON.stringify(PaymentDTO,OrderProDTO),
-					          contentType: "application/json",
-					          success: function (data) {
-					        	 console.log(data);
-					            alert('컨트롤러 성공');
-					           
-					          },
-					          error: function (xhr, status, error) {
-					            alert('컨트롤러 실패');
-					            
-					          }
-					        });
-						
-						var msg = '결제가 성공되었습니다.';
-						document.orderForm.submit();
-						
-						
+						document.orderForm.submit();				
 
 					} else {
 						console.log(rsp);
