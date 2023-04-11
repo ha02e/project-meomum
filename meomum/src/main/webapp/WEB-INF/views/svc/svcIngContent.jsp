@@ -9,17 +9,12 @@
 	<!-- jQuery -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
     
-    <script>
+<!--     <script>
     $(function(){
     	$('input[name="pointTotal"]')
     });
     </script>
-    <!-- iamport.payment.js -->
-    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
-	
-
-	
-		
+	 -->
 
 </head>
 <body>
@@ -33,10 +28,10 @@
 			<li>${dto.svc_state}</li>
 			<li>예약번호: <input type="text" id="svc_idx" value="${ingdto.svc_idx}" readonly></li>
 
-			<c:if test="${dto.svc_state ne '예약취소'}">
+			<c:if test="${dto.svc_state ne '결제취소'}">
 			방문 예약 일시:${dto.svc_days}&nbsp;|&nbsp;${dto.svc_time}
 			</c:if>
-			<c:if test="${dto.svc_state eq '예약취소'}">
+			<c:if test="${dto.svc_state eq '결제취소'}">
 			방문 예약 일시:${dto.svc_days.substring(1)} | ${dto.svc_time.substring(1)}
 			</c:if>
 
@@ -58,30 +53,39 @@
 			<li>휴대전화: <input type="text" id="user_tel" value="${dto.user_tel}"></li>
 			
 			<hr>
-			<h3>견적금액</h3>
-
-			<li>견적금액: <input type="text" id="total" value="${ingdto.total}"></li>
-			<li>사용가능 포인트 :<input type="text" id="point_total" value="${rdto.result}" ><input type="checkbox" id="check" onclick="checkPt()">전액사용</li>
-			<li>포인트 사용:<input type="text" id="point_num" oninput="getTotal()"></li>
-			<li>총 결제 금액<input type="text" id="amount"></li>
-		</ul>
-
-		<div class="float-right">
-			<c:if test="${dto.svc_state eq '견적완료' or dto.svc_state eq '결제대기'}">
-				<button onclick="requestPay()">결제하기</button>
+			
+			<c:if test="${dto.svc_state eq '견적완료'}">
+				<h3>견적금액</h3>
+				<li>견적금액: <input type="text" id="total" value="${ingdto.total}"></li>
+				<li>사용가능 포인트 :<input type="text" id="point_total" value="${result}" readonly><input type="checkbox" id="check" onclick="checkPt()" >전액사용</li>
+				<li>포인트 사용:<input type="text" id="point_num" oninput="getTotal()" ></li>
+				<li>총 결제 금액<input type="text" id="amount"></li>
+				<div class="float-right">
+				<input type="button" value="결제하기" onclick="requestPay()">
+				</div>
 			</c:if>
 			<c:if test="${dto.svc_state eq '결제취소'}">
 				<a href="svc.do" class="btn btn-primary">재예약</a>
 			</c:if>
-<%-- 			<c:if test="${dto.svc_state eq '결제완료'}">				
-				<c:url var="cancleUrl" value="svcCancle.do">
+			<c:if test="${dto.svc_state eq '결제완료'}">				
+<%-- 				<c:url var="cancleUrl" value="svcCancle.do">
 					<c:param name="svc_idx">${dto.svc_idx}</c:param>
 					<c:param name="svc_days" value="${dto.svc_days}"/>
 					<c:param name="svc_time" value="${dto.svc_time}"/>
-				</c:url>
-				<a href="${cancleUrl}" class="btn btn-dark">결제 취소</a>
-			</c:if> --%>
-
+				</c:url> --%>
+				<a href="#" class="btn btn-dark">결제 취소</a>
+			</c:if>
+			
+			<c:if test="${dto.svc_state eq '작업완료'}">
+			<c:url var="contentUrl" value="reviewWrite.do">
+ 			 	<c:param name="activity_idx">${ingdto.svc_idx}</c:param>
+  				<c:param name="writer">${dto.user_name}</c:param>
+  				<c:param name="category">정리일상</c:param>                     
+  			</c:url>
+            <a href="${contentUrl}" class="btn btn-sm btn-outline-success">후기 작성하기</a>
+			</c:if>
+			
+		</ul>
 		</div>
 		
 	<script>
@@ -90,30 +94,42 @@
 	 var point_total = document.getElementById('point_total'); //사용가능 포인트
 	 var point_num = document.getElementById('point_num');//사용 포인트
 	 var real_total = document.getElementById('amount');//총 결제 금액
+	 point_num.value = 0;
+	 real_total.value = total.value;
 	 
 		function checkPt() {
 			if (document.getElementById('check').checked) {
 				point_num.value = point_total.value;
 				point_num.disabled = true;
 			} else {
-				point_num.disabled = false;
 				point_num.value = 0;
+				point_num.disabled = false;
+				
 			}
 			getTotal();
 		}
 
 		function getTotal() {
-			var remainingPoint = point_total.value;
+			var remainingPoint = point_total.value; 
+			var usePoint = point_num.value;
 			if (!document.getElementById('check').checked) {
-				remainingPoint -= point_num.value;
+				remainingPoint -= usePoint;
 				if (remainingPoint < 0) {
 					window.alert("사용 가능한 포인트를 초과하였습니다.");
-					point_num.value = remainingPoint;
+					point_num.value = 0;
+					real_total.value = total.value;
+					console.log(total.value);
+					console.log(real_total.value);
+				}
+				else{
+					real_total.value = total.value - usePoint;
 				}
 			}
-			real_total.value = total.value - remainingPoint;
+			
 		}
 </script>
+<!-- iamport.payment.js -->
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 <script>
 	  var IMP = window.IMP;
 	  IMP.init("imp51432774"); 
@@ -130,7 +146,6 @@
 	    var user_tel = document.getElementById('user_tel').value;
 	    var user_email = document.getElementById('user_email').value;
 	    var user_idx= "${sessionScope.ssInfo.user_idx}";
-	    
 	    var uid = svcIdx + makeMerchantUid;
 	    
 	    console.log(user_idx);
@@ -149,6 +164,7 @@
 	      buyer_tel : user_tel,
 	    }, function (rsp, event) { // callback
 	      if (rsp.success) {
+	    	  
 	    	  var PaymentDTO ={
 	    			  	payment_idx: rsp.imp_uid, //payment_idx로 들어갈 값
 			            cate_idx: rsp.merchant_uid, //인식번호(cate_idx)
@@ -156,43 +172,52 @@
 			            pay_method: rsp.pay_method, //pay_mehtod 지불수단
 			            amount: rsp.paid_amount, //amount 금액
 			            pay_buydate: rsp.paid_at, //pay_buydate 결제일
-			            pay_cancleDate:'-',//pay_cancleDate 취소일(임시'-'로 지정)
+			            pay_cancleDate:null,//pay_cancleDate 취소일(임시'-'로 지정)
 			            pay_state: rsp.status,//pay_state
 
 	    	  };
-	    	 
 	    	  var PointDTO = {
 	    			  	cate_idx: svcIdx,
 			            user_idx: user_idx,
-			           	point_use: 0,
+			           	point_use: 1,
 			          	point_info:'정리일상 결제',
 			          	point_num: $("#point_num").val()
-	    	  }
+	    	  };
 	    	  
 	    	  console.log(PaymentDTO);
 	    	  console.log(PointDTO);
-	    	  
-			 $.ajax({
-		          type: 'POST',
-		          url: "svcPay.do",
-		          data: JSON.stringify(PaymentDTO,PointDTO),
-		          contentType: "application/json",
-		          success: function (data) {
-		        	 console.log(data);
-		            alert('컨트롤러 성공');
-		           
-		          },
-		          error: function (xhr, status, error) {
-		            alert('컨트롤러 실패');
-		            
-		          }
-		        });
-	    	   
-	        alert('결제가 완료되었습니다');
-	      } else {
-	        alert('다시 시도해주세요');
-	      }
-	    });
+	    	 //첫번째 ajax요청 - PaymentDTO insert
+	    	  $.ajax({
+	    	      type: 'POST',
+	    	      url: "svcPay.do",
+	    	      data: JSON.stringify(PaymentDTO),
+	    	      contentType: "application/json",
+	    	      success: function (data) {
+	    	        console.log(data);
+	    	        alert('완료:payment테이블')
+	    	        // 두 번째 ajax 요청 - PointDTO insert
+	    	        $.ajax({
+	    	          type: 'POST',
+	    	          url: "insertPoint.do",
+	    	          data: JSON.stringify(PointDTO),
+	    	          contentType: "application/json",
+	    	          success: function (data) {
+	    	            console.log(data);
+	    	            alert('완료:point테이블');
+	    	          },
+	    	          error: function (xhr, status, error) {
+	    	            alert('PointDTO insert 실패');
+	    	          }
+	    	        });
+	    	      },
+	    	      error: function (xhr, status, error) {
+	    	        alert('PaymentDTO insert 실패');
+	    	      }
+	    	    });
+	    	  } else {
+	    	    alert('다시 시도해주세요');
+	    	  }
+	    	}); 
 	  }
 	</script>
 

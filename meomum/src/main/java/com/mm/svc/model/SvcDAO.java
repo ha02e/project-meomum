@@ -24,8 +24,11 @@ public interface SvcDAO {
 	
 	public int svcIngInsert(SvcIngDTO dto);
 	
-	public List<SvcSelectAllDTO> svcUserList(int user_idx);
-	public List<SvcIngDTO> svcIngList(int user_idx);
+	public List<SvcSelectAllDTO> svcUserList(int cp,int ls,int user_idx);
+	public int svcUserListCnt(int user_idx);
+	
+	public List<SvcIngDTO> svcIngList(int cp,int ls,int user_idx);
+	public int svcIngListCnt(int user_idx);
 	
 	public int svcStateCancle(SvcContentDTO dto);
 	public int svcDateCancle(SvcContentDTO dto);

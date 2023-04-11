@@ -143,18 +143,46 @@ public class SvcDAOImple implements SvcDAO {
 	
 	/**마이페이지 : 방문 예약 신청 내역*/
 	@Override
-	public List<SvcSelectAllDTO> svcUserList(int user_idx) {
-		List<SvcSelectAllDTO> list = sqlMap.selectList("svcUserList",user_idx);
+	public List<SvcSelectAllDTO> svcUserList(int cp,int ls, int user_idx) {
+		int start = (cp-1)*ls+1;
+		int end = cp*ls;
+		Map map = new HashMap();
+		map.put("start", start);
+		map.put("end", end);
+		map.put("user_idx", user_idx);
+		List<SvcSelectAllDTO> list = sqlMap.selectList("svcUserList",map);
 		return list;
+	}
+	
+	/**마이페이지: 방문 예약 신청 내역 총 게시글 수*/
+	@Override
+	public int svcUserListCnt(int user_idx) {
+		int count = sqlMap.selectOne("svcUserListCnt",user_idx);
+		count = count==0?1:count;
+		return count;
 	}
 	
 	/**마이페이지 : 정리일상 진행 내역*/
 	@Override
-	public List<SvcIngDTO> svcIngList(int user_idx) {
-		List<SvcIngDTO> list = sqlMap.selectList("svcIngList",user_idx);
+	public List<SvcIngDTO> svcIngList(int cp,int ls,int user_idx) {
+		int start = (cp-1)*ls+1;
+		int end = cp*ls;
+		Map map = new HashMap();
+		map.put("start", start);
+		map.put("end", end);
+		map.put("user_idx", user_idx);
+		List<SvcIngDTO> list = sqlMap.selectList("svcIngList",map);
 		return list;
 	}
 	
+	/**마이페이지: 정리일상 진행 내역 총 게시글*/
+	@Override
+	public int svcIngListCnt(int user_idx) {
+		int count = sqlMap.selectOne("svcAdminListCnt",user_idx);
+		count = count==0?1:count;
+		return count;
+	}
+
 	/**마이페이지: 예약 삭제(방문 견적 신청)*/
 	//예약 상태 변경(svc_member)
 	@Override
