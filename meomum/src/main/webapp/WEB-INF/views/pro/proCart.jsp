@@ -39,7 +39,7 @@ img {
 <%@include file="../header.jsp"%> 
 
 	<!-- Shoping Cart -->
-		
+					<form name="cartForm" method="get" action="orderListss.do">
 		<table>
 			
 			<tr>
@@ -73,7 +73,7 @@ img {
 			<c:forEach var="list" items="${lists}">		
 					<tr>
 						<td class="cart_info_td">
-							<input type="checkbox" class="individual_cart_checkbox input_size_20" checked="checked">				
+							<input type="checkbox" class="individual_cart_checkbox input_size_20" checked="checked" name="cart_idx" value="${list.cart_idx}">		
 							<input type="hidden" class="individual_cartamount_input" value="${list.cart_amount }">
 							<input type="hidden" class="individual_prosubprice_input" value="${list.pro_subprice }">
 							<input type="hidden" class="individual_prodelprice_input" value="${list.pro_delprice }">
@@ -138,18 +138,18 @@ img {
 						<td>월 구독 가격+총 배송비: <span class="finalTotalPrice"></span>원</td>
 						
 					</tr>
-					<form name="cartForm" method="get" action="orderList.do">
+		
 					<tr>
 						<td colspan="5">
-						<input type="hidden" name="pro_idx" id="pro_idx" value="${list.pro_idx}" >
-						<input type="hidden" name="cart_amount" value="${list.cart_amount}" >
-						<input type="hidden" name="totalSubPrice" value="${totalSubPrice}" >
-						<input type="hidden" name="totalDel" value="${totalDel}" >	
-						<button type="submit" formaction="orderList.do">결제하기</button>
+						<input type="hidden" name="totalSub" id="totalSub" >
+						<input type="hidden" name="totalCount" id="totalCount" >
+						<input type="hidden" name="totalDel" id="totalDel" >
+						<input type="hidden" name="finalTotalPrice" id="finalTotalPrice" >	
+						<button type="submit">결제하기</button>
 						</td>
 					</tr>
-					</form>		
 				</table>
+					</form>		
 				
 				
 <script>
@@ -196,20 +196,27 @@ function setTotalInfo(){
 	    totalSub += cart_amount * pro_subprice;
 	    totalDel += cart_amount * pro_delprice;
 	    finalTotalPrice = totalSub + totalDel;
+
+	    
 		}
 	  });
 	  
 	  // 배송비 출력
 	  $(".totalDel").text(totalDel.toLocaleString());
+	    $("#totalDel").val(totalDel);
 
 	  // 총 가격 출력
 	  $(".totalSub").text(totalSub.toLocaleString());
-	  
+	   $("#totalSub").val(totalSub);
+
 	  // 총 구매 개수
 	  $(".totalCount").text(totalCount.toLocaleString());
-	  
+	   $("#totalCount").val(totalCount);
+
 	  // 배송비+월 구독 가격
 	  $(".finalTotalPrice").text(finalTotalPrice.toLocaleString());
+	    $("#finalTotalPrice").val(finalTotalPrice);
+
 }
 </script>
 

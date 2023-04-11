@@ -40,5 +40,13 @@
 	  <select id= "userCartCount" parameterType="Integer" resultType="Integer">
         select count(*) from cart where user_idx = #{user_idx}
     </select>
+    
+    <select id="orderListCartIDX" parameterType="Integer" resultType="com.mm.cart.model.CartDTO">
+    	select p.*, c.*
+    from product p
+    join cart c ON p.pro_idx = c.pro_idx
+    where cart_idx=#{cart_idx}
+    
+    </select>
 
   </mapper>

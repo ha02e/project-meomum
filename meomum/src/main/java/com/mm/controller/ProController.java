@@ -149,13 +149,12 @@ public class ProController {
 	        byte bytes[] = upload.getBytes();
 	        
 	        
-	        String filePath= "/images/items/"+fileName;
-	        String fullPath = req.getSession().getServletContext().getRealPath(filePath);
-	        
-	       
+	        String rootPath = req.getSession().getServletContext().getRealPath("/");
+	        String filePath= rootPath+"/images/items/"+fileName;
+
 	       // String filepath = rootPath+"/items/"+fileName;
 	        
-	        File outfile = new File(fullPath);
+	        File outfile = new File(filePath);
 	        
 	        FileOutputStream fos = new FileOutputStream(outfile);
 	        

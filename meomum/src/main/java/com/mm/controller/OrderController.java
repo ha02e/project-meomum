@@ -1,6 +1,7 @@
 package com.mm.controller;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mm.cart.model.CartDAO;
+import com.mm.cart.model.CartDTO;
 import com.mm.member.model.MemberDTO;
 import com.mm.order.model.MyOrderListDTO;
 import com.mm.order.model.OrderDAO;
@@ -29,6 +32,8 @@ public class OrderController {
 
 	@Autowired
 	private OrderDAO orderDao;
+	@Autowired
+	private CartDAO cdao;
 
 	@RequestMapping("/orderList.do")
 	public ModelAndView orderList(@RequestParam("pro_idx") int idx) {
@@ -37,6 +42,32 @@ public class OrderController {
 		ProDTO dto = orderDao.orderList(idx);
 		mav.addObject("dto", dto);
 		mav.setViewName("order/orderList");
+		return mav;
+	}
+	
+	@RequestMapping("/orderListss.do")
+	public ModelAndView orderAllList(@RequestParam("cart_idx") int[] cartIdx,
+									@RequestParam("totalSub") int totalSub ,
+									@RequestParam("totalCount") int totalCount ,
+									@RequestParam("totalDel") int totalDel ,
+									@RequestParam("finalTotalPrice") int finalTotalPrice ){
+
+			HashMap<String, Integer> map = new HashMap<String, Integer>();
+			map.put("totalSub", totalSub);
+			map.put("totalCount", totalCount);
+			map.put("totalDel", totalDel);
+			map.put("finalTotalPrice", finalTotalPrice);
+			
+		
+			List<CartDTO> lists = new ArrayList<CartDTO>();
+		for(int i=0;i<cartIdx.length;i++) {
+			lists.add(cdao.orderListCartIDX(cartIdx[i]));
+
+		}
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("lists",lists);
+		mav.addObject("total",map);
+		mav.setViewName("order/orderLists");
 		return mav;
 	}
 

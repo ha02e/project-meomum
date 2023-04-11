@@ -62,6 +62,13 @@ public class CartDAOImple implements CartDAO {
 	        int result = sqlMap.selectOne("userCartCount", user_idx);
 	        return result;
 	    }
+	   
+@Override
+	public CartDTO orderListCartIDX(int cart_idx) {
+	CartDTO dto= sqlMap.selectOne("orderListCartIDX", cart_idx);
+		return dto;
+	}
+
 	
 
 }
