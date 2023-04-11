@@ -83,6 +83,9 @@ thead th a{
 </style>
 
 <script>
+function orderInfoOpen(url, name, options) {
+	  window.open(url, name, options);
+	}
 function shipFormOpen(url, name, options) {
   window.open(url, name, options);
 }
@@ -149,15 +152,15 @@ function shipFormOpen(url, name, options) {
 				<table class="datatable-table" id="order-table">
 				<thead>
 					<tr>
-						<th data-sortable="true"style="width:14%;" aria-sort="descending" class="datatable-descending" >
+						<th data-sortable="true"style="width:18%;" aria-sort="descending" class="datatable-descending" >
 							<a href="#" class="datatable-sorter">주문번호</a>
 						</th>
-						<th data-sortable="true" style="width:22%;">
+						<th data-sortable="true" style="width:20%;">
 							<a href="#" class="datatable-sorter">구독상품</a>
 						</th>
 						<th data-sortable="true" style="width:10%">
 							<a href="#" class="datatable-sorter">주문자</a></th>
-						<th data-sortable="true" style="width:16%">
+						<th data-sortable="true" style="width:14%">
 							<a href="#" class="datatable-sorter">주문자 연락처</a>
 						</th>
 						<th data-sortable="true" style="width:10%">
@@ -183,8 +186,12 @@ function shipFormOpen(url, name, options) {
 					
 					<c:forEach var="dto" items="${lists}" varStatus="status">
 						<tr data-index="${status.count}">
-							<td class="sorting_${status.count} order-num text-center">${dto.order_idx}</td>
-							<td>${dto.pro_name}</td>
+							<td class="sorting_${status.count} order-num text-center">
+								<a href="#" onclick="orderInfoOpen('orderInfoDetail.do?order_idx=${dto.order_idx}', 'orderInfoDetail', 'width=540,height=600'); return false;">
+								${dto.order_idx}
+								</a>
+							</td>
+							<td class="text-truncate">${dto.pro_name}</td>
 							<td class="text-center">${dto.user_name}</td>
 							<td class="text-center">${dto.user_tel}</td>
 							<td class="text-center">${dto.order_date}</td>

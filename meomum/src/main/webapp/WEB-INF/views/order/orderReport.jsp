@@ -30,9 +30,7 @@
 	<div class="col-xl-9 col-md-9">	
 		<!-- ---------- 마이페이지 작업한 파일 페이지 여기에 넣어주세요!!(include) ---------- -->
 		
-	<div class="container-xl">
-			    
-			    <div class="row g-3 mb-4 align-items-center justify-content-between">
+	<div class="row g-3 mb-4 align-items-center justify-content-between">
 				    <div class="col-auto">
 			            <h2 class="title">주문/배송내역</h2>
 				    </div>
@@ -101,12 +99,7 @@
 														</c:when>
 														<c:when test="${dto.order_status eq 4}">
 															<div>배송완료</div>
-															<form action="http://info.sweettracker.co.kr/tracking/4" method="post">
-																<input type="hidden" id="t_key" name="t_key" value="sjLmbhJEhPXnO5neAx7FNg">
-																<input type="hidden" id="t_code" name="t_code" value="04">
-																<input type="hidden" id="t_invoice" name="t_invoice" value="566250609912">
-																<button type="submit" id="btnSubmit" class="btn-sm app-btn-secondary">배송조회</button>
-															</form>
+															<button type="button" id="btnSubmit" class="btn-sm app-btn-secondary">후기 작성하기</button>
 														</c:when>
 														<c:when test="${dto.order_status eq 5}">										
 															<div class="text-danger">반납신청</div>
@@ -133,11 +126,8 @@
 			        </div><!--//tab-pane-->
 			        
 			        
-				</div><!--//tab-content-->
-				
-				
-			    
-		    </div>
+				</div><!--//tab-content-->	
+	
 
 		<!-- ---------- 마이페이지 각 페이지 여기에 넣어주세요!! 끝 지점 ---------- -->
 	</div>

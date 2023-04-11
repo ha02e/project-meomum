@@ -39,7 +39,7 @@ public class OrderController {
 		return mav;
 	}
 
-	@RequestMapping(value = "/orderForm.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/orderForm.do", method = RequestMethod.POST)
 	public ModelAndView order(OrderDTO dto,OrderProDTO dto2) {
 		int result = orderDao.orderInsert(dto);
 		int result2 = orderDao.order_proInsert(dto2);
@@ -132,6 +132,16 @@ public class OrderController {
 		ModelAndView mav=new ModelAndView();
 		mav.addObject("dto", dto);
 		mav.setViewName("shipping/shipForm");
+		return mav;
+	}
+	
+	@RequestMapping("/orderInfoDetail.do")
+	public ModelAndView orderInfoDetail(@RequestParam("order_idx")String order_idx) {
+		OrderReportDTO dto=orderDao.orderData(order_idx);
+		
+		ModelAndView mav=new ModelAndView();
+		mav.addObject("dto", dto);
+		mav.setViewName("order/orderInfoDetail");
 		return mav;
 	}
 	
