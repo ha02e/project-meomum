@@ -13,7 +13,9 @@
 	width:500px;
 	margin:10px auto;
 }
-
+.row {
+    --bs-gutter-x: 0;
+}
 .form-label{
 	font-weight: bold;
 }
@@ -129,7 +131,7 @@ hr{
 				</div>
 				
 				<div class="form-row mb-3 form-btn text-center">
-					<button type="button" class="btn btn-primary">닫기</button>
+					<button type="button" class="btn btn-primary" onclick="self.close()">닫기</button>
 	          	</div>
 				
 	          	

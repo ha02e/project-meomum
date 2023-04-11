@@ -230,5 +230,5 @@ public class OrderController {
 		mav.setViewName("order/orderInfoDetail");
 		return mav;
 	}
-
+	
 }

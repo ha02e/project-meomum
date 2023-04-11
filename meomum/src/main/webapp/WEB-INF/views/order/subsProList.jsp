@@ -36,10 +36,10 @@
 	text-align: center;
 }
 
+
 .nav-link{
     color: #85745D !important;
 }
-
 
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
     color: #ffffff !important;
@@ -197,8 +197,8 @@ function orderInfoOpen(){
 				<table class="posts-table">
 					<thead>
 						<tr class="users-table-info">
-							<th style="width:22%;">주문번호</th>
-							<th style="width:30%;">구독상품</th>
+							<th style="width:24%;">주문번호</th>
+							<th style="width:28%;">구독상품</th>
 							<th style="width:12%;">구독시작일</th>
 							<th style="width:12%;">구독종료일</th>
 							<th style="width:12%;">자동납부일</th>
@@ -235,7 +235,7 @@ function orderInfoOpen(){
 					                	<div class="categories-table-img">
 					                    	<img src="/meomum/images/items/${dto.pro_thumb}" alt="category">
 					                	</div>
-					                	<p class="text-truncate" style="max-width: 180px;">${dto.pro_name}</p>
+					                	<p class="text-truncate" style="max-width: 170px;">${dto.pro_name}</p>
 				                	</a>
 								</td>
 			                    <td>${dto.sub_start}</td>
@@ -246,7 +246,7 @@ function orderInfoOpen(){
 				                    	<c:url var="returnFormUrl" value="returnForm.do">
 											<c:param name="order_idx">${dto.order_idx}</c:param>
 										</c:url>
-										<a href="#" class="orderNum" onclick="orderInfoOpen('${returnFormUrl}', 'orderInfoDetail', 'width=540,height=600'); return false;">
+										<a href="#" class="orderNum" onclick="orderInfoOpen('${returnFormUrl}', 'orderInfoDetail', 'width=540,height=510'); return false;">
 											<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-dash-circle" viewBox="0 0 16 16">
 											  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
 											  <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
