@@ -39,11 +39,11 @@ public class ReviewController {
 	public ModelAndView myreviewList(@RequestParam(value="cp",defaultValue = "1")int cp,
 									HttpSession session) {
 		MemberDTO mdto=(MemberDTO)session.getAttribute("ssInfo");
+		int user_idx=mdto.getUser_idx();
 		
-		int totalCnt=reviewService.getTotalCnt();
+		int totalCnt=reviewService.myreviewTotalCnt(user_idx);
 		int listSize=2;
 		int pageSize=5;
-		int user_idx=mdto.getUser_idx();
 		
 		String pageStr=com.mm.module.PageModule
 				.makePage("myReviewList.do", totalCnt, listSize, pageSize, cp);

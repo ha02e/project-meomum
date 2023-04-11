@@ -13,7 +13,7 @@ public interface ReviewService {
 	public int getTotalCnt();
 	
 	public List<ReviewDTO> myreviewList(int cp, int ls, int user_idx);
-	public int myreviewTotalCnt();
+	public int myreviewTotalCnt(int user_idx);
 	
 	public List<ReviewDTO> reviewableList(int cp, int ls, int user_idx);
 	public int reviewableTotalCnt(int user_idx);
