@@ -38,6 +38,7 @@
 	<link rel="stylesheet" type="text/css" href="css/proMain.css">
 <!--===============================================================================================-->
 </head>
+</style>
 <%@include file="/WEB-INF/views/header.jsp" %>
 <body class="animsition">
 
@@ -85,7 +86,8 @@
 										</a>
 									</div>
 								</div>
-
+				
+				
 								<div class="item-slick3" data-thumb="/meomum/images/items/${lists[0].pro_img1}">
 									<div class="wrap-pic-w pos-relative">
 										<img src="/meomum/images/items/${lists[0].pro_img1}" alt="IMG-PRODUCT">
@@ -95,7 +97,8 @@
 										</a>
 									</div>
 								</div>
-
+					
+					
 								<div class="item-slick3" data-thumb="/meomum/images/items/${lists[0].pro_img2}">
 									<div class="wrap-pic-w pos-relative">
 										<img src="/meomum/images/items/${lists[0].pro_img2}" alt="IMG-PRODUCT">
@@ -133,29 +136,51 @@
 						
 						<span class="mtext-106 cl2">
 							총 구독 가격 <fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_allprice}" />원
+													
 						</span>
 						
 						<!--  -->
 						<form name="contentForm" method="get" action="orderList.do">	
+						<div class="wrap-num-product flex-w m-r-20 m-tb-10">
+							<!-- 마이너스 -->
+							<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+								<i class="fs-16 zmdi zmdi-minus"></i>
+							</div>
+
+							<!-- 수량 조절 -->
+							<input class="mtext-104 cl3 txt-center num-product" id="cart_amount" 
+							type="number" name="cart_amount" value="1" min="1" max="10"
+							onchange="updatePrice(this,${lists[0].pro_subprice}, ${lists[0].pro_allprice})">
+							
+							<!-- 플러스 -->
+							<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
+								<i class="fs-16 zmdi zmdi-plus"></i>
+							</div>
+						</div>
+						
+						<div class="wrap-price">
+						  <div class="p-r-20 p-t-5 p-b-5">
+						    <span class="mtext-108 cl2">소계</span>
+						  </div>
+						  <div class="p-r-20 p-t-5 p-b-5">
+						    <span id="updateSub" class="mtext-108 cl2">${lists[0].pro_subprice}원</span>
+						  </div>
+						</div>
+						
+						<div class="wrap-price">
+						  <div class="p-r-20 p-t-5 p-b-5">
+						    <span class="mtext-108 cl2">총 구독 가격</span>
+						  </div>
+						  <div class="p-r-20 p-t-5 p-b-5">
+						    <span id="updateAll" class="mtext-108 cl2">${lists[0].pro_allprice}원</span>
+						  </div>
+						</div>
+						
 						 <input type="hidden" name="pro_idx" value="${lists[0].pro_idx}">
 						 <input type="hidden" name="pro_name" value="${lists[0].pro_name}">
 						 <input type="hidden" name="pro_subprice" value="${lists[0].pro_subprice}">
-						 <input type="hidden" name="pro_delprice" value="${lists[0].pro_delprice }">
-						 
-						<div class="wrap-num-product flex-w m-r-20 m-tb-10">
-									
-										<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-											<i class="fs-16 zmdi zmdi-minus"></i>
-										</div>
+						 <input type="hidden" name="pro_delprice" value="${lists[0].pro_delprice }">				
 
-										<input class="mtext-104 cl3 txt-center num-product" type="number" name="cart_amount" value="1"
-										min="1" max="10">
-
-										<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-											<i class="fs-16 zmdi zmdi-plus"></i>
-										</div>
-						</div>
-							
 							<div class="flex-w flex-r-m p-b-10">
 								<div class="size-204 flex-w flex-m respon6-next">
 									<button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail"
@@ -380,6 +405,41 @@
 			<i class="zmdi zmdi-chevron-up"></i>
 		</span>
 	</div>
+	
+
+<script>
+var subprice = ${lists[0].pro_subprice};
+var allprice = ${lists[0].pro_allprice};
+var input = document.getElementById("cart_amount");
+input.addEventListener("change", function() {
+  updatePrice(input, subprice, allprice);
+});
+
+function updatePrice(input, subprice, allprice) {
+  var cartAmount = input.value;
+  var subPrice = cartAmount * parseInt(subprice);
+  var allPrice = cartAmount * parseInt(allprice);
+  
+  document.getElementById("updateSub").innerHTML = subPrice + "원";
+  document.getElementById("updateAll").innerHTML = allPrice + "원";
+  
+  alert("cartAmount: " + cartAmount + "\nsubPrice: " + subPrice + "원\nallPrice: " + allPrice + "원");
+}
+
+
+//"+" 버튼을 찾아서 클릭 이벤트를 추가합니다.
+const plusButton = document.querySelector('.btn-num-product-up');
+plusButton.addEventListener('click', function() {
+    // updatePrice 함수를 호출하여 가격을 업데이트합니다.
+    updatePrice(document.querySelector('#cart_amount'), ${lists[0].pro_subprice}, ${lists[0].pro_allprice});
+});
+
+// "-" 버튼도 같은 방법으로 처리합니다.
+const minusButton = document.querySelector('.btn-num-product-down');
+minusButton.addEventListener('click', function() {
+    updatePrice(document.querySelector('#cart_amount'), ${lists[0].pro_subprice}, ${lists[0].pro_allprice});
+});
+</script>
 
 <!--===============================================================================================-->	
 	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
