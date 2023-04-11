@@ -103,6 +103,7 @@ public class OrderController {
 		return mav;
 	}
 
+	//결제부분 시작//
 	@RequestMapping(value = "/orderPay.do")
 	public ModelAndView svcPay(@RequestBody PaymentDTO dto) {
 		System.out.println(dto);
@@ -133,6 +134,8 @@ public class OrderController {
 
 		return mav;
 	}
+	
+	//결제부분 끝//
 	/** 마이페이지 구독중인 상품 */
 	public List<MyOrderListDTO> mySubsProPage(int cp, int ls, int user_idx) {
 		int start = (cp - 1) * ls + 1;
