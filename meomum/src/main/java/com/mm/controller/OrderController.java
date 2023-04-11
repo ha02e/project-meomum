@@ -83,16 +83,6 @@ public class OrderController {
 		return mav;
 	}
 
-	@RequestMapping("/orderList.do")
-	public ModelAndView orderList(@RequestParam("pro_idx") int idx) {
-
-		ModelAndView mav = new ModelAndView();
-		ProDTO dto = orderDao.orderList(idx);
-		mav.addObject("dto", dto);
-		mav.setViewName("order/orderList");
-		return mav;
-	}
-
 	@RequestMapping(value = "/orderForm.do", method = RequestMethod.POST)
 	public ModelAndView order(OrderDTO dto) {
 		int result = orderDao.orderInsert(dto);

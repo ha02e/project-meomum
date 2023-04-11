@@ -6,39 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>[사용자] 상세 페이지</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="images/icons/favicon.png"/>
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/linearicons-v1.0.0/icon-font.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
-<!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
-<!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/slick/slick.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/MagnificPopup/magnific-popup.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="css/proUtil.css">
-	<link rel="stylesheet" type="text/css" href="css/proMain.css">
-<!--===============================================================================================-->
 </head>
-</style>
 <%@include file="/WEB-INF/views/header.jsp" %>
 <body class="animsition">
 
@@ -113,10 +81,9 @@
 					</div>
 				</div>
 				
-			
+				<!-- 상품 정보 -->
 				<div class="col-md-6 col-lg-5 p-b-30">
 					<div class="p-r-50 p-t-5 p-lr-0-lg">
-						
 						
 						<h4 class="mtext-105 cl2 js-name-detail p-b-14">
 							${lists[0].pro_name}
@@ -131,7 +98,7 @@
 						</div>
 
 						<p class="stext-102 cl3 p-t-23">
-							배송비 <fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_delprice}" />원
+							개당 배송비 <fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_delprice}" />원
 						</p>
 						
 						<span class="mtext-106 cl2">
@@ -139,49 +106,36 @@
 													
 						</span>
 						
-						<!--  -->
+						<!-- 수량 부분 -->
 						<form name="contentForm" method="get" action="orderList.do">	
+						 <input type="hidden" name="pro_idx" value="${lists[0].pro_idx}">
+						 <input type="hidden" name="pro_name" value="${lists[0].pro_name}">
+						 <input type="hidden" name="pro_subprice" value="${lists[0].pro_subprice}">
+						 <input type="hidden" name="pro_delprice" value="${lists[0].pro_delprice }">
+						 
 						<div class="wrap-num-product flex-w m-r-20 m-tb-10">
 							<!-- 마이너스 -->
-							<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+							<div id="minus-button" class="btn-num-product-down">
 								<i class="fs-16 zmdi zmdi-minus"></i>
 							</div>
 
 							<!-- 수량 조절 -->
 							<input class="mtext-104 cl3 txt-center num-product" id="cart_amount" 
-							type="number" name="cart_amount" value="1" min="1" max="10"
-							onchange="updatePrice(this,${lists[0].pro_subprice}, ${lists[0].pro_allprice})">
-							
+							type="number" name="cart_amount" value="1" onchange="updatePrice(this, ${lists[0].pro_subprice}, ${lists[0].pro_allprice})" 
+							min="1" max="10">
+												
 							<!-- 플러스 -->
-							<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
+							<div id="plus-button" class="btn-num-product-up">
 								<i class="fs-16 zmdi zmdi-plus"></i>
 							</div>
 						</div>
 						
-						<div class="wrap-price">
-						  <div class="p-r-20 p-t-5 p-b-5">
-						    <span class="mtext-108 cl2">소계</span>
-						  </div>
-						  <div class="p-r-20 p-t-5 p-b-5">
-						    <span id="updateSub" class="mtext-108 cl2">${lists[0].pro_subprice}원</span>
-						  </div>
-						</div>
-						
-						<div class="wrap-price">
-						  <div class="p-r-20 p-t-5 p-b-5">
-						    <span class="mtext-108 cl2">총 구독 가격</span>
-						  </div>
-						  <div class="p-r-20 p-t-5 p-b-5">
-						    <span id="updateAll" class="mtext-108 cl2">${lists[0].pro_allprice}원</span>
-						  </div>
-						</div>
-						
-						 <input type="hidden" name="pro_idx" value="${lists[0].pro_idx}">
-						 <input type="hidden" name="pro_name" value="${lists[0].pro_name}">
-						 <input type="hidden" name="pro_subprice" value="${lists[0].pro_subprice}">
-						 <input type="hidden" name="pro_delprice" value="${lists[0].pro_delprice }">				
-
-							<div class="flex-w flex-r-m p-b-10">
+						<br>
+						<div><span id="subPrice"><fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_subprice}" />원</span></div>
+    					<div><span id="allPrice"><fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_allprice}" />원</span></div>
+    					<div><span id="totalDel"><fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_delprice}" />원</span></div>
+						<br>
+										<div class="flex-w flex-r-m p-b-10">
 								<div class="size-204 flex-w flex-m respon6-next">
 									<button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail"
 									type="submit" formaction="cartInsert.do">장바구니</button>
@@ -408,39 +362,31 @@
 	
 
 <script>
-var subprice = ${lists[0].pro_subprice};
-var allprice = ${lists[0].pro_allprice};
-var input = document.getElementById("cart_amount");
-input.addEventListener("change", function() {
-  updatePrice(input, subprice, allprice);
-});
-
 function updatePrice(input, subprice, allprice) {
-  var cartAmount = input.value;
-  var subPrice = cartAmount * parseInt(subprice);
-  var allPrice = cartAmount * parseInt(allprice);
+    var cartAmount = input.value;
+    var subPrice = cartAmount * subprice;
+    var allPrice = cartAmount * allprice;
+    var delPrice = $("#pro_delprice").val();
+    var totalDel = cartAmount * delPrice;
+    
+    // 하위 요소에서 ID를 이용하여 값을 업데이트합니다.
+    document.getElementById("subPrice").innerHTML = "총 월 구독 가격 :"subPrice.toLocaleString() + "원";
+    document.getElementById("allPrice").innerHTML = "총 구독 가격 :"+allPrice.toLocaleString() + "원";
+    document.getElementById("totalDel").innerHTML = "총 배송비 :"+totalDel.toLocaleString() + "원";
+
+ /*
+  function updatePrice(input, subPrice, allPrice) {
+  let cartAmount = input.value;
+  let subPrice = cartAmount * subprice;
+  let allPrice = cartAmount * allprice;
   
-  document.getElementById("updateSub").innerHTML = subPrice + "원";
-  document.getElementById("updateAll").innerHTML = allPrice + "원";
-  
-  alert("cartAmount: " + cartAmount + "\nsubPrice: " + subPrice + "원\nallPrice: " + allPrice + "원");
+  document.getElementById("subPrice").textContent = subPrice.toLocaleString() + "원";
+  document.getElementById("allPrice").textContent = allPrice.toLocaleString() + "원";
+	}
+  */
+ 
 }
-
-
-//"+" 버튼을 찾아서 클릭 이벤트를 추가합니다.
-const plusButton = document.querySelector('.btn-num-product-up');
-plusButton.addEventListener('click', function() {
-    // updatePrice 함수를 호출하여 가격을 업데이트합니다.
-    updatePrice(document.querySelector('#cart_amount'), ${lists[0].pro_subprice}, ${lists[0].pro_allprice});
-});
-
-// "-" 버튼도 같은 방법으로 처리합니다.
-const minusButton = document.querySelector('.btn-num-product-down');
-minusButton.addEventListener('click', function() {
-    updatePrice(document.querySelector('#cart_amount'), ${lists[0].pro_subprice}, ${lists[0].pro_allprice});
-});
 </script>
-
 <!--===============================================================================================-->	
 	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
 <!--===============================================================================================-->
