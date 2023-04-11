@@ -11,6 +11,46 @@ font-weight: bold;
 color : #F5E1DA;
 font-size: 25px;
 }
+
+
+.topbutton {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: normal;
+    width: 45px;
+    height: 45px;
+    border-radius: 50% !important;
+    color: #FFFFFF;
+    background-color: #EAA636;
+    border-color: #EAA636;
+    
+}
+.topbutton:hover{
+ background-color: #EAA636;
+    border-color: #EAA636;
+}
+
+.kakao {
+    cursor: pointer;
+    border-radius: 4px;
+    overflow: hidden;
+    position: fixed;
+    right:10px;
+    bottom: 0;
+    width: 100px;
+    height: 100px;
+    z-index: 9999;
+}
+
+.back-to-top {
+    position: fixed;
+    right: 30px;
+    bottom: 100px;
+    z-index: 99;
+}
+
 </style>
 </head>
 <body>
@@ -111,8 +151,12 @@ font-size: 25px;
         </div>
  
     </footer>
+<a href="#top" class="btn btn-lg topbutton back-to-top" style=""><i class="bi bi-arrow-up"></i></a> 
+<div class="kakao"><img alt="카카오 상담" src="/meomum/images/icon/consult_small_yellow_pc.png" ></div>
 
- 
+
+
+
     <!-- JAVASCRIPT FILES -->
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -123,7 +167,6 @@ font-size: 25px;
     
     
     <!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
 
 
 

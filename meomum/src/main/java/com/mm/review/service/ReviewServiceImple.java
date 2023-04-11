@@ -59,8 +59,8 @@ public class ReviewServiceImple implements ReviewService {
 	}
 	
 	@Override
-	public int myreviewTotalCnt() {
-		int count=reviewDao.myreviewTotalCnt();
+	public int myreviewTotalCnt(int user_idx) {
+		int count=reviewDao.myreviewTotalCnt(user_idx);
 		count=count==0?1:count;
 		return count;
 	}
