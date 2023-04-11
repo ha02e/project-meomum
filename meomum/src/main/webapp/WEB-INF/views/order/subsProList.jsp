@@ -214,7 +214,7 @@ function orderInfoOpen((url, name, options) {
 			                    <td>${dto.pay_date}</td>
 			                    <td>
 			                    	<div class="buttons">
-										<a class="action-link" href="${contentUrl}" target="blank">
+										<a class="btn btn-primary mb-2" href="${contentUrl}" target="blank">
 											<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-dash-circle" viewBox="0 0 16 16">
 											  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
 											  <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
