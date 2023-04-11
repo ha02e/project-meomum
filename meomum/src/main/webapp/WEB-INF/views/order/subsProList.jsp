@@ -145,7 +145,7 @@ function orderInfoOpen((url, name, options) {
 </script>
 </head>
 <body>
-<%@include file="../header.jsp"%> 
+<%@include file="/WEB-INF/views/header.jsp"%> 
 
 <!-- 헤더 이미지 시작 -->
 	<div class="page-header">
