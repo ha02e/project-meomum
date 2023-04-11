@@ -190,9 +190,11 @@ object-fit: cover;
 		<div class="contain">
 			<div class="img"><img src="https://cdn.pixabay.com/photo/2020/05/11/06/45/cutlery-5156696_960_720.jpg" alt="정리된 서랍장"></div>
 			<div class="cnt">
-				<h2 class="main-tit">새로운 삶의 문을 열어주는 '새삶'</h2>
-				<p>공간이 바뀌면 인생이 달라집니다. <br>비움과 활용으로 공간을 가치있게 디자인하고 새로운 삶을 살아갈 <br>당신을 응원합니다.</p>
-				<div class="main-more"><a href="service.php">바로가기</a></div>
+				<h2 class="main-tit">머물고 싶은 공간을 만드는 '머뭄'</h2>
+				<p>머물고 싶은 공간을 만들어드립니다.<br>당신의 상쾌한 일상에 함께합니다.<br> 간단한 상담이 필요하다면 간단한 문의 먼저 해보세요!</p>
+
+				
+				<div class="main-more">정리일상 <a href="svc.do"><button type="button" class="btn btn-outline-info"> 간단문의</button></a></div>
 			</div>
 		</div>
 	</div>
