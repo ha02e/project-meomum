@@ -83,36 +83,6 @@ public class OrderController {
 		return mav;
 	}
 
-	@RequestMapping(value = "/orderForm.do", method = RequestMethod.POST)
-	public ModelAndView order(OrderDTO dto, OrderProDTO dto2) {
-		int result = orderDao.orderInsert(dto);
-		int result2 = orderDao.order_proInsert(dto2);
-		int total = result + result2;
-		String msg = total > 0 ? "폼 저장 성공" : "폼 저장 성공 실패";
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("msg", msg);
-		mav.addObject("goUrl", "/meomum/index.do");
-		mav.setViewName("ntc/ntcMsg");
-		return mav;
-	}
-
-	@RequestMapping(value = "/orderPay.do")
-	public ModelAndView svcPay(@RequestBody PaymentDTO dto) {
-		System.out.println(dto);
-		int result = payDao.paymentInsert(dto);
-		System.out.println("컨트롤러:" + result);
-		ModelAndView mav = new ModelAndView();
-
-		String msg = result > 0 ? "결제가 완료되었습니다" : "다시 시도해주세요";
-		String link = result > 0 ? "index.do" : "proList.do";
-
-		mav.addObject("msg", msg);
-		mav.addObject("link", link);
-		mav.setViewName("mmJson");
-
-		return mav;
-	}
-
 	@RequestMapping("/orderList.do")
 	public ModelAndView orderList(@RequestParam("pro_idx") int idx) {
 
@@ -165,12 +135,11 @@ public class OrderController {
 	}
 
 	@RequestMapping("/subsProList.do")
-	public ModelAndView mysubsProList(@RequestParam(value = "cp", defaultValue = "1") int cp,
-										HttpSession session) {
+	public ModelAndView mysubsProList(@RequestParam(value = "cp", defaultValue = "1") int cp, HttpSession session) {
 
-		MemberDTO mdto=(MemberDTO)session.getAttribute("ssInfo");
-		int user_idx=mdto.getUser_idx();
-		
+		MemberDTO mdto = (MemberDTO) session.getAttribute("ssInfo");
+		int user_idx = mdto.getUser_idx();
+
 		int totalCnt = orderDao.mySubsProTotalCnt(user_idx);
 		int listSize = 5;
 		int pageSize = 5;
@@ -179,12 +148,12 @@ public class OrderController {
 
 		List<MyOrderListDTO> lists = mySubsProPage(cp, pageSize, user_idx);
 
-		ModelAndView mav=new ModelAndView();
-		mav.addObject("lists",lists);
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("lists", lists);
 		mav.setViewName("order/subsProList");
 		mav.addObject("pageStr", pageStr);
 		return mav;
-		
+
 	}
 
 	/** 마이페이지 주문배송내역 */
