@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -68,7 +69,7 @@ public class OrderController {
 
 		return mav;
 	}
-
+	/**장바구니에서 결제 여러개 하기*/
 	@RequestMapping("/orderListss.do")
 	public ModelAndView orderAllList(@RequestParam("cart_idx") int[] cartIdx, @RequestParam("totalSub") int totalSub,
 			@RequestParam("totalCount") int totalCount, @RequestParam("totalDel") int totalDel,
@@ -103,6 +104,42 @@ public class OrderController {
 		return mav;
 	}
 
+	/**cho 주문 폼*/
+	@RequestMapping(value = "/ordersForm.do", method = RequestMethod.POST)
+	public ModelAndView ordersSubmit(OrderDTO dto ,@ModelAttribute("orderList") List<OrderProDTO> orderList) {
+		int result = orderDao.orderInsert(dto);
+		
+		ModelAndView mav = new ModelAndView();
+		
+		if(result>0) {
+			int proOk =0;
+			for(int i=0;i<orderList.size();i++) {
+			
+				proOk = orderDao.order_proInsert( orderList.get(i));
+			}
+			if(proOk>0) {
+				mav.addObject("msg", "주문이 완료되었습니다");
+				mav.setViewName("msg");
+				mav.addObject("link", "index.do");
+				return mav;
+			}else {
+				mav.addObject("msg","주문에 상품 폼 전송에 실패하였습니다.");
+				mav.setViewName("mainMsg");
+				mav.addObject("gopage", "history.back()");
+				return mav;
+
+			}
+			
+		}else {
+			mav.addObject("msg","주문에 실패하였습니다.");
+			mav.setViewName("mainMsg");
+			mav.addObject("gopage", "history.back()");
+			return mav;
+
+		}
+	}
+
+	
 	//결제부분 시작//
 	@RequestMapping(value = "/orderPay.do")
 	public ModelAndView svcPay(@RequestBody PaymentDTO dto) {
@@ -134,6 +171,7 @@ public class OrderController {
 
 		return mav;
 	}
+
 	
 	//결제부분 끝//
 	/** 마이페이지 구독중인 상품 */

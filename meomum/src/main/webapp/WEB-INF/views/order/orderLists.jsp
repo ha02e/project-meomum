@@ -50,7 +50,7 @@
 
 		document.getElementsByName("receiver_tel")[0].value = nameInput.value;
 	}
-	
+
 	var nameInput = document.getElementById("buyer_email");
 
 	if (nameInput.value !== document.getElementById("buyer_email")) {
@@ -58,9 +58,40 @@
 		document.getElementsByName("buyer_email")[0].value = nameInput.value;
 	}
 </script>
+<style>
+/*헤더 이미지용 url에 이미지 추가하면 됩니다.*/
+.page-header {
+	background: linear-gradient(rgba(36, 39, 38, 0.5), rgba(36, 39, 38, 0.5)),
+		rgba(36, 39, 38, 0.5)
+		url(https://images.unsplash.com/photo-1513694203232-719a280e022f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80)
+		no-repeat center;
+	background-size: cover;
+	margin: 0;
+	border-bottom: none;
+	padding-bottom: 0px;
+}
+
+.page-caption {
+	padding: 90px 0px;
+	position: relative;
+	z-index: 1;
+	color: #fff;
+	text-align: center;
+}
+
+.thumbimg{
+width: 60px;
+  height: 60px;
+  object-fit: cover;
+}
+/**헤더 이미지용 끝*/
 
 
-
+input:invalid {
+  border-color: red;
+  outline: none;
+}
+</style>
 </head>
 
 <body>
@@ -77,126 +108,153 @@
 			</div>
 		</div>
 	</div>
-
+	<br><br>
 	<div class="container">
 		<div class="row">
-			<form name="orderForm" action="orderForm.do" method="post">
+			<form name="ordersForm" action="ordersForm.do" method="post">
 				<input type="hidden" name="user_idx"
-					value="${sessionScope.ssInfo.user_idx}"> 
-				<input type="hidden" id="orderIdxInput" name="order_idx" value="${uid}" />
-				<table class="table">
-				  <thead>
-				    <tr>
-				      <th scope="col">상품명</th>
-				      <th scope="col">상품 이미지</th>
-				      <th scope="col">상품 가격</th>
-				      <th scope="col">구독월수</th>
-				      <th scope="col">배송비</th>
-				      <th scope="col">수량</th>
-				      <th scope="col">결제 금액</th>
-				    </tr>
-				  </thead>
-				  <tbody>
-				    <c:if test="${empty lists}">
-				      <tr>
-				        <td colspan="7">존재하지 않거나 삭제된 상품입니다.</td>
-				      </tr>
-				    </c:if>
-				    <c:if test="${!empty lists}">
-				      <c:forEach var="dto" items="${lists}">
-				        <tr>
-				          <td>${dto.pro_name}</td>
-				          <td><img alt="pro_img" src="/meomum/items/${dto.pro_thumb}"></td>
-				          <td>${dto.pro_price}원</td>
-				          <td>${dto.pro_month}월</td>
-				          <td>${dto.pro_delprice}원</td>
-				          <td>${dto.cart_amount}개</td>
-				          <td>${dto.pro_subprice * dto.cart_amount}원</td>
-				        </tr>
-				      </c:forEach>
-				    </c:if>
-				  </tbody>
+					value="${sessionScope.ssInfo.user_idx}"> <input
+					type="hidden" id="orderIdxInput" name="order_idx"  />
+				<div class="border">
 
-				</table>
-				    <c:if test="${!empty total}">
-				    	<div>
-					  		<div>월 구독 가격 : ${total.totalSub }원</div>
-							<div> 월 구매 개수 : ${total.totalCount } 개</div>
-						     <div> 총 배송비 : ${total.totalDel }원</div>
-						     <div> 월 구독 가격 + 총 배송비 : ${total.finalTotalPrice }원</div>
+					<table class="table">
+						<thead>
+							<tr>
+								<th scope="col">상품명</th>
+								<th scope="col">상품 이미지</th>
+								<th scope="col">상품 가격</th>
+								<th scope="col">구독월수</th>
+								<th scope="col">배송비</th>
+								<th scope="col">수량</th>
+								<th scope="col">결제 금액</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:if test="${empty lists}">
+								<tr>
+									<td colspan="7">존재하지 않거나 삭제된 상품입니다.</td>
+								</tr>
+							</c:if>
+							<c:if test="${!empty lists}">
+								<c:forEach var="dto" items="${lists}">
+									<tr>
+										<td>${dto.pro_name}</td>
+										<td><img alt="pro_img" class="thumbimg"
+											src="/meomum/images/items/${dto.pro_thumb}">
+											</td>
+										<td><fmt:formatNumber type="number" maxFractionDigits="3"
+												value="${dto.pro_price}" />원</td>
+										<td>${dto.pro_month}개월</td>
+										<td><fmt:formatNumber type="number" maxFractionDigits="3"
+												value="${dto.pro_delprice}" />원</td>
+										<td>${dto.cart_amount}개</td>
+										<td><fmt:formatNumber type="number" maxFractionDigits="3"
+												value="${dto.pro_subprice * dto.cart_amount}" />원</td>
+									</tr>
+									<input type="hidden" name="pro_idx" value="${dto.pro_idx}">
+									<input type="hidden" name="pro_amount" value="${dto.cart_amount}">
+								</c:forEach>
+							</c:if>
+						</tbody>
+					</table>
+
+					<c:if test="${!empty total}">
+						<div>
+							<div class="text-end">
+								월 구독 가격 :
+								<fmt:formatNumber type="number" maxFractionDigits="3"
+									value="${total.totalSub }" />
+								원
+							</div>
+							<div class="text-end">월 구매 개수 : ${total.totalCount } 개</div>
+							<div class="text-center">
+								총 배송비 : <span style="color: red;"><fmt:formatNumber
+										type="number" maxFractionDigits="3" value="${total.totalDel }" /></span>원
+							</div>
+							<div class="text-center">
+								월 구독 가격 + 총 배송비 :
+								<fmt:formatNumber type="number" maxFractionDigits="3"
+									value="${total.finalTotalPrice }" />
+								원
+							</div>
 						</div>
-				    </c:if>
-		<hr>
+					</c:if>
+				</div>
+				<hr>
 
-				<div>
-					<h2>배송 정보를 입력해주세요.</h2>
-					<h3>계약자 정보</h3>
+				<div class="container">
+					<h2 class="text-center mb-4">배송 정보 입력</h2>
+
 					<input type="hidden" name="user_idx"
-						value="${sessionScope.ssInfo.user_idx}">	
-				</div>
-				<div>
-					<label for="order_name">고객명</label> <input type="text"
-						class="form-control" id="order_name" name="order_name"
-						value="${sessionScope.ssInfo.user_name}" placeholder="이름을 입력해주세요">
-				</div>
-				<div>
-					<label for="receiver_tel">연락처</label> <input type="text"
-						class="form-control" id="receiver_tel" name="receiver_tel"
-						value="${sessionScope.ssInfo.user_tel}" placeholder="연락처 -제외 하고 입력">
-				</div>
-				<div>
-					<label for="order_pcode">우편번호</label>
-					<div class="input-group mb-3">
-						<input type="text" class="form-control" id="order_pcode"
-							name="order_pcode" value="${sessionScope.ssInfo.user_pcode}"
-							placeholder="우편번호" readonly="readonly" onclick="findaddr()">
-						<div class="input-group-append">
+						value="${sessionScope.ssInfo.user_idx}">
+					<div class="mb-3">
+						<label for="order_name" class="form-label">고객명</label> <input
+							type="text" class="form-control" id="order_name"
+							name="order_name" value="${sessionScope.ssInfo.user_name}"
+							placeholder="이름을 입력해주세요" required pattern="[가-힣]{2,5}">
+					</div>
+					<div class="mb-3">
+						<label for="receiver_tel" class="form-label">연락처</label> <input
+							type="text" class="form-control" id="receiver_tel"
+							name="receiver_tel" value="${sessionScope.ssInfo.user_tel}"
+							placeholder="연락처 -제외 하고 입력" required pattern="[0-9]{3}-[0-9]{3,4}-[0-9]{4}">
+					</div>
+					<div class="mb-3">
+						<label for="order_pcode" class="form-label">우편번호</label>
+						<div class="input-group">
+							<input type="text" class="form-control" id="order_pcode"
+								name="order_pcode" value="${sessionScope.ssInfo.user_pcode}"
+								placeholder="우편번호" readonly="readonly" onclick="findaddr()">
 							<button class="btn btn-outline-secondary" type="button"
 								onclick="findaddr()">우편번호 검색</button>
 						</div>
 					</div>
-				</div>
-				<div>
-					<label for="order_addr">기본주소</label> <input type="text"
-						class="form-control" id="order_addr" name="order_addr"
-						value="${sessionScope.ssInfo.user_addr}" placeholder="기본주소"
-						readonly="readonly">
-				</div>
-				<div>
-					<label for="order_detail">상세주소</label> <input type="text"
-						class="form-control" id="order_detail" name="order_detail"
-						value="${sessionScope.ssInfo.addr_detail}" placeholder="상세주소" required="required">
-				</div>
-				<div>
-					<label for="order_msg">배송 메세지</label> <input type="text"
-						class="form-control" id="order_msg" name="order_msg"
-						placeholder="배송메세지">
-				</div>
-				<div>
-					<label for="checkbox"> 개인정보이용동의 </label>
-						<div class="form-control">
-						개인정보 이용동의합니다.<input class="form-check-input" type="checkbox"
-	 					id="checkbox" value="Y"  name="order_tos" class="form-control" required="required">
+					<div class="mb-3">
+						<label for="order_addr" class="form-label">기본주소</label> <input
+							type="text" class="form-control" id="order_addr"
+							name="order_addr" value="${sessionScope.ssInfo.user_addr}"
+							placeholder="기본주소" readonly="readonly">
+					</div>
+					<div class="mb-3">
+						<label for="order_detail" class="form-label">상세주소</label> <input
+							type="text" class="form-control" id="order_detail"
+							name="order_detail" value="${sessionScope.ssInfo.addr_detail}"
+							placeholder="상세주소" required="required">
+					</div>
+					<div class="mb-3">
+						<label for="order_msg" class="form-label">배송 메세지</label> <input
+							type="text" class="form-control" id="order_msg" name="order_msg"
+							placeholder="배송메세지">
+					</div>
+					<div class="mb-3">
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" id="checkbox"
+								value="Y" name="order_tos" required="required"> <label
+								class="form-check-label" for="checkbox">개인정보 이용동의합니다.</label>
 						</div>
-				</div>
-				<div>
-					<label for="using_point">포인트</label> <input type="number"
-						name="using_point" value="${0}" class="form-control">
-				</div>
-	
-	
-			<!-- 결제하기 버튼 생성 -->
-			<button onclick="requestPay()">결제하기</button>
-			
+					</div>
+					<div class="mb-3">
+						<label for="using_point" class="form-label">포인트</label> <input
+							type="number" name="using_point" value="${0}"
+							class="form-control">
+					</div>
+					<div class="d-grid gap-2 col-4 mx-auto">
+					<button type="button" class="btn btn-primary"
+						onclick="requestPay()">결제하기</button> 
+						<a href="proList.do"><button type="button" class="btn btn-primary"
+						>목록으로</button></a>
+					</div>
+						<br><br>
 
-		</form>
-	</div>
-	
-	
-	
-	
-	
-	
+				</div>
+			</form>
+		</div>
+
+
+
+
+
+
 		<script>
 			var IMP = window.IMP;
 			IMP.init("imp77686458");
@@ -212,39 +270,92 @@
 			var makeMerchantUid = year + month + day + hours + minutes
 					+ seconds + milliseconds;
 
-			var name = "${sessionScope.ssInfo.user_name}";
-			var tp = ${total.finalTotalPrice };
-			var addr=document.getElementById("order_addr").value;
+			var oName = document.getElementById("order_name").value;
 			var uid = "OMM" + makeMerchantUid
-
+			
+			var tp = ${total.finalTotalPrice};
+			var bName =document.getElementById("order_name").value
+			var bTel= document.getElementById("receiver_tel").value
+			var addr= document.getElementById("order_addr").value;
+			var bPcode= document.getElementById("order_pcode").value
+			
+			var uidx = ${sessionScope.ssInfo.user_idx};
+			var pidx = [<c:forEach var="product" items="${lists}"><c:out value="${product.pro_idx}"/>, </c:forEach>];
+			var pAmount = [<c:forEach var="product" items="${lists}"><c:out value="${product.cart_amount}"/>, </c:forEach>];
+			
 			document.getElementById('orderIdxInput').setAttribute('value', uid);
 
+			function validateForm() {
+				var form = document.ordersForm;
+				  if (!form.checkValidity()) { // HTML5 폼 유효성 검사
+					    form.querySelector(':invalid').focus(); // 유효하지 않은 입력 필드에 포커스
+
+				    return false;
+				  }
+				  return true;
+			}
 			function requestPay() {
+				if (!validateForm()) {
+				    return;
+				  }
+	
 				IMP.request_pay({
 					pg : "kakaopay", //"html5_inicis",
 					pay_method : 'card',
 					merchant_uid : uid,
-					name : document.getElementById("order_name").value,
+					name : oName,
 					amount : tp,
 					buyer_email : "",
-					buyer_name : document.getElementById("order_name").value,
-					buyer_tel : document.getElementById("receiver_tel").value,
+					buyer_name : bName,
+					buyer_tel : bTel,
 					buyer_addr : addr,
-					buyer_postcode : document.getElementById("order_pcode").value
+					buyer_postcode : bPcode
 				}, function(rsp) { // callback
 					if (rsp.success) {
 						console.log(rsp);
 
+						var PaymentDTO ={
+			    			  	payment_idx: rsp.imp_uid, //payment_idx로 들어갈 값
+					            cate_idx: rsp.merchant_uid, //인식번호(cate_idx)
+					            payment_cate: 2, //payment_cate 카테고리
+					            pay_method: rsp.pay_method, //pay_mehtod 지불수단
+					            amount: rsp.paid_amount, //amount 금액
+					            pay_buydate: rsp.paid_at, //pay_buydate 결제일
+					            pay_cancleDate:null,//pay_cancleDate 취소일(임시'-'로 지정)
+					            pay_state: rsp.status,//pay_stat
+
+			    	  };
+						
+					var OrderProDTO = {
+								order_idx: uid, //주문번호
+								user_idx: uidx, //유저번호
+								pro_idx: pidx, //상품번호
+								pro_amount: pAmount, //수량		
+					};
+						$.ajax({
+					          type: 'POST',
+					          url: "orderPay.do",
+					          data: JSON.stringify(PaymentDTO),
+					          contentType: "application/json",
+					          success: function (data) {
+					        	 console.log(data);
+					            alert('컨트롤러 성공');
+					           
+					          },
+					          error: function (xhr, status, error) {
+					            alert('컨트롤러 실패');
+					            
+					          }
+					        });
+				    	   
+				        alert('결제가 완료되었습니다');
 						var msg = '결제가 완료되었습니다.';
 						
-						document.orderForm.submit();
-						
-						
+						document.ordersForm.submit();				
 
 					} else {
 						console.log(rsp);
 						var msg = '결제가 실패되었습니다.';
-						
 						location.href = "/meomum/proList.do";
 					}
 
