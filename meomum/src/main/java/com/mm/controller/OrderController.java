@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,6 +22,8 @@ import com.mm.order.model.OrderDAO;
 import com.mm.order.model.OrderDTO;
 import com.mm.order.model.OrderProDTO;
 import com.mm.order.model.OrderReportDTO;
+import com.mm.payment.model.PaymentDAO;
+import com.mm.payment.model.PaymentDTO;
 import com.mm.pro.model.ProDTO;
 
 @Controller
@@ -28,6 +31,8 @@ public class OrderController {
 
 	@Autowired
 	private OrderDAO orderDao;
+	@Autowired
+	private PaymentDAO payDao;
 
 	@RequestMapping("/orderList.do")
 	public ModelAndView orderList(@RequestParam("pro_idx") int idx) {
@@ -40,15 +45,30 @@ public class OrderController {
 	}
 
 	@RequestMapping(value = "/orderForm.do", method = RequestMethod.POST)
-	public ModelAndView order(OrderDTO dto,OrderProDTO dto2) {
+	public ModelAndView order(OrderDTO dto) {
 		int result = orderDao.orderInsert(dto);
-		int result2 = orderDao.order_proInsert(dto2);
-		int total=result+result2;
-		String msg = total > 0 ? "폼 저장 성공" : "폼 저장 성공 실패";
+		String msg = result > 0 ? "폼 저장 성공" : "폼 저장 성공 실패";
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("msg", msg);
 		mav.addObject("goUrl", "/meomum/index.do");
 		mav.setViewName("ntc/ntcMsg");
+		return mav;
+	}
+	
+	@RequestMapping(value="/orderPay.do")
+	public ModelAndView svcPay(@RequestBody PaymentDTO dto, @RequestBody OrderProDTO dto2) {
+		System.out.println(dto);
+		int result = payDao.paymentInsert(dto);
+		int result2 = orderDao.order_proInsert(dto2);
+		ModelAndView mav = new ModelAndView();
+		
+		String msg = result>0?"결제가 완료되었습니다":"다시 시도해주세요";
+		String link = result>0?"index.do":"proList.do";
+		
+		mav.addObject("msg", msg);
+		mav.addObject("link", link);
+		mav.setViewName("mmJson");
+		
 		return mav;
 	}
 	

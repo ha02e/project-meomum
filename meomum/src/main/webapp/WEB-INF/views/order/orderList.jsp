@@ -201,31 +201,69 @@
 			var makeMerchantUid = year + month + day + hours + minutes
 					+ seconds + milliseconds;
 
-			var name = "${sessionScope.ssInfo.user_name}";
-			var tp = ${dto.pro_subprice * param.cart_amount + dto.pro_delprice};
-			var addr=document.getElementById("order_addr").value;
+			var name = document.getElementById("order_name").value;
 			var uid = "OMM" + makeMerchantUid
-
+			var tp = ${dto.pro_subprice * param.cart_amount + dto.pro_delprice};
+			var bName =document.getElementById("order_name").value
+			var bTel= document.getElementById("receiver_tel").value
+			var addr= document.getElementById("order_addr").value;
+			var bPcode= document.getElementById("order_pcode").value
 			document.getElementById('orderIdxInput').setAttribute('value', uid);
-
+			
+			var uidx= ${sessionScope.ssInfo.user_idx};
+			var pidx= ${dto.pro_idx};
+			var amount = ${param.cart_amount};
+			
 			function requestPay() {
 				IMP.request_pay({
 					pg : "kakaopay", //"html5_inicis",
 					pay_method : 'card',
 					merchant_uid : uid,
-					name : document.getElementById("order_name").value,
+					name : name,
 					amount : tp,
 					buyer_email : "",
-					buyer_name : document.getElementById("order_name").value,
-					buyer_tel : document.getElementById("receiver_tel").value,
+					buyer_name : bName,
+					buyer_tel : bTel,
 					buyer_addr : addr,
-					buyer_postcode : document.getElementById("order_pcode").value
+					buyer_postcode : bPcode
 				}, function(rsp) { // callback
 					if (rsp.success) {
-						console.log(rsp);
-
-						var msg = '결제가 완료되었습니다.';
+						var PaymentDTO ={
+			    			  	payment_idx: rsp.imp_uid, //payment_idx로 들어갈 값
+					            cate_idx: rsp.merchant_uid, //인식번호(cate_idx)
+					            payment_cate: 2, //payment_cate 카테고리
+					            pay_method: rsp.pay_method, //pay_mehtod 지불수단
+					            amount: rsp.paid_amount, //amount 금액
+					            pay_buydate: rsp.paid_at, //pay_buydate 결제일
+					            pay_cancleDate:null,//pay_cancleDate 취소일(임시'-'로 지정)
+					            pay_state: rsp.status,//pay_state
+						};
 						
+						var OrderProDTO = {
+								order_idx:rsp.merchant_uid, //주문번호
+								user_idx: uidx,
+								pro_idx: pidx, //상품번호
+								pro_amount: amount //상품수량
+								
+						};
+						
+						$.ajax({
+					          type: 'POST',
+					          url: "orderPay.do",
+					          data: JSON.stringify(PaymentDTO,OrderProDTO),
+					          contentType: "application/json",
+					          success: function (data) {
+					        	 console.log(data);
+					            alert('컨트롤러 성공');
+					           
+					          },
+					          error: function (xhr, status, error) {
+					            alert('컨트롤러 실패');
+					            
+					          }
+					        });
+						
+						var msg = '결제가 성공되었습니다.';
 						document.orderForm.submit();
 						
 						
