@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mm.member.model.MemberDTO;
+import com.mm.order.model.MyOrderListDTO;
 import com.mm.order.model.OrderDAO;
 import com.mm.order.model.OrderDTO;
 import com.mm.order.model.OrderProDTO;
@@ -52,15 +53,44 @@ public class OrderController {
 		return mav;
 	}
 	
-	@RequestMapping("/myOrderList.do")
-	public ModelAndView myOrderList(@RequestParam("user_idx")int idx) {
-		List<OrderDTO> list = orderDao.myOrderList(idx);
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("list", list);
-		mav.setViewName("order/myOrderList");
+	
+	/** 마이페이지 구독중인 상품 */
+	public List<MyOrderListDTO> mySubsProPage(int cp, int ls,int user_idx) {
+		int start = (cp - 1) * ls + 1;
+		int end = cp * ls;
+		Map map = new HashMap();
+		map.put("start", start);
+		map.put("end", end);
+		map.put("user_idx", user_idx);
+		
+		List<MyOrderListDTO> lists = orderDao.myOrderList(map);
+		return lists;
+	}
+	
+	@RequestMapping("/subsProList.do")
+	public ModelAndView mysubsProList(@RequestParam(value = "cp", defaultValue = "1") int cp,
+										HttpSession session) {
+
+		MemberDTO mdto=(MemberDTO)session.getAttribute("ssInfo");
+		int user_idx=mdto.getUser_idx();
+		
+		int totalCnt = orderDao.mySubsProTotalCnt(user_idx);
+		int listSize = 5;
+		int pageSize = 5;
+
+		String pageStr = com.mm.module.PageModule.makePage("subsProList.do", totalCnt, listSize, pageSize, cp);
+
+		List<MyOrderListDTO> lists = mySubsProPage(cp, pageSize, user_idx);
+
+		ModelAndView mav=new ModelAndView();
+		mav.addObject("lists",lists);
+		mav.setViewName("order/subsProList");
+		mav.addObject("pageStr", pageStr);
 		return mav;
+		
 	}
 
+	
 	/** 마이페이지 주문배송내역 */
 	public List<OrderReportDTO> myReportPage(int cp, int ls,int user_idx) {
 		int start = (cp - 1) * ls + 1;
@@ -96,6 +126,7 @@ public class OrderController {
 		return mav;
 	}
 	
+	
 	/** 관리자페이지 주문배송내역 */
 	public List<OrderReportDTO> reportPage(int cp, int ls) {
 		int start = (cp - 1) * ls + 1;
@@ -125,6 +156,8 @@ public class OrderController {
 		return mav;
 	}
 
+	
+	/** 관리자페이지 배송처리 폼 */
 	@RequestMapping("/shipForm.do")
 	public ModelAndView shippingForm(@RequestParam("order_idx")String order_idx) {
 		OrderReportDTO dto=orderDao.orderData(order_idx);
@@ -135,6 +168,8 @@ public class OrderController {
 		return mav;
 	}
 	
+	
+	/** 관리자페이지 주문상세내역 */
 	@RequestMapping("/orderInfoDetail.do")
 	public ModelAndView orderInfoDetail(@RequestParam("order_idx")String order_idx) {
 		OrderReportDTO dto=orderDao.orderData(order_idx);
