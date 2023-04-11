@@ -30,9 +30,9 @@
 
 			<li>결제상태 <select name="pay_state" id="pay_state">
 					<option value="견적완료">견적완료</option>
-					<option value="결제대기">결제대기</option>
 					<option value="결제완료">결제완료</option>
 					<option value="결제취소">결제취소</option>
+					<option value="작업완료">작업완료</option>
 			</select>
 			</li>
 		</ul>

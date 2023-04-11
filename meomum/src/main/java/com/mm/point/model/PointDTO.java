@@ -10,14 +10,14 @@ public class PointDTO {
 	private Date point_usedate;  
 	private String point_info; 
 	private int point_num;
-	private int result;
+
 	
 	public PointDTO() {
 		super();
 	}
 
 	public PointDTO(int point_idx, String cate_idx, int user_idx, int point_use, Date point_usedate, String point_info,
-			int point_num, int result) {
+			int point_num) {
 		super();
 		this.point_idx = point_idx;
 		this.cate_idx = cate_idx;
@@ -26,7 +26,6 @@ public class PointDTO {
 		this.point_usedate = point_usedate;
 		this.point_info = point_info;
 		this.point_num = point_num;
-		this.result = result;
 	}
 
 	public int getPoint_idx() {
@@ -85,11 +84,4 @@ public class PointDTO {
 		this.point_num = point_num;
 	}
 
-	public int getResult() {
-		return result;
-	}
-
-	public void setResult(int result) {
-		this.result = result;
-	}
 }

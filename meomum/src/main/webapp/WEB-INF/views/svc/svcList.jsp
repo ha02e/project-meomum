@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<!-- 사이드바용 css 시작-->
+
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
@@ -17,11 +17,41 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
 	integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
 	crossorigin="anonymous" referrerpolicy="no-referrer" />
-<!-- 사이드바용 css 끝 -->
+
 
 <style>
-.card{
- 	margin: 0 0 20px 0;
+.title {
+	text-align: center;
+	font-weight: bold;
+	margin-bottom: 30px;
+}
+
+.page-header {
+	background: linear-gradient(rgba(36, 39, 38, 0.5), rgba(36, 39, 38, 0.5)),
+		rgba(36, 39, 38, 0.5)
+		url(https://cdn.pixabay.com/photo/2016/06/24/10/47/house-1477041_960_720.jpg)
+		no-repeat center;
+	background-size: cover;
+	margin: 0;
+	border-bottom: none;
+	padding-bottom: 0px;
+	margin-bottom: 40px;
+}
+
+.page-caption {
+	padding: 90px 0px;
+	position: relative;
+	z-index: 1;
+	color: #fff;
+	text-align: center;
+}
+
+.card {
+	margin: 0 0 20px 0;
+}
+
+footer {
+	margin-top: 20px;
 }
 </style>
 
@@ -29,6 +59,17 @@
 
 <body>
 	<%@include file="../header.jsp"%>
+	<div class="page-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="page-caption">
+						<h2 class="page-title">마이페이지</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	<section>
 		<div class="container">
 			<div class="row">
@@ -37,11 +78,11 @@
 					<c:if test="${empty list}">
 						<div class="card">
 							<div class="card-body">방문 견적 예약 내역이 없습니다</div>
-						</div>	
+						</div>
 					</c:if>
 					<c:forEach var="list" items="${list}">
-						<div class="card">
-							<div class="card-header">
+						<div class="card mb-3">
+							<div class="card-header bg-secondary text-white">
 								<h5>${list.svc_state}</h5>
 							</div>
 							<div class="card-body">
@@ -49,22 +90,31 @@
 									<c:url var="contentUrl" value="svcContent.do">
 										<c:param name="svc_idx">${list.svc_idx}</c:param>
 									</c:url>
-									<a href="${contentUrl}">예약번호:${list.svc_idx}</a>
+									<a href="${contentUrl}"
+										class="text-decoration-none text-primary">예약번호:
+										${list.svc_idx}</a>
 								</p>
 								<p class="card-text">
-								<c:if test="${list.svc_state ne '예약취소'}">
-								방문 예약 일시:${list.svc_days}&nbsp;|&nbsp;${list.svc_time}
-								</c:if>
-								<c:if test="${list.svc_state eq '예약취소'}">
-								방문 예약 일시:${list.svc_days.substring(1)} | ${list.svc_time.substring(1)}
-								</c:if>
+									<c:if test="${list.svc_state ne '예약취소'}">
+                                방문 예약 일시: ${list.svc_days}&nbsp;|&nbsp;${list.svc_time}
+                            </c:if>
+									<c:if test="${list.svc_state eq '예약취소'}">
+                                방문 예약 일시: ${list.svc_days.substring(1)} | ${list.svc_time.substring(1)}
+                            </c:if>
 								</p>
 							</div>
 						</div>
 					</c:forEach>
+				<nav class="d-flex justify-content-between align-items-center">
+				<div class="col-10 justify-content-center align-items-start text-center">
+					<span class="pagination pagination-sm justify-content-center">
+						${pageStr} </span>
+				</div>
+			</nav>
 				</div>
 			</div>
 		</div>
+
 
 	</section>
 	<%@include file="../footer.jsp"%>
