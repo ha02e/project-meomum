@@ -15,9 +15,24 @@
 
 
 <style>
-.title{
-	font-weight: bold;
-	margin-bottom: 40px; 
+/*헤더 이미지용 url에 이미지 추가하면 됩니다.*/
+.page-header {
+	background: linear-gradient(rgba(36, 39, 38, 0.5), rgba(36, 39, 38, 0.5)),
+		rgba(36, 39, 38, 0.5)
+		url(https://plus.unsplash.com/premium_photo-1669686968099-f3a8f355a8cc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1025&q=80)
+		no-repeat center;
+	background-size: cover;
+	margin: 0;
+	border-bottom: none;
+	padding-bottom: 0px;
+}
+
+.page-caption {
+	padding: 90px 0px;
+	position: relative;
+	z-index: 1;
+	color: #fff;
+	text-align: center;
 }
 
 /* ck에디터 */
@@ -59,7 +74,21 @@
 </style>
 </head>
 <body>
-<%@include file="../header.jsp"%> 
+<%@include file="/WEB-INF/views/header.jsp"%> 
+
+<!-- 헤더 이미지 시작 -->
+	<div class="page-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="page-caption">
+						<h2 class="page-title">후기 작성하기</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- 헤더 이미지 끝 -->
 
 <section class="shop spad">
 	<div class="container">
@@ -68,7 +97,6 @@
 		<div class="col-xl-9 col-md-9">
 		<!-- ---------- 마이페이지 작업한 파일 페이지 여기에 넣어주세요!!(include) ---------- -->
 			<div class="row">
-				<h3 class="title text-center">후기 작성하기</h3>
 				<!-- 테스트 리뷰게시판 -->
 				<form action="reviewWrite.do" name="reviewWrite" method="post" enctype="multipart/form-data">
 				<input type="hidden" name="activity_idx" value="${param.activity_idx}">
@@ -125,7 +153,7 @@
 				</div>
 				
 				<div class="mb-3 text-center">
-					<input type="submit" class="btn btn-outline-primary mb-2" value="작성하기">	
+					<input type="submit" class="btn btn-primary mb-2" value="작성하기">	
 				</div>
 			</form>
 			</div>

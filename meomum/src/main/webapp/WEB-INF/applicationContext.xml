@@ -94,5 +94,9 @@
 			<ref bean="sqlSessionTemplate" />
 		</constructor-arg>
 	</bean>
-
+	<bean id="returnDAO" class="com.mm.turnback.model.ReturnDAOImple">
+		<constructor-arg>
+			<ref bean="sqlSessionTemplate" />
+		</constructor-arg>
+	</bean>
 </beans>

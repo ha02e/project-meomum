@@ -91,17 +91,20 @@
 					</tbody>
 				</table>
 				<div class="text-center">
-					<button type="button" class="btn btn-primary text-center" onclick="editData()">수정</button>
 					<button type="button" class="btn btn-primary"
 						onclick="deleteData()">삭제</button>
 
-					<a href="#" class="btn btn-primary text-center" onclick="history.back()">목록으로
+					<a href="#" class="btn btn-outline-warning text-center" onclick="history.back()">목록으로
 						돌아가기</a>
 				</div>
 				<!-- 답글시작 -->
+				
+				<br>
+				<div class="row">
+				
 				<c:if test="${empty comm }">
-					<div class="alert alert-primary mb-3" role="alert">담당자가 현재 확인
-						중입니다. 빠른 시일 내에 답변드리겠습니다.</div>
+					<div class="alert alert-primary mb-3 text-center" role="alert" >담당자가 현재 확인
+						중입니다. <br>빠른 시일 내에 답변드리겠습니다.</div>
 				</c:if>
 				<c:if test="${!empty comm }">
 					<div class="card mb-3">
@@ -113,6 +116,7 @@
 				</c:if>
 				<!-- 답글 끝 -->
 
+			</div>
 			</div>
 		</div>
 	</div>
