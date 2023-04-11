@@ -13,8 +13,19 @@
   		insert into order_pro values(#{order_idx},#{user_idx},#{pro_idx},#{pro_amount})
 	</insert>
 
-	<select id="myOrderList" parameterType="Integer" resultType="com.mm.order.model.OrderDTO">
-		SELECT *FROM orders o
+	<select id="myOrderList" parameterType="Map" resultType="com.mm.order.model.MyOrderListDTO">
+		select * from
+			(select rownum as rnum, e.*from(
+				SELECT *FROM orders o
+				JOIN order_pro op ON o.order_idx = op.order_idx
+				JOIN product p ON op.pro_idx = p.pro_idx
+				WHERE o.user_idx = #{user_idx}
+			)e )f
+		where rnum<![CDATA[>=]]>#{start} and rnum<![CDATA[<=]]>#{end}
+	</select>
+	<select id="mySubsProTotalCnt" parameterType="Integer" resultType="Integer">
+		select count(*) from
+			orders o
 		JOIN order_pro op ON o.order_idx = op.order_idx
 		JOIN product p ON op.pro_idx = p.pro_idx
 		WHERE o.user_idx = #{user_idx}

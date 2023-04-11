@@ -13,7 +13,7 @@
 .page-header {
 	background: linear-gradient(rgba(36, 39, 38, 0.5), rgba(36, 39, 38, 0.5)),
 		rgba(36, 39, 38, 0.5)
-		url(https://img.kr.news.samsung.com/kr/wp-content/uploads/2018/05/0510-white-1.jpg)
+		url(https://images.unsplash.com/photo-1630904989936-da6328c2f92d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80)
 		no-repeat center;
 	background-size: cover;
 	margin: 0;
