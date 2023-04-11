@@ -28,6 +28,8 @@ import com.mm.order.model.OrderProDTO;
 import com.mm.order.model.OrderReportDTO;
 import com.mm.payment.model.PaymentDAO;
 import com.mm.payment.model.PaymentDTO;
+import com.mm.point.model.PointDAO;
+import com.mm.point.model.PointDTO;
 import com.mm.pro.model.ProDTO;
 
 @Controller
@@ -39,6 +41,8 @@ public class OrderController {
 	private PaymentDAO payDao;
 	@Autowired
 	private CartDAO cdao;
+	@Autowired
+	private PointDAO pdao;
 
 	@RequestMapping("/orderList.do")
 	public ModelAndView orderList(@RequestParam("pro_idx") int idx, HttpSession session) {
@@ -95,10 +99,9 @@ public class OrderController {
 	}
 
 	@RequestMapping(value = "/orderPay.do")
-	public ModelAndView svcPay(@RequestBody PaymentDTO dto, @RequestBody OrderProDTO dto2) {
+	public ModelAndView svcPay(@RequestBody PaymentDTO dto) {
 		System.out.println(dto);
 		int result = payDao.paymentInsert(dto);
-		int result2 = orderDao.order_proInsert(dto2);
 		ModelAndView mav = new ModelAndView();
 
 		String msg = result > 0 ? "결제가 완료되었습니다" : "다시 시도해주세요";
@@ -110,7 +113,21 @@ public class OrderController {
 
 		return mav;
 	}
+	@RequestMapping(value = "/orderPro.do")
+	public ModelAndView orderPay(@RequestBody OrderProDTO dto) {
+		
+		int result = orderDao.order_proInsert(dto);
+		ModelAndView mav = new ModelAndView();
 
+		String msg = result > 0 ? "결제가 완료되었습니다" : "다시 시도해주세요";
+		String link = result > 0 ? "index.do" : "proList.do";
+
+		mav.addObject("msg", msg);
+		mav.addObject("link", link);
+		mav.setViewName("mmJson");
+
+		return mav;
+	}
 	/** 마이페이지 구독중인 상품 */
 	public List<MyOrderListDTO> mySubsProPage(int cp, int ls, int user_idx) {
 		int start = (cp - 1) * ls + 1;
@@ -228,6 +245,24 @@ public class OrderController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("dto", dto);
 		mav.setViewName("order/orderInfoDetail");
+		return mav;
+	}
+	
+	
+	/**사용자: 구독일상 결제(point 테이블 insert)*/
+	@RequestMapping(value="/insertPoint.do")
+	public ModelAndView svcPay(@RequestBody PointDTO pdto) {
+		
+		int result = pdao.pointInsert(pdto);
+		ModelAndView mav = new ModelAndView();
+		
+		String msg = result>0?"결제가 완료되었습니다":"다시 시도해주세요";
+		String link = result>0?"svcIngList.do":"svcIngContent.do";
+		
+		mav.addObject("msg", msg);
+		mav.addObject("link", link);
+		mav.setViewName("mmJson");
+		
 		return mav;
 	}
 

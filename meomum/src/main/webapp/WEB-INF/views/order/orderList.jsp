@@ -79,14 +79,9 @@
 	</div>
 
 	<div class="form-group">
-		<form name="orderForm" action="orderForm.do" method="post">
+		<form name="orderForm" action="orderForm.do" method="post"
+			onsubmit="return validateForm()">
 
-			<!-- 구독상품에 넘겨야할 파라미터들 -->
-			<input type="hidden" name="user_idx"
-				value="${sessionScope.ssInfo.user_idx}"> <input
-				type="hidden" id="orderIdxInput" name="order_idx" value="${uid}" />
-			<input type="hidden" name="pro_month" value="${dto.pro_month }">
-			<!--  -->
 			<h2>구매 상품 정보</h2>
 			<c:if test="${empty dto}">
 				<div>존재하지 않거나 삭제된 상품입니다.</div>
@@ -179,14 +174,74 @@
 						required="required">
 				</div>
 			</div>
-			<div>
-				<label for="using_point">포인트</label> <input type="number"
-					name="using_point" value="${0}" class="form-control">
-			</div>
 		</form>
+		<div>
+			<h3>결제 금액</h3>
+		</div>
+		<div>
+			<label for="orderPay">주문 금액</label> <input type="number"
+				name="orderPay"
+				value="${dto.pro_subprice * param.cart_amount + dto.pro_delprice}"
+				class="form-control">
+		</div>
+		<div>
+			<label for="point_total">사용 가능포인트</label> <input type="text"
+				id="point_total" value="${result}" readonly> <input
+				type="checkbox" id="check" onclick="checkPt()">전액사용
+		</div>
+		<div>
+			<label for="point_num">포인트 사용</label> <input type="text"
+				id="point_num" oninput="getTotal()">
+		</div>
+		<div>
+			<label for="amount">최종 결제금액</label> <input type="text" id="amount"
+				readonly="readonly">
+		</div>
 
 		<!-- 결제하기 버튼 생성 -->
 		<button onclick="requestPay()">결제하기</button>
+
+		<script>
+	
+	 var total = document.getElementById('orderPay'); //견적금액
+	 var point_total = document.getElementById('point_total'); //사용가능 포인트
+	 var point_num = document.getElementById('point_num');//사용 포인트
+	 var real_total = document.getElementById('amount');//총 결제 금액
+	 point_num.value = 0;
+	 real_total.value = total.value;
+	 
+		function checkPt() {
+			if (document.getElementById('check').checked) {
+				point_num.value = point_total.value;
+				point_num.disabled = true;
+			} else {
+				point_num.value = 0;
+				point_num.disabled = false;
+				
+			}
+			getTotal();
+		}
+
+		function getTotal() {
+			var remainingPoint = point_total.value; 
+			var usePoint = point_num.value;
+			if (!document.getElementById('check').checked) {
+				remainingPoint -= usePoint;
+				if (remainingPoint < 0) {
+					window.alert("사용 가능한 포인트를 초과하였습니다.");
+					point_num.value = 0;
+					real_total.value = total.value;
+					console.log(total.value);
+					console.log(real_total.value);
+				}
+				else{
+					real_total.value = total.value - usePoint;
+				}
+			}
+			
+		}
+</script>
+
 
 		<script>
 			var IMP = window.IMP;
@@ -257,19 +312,61 @@
 								pro_amount: pAmount, //수량		
 						};
 						
+						var PointDTO = {
+			    			  	cate_idx: uid,
+					            user_idx: uidx,
+					           	point_use: 1,
+					          	point_info:'구독일상 결제',
+					          	point_num: $("#point_num").val()
+			    	  };
+						
 						
 						$.ajax({
 					          type: 'POST',
 					          url: "orderPay.do",
-					          data: JSON.stringify(PaymentDTO,OrderProDTO),
+					          data: JSON.stringify(PaymentDTO),
 					          contentType: "application/json",
 					          success: function (data) {
 					        	 console.log(data);
-					            alert('컨트롤러 성공');
+					            alert('payment 테이블 성공');
+					            
+					            $.ajax({
+							          type: 'POST',
+							          url: "orderPro.do",
+							          data: JSON.stringify(OrderProDTO),
+							          contentType: "application/json",
+							          success: function (data) {
+							        	 console.log(data);
+							            alert('orderPro 테이블 성공');
+							            $.ajax({
+							    	          type: 'POST',
+							    	          url: "insertPoint.do",
+							    	          data: JSON.stringify(PointDTO),
+							    	          contentType: "application/json",
+							    	          success: function (data) {
+							    	            console.log(data);
+							    	            alert('완료:point테이블');
+							    	          },
+							    	          error: function (xhr, status, error) {
+							    	            alert('PointDTO insert 실패');
+							    	          }
+							    	        });
+							    	      },
+							    	      error: function (xhr, status, error) {
+							    	        alert('PaymentDTO insert 실패');
+							    	      }
+							    	    });
+							           
+							          },
+							          error: function (xhr, status, error) {
+							            alert('orderPro 테이블 실패');
+							            
+							          }
+							        });
 					           
 					          },
 					          error: function (xhr, status, error) {
-					            alert('컨트롤러 실패');
+					            alert('payment 테이블 실패');
 					            
 					          }
 					        });
