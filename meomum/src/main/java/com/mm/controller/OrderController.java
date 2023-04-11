@@ -36,12 +36,9 @@ public class OrderController {
 	@Autowired
 	private OrderDAO orderDao;
 	@Autowired
-<<<<<<< HEAD
 	private PaymentDAO payDao;
-=======
-	private CartDAO cdao;
 	@Autowired
-	private PaymentDAO payDao;
+	private CartDAO cdao;
 
 	@RequestMapping("/orderList.do")
 	public ModelAndView orderList(@RequestParam("pro_idx") int idx, HttpSession session) {
@@ -115,7 +112,6 @@ public class OrderController {
 
 		return mav;
 	}
->>>>>>> js
 
 	@RequestMapping("/orderList.do")
 	public ModelAndView orderList(@RequestParam("pro_idx") int idx) {
@@ -126,7 +122,6 @@ public class OrderController {
 		mav.setViewName("order/orderList");
 		return mav;
 	}
-<<<<<<< HEAD
 
 	@RequestMapping(value = "/orderForm.do", method = RequestMethod.POST)
 	public ModelAndView order(OrderDTO dto) {
@@ -138,45 +133,37 @@ public class OrderController {
 		mav.setViewName("ntc/ntcMsg");
 		return mav;
 	}
-	
-	@RequestMapping(value="/orderPay.do")
+
+	@RequestMapping(value = "/orderPay.do")
 	public ModelAndView svcPay(@RequestBody PaymentDTO dto, @RequestBody OrderProDTO dto2) {
 		System.out.println(dto);
 		int result = payDao.paymentInsert(dto);
 		int result2 = orderDao.order_proInsert(dto2);
 		ModelAndView mav = new ModelAndView();
-		
-		String msg = result>0?"결제가 완료되었습니다":"다시 시도해주세요";
-		String link = result>0?"index.do":"proList.do";
-		
+
+		String msg = result > 0 ? "결제가 완료되었습니다" : "다시 시도해주세요";
+		String link = result > 0 ? "index.do" : "proList.do";
+
 		mav.addObject("msg", msg);
 		mav.addObject("link", link);
 		mav.setViewName("mmJson");
-		
+
 		return mav;
 	}
-	
-	@RequestMapping("/myOrderList.do")
-	public ModelAndView myOrderList(@RequestParam("user_idx")int idx) {
-		List<OrderDTO> list = orderDao.myOrderList(idx);
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("list", list);
-		mav.setViewName("order/myOrderList");
-=======
-	
+
 	/** 마이페이지 구독중인 상품 */
-	public List<MyOrderListDTO> mySubsProPage(int cp, int ls,int user_idx) {
+	public List<MyOrderListDTO> mySubsProPage(int cp, int ls, int user_idx) {
 		int start = (cp - 1) * ls + 1;
 		int end = cp * ls;
 		Map map = new HashMap();
 		map.put("start", start);
 		map.put("end", end);
 		map.put("user_idx", user_idx);
-		
+
 		List<MyOrderListDTO> lists = orderDao.myOrderList(map);
 		return lists;
 	}
-	
+
 	@RequestMapping("/subsProList.do")
 	public ModelAndView mysubsProList(@RequestParam(value = "cp", defaultValue = "1") int cp,
 										HttpSession session) {
@@ -196,13 +183,10 @@ public class OrderController {
 		mav.addObject("lists",lists);
 		mav.setViewName("order/subsProList");
 		mav.addObject("pageStr", pageStr);
->>>>>>> 8b8701d9849b3e9961243aee06884dba2d50055c
->>>>>>> js
 		return mav;
 		
 	}
 
-	
 	/** 마이페이지 주문배송내역 */
 	public List<OrderReportDTO> myReportPage(int cp, int ls, int user_idx) {
 		int start = (cp - 1) * ls + 1;
@@ -236,12 +220,7 @@ public class OrderController {
 
 		return mav;
 	}
-<<<<<<< HEAD
 
-=======
-	
-	
->>>>>>> 8b8701d9849b3e9961243aee06884dba2d50055c
 	/** 관리자페이지 주문배송내역 */
 	public List<OrderReportDTO> reportPage(int cp, int ls) {
 		int start = (cp - 1) * ls + 1;
@@ -271,7 +250,6 @@ public class OrderController {
 		return mav;
 	}
 
-	
 	/** 관리자페이지 배송처리 폼 */
 	@RequestMapping("/shipForm.do")
 	public ModelAndView shippingForm(@RequestParam("order_idx") String order_idx) {
@@ -282,13 +260,8 @@ public class OrderController {
 		mav.setViewName("shipping/shipForm");
 		return mav;
 	}
-<<<<<<< HEAD
 
-=======
-	
-	
 	/** 관리자페이지 주문상세내역 */
->>>>>>> 8b8701d9849b3e9961243aee06884dba2d50055c
 	@RequestMapping("/orderInfoDetail.do")
 	public ModelAndView orderInfoDetail(@RequestParam("order_idx") String order_idx) {
 		OrderReportDTO dto = orderDao.orderData(order_idx);
