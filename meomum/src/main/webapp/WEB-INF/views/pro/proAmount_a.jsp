@@ -166,7 +166,7 @@
 													<td class="cell">
 														<form action="proAmountUpdate.do?pro_idx=${dto.pro_idx}" name="proAmountUpdate" 
 																method="post" onsubmit="return validate()">
-															<input class="pro_amount" id="pro_amount" type="text" name="pro_amount" size="4">
+															<input class="pro_amount" id="pro_amount" type="text" name="pro_amount" size="4" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
 															<input type="submit" class="btn-sm app-btn-secondary" value="수정">
 														</form>
 													</td>

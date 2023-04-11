@@ -12,11 +12,26 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <style>
-.title{
-	text-align: center;
-	font-weight: bold;
-	margin-bottom: 30px;
+/*헤더 이미지용 url에 이미지 추가하면 됩니다.*/
+.page-header {
+	background: linear-gradient(rgba(36, 39, 38, 0.5), rgba(36, 39, 38, 0.5)),
+		rgba(36, 39, 38, 0.5)
+		url(https://plus.unsplash.com/premium_photo-1669686968099-f3a8f355a8cc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1025&q=80)
+		no-repeat center;
+	background-size: cover;
+	margin: 0;
+	border-bottom: none;
+	padding-bottom: 0px;
 }
+
+.page-caption {
+	padding: 90px 0px;
+	position: relative;
+	z-index: 1;
+	color: #fff;
+	text-align: center;
+}
+
 .noreview h5{
 	line-height:180px;
 }
@@ -48,7 +63,22 @@
 
 </head>
 <body>
-<%@include file="../header.jsp"%> 
+<%@include file="/WEB-INF/views/header.jsp"%> 
+
+<!-- 헤더 이미지 시작 -->
+	<div class="page-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="page-caption">
+						<h2 class="page-title">작성 가능한 후기</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- 헤더 이미지 끝 -->
+
 <section class="shop spad">
 <div class="container">
 <div class="row"> 
@@ -57,13 +87,12 @@
 		<!-- ---------- 마이페이지 작업한 파일 페이지 여기에 넣어주세요!!(include) ---------- -->	
 		
 			<div class="container-xl text-center">
-				<h2 class="title">작성 가능한 후기</h2>
 
 				<table class="table reviewable-table">
 					<thead class="table-light">
 						<tr class="table-borderless">
 							<th scope="col" class="num">서비스/주문번호</th>
-							<th colspan="2" scope="col"=>이용내역</th>
+							<th colspan="2" scope="col">이용내역</th>
 							<th scope="col" class="button">버튼</th>
 						</tr>
 					</thead>

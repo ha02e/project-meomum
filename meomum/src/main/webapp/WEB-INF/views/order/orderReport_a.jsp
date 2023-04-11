@@ -205,12 +205,28 @@ function shipFormOpen(url, name, options) {
 									</c:when>
 									<c:when test="${dto.order_status eq 2}">
 										<div class="text-success">배송중</div>
-										<form action="http://info.sweettracker.co.kr/tracking/4" method="post">
-											<input type="hidden" id="t_key" name="t_key" value="sjLmbhJEhPXnO5neAx7FNg">
-											<input type="hidden" id="t_code" name="t_code" value="04">
-											<input type="hidden" id="t_invoice" name="t_invoice" value="566250609912">
-											<button type="submit" class="btn-sm app-btn-secondary">배송조회</button>
-										</form>
+											<button type="button" class="btn-sm app-btn-secondary" onclick="sendRequest()">배송조회</button>
+										
+											<script>
+											function sendRequest(){
+												var xhr = new XMLHttpRequest();
+												
+												var url='http://openapi.epost.go.kr/trace/retrieveLongitudinalService/retrieveLongitudinalService/getLongitudinalDomesticList';
+												var queryParams='?' + encodeURIComponent('serviceKey') + '='+'1vQo9cVpa0Dh3VkuWlejTJ98PPHc0AsrpqMo4Pymlp3%2Fipgtycu5jmA%2BZOUtK3U%2B3O26sJ7IVysVOoABmofX1g%3D%3D';
+												queryParams += '&' + encodeURIComponent('rgist') + '=' + encodeURIComponent('6897102086554');
+												
+												xhr.open('GET', url+queryParams);
+												
+												xhr.onreadystatechange=function(){
+													if (this.readyState == 4) {
+														
+												        alert('Status: '+this.status+'\nHeaders: '+JSON.stringify(this.getAllResponseHeaders())+'\nBody: '+this.responseText);
+												    }
+												};
+												xhr.send();
+											}
+											</script>
+										
 									</c:when>
 									<c:when test="${dto.order_status eq 3}">
 										<div class="text-danger">주문취소</div>
