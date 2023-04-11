@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mm.pro.model.ProDTO;
 
@@ -30,9 +29,14 @@ public class OrderDAOImple implements OrderDAO {
 	}
 
 	@Override
-	public List<OrderDTO> myOrderList(int idx) {
-		List<OrderDTO> list = sqlMap.selectList("myOrderList", idx);
-		return list;
+	public List<MyOrderListDTO> myOrderList(Map map) {
+		List<MyOrderListDTO> lists = sqlMap.selectList("myOrderList", map);
+		return lists;
+	}
+	@Override
+	public int mySubsProTotalCnt(int user_idx) {
+		int count=sqlMap.selectOne("mySubsProTotalCnt", user_idx);
+		return count;
 	}
 	
 	@Override

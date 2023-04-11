@@ -63,7 +63,7 @@
 					<thead class="table-light">
 						<tr class="table-borderless">
 							<th scope="col" class="num">서비스/주문번호</th>
-							<th colspan="2" scope="col"=>이용내역</th>
+							<th colspan="2" scope="col">이용내역</th>
 							<th scope="col" class="button">버튼</th>
 						</tr>
 					</thead>
