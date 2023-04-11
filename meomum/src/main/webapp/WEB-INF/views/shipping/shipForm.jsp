@@ -11,6 +11,10 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
+.row {
+    --bs-gutter-x: 0;
+}
+
 .card{
 	width:500px;
 	margin:10px auto;
@@ -98,7 +102,7 @@ hr{
 				</div>
 				
 				<div class="form-row mb-3 form-btn d-flex justify-content-center">
-					<button type="button" class="btn btn-secondary">닫기</button>
+					<button type="button" class="btn btn-secondary" onclick="self.close()">닫기</button>
 	          		<button type="submit" class="btn btn-primary">배송처리</button>
 	          	</div>
 	          	

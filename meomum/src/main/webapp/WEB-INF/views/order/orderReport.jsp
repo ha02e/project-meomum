@@ -32,6 +32,105 @@
 	color: #fff;
 	text-align: center;
 }
+
+
+.btn-primary {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #85745D;
+    --bs-btn-border-color: #85745D;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #4F4538;
+    --bs-btn-hover-border-color: #4F4538;
+    --bs-btn-focus-shadow-rgb: 49,132,253;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #FE8A7F;
+    --bs-btn-active-border-color: #FFC1B4;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #85745D;
+    --bs-btn-disabled-border-color: #85745D;
+}
+
+
+.users-table table {
+	margin-top:10px;
+  	width: 100%;
+  	text-align: left;
+  	border-collapse: collapse;
+  	line-height: 1.4;
+  	letter-spacing: -0.3px;
+  	color: #555555;
+  	transition: none;
+	background-color:fcfcfc;
+}
+
+.users-table-info {
+  line-height: 1.4;
+  letter-spacing: -0.3px;
+  color: #767676;
+  height: 48px;
+  border-bottom: 1.2px solid #dadbe4;
+  font-size: 14px;
+}
+
+.users-table-info th {
+	color:#333333;
+	text-align: center;
+	font-size: 0.95rem;
+}
+
+.users-table td {
+	background-color: #fff;
+	border-top: 1px solid #dddddd;
+	border-bottom: 1px solid #dddddd;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	text-align: center;
+	font-family: initial;
+}
+
+.users-table td:first-child {
+  padding-left: 20px;
+}
+
+.users-table tbody {
+  font-size: 14px;
+}
+
+.users-table tbody tr.active td {
+  background-color: rgba(47, 73, 209, 0.1);
+}
+
+
+.table-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+  margin-bottom: 20px;
+}
+
+
+tbody{
+	background:#eeeeee;
+}
+.orderNum{
+	color:#E6694C;
+}
+
+.buttons a{
+	color: #E6694C;
+	border: 1px solid #E6694C;
+	padding: 0.3rem 0.5rem;
+	display: inline-block;
+}
+.buttons a:hover{
+	color: #82745d;
+	border: 1px solid #82745d;
+}
+
+.paging{
+	margin:20px;
+}
+
 </style>
 
 </head>
@@ -60,56 +159,79 @@
 		<!-- ---------- 마이페이지 작업한 파일 페이지 여기에 넣어주세요!!(include) ---------- -->
 		
 	<div class="row g-3 mb-4 align-items-center justify-content-between">
-				    <div class="col-auto">
 					     <div class="page-utilities">
-						    <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
+						    <div class="row g-2 justify-content-center align-items-center">
 							    <div class="col-auto">
-								    <form class="table-search-form row gx-1 align-items-center">
-					                    <div class="col-auto">
-					                        <input type="text" id="search-orders" name="searchorders" class="form-control search-orders" placeholder="Search">
-					                    </div>
-					                    <div class="col-auto">
-					                        <button type="submit" class="btn app-btn-secondary">Search</button>
-					                    </div>
+									<form class="table-search-form row gx-1 align-items-center">
+					          		<div class="col-auto">
+					                	<input type="text" id="search-orders" name="searchorders" class="form-control search-orders" placeholder="검색어를 입력해주세요.">
+					           		</div>
+					           		<div class="col-auto">
+					              		<button type="submit" class="btn btn btn-primary">검색</button>
+					               	</div>
 					                </form>
 							    </div><!--//col-->
 						    </div><!--//row-->
 					    </div><!--//table-utilities-->
-				    </div><!--//col-auto-->
 			    </div><!--//row-->
 			   
-				
-				<div class="tab-content" id="orders-table-tab-content">
-			        <div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
-					    <div class="app-card app-card-orders-table shadow-sm mb-5">
-						    <div class="app-card-body">
-							    <div class="table-responsive">
-							        <table class="table app-table-hover mb-0 text-left">
-										<thead>
+			   
+			   	<div class="users-table table-wrapper">
+				<table class="posts-table">
+					<thead>
+						<tr class="users-table-info">
+							<th style="width:22%;">주문번호</th>
+							<th style="width:28%;">구독상품</th>
+							<th style="width:20%;">총주문액</th>
+							<th style="width:10%;">주문날짜</th>
+							<th style="width:20%;">상태</th>
+						</tr>
+					</thead>
+					
+					<tbody>
+						<c:if test="${empty lists}">
+							<tr>
+								<td class="cell text-center" colspan="5">주문하신 상품이 없습니다.</td>
+							</tr>
+						</c:if>
+						<c:forEach var="dto" items="${lists}">
 											<tr>
-												<th class="cell">주문번호</th>
-												<th class="cell">구독상품</th>
-												<th class="cell">총주문액</th>
-												<th class="cell">주문날짜</th>
-												<th class="cell">상태</th>
-											</tr>
-										</thead>
-										<tbody>
-										<c:if test="${empty lists}">
-											<tr>
-												<td class="cell text-center" colspan="5">주문하신 상품이 없습니다.</td>
-											</tr>
-										</c:if>
-										<c:forEach var="dto" items="${lists}">
-											<tr>
-												<td class="cell">${dto.order_idx}</td>
-												<td class="cell">${dto.pro_name}</td>
+												<td class="cell">
+													<c:url var="orderDetailUrl" value="orderInfoDetail.do">
+														<c:param name="order_idx">${dto.order_idx}</c:param>
+													</c:url>
+													<a href="#" class="orderNum" onclick="orderDetailOpen('${orderDetailUrl}', 'orderInfoDetail', 'width=540,height=600'); return false;">
+													${dto.order_idx}
+													</a>
+													<script>
+													function orderDetailOpen(url, name, options) {
+														  window.open(url, name, options);
+													}
+													</script>
+												</td>
+												<td class="cell text-truncate" style="max-width: 170px;">${dto.pro_name}</td>
 												<td class="cell"><fmt:formatNumber type="number" maxFractionDigits="3" value="${dto.amount}" />원</td>
 												<td class="cell">${dto.order_date}</td>
 												<td class="cell">
 													<c:choose>
 														<c:when test="${dto.order_status eq 1}">
 															<div class="text-warning">상품준비중</div>
+															<div class="buttons">
+										                    	<c:url var="returnFormUrl" value="returnForm.do">
+																	<c:param name="order_idx">${dto.order_idx}</c:param>
+																</c:url>
+																<a href="#" class="orderNum" onclick="">
+																	<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-dash-circle" viewBox="0 0 16 16">
+																	  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+																	  <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+																	</svg>&nbsp;주문취소
+																</a>
+																<script>
+																function returnFormOpen(url, name, options) {
+																	  window.open(url, name, options);
+																}
+																</script>
+															</div>
 														</c:when>
 														<c:when test="${dto.order_status eq 2}">
 															<div class="text-success">배송중</div>
@@ -136,10 +258,20 @@
 												</td>
 											</tr>
 										</c:forEach>
-										
-										</tbody>
-									</table>
-						        </div><!--//table-responsive-->
+                	</tbody>
+              	</table>
+              
+				<div class="container-xl paging">
+					<nav aria-label="Page navigation example">
+						<ul class="pagination pagination-sm justify-content-center">
+						${pageStr}
+						</ul>
+					</nav>
+				</div>
+              
+            </div>
+			   
+			   
 						       
 						    </div><!--//app-card-body-->		
 						</div><!--//app-card-->

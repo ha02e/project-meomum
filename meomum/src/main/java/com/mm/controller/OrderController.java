@@ -11,7 +11,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,8 +28,6 @@ import com.mm.order.model.OrderProDTO;
 import com.mm.order.model.OrderReportDTO;
 import com.mm.payment.model.PaymentDAO;
 import com.mm.payment.model.PaymentDTO;
-import com.mm.point.model.PointDAO;
-import com.mm.point.model.PointDTO;
 import com.mm.pro.model.ProDTO;
 
 @Controller
@@ -42,11 +39,10 @@ public class OrderController {
 	private PaymentDAO payDao;
 	@Autowired
 	private CartDAO cdao;
-	@Autowired
-	private PointDAO pdao;
 
 	@RequestMapping("/orderList.do")
-	public ModelAndView orderList(@RequestParam("pro_idx") int idx,HttpSession session) {
+	public ModelAndView orderList(@RequestParam("pro_idx") int idx, HttpSession session) {
+
 		ModelAndView mav = new ModelAndView();
 
 		if (session.getAttribute("ssInfo") == null) {
@@ -55,21 +51,15 @@ public class OrderController {
 			mav.addObject("goUrl", "login.do");
 			mav.setViewName("ntc/ntcMsg");
 		} else {
-			session.getAttribute("ssInfo");
-			MemberDTO sdto =(MemberDTO) session.getAttribute("ssInfo");
-			int user_idx = sdto.getUser_idx();
-			System.out.println(user_idx);
+
 			ProDTO dto = orderDao.orderList(idx);
-			int result = pdao.pointTotal(user_idx);
-			System.out.println(result);
 			mav.addObject("dto", dto);
-			mav.addObject("result", result);
 			mav.setViewName("order/orderList");
 		}
 
 		return mav;
 	}
-	/**장바구니에서 결제 여러개 하기*/
+
 	@RequestMapping("/orderListss.do")
 	public ModelAndView orderAllList(@RequestParam("cart_idx") int[] cartIdx, @RequestParam("totalSub") int totalSub,
 			@RequestParam("totalCount") int totalCount, @RequestParam("totalDel") int totalDel,
@@ -104,62 +94,11 @@ public class OrderController {
 		return mav;
 	}
 
-	/**cho 주문 폼*/
-	@RequestMapping(value = "/ordersForm.do", method = RequestMethod.POST)
-	public ModelAndView ordersSubmit(OrderDTO dto ,@ModelAttribute("orderList") List<OrderProDTO> orderList) {
-		int result = orderDao.orderInsert(dto);
-		
-		ModelAndView mav = new ModelAndView();
-		
-		if(result>0) {
-			int proOk =0;
-			for(int i=0;i<orderList.size();i++) {
-			
-				proOk = orderDao.order_proInsert( orderList.get(i));
-			}
-			if(proOk>0) {
-				mav.addObject("msg", "주문이 완료되었습니다");
-				mav.setViewName("msg");
-				mav.addObject("link", "index.do");
-				return mav;
-			}else {
-				mav.addObject("msg","주문에 상품 폼 전송에 실패하였습니다.");
-				mav.setViewName("mainMsg");
-				mav.addObject("gopage", "history.back()");
-				return mav;
-
-			}
-			
-		}else {
-			mav.addObject("msg","주문에 실패하였습니다.");
-			mav.setViewName("mainMsg");
-			mav.addObject("gopage", "history.back()");
-			return mav;
-
-		}
-	}
-
-	
-	//결제부분 시작//
 	@RequestMapping(value = "/orderPay.do")
-	public ModelAndView svcPay(@RequestBody PaymentDTO dto) {
+	public ModelAndView svcPay(@RequestBody PaymentDTO dto, @RequestBody OrderProDTO dto2) {
 		System.out.println(dto);
 		int result = payDao.paymentInsert(dto);
-		ModelAndView mav = new ModelAndView();
-
-		String msg = result > 0 ? "결제가 완료되었습니다" : "다시 시도해주세요";
-		String link = result > 0 ? "index.do" : "proList.do";
-
-		mav.addObject("msg", msg);
-		mav.addObject("link", link);
-		mav.setViewName("mmJson");
-
-		return mav;
-	}
-	@RequestMapping(value = "/orderPro.do")
-	public ModelAndView orderPay(@RequestBody OrderProDTO dto) {
-		
-		int result = orderDao.order_proInsert(dto);
+		int result2 = orderDao.order_proInsert(dto2);
 		ModelAndView mav = new ModelAndView();
 
 		String msg = result > 0 ? "결제가 완료되었습니다" : "다시 시도해주세요";
@@ -172,8 +111,6 @@ public class OrderController {
 		return mav;
 	}
 
-	
-	//결제부분 끝//
 	/** 마이페이지 구독중인 상품 */
 	public List<MyOrderListDTO> mySubsProPage(int cp, int ls, int user_idx) {
 		int start = (cp - 1) * ls + 1;
@@ -294,22 +231,4 @@ public class OrderController {
 		return mav;
 	}
 	
-	
-	/**사용자: 구독일상 결제(point 테이블 insert)*/
-	@RequestMapping(value="/orderPoint.do")
-	public ModelAndView orderPay(@RequestBody PointDTO pdto) {
-		
-		int result = pdao.pointInsert(pdto);
-		ModelAndView mav = new ModelAndView();
-		
-		String msg = result > 0 ? "결제가 완료되었습니다" : "다시 시도해주세요";
-		String link = result > 0 ? "index.do" : "proList.do";
-
-		mav.addObject("msg", msg);
-		mav.addObject("link", link);
-		mav.setViewName("mmJson");
-		
-		return mav;
-	}
-
 }

@@ -116,7 +116,7 @@
 										<c:param name="writer">${dto.writer}</c:param>
 										<c:param name="category">정리일상</c:param>										
 									</c:url>
-									<a href="${contentUrl}" class="btn btn-sm btn-outline-success">후기 작성하기</a>
+									<a href="${contentUrl}" class="btn btn-sm btn-primary">후기 작성하기</a>
 								</td>
 							</tr>
 						</c:forEach>
