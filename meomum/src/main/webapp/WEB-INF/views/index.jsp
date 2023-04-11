@@ -5,6 +5,22 @@
 <head>
 <meta charset="UTF-8">
 <title>머뭄</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.11/typed.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+	  var typedTextElements = document.querySelectorAll('.typed-text');
+	  typedTextElements.forEach(function(typedTextElement) {
+	    var typed = new Typed(typedTextElement, {
+	      strings: typedTextElement.getAttribute('data-typed-text').split(','),
+	      typeSpeed: 100,
+	      loop: true,
+	      backDelay: 1500
+	    });
+	  });
+	});
+
+</script>
 <style>
 .carousel-item img {
   width: 100%;
@@ -49,14 +65,7 @@ object-fit: cover;
 .main-process .main-tit {
     margin-bottom: 65px;
 }
-body {
-    font-size: 16px;
-    line-height: 1.75em;
-    color: #000;
-    word-break: keep-all;
-    -webkit-text-size-adjust: none;
-    display: block;
-    }
+
     ul {
     display: block;
     list-style-type: disc;
@@ -139,7 +148,10 @@ font-family: 'GmarketSansMedium';
   height: 410px;
 object-fit: cover; 
 }
-
+@media (min-width: 576px)
+.hidden-sm-up {
+    display: none!important;
+}
 </style>
 </head>
 <body id="mainintro">
@@ -186,7 +198,18 @@ object-fit: cover;
 		</div>
 	</div>
 
-<div class="main-about wow fadeInUp" data-wow-delay="0.3s" data-wow-duration="0.6s" style="visibility: visible; animation-duration: 0.6s; animation-delay: 0.3s; animation-name: fadeInUp;">
+
+
+	<div class="contain text-center">
+		<h2 >머뭄은 <span class="color-primary">
+		<br class="hidden-sm-up">
+		<span class="typed-text" data-typed-text="['beautiful','gorgeous','outstanding','remarkable','stunning'">gorgeous</span>
+		<span class="typed-cursor"></span>
+		</span><br class="hidden-sm-up"> 합니다.</h2>
+	</div>
+
+
+<div class="main-about wow" >
 		<div class="contain">
 			<div class="img"><img src="https://cdn.pixabay.com/photo/2020/05/11/06/45/cutlery-5156696_960_720.jpg" alt="정리된 서랍장"></div>
 			<div class="cnt">
