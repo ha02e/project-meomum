@@ -121,7 +121,8 @@
 
 							<!-- 수량 조절 -->
 							<input class="mtext-104 cl3 txt-center num-product" id="cart_amount" 
-							type="number" name="cart_amount" value="1" onchange="updatePrice(this, ${lists[0].pro_subprice}, ${lists[0].pro_allprice})" 
+							type="number" name="cart_amount" value="1" 
+							onchange="updatePrice(this, ${lists[0].pro_subprice},${lists[0].pro_allprice},${lists[0].pro_delprice})" 
 							min="1" max="10">
 												
 							<!-- 플러스 -->
@@ -362,18 +363,17 @@
 	
 
 <script>
-function updatePrice(input, subprice, allprice) {
+function updatePrice(input, subprice, allprice, delprice) {
     var cartAmount = input.value;
     var subPrice = cartAmount * subprice;
     var allPrice = cartAmount * allprice;
-    var delPrice = $("#pro_delprice").val();
-    var totalDel = cartAmount * delPrice;
+    var totalDel = cartAmount * delprice;
     
     // 하위 요소에서 ID를 이용하여 값을 업데이트합니다.
-    document.getElementById("subPrice").innerHTML = "총 월 구독 가격 :"subPrice.toLocaleString() + "원";
-    document.getElementById("allPrice").innerHTML = "총 구독 가격 :"+allPrice.toLocaleString() + "원";
-    document.getElementById("totalDel").innerHTML = "총 배송비 :"+totalDel.toLocaleString() + "원";
-
+    document.getElementById("subPrice").innerHTML = "총 월 구독 가격 :"+ subPrice.toLocaleString() + "원";
+    document.getElementById("allPrice").innerHTML = "총 구독 가격 :"+ allPrice.toLocaleString() + "원";
+    document.getElementById("totalDel").innerHTML = "총 배송비 :"+ totalDel.toLocaleString() + "원";
+}
  /*
   function updatePrice(input, subPrice, allPrice) {
   let cartAmount = input.value;
@@ -384,8 +384,6 @@ function updatePrice(input, subprice, allprice) {
   document.getElementById("allPrice").textContent = allPrice.toLocaleString() + "원";
 	}
   */
- 
-}
 </script>
 <!--===============================================================================================-->	
 	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>

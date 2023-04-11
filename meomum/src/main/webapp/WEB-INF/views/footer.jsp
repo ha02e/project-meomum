@@ -32,7 +32,7 @@ font-size: 25px;
     border-color: #EAA636;
 }
 
-.kakao {
+#kakao {
     cursor: pointer;
     border-radius: 4px;
     overflow: hidden;
@@ -151,11 +151,16 @@ font-size: 25px;
         </div>
  
     </footer>
-<a href="#top" class="btn btn-lg topbutton back-to-top" style=""><i class="bi bi-arrow-up"></i></a> 
-<div class="kakao"><img alt="카카오 상담" src="/meomum/images/icon/consult_small_yellow_pc.png" ></div>
+<a href="#top" class="btn btn-lg topbutton back-to-top" style=""><i class="bi bi-arrow-up"></i></a>
+<div id="kakao"
+  data-channel-public-id="_dCLxcxj"
+  data-title="consult"
+  data-size="small"
+  data-color="yellow"
+  data-shape="pc"
+  data-support-multiple-densities="true"></div>
 
-
-
+   
 
     <!-- JAVASCRIPT FILES -->
     <script src="js/jquery.min.js"></script>
@@ -171,4 +176,21 @@ font-size: 25px;
 
 
 </body>
+<script>
+  window.kakaoAsyncInit = function() {
+    Kakao.Channel.createChatButton({
+      container: '#kakao',
+    });
+  };
+
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = 'https://t1.kakaocdn.net/kakao_js_sdk/2.1.0/kakao.channel.min.js';
+    js.integrity = 'sha384-MEvxc+j9wOPB2TZ85/N6G3bt3K1/CgHSGNSM+88GoytFuzP4C9szmANjTCNfgKep';
+    js.crossOrigin = 'anonymous';
+    fjs.parentNode.insertBefore(js, fjs);
+  })(document, 'script', 'kakao-js-sdk');
+</script>
 </html>
