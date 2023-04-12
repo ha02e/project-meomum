@@ -30,7 +30,7 @@
 .page-header {
 	background: linear-gradient(rgba(36, 39, 38, 0.5), rgba(36, 39, 38, 0.5)),
 		rgba(36, 39, 38, 0.5)
-		url(https://cdn.aitimes.com/news/photo/202210/147215_155199_1614.jpg)
+		url(https://images.unsplash.com/photo-1519974719765-e6559eac2575?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80)
 		no-repeat center;
 	background-size: cover;
 	margin: 0;
@@ -97,7 +97,7 @@ function ask_click(clicked_idx, ask_userIdx) {
 			<div class="row">
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<div class="page-caption">
-						<h2 class="page-title">마이페이지</h2>
+						<h2 class="page-title">간단 견적 문의 내역</h2>
 					</div>
 				</div>
 			</div>

@@ -11,6 +11,10 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
+.row {
+    --bs-gutter-x: 0;
+}
+
 .card{
 	width:500px;
 	margin:10px auto;
@@ -21,6 +25,23 @@ hr{
 
 .orderMsg{
 	resize:none;
+}
+
+.btn-primary {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #85745D;
+    --bs-btn-border-color: #85745D;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #4F4538;
+    --bs-btn-hover-border-color: #4F4538;
+    --bs-btn-focus-shadow-rgb: 49,132,253;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #FE8A7F;
+    --bs-btn-active-border-color: #FFC1B4;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #85745D;
+    --bs-btn-disabled-border-color: #85745D;
 }
 
 .form-btn button{
@@ -98,7 +119,7 @@ hr{
 				</div>
 				
 				<div class="form-row mb-3 form-btn d-flex justify-content-center">
-					<button type="button" class="btn btn-secondary">닫기</button>
+					<button type="button" class="btn btn-secondary" onclick="self.close()">닫기</button>
 	          		<button type="submit" class="btn btn-primary">배송처리</button>
 	          	</div>
 	          	

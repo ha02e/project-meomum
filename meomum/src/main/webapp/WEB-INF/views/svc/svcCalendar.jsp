@@ -106,6 +106,7 @@
 	border-radius: 3px;
 	color: black;
 }
+
 </style>
 </head>
 <body class="app">

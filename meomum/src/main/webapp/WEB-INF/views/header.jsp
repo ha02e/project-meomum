@@ -77,7 +77,6 @@ ul {
 
 body{
 	font-family: 'GmarketSansMedium';
-
 }
 .btn-primary {
     --bs-btn-color: #fff;
@@ -104,13 +103,34 @@ body{
 	letter-spacing: -1px;
     font-family: 'GmarketSansMedium';
 }
+
+/**모달*/
+.modal-title{
+font-size: 25px;
+font-weight: bold;
+}
+
+.modal-body p,label{
+font-size :18px;
+}
+@font-face {
+    font-family: 'TTTtangsbudaejjigaeB';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2212@1.0/TTTtangsbudaejjigaeB.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+h2{
+    font-family: 'TTTtangsbudaejjigaeB';
+    color :#524439;
+}
 </style>
 
 </head>
 
 <body id="#top">
 
-	<header class="site-header">
+	<header class="site-header" >
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-8 col-12 d-flex flex-wrap">

@@ -7,24 +7,58 @@
 <meta charset="UTF-8">
 <title>간단견적 문의 내용</title>
 
+<style>
+
+/*헤더 이미지용 url에 이미지 추가하면 됩니다.*/
+.page-header {
+	background: linear-gradient(rgba(36, 39, 38, 0.5), rgba(36, 39, 38, 0.5)),
+		rgba(36, 39, 38, 0.5)
+		url(https://images.unsplash.com/photo-1630904989936-da6328c2f92d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80)
+		no-repeat center;
+	background-size: cover;
+	margin: 0;
+	border-bottom: none;
+	padding-bottom: 0px;
+}
+
+.page-caption {
+	padding: 90px 0px;
+	position: relative;
+	z-index: 1;
+	color: #fff;
+	text-align: center;
+}
+
+/**헤더 이미지용 끝*/
+</style>
 </head>
 <body>
 
 
 	<%@include file="/WEB-INF/views/header.jsp"%>
+	
+	
+	<div class="page-header" >
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="page-caption">
+						<h2 class="page-title">간단 견적 내용</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	<br>
 	<br>
-	<br>
-	<br>
-	<div class="container">
+
+	<div class="container" style="margin-top: 30px; margin-bottom: 40px;">
 		<div class="row justify-content-center">
 			<div class="col-md-9">
 				<div class="row">
-					<div class="text-center">
-						<h4>간단견적 내용</h4>
-					</div>
+				
 
-				</div>
+			
 
 				<table class="table table-bordered">
 					<colgroup>
@@ -43,6 +77,12 @@
 							<td>${ask.ask_writer}</td>
 							<th class="bg-light text-center">작성일</th>
 							<td>${ask.ask_wdate}</td>
+						</tr>
+							<tr>
+							<th class="bg-light text-center">공간유형</th>
+							<td>${ask.rsd_type}</td>
+							<th class="bg-light text-center">평수</th>
+							<td>${ask.rsd_py}평</td>
 						</tr>
 						<tr>
 							<th class="bg-light text-center">내용</th>
@@ -90,18 +130,21 @@
 						</tr>
 					</tbody>
 				</table>
-				<div class="text-center">
-					<button type="button" class="btn btn-primary text-center" onclick="editData()">수정</button>
+				<div class="text-center" >
 					<button type="button" class="btn btn-primary"
-						onclick="deleteData()">삭제</button>
+						onclick="deleteData()"  style="width: 120px;">삭제</button>
 
-					<a href="#" class="btn btn-primary text-center" onclick="history.back()">목록으로
+					<a href="#" class="btn btn-outline-warning text-center" onclick="history.back()">목록으로
 						돌아가기</a>
 				</div>
 				<!-- 답글시작 -->
+				
+				<br>
+				<div class="row" style="margin-top: 30px; ">
+				
 				<c:if test="${empty comm }">
-					<div class="alert alert-primary mb-3" role="alert">담당자가 현재 확인
-						중입니다. 빠른 시일 내에 답변드리겠습니다.</div>
+					<div class="alert alert-primary mb-3 text-center" role="alert" >담당자가 현재 확인
+						중입니다. <br>빠른 시일 내에 답변드리겠습니다.</div>
 				</c:if>
 				<c:if test="${!empty comm }">
 					<div class="card mb-3">
@@ -114,9 +157,10 @@
 				<!-- 답글 끝 -->
 
 			</div>
+			</div>
 		</div>
 	</div>
-
+</div>
 
 
 	<%@include file="/WEB-INF/views/footer.jsp"%>
