@@ -64,7 +64,7 @@ footer {
 </head>
 
 <body>
-	<%@include file="/WEB-INF/views/header.jsp"%>
+	<%@include file="../header.jsp"%>
 	<div class="page-header">
 		<div class="container">
 			<div class="row">
