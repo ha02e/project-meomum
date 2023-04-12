@@ -10,7 +10,13 @@ public class PointDTO {
 	private Date point_usedate;  
 	private String point_info; 
 	private int point_num;
-
+	
+	
+	/**select할때 필요값*/
+	private int point_sum;
+	private String point_type;
+	private String point_changed;
+	private int rnum;
 	
 	public PointDTO() {
 		super();
@@ -27,11 +33,32 @@ public class PointDTO {
 		this.point_info = point_info;
 		this.point_num = point_num;
 	}
+	
+	
+	
+/**포인트 추가된 dto*/
+
+	public PointDTO(int point_idx, String cate_idx, int user_idx, int point_use, Date point_usedate, String point_info,
+		int point_num, int point_sum, String point_type, String point_changed, int rnum) {
+	super();
+	this.point_idx = point_idx;
+	this.cate_idx = cate_idx;
+	this.user_idx = user_idx;
+	this.point_use = point_use;
+	this.point_usedate = point_usedate;
+	this.point_info = point_info;
+	this.point_num = point_num;
+	this.point_sum = point_sum;
+	this.point_type = point_type;
+	this.point_changed = point_changed;
+	this.rnum = rnum;
+	}
+
 
 	public int getPoint_idx() {
 		return point_idx;
 	}
-
+	
 	public void setPoint_idx(int point_idx) {
 		this.point_idx = point_idx;
 	}
@@ -84,4 +111,52 @@ public class PointDTO {
 		this.point_num = point_num;
 	}
 
+	
+	//포인트 합계 추가
+	public int getPoint_sum() {
+		return point_sum;
+	}
+
+	public void setPoint_sum(int point_sum) {
+		this.point_sum = point_sum;
+	}
+
+	public String getPoint_type() {
+		return point_type;
+	}
+
+	public void setPoint_type(String point_type) {
+		this.point_type = point_type;
+	}
+
+	public String getPoint_changed() {
+		 String money = String.valueOf(point_changed);
+		    int len = money.length();
+		    StringBuilder sb = new StringBuilder();
+		    for (int i = len - 1; i >= 0; i--) {
+		        sb.append(money.charAt(i));
+		        if ((len - i - 1) % 3 == 2 && i != 0) {
+		            sb.append(",");
+		        }
+		    }
+		
+		
+		    return sb.reverse().toString();
+	}
+
+	public void setPoint_changed(String point_changed) {
+		this.point_changed = point_changed;
+	}
+
+	public int getRnum() {
+		return rnum;
+	}
+
+	public void setRnum(int rnum) {
+		this.rnum = rnum;
+	}
+
+	
+	
+	
 }
