@@ -47,6 +47,15 @@
 	}
 </script>
 
+<style>
+#user_info {
+	display: block;
+}
+
+#user_info.hidden {
+	display: none;
+}
+</style>
 </head>
 
 <body>
@@ -151,39 +160,32 @@
 
 		<h3>사용자 정보</h3>
 		<div>
-			계약자와 동일<input type="checkbox" value="y" onclick="copyUserInfo()">
+			<input type="checkbox" value="y"
+				onclick="copyUserInfo(); toggleDivVisibility()"> <label>계약자와
+				동일</label>
 		</div>
-		<div>
+		<div id="user_info">
 			<label for="buyer_name">고객명</label> <input type="text"
-				class="form-control" id="buyer_name" name="buyer_name"
-				value="" placeholder="이름을 입력해주세요">
-		</div>
-		<div>
-			<label for="buyer_tel">연락처</label> <input type="text"
-				class="form-control" id="buyer_tel" name="buyer_tel" value=""
-				placeholder="연락처 -제외 하고 입력">
-		</div>
-		<div>
-			<label for="buyer_pcode">우편번호</label>
+				class="form-control" id="buyer_name" name="buyer_name" value=""
+				placeholder="이름을 입력해주세요"> <label for="buyer_tel">연락처</label>
+			<input type="text" class="form-control" id="buyer_tel"
+				name="buyer_tel" value="" placeholder="연락처 -제외 하고 입력"> <label
+				for="buyer_pcode">우편번호</label>
 			<div class="input-group mb-3">
 				<input type="text" class="form-control" id="buyer_pcode"
-					name="buyer_pcode" value="" placeholder="우편번호"
-					readonly="readonly" onclick="findaddr()">
+					name="buyer_pcode" value="" placeholder="우편번호" readonly="readonly"
+					onclick="findaddr()">
 				<div class="input-group-append">
 					<button class="btn btn-outline-secondary" type="button"
 						onclick="findaddr()">우편번호 검색</button>
 				</div>
 			</div>
-		</div>
-		<div>
 			<label for="buyer_addr">기본주소</label> <input type="text"
-				class="form-control" id="buyer_addr" name="buyer_addr"
-				value="" placeholder="기본주소" readonly="readonly">
-		</div>
-		<div>
-			<label for="buyer_detail">상세주소</label> <input type="text"
-				class="form-control" id="buyer_detail" name="buyer_detail"
-				value="" placeholder="상세주소" required="required">
+				class="form-control" id="buyer_addr" name="buyer_addr" value=""
+				placeholder="기본주소" readonly="readonly"> <label
+				for="buyer_detail">상세주소</label> <input type="text"
+				class="form-control" id="buyer_detail" name="buyer_detail" value=""
+				placeholder="상세주소" required="required">
 		</div>
 
 		<div>
@@ -231,6 +233,28 @@
 			console.log(amount)
 		</script>
 
+		<script>
+			function copyUserInfo() {
+				var checked = document
+						.querySelector('input[type="checkbox"][value="y"]').checked;
+				if (checked) {
+					document.querySelector('#buyer_name').value = '';
+					document.querySelector('#buyer_tel').value = '';
+					document.querySelector('#buyer_pcode').value = '';
+					document.querySelector('#buyer_addr').value = '';
+				}
+			}
+
+			function toggleDivVisibility() {
+				var userInfoDiv = document.getElementById("user_info");
+				if (userInfoDiv.classList.contains("hidden")) {
+					userInfoDiv.classList.remove("hidden");
+				} else {
+					userInfoDiv.classList.add("hidden");
+				}
+			}
+		</script>
+
 
 		<script>
 			var IMP = window.IMP;
@@ -248,7 +272,7 @@
 				var milliseconds = today.getMilliseconds().toString();
 				var makeMerchantUid = year + month + day + hours + minutes
 						+ seconds;
-				
+
 				//계약자 및 사용자 정보//
 				var oName = document.getElementById("order_name").value;
 				var uid = "OMM" + makeMerchantUid;
@@ -256,7 +280,7 @@
 				var tp = document.getElementById("amount").value;
 				var bName = document.getElementById("buyer_name").value;
 				if (!bName) {
-				    bName = document.getElementById("order_name").value;
+					bName = document.getElementById("order_name").value;
 				}
 				var bTel = document.getElementById("buyer_tel").value;
 				if (!bTel) {
@@ -278,11 +302,11 @@
 				var order_tos = document.getElementById("checkbox").value;
 				var point_num = document.getElementById("point_num").value;
 				//계약자및 사용자 정보 끝//
-				
+
 				var uidx = ${sessionScope.ssInfo.user_idx};//유저번호
 				var pidx = ${dto.pro_idx};//상품번호
 				var pAmount = ${param.cart_amount};//상품수량
-			
+
 				IMP.request_pay({
 					pg : "kakaopay", //"html5_inicis",
 					pay_method : 'card',
