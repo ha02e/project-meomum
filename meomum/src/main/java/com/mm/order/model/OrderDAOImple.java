@@ -33,6 +33,7 @@ public class OrderDAOImple implements OrderDAO {
 		List<MyOrderListDTO> lists = sqlMap.selectList("myOrderList", map);
 		return lists;
 	}
+	
 	@Override
 	public int mySubsProTotalCnt(int user_idx) {
 		int count=sqlMap.selectOne("mySubsProTotalCnt", user_idx);

@@ -10,6 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Insert title here</title>
 
+<script src="https://code.jquery.com/jquery-3.6.4.slim.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -150,10 +151,33 @@ tbody{
 </style>
 
 <script>
-function orderInfoOpen(){
-	window.open();
+function orderInfoOpen(url, name, options) {
+	  window.open(url, name, options);
 }
 </script>
+
+<!-- jQuery와 Ajax를 사용한 탭메뉴 스크립트 -->
+<script>
+  $(document).ready(function(){
+    $('.nav-link').click(function(e){
+      e.preventDefault();
+      $(this).tab('show');
+      var tabTarget = $(this).attr("data-bs-target");
+      $.ajax({
+        url: '/tabContent.do',
+        type: 'GET',
+        data: {tabTarget:tabTarget},
+        success: function(result){
+          $(tabTarget).html(result);
+        },
+        error: function(){
+          alert('탭메뉴를 불러오는 데 실패했습니다.');
+        }
+      });
+    });
+  });
+</script>
+
 </head>
 <body>
 <%@include file="/WEB-INF/views/header.jsp"%> 
@@ -184,36 +208,39 @@ function orderInfoOpen(){
 			
 			<ul class="nav nav-pills nav-justified flex-column flex-sm-row mb-3" id="pills-tab" role="tablist">
 				<li class="nav-item" role="presentation">
-					<button class="nav-link flex-sm-fill text-sm-center active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">구독 중인 상품</button>
+					<button class="nav-link flex-sm-fill text-sm-center active" id="allList-tab" data-bs-toggle="pill" data-bs-target="#allList" type="button" role="tab" aria-controls="pills-all" aria-selected="true">전체보기</button>
 				</li>
 				<li class="nav-item" role="presentation">
-					<button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">반납 내역</button>
+					<button class="nav-link" id="subsProList-tab" data-bs-toggle="pill" data-bs-target="#subsProList" type="button" role="tab" aria-controls="pills-home" aria-selected="false">구독 중인 상품</button>
+				</li>
+				<li class="nav-item" role="presentation">
+					<button class="nav-link" id="returnProList-tab" data-bs-toggle="pill" data-bs-target="#returnProList" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">반납 내역</button>
 				</li>
 			</ul>
 		
 		<div class="tab-content" id="pills-tabContent">
-		  <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
+		  <div class="tab-pane fade show active" id="allList" role="tabpanel" aria-labelledby="allList-tab" tabindex="0">
 		  
 		  <div class="users-table table-wrapper">
-				<table class="posts-table">
-					<thead>
-						<tr class="users-table-info">
-							<th style="width:24%;">주문번호</th>
-							<th style="width:28%;">구독상품</th>
-							<th style="width:12%;">구독시작일</th>
-							<th style="width:12%;">구독종료일</th>
-							<th style="width:12%;">자동납부일</th>
-							<th style="width:12%;"></th>
-						</tr>
-					</thead>
-					
-					<tbody>
-						<c:if test="${empty lists}">
+		  
+		  <table class="posts-table" id="order-list">
+  <thead>
+    <tr class="users-table-info">
+      <th style="width:24%;">주문번호</th>
+      <th style="width:28%;">구독상품</th>
+      <th style="width:12%;">구독시작일</th>
+      <th style="width:12%;">구독종료일</th>
+      <th style="width:12%;">자동납부일</th>
+      <th style="width:12%;"></th>
+    </tr>
+  </thead>
+  <tbody id="tableBody">
+  <c:if test="${empty list}">
 							<tr>
 								<td class="text-center" colspan="6">구독 중인 상품이 없습니다.</td>
 							</tr>
 						</c:if>
-						<c:forEach var="dto" items="${lists}">
+						<c:forEach var="dto" items="${list}">
 							<tr>
 								<td>
 									<c:url var="orderDetailUrl" value="orderInfoDetail.do">
@@ -225,7 +252,6 @@ function orderInfoOpen(){
 									<script>
 									function orderInfoOpen(url, name, options) {
 										  window.open(url, name, options);
-									}
 									</script>
 								</td>
 								<td>
@@ -262,9 +288,12 @@ function orderInfoOpen(){
 			                    </td>
 	                  		</tr>
 						</c:forEach>
-                	</tbody>
-              	</table>
-              
+ 
+  
+  </tbody>
+</table>
+		  
+	
 				<div class="container-xl paging">
 					<nav aria-label="Page navigation example">
 						<ul class="pagination pagination-sm justify-content-center">
@@ -280,7 +309,8 @@ function orderInfoOpen(){
 		  
 		  
 		  </div>
-		  <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">...</div>
+		  <div class="tab-pane fade" id="subsProList" role="tabpanel" aria-labelledby="subsProList-tab" tabindex="0">...</div>
+		  <div class="tab-pane fade" id="returnProList" role="tabpanel" aria-labelledby="returnProList-tab" tabindex="0">...</div>
 		</div>
 		
 		

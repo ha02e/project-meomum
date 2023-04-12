@@ -10,6 +10,8 @@ import javax.servlet.http.HttpSession;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.mm.cart.model.CartDAO;
 import com.mm.cart.model.CartDTO;
 import com.mm.member.model.MemberDTO;
@@ -32,6 +35,7 @@ import com.mm.payment.model.PaymentDTO;
 import com.mm.point.model.PointDAO;
 import com.mm.point.model.PointDTO;
 import com.mm.pro.model.ProDTO;
+import com.mm.svc.model.SvcSelectAllDTO;
 
 @Controller
 public class OrderController {
@@ -149,28 +153,29 @@ public class OrderController {
 		List<MyOrderListDTO> lists = orderDao.myOrderList(map);
 		return lists;
 	}
-
+	
 	@RequestMapping("/subsProList.do")
+	@ResponseBody
 	public ModelAndView mysubsProList(@RequestParam(value = "cp", defaultValue = "1") int cp, HttpSession session) {
-
+		
 		MemberDTO mdto = (MemberDTO) session.getAttribute("ssInfo");
 		int user_idx = mdto.getUser_idx();
 
 		int totalCnt = orderDao.mySubsProTotalCnt(user_idx);
-		int listSize = 5;
-		int pageSize = 5;
+	    int listSize = 5;
+	    int pageSize = 5;
 
-		String pageStr = com.mm.module.PageModule.makePage("subsProList.do", totalCnt, listSize, pageSize, cp);
+	    String pageStr = com.mm.module.PageModule.makePage("subsProList.do", totalCnt, listSize, pageSize, cp);
 
-		List<MyOrderListDTO> lists = mySubsProPage(cp, pageSize, user_idx);
+	    List<MyOrderListDTO> list = mySubsProPage(cp, pageSize, user_idx);
 
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("lists", lists);
-		mav.setViewName("order/subsProList");
+		mav.addObject("list", list);
 		mav.addObject("pageStr", pageStr);
+		mav.setViewName("order/subsProList");
 		return mav;
-
 	}
+	
 
 	/** 마이페이지 주문배송내역 */
 	public List<OrderReportDTO> myReportPage(int cp, int ls, int user_idx) {
