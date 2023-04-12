@@ -93,7 +93,7 @@
 					
 					<div class="card">
 						<div class="card-heading one">
-							<a data-toggle="collapse" href="#">나의 포인트 내역</a>
+							<a  href="myPoint.do">나의 포인트 내역</a>
 						</div>
 					</div>
 					

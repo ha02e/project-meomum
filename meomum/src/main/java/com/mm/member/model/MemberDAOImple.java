@@ -11,6 +11,8 @@ import javax.mail.internet.MimeMessage;
 import com.fasterxml.jackson.annotation.JacksonInject;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -38,8 +40,16 @@ public class MemberDAOImple implements MemberDAO {
 
 	@Override
 	public int insertJoin(MemberDTO dto) {
+		
 		int count = sqlMap.insert("insertJoin", dto);
+			if(count>0) {
+				int user_idx = sqlMap.selectOne("selectLastInsertId");
+				sqlMap.insert("insertJoinPoint", user_idx);
+				
+			}
+			
 		return count;
+		
 	}
 
 	@Override

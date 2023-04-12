@@ -34,4 +34,45 @@ FROM dual
 		INTO point
 		VALUES (point_idx.nextval, #{cate_idx},#{user_idx},#{point_use},sysdate,#{point_info},#{point_num})
 	</insert>
+
+	<select id="pointList" parameterType="Integer" resultType="com.mm.point.model.PointDTO">
+	SELECT *
+FROM (
+    SELECT 
+        point_idx,
+        cate_idx,
+        user_idx,
+        point_info,
+        point_usedate,
+        point_num,
+        point_use,
+        CASE
+            WHEN point_use = 0 THEN point_num
+            ELSE -point_num
+        END AS point_changed,
+        SUM(CASE
+            WHEN point_use = 0 THEN point_num
+            ELSE -point_num
+        END) OVER (PARTITION BY user_idx ORDER BY point_usedate) AS point_sum,
+        CASE
+            WHEN point_use = 0 THEN '적립'
+            ELSE '사용'
+        END AS point_type,
+        ROW_NUMBER() OVER (ORDER BY point_usedate DESC) AS rnum2,
+        ROW_NUMBER() OVER (ORDER BY point_usedate ASC) AS rnum
+    FROM point
+    WHERE user_idx = #{user_idx}
+) a
+WHERE rnum2 BETWEEN #{start} AND #{end}
+ORDER BY rnum DESC
+
+	</select>
+	
+<select id="pointCnt" parameterType="Integer" resultType="Integer">
+	        select count(*) from point where user_idx =#{user_idx}
+	
+	</select>
+	
+	
+	
 </mapper>
