@@ -12,5 +12,9 @@ public class ReturnDAOImple implements ReturnDAO {
 	}
 	
 	
-
+	@Override
+	public int returnApplyInsert(ReturnDTO dto) {
+		int count=sqlMap.insert("returnApplyInsert",dto);
+		return count;
+	}
 }

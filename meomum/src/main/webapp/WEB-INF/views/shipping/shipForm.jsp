@@ -27,6 +27,23 @@ hr{
 	resize:none;
 }
 
+.btn-primary {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #85745D;
+    --bs-btn-border-color: #85745D;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #4F4538;
+    --bs-btn-hover-border-color: #4F4538;
+    --bs-btn-focus-shadow-rgb: 49,132,253;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #FE8A7F;
+    --bs-btn-active-border-color: #FFC1B4;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #85745D;
+    --bs-btn-disabled-border-color: #85745D;
+}
+
 .form-btn button{
 	margin:20px 10px 10px 10px;
 }

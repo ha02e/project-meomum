@@ -81,7 +81,7 @@
 	<div class="form-group">
 		<form name="orderForm" action="orderForm.do" method="post"
 			onsubmit="return validateForm()">
-
+			
 			<h2>구매 상품 정보</h2>
 			<c:if test="${empty dto}">
 				<div>존재하지 않거나 삭제된 상품입니다.</div>
@@ -91,6 +91,7 @@
 				상품번호:${dto.pro_idx} <input type="hidden" name="pro_idx"
 					value="${dto.pro_idx}" />
 			</div>
+			<input type="hidden" name="order_idx" id="orderIdxInput" value="">
 			<div>
 				<div>상품이름:${dto.pro_name}</div>
 				<div>
@@ -179,8 +180,8 @@
 			<h3>결제 금액</h3>
 		</div>
 		<div>
-			<label for="orderPay">주문 금액</label> <input type="number"
-				name="orderPay"
+			<label for="orderPay">주문 금액</label> <input type="text"
+				name="total"
 				value="${dto.pro_subprice * param.cart_amount + dto.pro_delprice}"
 				class="form-control">
 		</div>
@@ -193,16 +194,16 @@
 				id="point_num" oninput="getTotal()">
 		</div>
 		<div>
-			<label for="amount">최종 결제금액</label> <input type="text" id="amount"
-				readonly="readonly">
+			<label for="amount">최종 결제금액</label> 
+			<input type="text" id="amount" readonly="readonly">
 		</div>
 
 		<!-- 결제하기 버튼 생성 -->
 		<button onclick="requestPay()">결제하기</button>
 
 		<script>
-	
-	 var total = document.getElementById('orderPay'); //견적금액
+	console.log('amount')
+	 var total = document.getElementById('total'); //견적금액
 	 var point_total = document.getElementById('point_total'); //사용가능 포인트
 	 var point_num = document.getElementById('point_num');//사용 포인트
 	 var real_total = document.getElementById('amount');//총 결제 금액
@@ -255,16 +256,16 @@
 			var seconds = today.getSeconds().toString();
 			var milliseconds = today.getMilliseconds().toString();
 			var makeMerchantUid = year + month + day + hours + minutes
-					+ seconds + milliseconds;
+					+ seconds;
 
 			var oName = document.getElementById("order_name").value;
-			var uid = "OMM" + makeMerchantUid
+			var uid = "OMM" + makeMerchantUid;
 
 			var tp = ${dto.pro_subprice * param.cart_amount + dto.pro_delprice};
-			var bName =document.getElementById("order_name").value
-			var bTel= document.getElementById("receiver_tel").value
+			var bName =document.getElementById("order_name").value;
+			var bTel= document.getElementById("receiver_tel").value;
 			var addr= document.getElementById("order_addr").value;
-			var bPcode= document.getElementById("order_pcode").value
+			var bPcode= document.getElementById("order_pcode").value;
 			
 			var uidx = ${sessionScope.ssInfo.user_idx};
 			var pidx = ${dto.pro_idx};
@@ -291,7 +292,7 @@
 				}, function(rsp) { // callback
 					if (rsp.success) {
 						console.log(rsp);
-
+						
 						var PaymentDTO ={
 			    			  	payment_idx: rsp.imp_uid, //payment_idx로 들어갈 값
 					            cate_idx: rsp.merchant_uid, //인식번호(cate_idx)
@@ -305,75 +306,39 @@
 			    	  };
 						
 						var OrderProDTO = {
-								order_idx: uid, //주문번호
+								order_idx: rsp.merchant_uid, //주문번호
 								user_idx: uidx, //유저번호
 								pro_idx: pidx, //상품번호
 								pro_amount: pAmount, //수량		
 						};
 						
 						var PointDTO = {
-			    			  	cate_idx: uid,
+			    			  	cate_idx: rsp.merchant_uid,
 					            user_idx: uidx,
 					           	point_use: 1,
 					          	point_info:'구독일상 결제',
 					          	point_num: $("#point_num").val()
 			    	  };
 						
-						
 						$.ajax({
-					          type: 'POST',
-					          url: "orderPay.do",
-					          data: JSON.stringify(PaymentDTO),
-					          contentType: "application/json",
-					          success: function (data) {
-					        	 console.log(data);
-					            alert('payment 테이블 성공');
-					            
-					            $.ajax({
-							          type: 'POST',
-							          url: "orderPro.do",
-							          data: JSON.stringify(OrderProDTO),
-							          contentType: "application/json",
-							          success: function (data) {
-							        	 console.log(data);
-							            alert('orderPro 테이블 성공');
-							            $.ajax({
-							    	          type: 'POST',
-							    	          url: "orderPoint.do",
-							    	          data: JSON.stringify(PointDTO),
-							    	          contentType: "application/json",
-							    	          success: function (data) {
-							    	            console.log(data);
-							    	            alert('완료:point테이블');
-							    	          },
-							    	          error: function (xhr, status, error) {
-							    	            alert('PointDTO insert 실패');
-							    	          }
-							    	        });
-							    	      },
-							    	      error: function (xhr, status, error) {
-							    	        alert('PaymentDTO insert 실패');
-							    	      }
-							    	    });
-							           
-							          },
-							          error: function (xhr, status, error) {
-							            alert('orderPro 테이블 실패');
-							            
-							          }
-							        });
-					           
-					          },
-					          error: function (xhr, status, error) {
-					            alert('payment 테이블 실패');
-					            
-					          }
-					        });
-				    	   
-				        alert('결제가 완료되었습니다');
-						var msg = '결제가 완료되었습니다.';
-						document.orderForm.submit();				
-
+						    type: "POST",
+						    url: "totalOrders.do",
+						    data: JSON.stringify({paydto: PaymentDTO, odto: OrderProDTO, pdto: PointDTO}),
+						    contentType: "application/json; charset=utf-8",
+						    dataType: "json",
+						    success: function (data) {
+						        console.log(data);
+						        alert('전송 성공!');
+						    },
+						    error: function (xhr, status, error) {
+						        alert('전송 실패: ' + error);
+						    }
+						});
+				    	  
+						
+				    	  	var msg = '결제가 완료되었습니다.';
+				    	  	
+							document.orderForm.submit();
 					} else {
 						console.log(rsp);
 						var msg = '결제가 실패되었습니다.';

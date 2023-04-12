@@ -77,7 +77,6 @@ ul {
 
 body{
 	font-family: 'GmarketSansMedium';
-
 }
 .btn-primary {
     --bs-btn-color: #fff;
