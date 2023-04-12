@@ -10,56 +10,58 @@
 <title>Insert title here</title>
 
 <script type="text/javascript" src="/meomum/js/request.js"></script>
+<style>
 
+</style>
 </head>
 <body>
 	<%@include file="/WEB-INF/views/header.jsp"%>
 
-	<div class="container">
+	<div class="container" style="overflow: auto; margin-bottom: 30px; margin-top: 30px;">
 		<div class="row justify-content-center">
 			<div class="col-md-6">
-				<h4 class="mb-3 text-center">회원가입</h4>
+				<h2 class="mb-3 text-center">회원가입</h2>
 				<form id="memberJoin" name="memberJoin" action="memberJoin.do" method="post" onsubmit="return checkPasswordMatch()">
 					<input type="hidden" name="user_jointype"
 						value="${param.user_jointype==null ? '머뭄': param.user_jointype}">
 					
 
 					<div class="form-group email-form">
-    <label for="user_id" class="sr-only">이메일</label> 
-  <div class="input-group">
-    <input type="email" class="form-control" id="user_id" name="user_id" value="${param.user_id}" placeholder="이메일" required="required">
-    <div class="input-group-append">
-      <button type="button" class="btn btn-primary" onclick="emailcheck()" id="mail-Check-Btn">인증
-     </button>
-</div>
-      
-  </div>
-  <div class="input-group">
-    <input class="form-control mail-check-input" placeholder="인증번호 6자리를 입력해주세요!" disabled="disabled" maxlength="6" id="emailOkpwd">
-    <div class="input-group-append">
-      <button type="button" class="btn btn-secondary" disabled onclick="emailOkpwdCheck()" id="btn-secondary">인증번호 확인</button>
-    </div>
-  </div>
-</div>
+					    <label for="user_id" class="sr-only">이메일</label> 
+					  <div class="input-group">
+					    <input type="email" class="form-control" id="user_id" name="user_id" value="${param.user_id}" placeholder="이메일" required="required">
+					    <div class="input-group-append">
+					      <button type="button" class="btn btn-primary" onclick="emailcheck()" id="mail-Check-Btn">인증
+					     </button>
+					</div>
+					      
+					  </div>
+					  <div class="input-group ">
+					    <input class="form-control mail-check-input" placeholder="인증번호 6자리를 입력해주세요!" disabled="disabled" maxlength="6" id="emailOkpwd">
+					    <div class="input-group-append">
+					      <button type="button" class="btn btn-secondary" disabled onclick="emailOkpwdCheck()" id="btn-secondary">인증번호 확인</button>
+					    </div>
+					  </div>
+					</div>
 
 
-					<div class="form-group">
+					<div class="form-group my-3">
 						<label for="user_pwd">비밀번호</label> <input type="password"
 							class="form-control" id="user_pwd" name="user_pwd"
 							placeholder="비밀번호"  pattern="(?=.*\d)(?=.*[~`!@#$%\^&*()-+=])(?=.*[a-zA-Z]).{8,}" title="8자 이상, 숫자와 특수문자를 모두 포함해주세요." required="required">
 					</div>
-					<div class="form-group">
+					<div class="form-group my-3">
 						<label for="user_pwd_confirm">비밀번호확인</label> <input type="password"
 							class="form-control" id="user_pwd_confirm" name="user_pwd_confirm"
 							placeholder="비밀번호"  pattern="(?=.*\d)(?=.*[~`!@#$%\^&*()-+=])(?=.*[a-zA-Z]).{8,}" title="8자 이상, 숫자와 특수문자를 모두 포함해주세요." required="required">
 					</div>
-					<div class="form-group">
+					<div class="form-group my-3">
 						<label for="user_name">이름</label> <input type="text"
 							class="form-control" id="user_name" name="user_name"
 							value="${param.user_name}" placeholder="이름" required="required" minlength="2" maxlength="30">
 					</div>
 					<div class="form-group">
-						<label for="user_pcode">우편번호</label>
+						<label for="user_pcode">주소</label>
 						<div class="input-group mb-3">
 							<input type="text" class="form-control" id="user_pcode"
 								name="user_pcode" placeholder="우편번호" readonly="readonly"
@@ -71,24 +73,24 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="user_addr">기본주소</label> <input type="text"
+						<input type="text"
 							class="form-control" id="user_addr" name="user_addr"
 							placeholder="기본주소" readonly="readonly" required="required">
 					</div>
 					<div class="form-group">
-						<label for="user_detail">상세주소</label> <input type="text"
+						<input type="text"
 							class="form-control" id="addr_detail" name="addr_detail"
 							placeholder="상세주소">
 					</div>
-					<div class="form-group">
+					<div class="form-group my-3">
 						<label for="user_tel">연락처</label> <input type="tel"
 							class="form-control" id="user_tel" name="user_tel"
 							pattern="[0-9]{3}-[0-9]{3,4}-[0-9]{4}"
 							placeholder="휴대폰 번호 (ex. 010-1234-5678)" required="required">
 
 					</div>
-					<div class="form-group">
-						<label for="user_tel">필수약관동의</label> 
+					<div class="form-group my-3">
+						<label for="user_tel">필수약관동의</label> <br>
 						<input type="checkbox" name="allcheck" onclick="allCheck()">전체 동의<br> 
 							<input
 							type="checkbox" name="tos" id="tos" value="Y" required="required">(필수)이용약관 <a
@@ -96,9 +98,9 @@
 						<input type="checkbox" name="user_pia" id="user_pia" value="Y" required="required">(필수)개인정보처리방침<a
 							href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">내용보기</a>
 					</div>
-					<div class="text-center">
+					<div class="text-center my-3">
 						<button type="submit" class="btn btn-primary">회원가입</button>
-						<a href="login.do"><button type="button" class="btn btn-outline-primary">로그인 페이지</button></a>
+						<a href="login.do"><button type="button" class="btn btn-outline-primary">로그인</button></a>
 					</div>
 				</form>
 			</div>
@@ -124,8 +126,7 @@
 					주의 깊게 살펴봐 주시기 바랍니다.</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
-						data-bs-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary" data-bs-dismiss="modal">확인</button>
+						data-bs-dismiss="modal">닫기</button>
 				</div>
 			</div>
 		</div>

@@ -33,7 +33,7 @@
 .page-header {
 	background: linear-gradient(rgba(36, 39, 38, 0.5), rgba(36, 39, 38, 0.5)),
 		rgba(36, 39, 38, 0.5)
-		url(https://images.unsplash.com/photo-1630904989936-da6328c2f92d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80)
+		url(https://images.unsplash.com/photo-1575805501150-e064fbd815dd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80)
 		no-repeat center;
 	background-size: cover;
 	margin: 0;
@@ -60,38 +60,42 @@
 			<div class="row">
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<div class="page-caption">
-						<h2 class="page-title">마이페이지</h2>
+						<h2 class="page-title">나의 정보 수정</h2>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<!-- 헤더 이미지 끝 -->
-		<div class="container">
+		<div class="container "  style="overflow: auto; margin-bottom: 50px; margin-top: 30px;">
 			<div class="row justify-content-center">
 				<%@include file="../myMenu.jsp"%>
 				
 				<div class="col-xl-9 col-md-9">
-					<br><br>
-								<h4 class="card-title mb-4 text-center">나의 정보 수정</h4>
-					<div class="row justify-content-center">
-						<div class="card text-center">
-							<div class="card-body">
-								<form class="form-inline justify-content-center" method="POST" action="infoEdit.do" id="myForm"
-								onkeypress="return event.keyCode != 13;">
-									<div class="form-group mr-3">
-								
-										<label for="password-input">비밀번호</label> <input
-											type="password" class="form-control" id="input_pwd"
-											name="input_pwd" placeholder="비밀번호를 입력하세요" required="required">
-											<input type="hidden" id="user_ok" name="user_ok" value="OK" >
-									</div>
-									<button type="button" class="btn btn-primary"
-										onclick="pwdCheck()">확인</button>
-								</form>
-							</div>
-						</div>
-					</div>
+				    <div class="row justify-content-center">
+				        <div class="card text-center">
+				            <div class="card-header ">
+				                <label for="input_pwd" class="form-label">비밀번호 확인</label>
+				            </div>
+				            <div class="card-body">
+				            비밀번호를 확인 후 정보 수정이 가능합니다.
+
+				                <form class="form-inline justify-content-center" method="POST" action="infoEdit.do" id="myForm"
+				                onkeypress="return event.keyCode != 13;">
+				                    <div class="d-flex align-items-center my-3">
+				                        <input type="password" class="form-control me-2" 
+				                        id="input_pwd" name="input_pwd" placeholder="비밀번호를 입력하세요" required="required">
+				                            <input type="hidden" id="user_ok" name="user_ok" value="OK" >
+				                    </div>
+				                </form>
+				            </div>
+				            <div class="card-footer">
+				            <div class="d-grid gap-2">
+				                <button type="button" class="btn btn-primary" onclick="pwdCheck()">확인</button>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
 				</div>
 			</div>
 		</div>
