@@ -47,8 +47,8 @@
 <div class="app-wrapper">
 	    
 	<div class="app-content pt-3 p-md-3 p-lg-4">
-		<div class="container-xl">
-			<h2 class="title">후기 관리</h2>
+		<div class="container pt-5">
+			<h1 class="text-center mb-4">후기 관리</h1>
  
 				<div class="users-table table-wrapper">
 					<table class="posts-table">

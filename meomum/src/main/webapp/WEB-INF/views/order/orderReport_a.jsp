@@ -128,8 +128,8 @@ function shipFormOpen(url, name, options) {
 <div class="app-wrapper">
 	    
 	<div class="app-content pt-3 p-md-3 p-lg-4">
-		<div class="container-xl">
-			<h2 class="title">주문/배송 내역</h2>
+		<div class="container pt-5">
+			<h1 class="text-center mb-4">주문/배송 내역</h1>
 			<div class="card">
 			<div class="card-body">
 			

@@ -83,15 +83,13 @@
 <div class="app-wrapper">
 	    
 	<div class="app-content pt-3 p-md-3 p-lg-4">
-		<div class="container-xl">
+		<div class="container pt-5">
+			<h1 class="text-center mb-4">상품 재고 관리</h1>
 			    
 			<div class="row g-3 mb-4 align-items-center justify-content-between">
-				<div class="col-auto">
-					<h1 class="app-page-title mb-0">상품 재고 관리</h1>
-				</div>
 				    <div class="col-auto">
 					     <div class="page-utilities">
-						    <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
+						    <div class="row g-2 justify-content-end justify-content-md-end align-items-center">
 							    <div class="col-auto">
 								    <select class="form-select w-auto" >
 										  <option selected value="option-1">전체보기</option>
