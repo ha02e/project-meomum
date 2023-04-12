@@ -16,6 +16,7 @@
 
 
 <style>
+
 /*헤더 이미지용 url에 이미지 추가하면 됩니다.*/
 .page-header {
 	background: linear-gradient(rgba(36, 39, 38, 0.5), rgba(36, 39, 38, 0.5)),
@@ -36,24 +37,27 @@
 	text-align: center;
 }
 
-.title{
-	text-align: center;
-	font-weight: bold;
-	margin-bottom: 30px;
+
+.nav-link{
+    color: #85745D !important;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #ffffff !important;
+    background-color: #85745D !important;
 }
 
 
-.users-table{
-	background-color:fcfcfc;
-}
 .users-table table {
-  width: 100%;
-  text-align: left;
-  border-collapse: collapse;
-  line-height: 1.4;
-  letter-spacing: -0.3px;
-  color: #555555;
-  transition: none;
+	margin-top:10px;
+  	width: 100%;
+  	text-align: left;
+  	border-collapse: collapse;
+  	line-height: 1.4;
+  	letter-spacing: -0.3px;
+  	color: #555555;
+  	transition: none;
+	background-color:fcfcfc;
 }
 
 .users-table-info {
@@ -78,6 +82,7 @@
 	padding-top: 15px;
 	padding-bottom: 15px;
 	text-align: center;
+	font-family: initial;
 }
 
 .users-table td:first-child {
@@ -97,7 +102,6 @@
 	position: relative;
 	overflow: hidden;
 	margin: 0 10px;
-	background-color:#333333;
   	width: 40px;
   	height: 40px;
 }
@@ -107,7 +111,7 @@
   	top: 50%; 
   	left: 50%;
   	transform: translate(-50%, -50%);
-  	border-radius: 50%;
+  	border-radius: 0.5rem;
 }
 .subsPro p{
 	line-height: 40px;
@@ -124,13 +128,20 @@
 tbody{
 	background:#eeeeee;
 }
+.orderNum{
+	color:#E6694C;
+}
+
 .buttons a{
-	color: #c1564c;
-	border: 1px solid #c1564c;
+	color: #E6694C;
+	border: 1px solid #E6694C;
 	padding: 0.3rem 0.5rem;
 	display: inline-block;
 }
-
+.buttons a:hover{
+	color: #82745d;
+	border: 1px solid #82745d;
+}
 
 .paging{
 	margin:20px;
@@ -139,9 +150,9 @@ tbody{
 </style>
 
 <script>
-function orderInfoOpen((url, name, options) {
-	  window.open(url, name, options);
-	}
+function orderInfoOpen(){
+	window.open();
+}
 </script>
 </head>
 <body>
@@ -169,12 +180,26 @@ function orderInfoOpen((url, name, options) {
 		<!-- ---------- 마이페이지 작업한 파일 페이지 여기에 넣어주세요!!(include) ---------- -->
 
 		<div class="container-xl text-center">
-			<div class="users-table table-wrapper">
+		
+			
+			<ul class="nav nav-pills nav-justified flex-column flex-sm-row mb-3" id="pills-tab" role="tablist">
+				<li class="nav-item" role="presentation">
+					<button class="nav-link flex-sm-fill text-sm-center active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">구독 중인 상품</button>
+				</li>
+				<li class="nav-item" role="presentation">
+					<button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">반납 내역</button>
+				</li>
+			</ul>
+		
+		<div class="tab-content" id="pills-tabContent">
+		  <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
+		  
+		  <div class="users-table table-wrapper">
 				<table class="posts-table">
 					<thead>
 						<tr class="users-table-info">
-							<th style="width:20%;">주문번호</th>
-							<th style="width:32%;">구독상품</th>
+							<th style="width:24%;">주문번호</th>
+							<th style="width:28%;">구독상품</th>
 							<th style="width:12%;">구독시작일</th>
 							<th style="width:12%;">구독종료일</th>
 							<th style="width:12%;">자동납부일</th>
@@ -194,9 +219,14 @@ function orderInfoOpen((url, name, options) {
 									<c:url var="orderDetailUrl" value="orderInfoDetail.do">
 										<c:param name="order_idx">${dto.order_idx}</c:param>
 									</c:url>
-									<a href="#" onclick="orderInfoOpen('${orderDetailUrl}', 'orderInfoDetail', 'width=540,height=600'); return false;">
+									<a href="#" class="orderNum" onclick="orderInfoOpen('${orderDetailUrl}', 'orderInfoDetail', 'width=540,height=600'); return false;">
 									${dto.order_idx}
 									</a>
+									<script>
+									function orderInfoOpen(url, name, options) {
+										  window.open(url, name, options);
+									}
+									</script>
 								</td>
 								<td>
 									<c:url var="proContentUrl" value="proContent.do">
@@ -204,9 +234,9 @@ function orderInfoOpen((url, name, options) {
 									</c:url>
 									<a href="${proContentUrl}" target="blank" class="subsPro d-flex jusify-content-center align-items-center">
 					                	<div class="categories-table-img">
-					                    	<img src="/meomum/items/${dto.pro_thumb}" alt="category">
+					                    	<img src="/meomum/images/items/${dto.pro_thumb}" alt="category">
 					                	</div>
-					                	<p class="text-truncate" style="max-width: 190px;">${dto.pro_name}</p>
+					                	<p class="text-truncate" style="max-width: 170px;">${dto.pro_name}</p>
 				                	</a>
 								</td>
 			                    <td>${dto.sub_start}</td>
@@ -214,12 +244,20 @@ function orderInfoOpen((url, name, options) {
 			                    <td>${dto.pay_date}</td>
 			                    <td>
 			                    	<div class="buttons">
-										<a class="action-link" href="${contentUrl}" target="blank">
+				                    	<c:url var="returnFormUrl" value="returnForm.do">
+											<c:param name="order_idx">${dto.order_idx}</c:param>
+										</c:url>
+										<a href="#" class="orderNum" onclick="orderInfoOpen('${returnFormUrl}', 'orderInfoDetail', 'width=540,height=510'); return false;">
 											<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-dash-circle" viewBox="0 0 16 16">
 											  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
 											  <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
 											</svg>&nbsp;반납신청
 										</a>
+										<script>
+										function returnFormOpen(url, name, options) {
+											  window.open(url, name, options);
+										}
+										</script>
 									</div>
 			                    </td>
 	                  		</tr>
@@ -236,6 +274,23 @@ function orderInfoOpen((url, name, options) {
 				</div>
               
             </div>
+		  
+		  
+		  
+		  
+		  
+		  </div>
+		  <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">...</div>
+		</div>
+		
+		
+		
+			
+			
+			
+			
+			
+			
 		</div>
 
 

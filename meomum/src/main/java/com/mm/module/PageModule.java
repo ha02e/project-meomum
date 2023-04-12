@@ -15,7 +15,7 @@ public class PageModule {
 		if(cp%pageSize==0)userGroup--;
 		
 		if(userGroup!=0){
-			sb.append("<li class='page-item'><a class='page-link' href='");
+			sb.append("<li class='page-item'><a class='page-link link-dark' href='");
 			sb.append(pagename); 
 			sb.append("?cp=");
 			int temp = (userGroup-1)*pageSize+pageSize;
@@ -24,7 +24,7 @@ public class PageModule {
 		}
 						
 			for(int i=userGroup*pageSize+1;i<=userGroup*pageSize+pageSize;i++){
-			sb.append("<li class='page-item'><a class='page-link' href='");
+			sb.append("<li class='page-item'><a class='page-link link-dark' href='");
 			sb.append(pagename);
 			sb.append("?cp=");
 			sb.append(i);
@@ -36,7 +36,7 @@ public class PageModule {
 				
 			if(userGroup!=(totalPage/pageSize-(totalPage%pageSize==0?1:0))){
 				sb.append("<li class='page-item'>");
-				sb.append("<a class='page-link' href='");
+				sb.append("<a class='page-link link-dark' href='");
 				sb.append(pagename);
 				sb.append("?cp=");
 				int temp=(userGroup+1)*pageSize+1;
@@ -62,7 +62,7 @@ public class PageModule {
 		if(cp%pageSize==0)userGroup--;
 		
 		if(userGroup!=0){
-			sb.append("<li class='page-item'><a class='page-link' href='");
+			sb.append("<li class='page-item'><a class='page-link link-dark' href='");
 			sb.append(pagename); 
 			sb.append("?cp=");
 			int temp = (userGroup-1)*pageSize+pageSize;
@@ -72,7 +72,7 @@ public class PageModule {
 		}
 						
 			for(int i=userGroup*pageSize+1;i<=userGroup*pageSize+pageSize;i++){
-			sb.append("<li class='page-item'><a class='page-link' href='");
+			sb.append("<li class='page-item'><a class='page-link link-dark' href='");
 			sb.append(pagename);
 			sb.append("?cp=");
 			sb.append(i);
@@ -85,7 +85,7 @@ public class PageModule {
 				
 			if(userGroup!=(totalPage/pageSize-(totalPage%pageSize==0?1:0))){
 				sb.append("<li class='page-item'>");
-				sb.append("<a class='page-link' href='");
+				sb.append("<a class='page-link link-dark' href='");
 				sb.append(pagename);
 				sb.append("?cp=");
 				int temp=(userGroup+1)*pageSize+1;

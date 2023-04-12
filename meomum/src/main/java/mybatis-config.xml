@@ -18,5 +18,6 @@
 		<mapper resource="sqlMap/pointSQL.xml" />
 		<mapper resource="sqlMap/shipSQL.xml"/>
 		<mapper resource="sqlMap/paymentSQL.xml"/>
+		<mapper resource="sqlMap/returnSQL.xml"/>
 	</mappers>
 </configuration>

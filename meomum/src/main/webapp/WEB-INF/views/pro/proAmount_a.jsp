@@ -22,9 +22,17 @@
 	width:50px;
 	height:50px;
 	background-color:#eeeeee;
+	position:relative;
+	overflow: hidden;
 }
 .thumb-box img{
     object-fit: cover;
+    width:100%;
+    position:absolute;
+  	top: 50%; 
+  	left: 50%;
+  	transform: translate(-50%, -50%);
+  	border-radius: 0.5rem;
 }
 .truncate{
 	margin-left:0.6rem;
@@ -146,7 +154,7 @@
 													<td class="cell proname">
 														<div class="d-flex justify-content-start align-items-center">
 														<div class="thumb-box">
-															<img src="/meomum/items/${dto.pro_thumb}" alt="IMG-PRODUCT">
+															<img src="/meomum/images/items/${dto.pro_thumb}" alt="IMG-PRODUCT">
 														</div>
 														<span class="truncate">${dto.pro_name}</span>
 														</div>
