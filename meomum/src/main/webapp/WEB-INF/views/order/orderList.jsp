@@ -141,20 +141,20 @@
 			계약자와 동일<input type="checkbox" value="y" onclick="copyUserInfo()">
 		</div>
 		<div>
-			<label for="receiver_name">고객명</label> <input type="text"
-				class="form-control" id="receiver_name" name="receiver_name"
+			<label for="buyer_name">고객명</label> <input type="text"
+				class="form-control" id="buyer_name" name="buyer_name"
 				value="" placeholder="이름을 입력해주세요">
 		</div>
 		<div>
-			<label for="receiver_tel">연락처</label> <input type="text"
-				class="form-control" id="receiver_tel" name="receiver_tel" value=""
+			<label for="buyer_tel">연락처</label> <input type="text"
+				class="form-control" id="buyer_tel" name="buyer_tel" value=""
 				placeholder="연락처 -제외 하고 입력">
 		</div>
 		<div>
-			<label for="receiver_pcode">우편번호</label>
+			<label for="buyer_pcode">우편번호</label>
 			<div class="input-group mb-3">
-				<input type="text" class="form-control" id="receiver_pcode"
-					name="receiver_pcode" value="" placeholder="우편번호"
+				<input type="text" class="form-control" id="buyer_pcode"
+					name="buyer_pcode" value="" placeholder="우편번호"
 					readonly="readonly" onclick="findaddr()">
 				<div class="input-group-append">
 					<button class="btn btn-outline-secondary" type="button"
@@ -163,13 +163,13 @@
 			</div>
 		</div>
 		<div>
-			<label for="receiver_addr">기본주소</label> <input type="text"
-				class="form-control" id="receiver_addr" name="receiver_addr"
+			<label for="buyer_addr">기본주소</label> <input type="text"
+				class="form-control" id="buyer_addr" name="receiver_addr"
 				value="" placeholder="기본주소" readonly="readonly">
 		</div>
 		<div>
-			<label for="receiver_detail">상세주소</label> <input type="text"
-				class="form-control" id="receiver_detail" name="receiver_detail"
+			<label for="buyer_detail">상세주소</label> <input type="text"
+				class="form-control" id="buyer_detail" name="buyer_detail"
 				value="" placeholder="상세주소" required="required">
 		</div>
 
@@ -240,38 +240,25 @@
 				var uid = "OMM" + makeMerchantUid;
 
 				var tp = document.getElementById("amount").value;
-				var bName = document.getElementById("order_name").value;
+				var bName = document.getElementById("buyer_name").value;
+				if (!bName) {
+				    bName = document.getElementById("order_name").value;
+				}
 				var bTel = document.getElementById("receiver_tel").value;
 				var addr = document.getElementById("order_addr").value;
 				var bPcode = document.getElementById("order_pcode").value;
 				var order_tos = document.getElementById("checkbox").value;
 
-				var uidx = $
-				{
-					sessionScope.ssInfo.user_idx
-				}
-				;
-				var pidx = $
-				{
-					dto.pro_idx
-				}
-				;
-				var pAmount = $
-				{
-					param.cart_amount
-				}
-				;
-				var pidx = $
-				{
-					dto.pro_idx
-				}
-				;
+				var uidx = ${sessionScope.ssInfo.user_idx};
+				var pidx = ${dto.pro_idx};
+				var pAmount = ${param.cart_amount};
+				var pidx = ${dto.pro_idx};
 
 				IMP.request_pay({
 					pg : "kakaopay", //"html5_inicis",
 					pay_method : 'card',
 					merchant_uid : uid,
-					name : oName,
+					name : bName,
 					amount : tp,
 					buyer_email : "",
 					buyer_name : bName,
