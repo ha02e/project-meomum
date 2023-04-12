@@ -17,33 +17,10 @@
   display: block;
 }
 </style>
-<!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="images/icon/favicon.png"/>
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-<!--===============================================================================================-->
+
+<!--==============돋보기용====================-->
 	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/linearicons-v1.0.0/icon-font.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
 <!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
-<!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/slick/slick.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/MagnificPopup/magnific-popup.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
-<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="css/proUtil.css">
 	<link rel="stylesheet" type="text/css" href="css/proMain.css">
 <!--===============================================================================================-->
@@ -52,9 +29,10 @@
 <%@include file="/WEB-INF/views/header.jsp" %>
 <body class="animsition">
 
-	<div style="height: 50px;"></div>
-<!-- BEST PRODUCTS -->
+	<div style="height: 70px;"></div>
 
+
+<!-- BEST PRODUCTS -->
 		<div class="container">
 			<div class="p-b-45">
 				<h3 class="ltext-106 cl5 txt-center">
@@ -63,174 +41,131 @@
 			</div>
 			</div>
 
+	<div class="container text-center" style="max-width: 960px;">
+		 <div class="row justify-content-center">
+		  <c:forEach var="list2" items="${lists2}">
+		    <div class="col-sm-6 col-md-3 col-lg-3">
+		      <div class="block2-pic hov-img0">
+		        <a href="proContent.do?pro_idx=${list2.pro_idx}"><img src="/meomum/images/items/${list2.pro_thumb}" alt="best-img"></a>
+		     	 </div>
+			      <div class="block2-txt flex-w flex-t p-t-14">
+			        <div class="block2-txt-child1 flex-col-l text-center">
+			          <a href="proContent.do?pro_idx=${list2.pro_idx}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6 d-block mx-auto">
+			            ${list2.pro_name}
+			          </a>
+			          <span class="stext-105 cl3 d-block mx-auto">
+			            <fmt:formatNumber type="number" maxFractionDigits="3" value="${list2.pro_subprice }" />원
+			          </span>
+			        </div>
+			      </div>
+			   	</div>
+			  </c:forEach>
+			</div>
+		</div>
+   
 
-<div class="container text-center" style="max-width: 960px;">
-  <div class="row justify-content-center">
-    <div class="col-sm-6 col-md-3 col-lg-3">
-      <div class="block2-pic hov-img0">
-        <img src="/meomum/items/image1.jpg" alt="IMG-PRODUCT">
-      </div>
-      <div class="block2-txt flex-w flex-t p-t-14">
-        <div class="block2-txt-child1 flex-col-l text-center">
-          <a href="#" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6 d-block mx-auto">
-            Product Name
-          </a>
-          <span class="stext-105 cl3 d-block mx-auto">
-            $100.00
-          </span>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-6 col-md-3 col-lg-3">
-      <div class="block2-pic hov-img0">
-        <img src="/meomum/items/image2.jpg" alt="IMG-PRODUCT">
-      </div>
-       <div class="block2-txt flex-w flex-t p-t-14">
-        <div class="block2-txt-child1 flex-col-l text-center">
-          <a href="#" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6 d-block mx-auto">
-            Product Name
-          </a>
-          <span class="stext-105 cl3 d-block mx-auto">
-            $100.00
-          </span>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-6 col-md-3 col-lg-3">
-      <div class="block2-pic hov-img0">
-        <img src="/meomum/items/image3.jpg" alt="IMG-PRODUCT">
-      </div>
-       <div class="block2-txt flex-w flex-t p-t-14">
-        <div class="block2-txt-child1 flex-col-l text-center">
-          <a href="#" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6 d-block mx-auto">
-            Product Name
-          </a>
-          <span class="stext-105 cl3 d-block mx-auto">
-            $100.00
-          </span>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-6 col-md-3 col-lg-3">
-      <div class="block2-pic hov-img0">
-        <img src="/meomum/items/image3.jpg" alt="IMG-PRODUCT">
-      </div>
-       <div class="block2-txt flex-w flex-t p-t-14">
-        <div class="block2-txt-child1 flex-col-l text-center">
-          <a href="#" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6 d-block mx-auto">
-            Product Name
-          </a>
-          <span class="stext-105 cl3 d-block mx-auto">
-            $100.00
-          </span>
-        </div>
-        </div>
-      </div>
-    </div>
-	</div>
-
-	<div style="height: 70px;"></div>
+	<div style="height: 50px;"></div>
 	
-<!-- CATEGORY -->
-<div class="bg0 m-t-23 p-b-140">
-  <div class="container" style="max-width: 1100px">
-    <div class="flex-w flex-sb-m p-b-52">
-     
-      <div class="flex-w flex-l-m filter-tope-group m-tb-10">
-        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
-          전체
-        </button>
-        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".1">
-          침대
-        </button>
-        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".2">
-          테이블
-        </button>
-        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".3">
-          의자
-        </button>
-        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".4">
-          소파
-        </button>
-        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".5">
-          조명
-        </button>
-      </div>
+	<!-- CATEGORY -->
+	<div class="bg0 m-t-23 p-b-140">
+	  <div class="container" style="max-width: 1100px">
+	    <div class="flex-w flex-sb-m p-b-52">
+	     
+	      <div class="flex-w flex-l-m filter-tope-group m-tb-10">
+	        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
+	          전체
+	        </button>
+	        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".1">
+	          침대
+	        </button>
+	        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".2">
+	          테이블
+	        </button>
+	        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".3">
+	          의자
+	        </button>
+	        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".4">
+	          소파
+	        </button>
+	        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".5">
+	          조명
+	        </button>
+	   	</div>
       
       
     <!-- Search product -->
-  <form name="itemFind" action="itemFind.do">
-    <div class="dis-flex panel-search w-full p-t-10 p-b-15">
-      
-      <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="proF" >
-      <button type="submit" 
-      class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
-        <i class="zmdi zmdi-search"></i>
-      </button>
-      
-    </div>
-  </form>
-</div>
-
-	
-<!-- products -->
-<div class="row isotope-grid">
-    <c:forEach var="list" items="${lists}">
-        <div class="col-sm-6 col-md-4 col-lg-4 p-b-35 isotope-item ${list.pro_cate}" >
-            <!-- Block2 -->
-            <div class="block2">
-                <div class="block2-pic hov-img0">
-                    <a href="proContent.do?pro_idx=${list.pro_idx}"><img src="/meomum/images/items/${list.pro_thumb}" alt="IMG-PRODUCT"></a>
-
-                    <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                       ${list.pro_month }개월
-                    </a>
-                </div>
-
-                <div class="block2-txt flex-w flex-t p-t-14">
-                    <div class="block2-txt-child1 flex-col-l ">
-                        <a href="proContent.do?pro_idx=${list.pro_idx}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                            ${list.pro_name}
-                        </a>
-			
-                        <span class="stext-105 cl3">
-                        <fmt:formatNumber type="number" maxFractionDigits="3" value="${list.pro_subprice }" />원
-                        </span>
-                    </div>
-						
-						
-						<input type="hidden" id="pro_idx" name="pro_idx" value="${list.pro_idx }">
-                        <input type="hidden" id="user_idx" name="user_idx" value="${sessionScope.ssInfo.user_idx}">
-                   
-                    <div class="block2-txt-child2 flex-r p-t-3">
-                        <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" onclick="loveInsert(${list.pro_idx },${sessionScope.ssInfo.user_idx})">
-                            <img class="icon-heart1 dis-block trans-04" src="images/icon/icon-heart-01.png" alt="ICON">
-                            <img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icon/icon-heart-02.png" alt="ICON">
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-   			 </c:forEach>
+		  <form name="itemFind" action="itemFind.do">
+		    <div class="dis-flex panel-search w-full p-t-10 p-b-15">
+		      
+		      <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="proF" placeholder="Search">
+		      <button type="submit" 
+		      class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
+		        <i class="zmdi zmdi-search"></i>
+		      </button>
+		    </div>
+		  </form>
 		</div>
-		<!-- page -->
-			<div class="flex-c-m flex-w w-full p-t-38">
-					${pageStr }
-			</div>		
-	</div>
-</div>
 
 	
-<!--===============================================================================================-->	
+	<!-- products -->
+		<div class="row isotope-grid">
+		    <c:forEach var="list" items="${lists}">
+		        <div class="col-sm-6 col-md-4 col-lg-4 p-b-35 isotope-item ${list.pro_cate}" >
+		            <!-- Block2 -->
+		            <div class="block2">
+		                <div class="block2-pic hov-img1">
+		                    <a href="proContent.do?pro_idx=${list.pro_idx}"><img src="/meomum/images/items/${list.pro_thumb}" alt="IMG-PRODUCT"></a>
+		
+		                    <a href="proContent.do?pro_idx=${list.pro_idx}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+		                       ${list.pro_month }개월
+		                    </a>
+		                </div>
+		
+	                <div class="block2-txt flex-w flex-t p-t-14">
+	                    <div class="block2-txt-child1 flex-col-l ">
+	                        <a href="proContent.do?pro_idx=${list.pro_idx}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+	                            ${list.pro_name}
+	                        </a>
+				
+	                        <span class="stext-105 cl3">
+	                        <fmt:formatNumber type="number" maxFractionDigits="3" value="${list.pro_subprice }" />원
+	                        </span>
+	                    </div>
+							
+							
+							<input type="hidden" id="pro_idx" name="pro_idx" value="${list.pro_idx }">
+	                        <input type="hidden" id="user_idx" name="user_idx" value="${sessionScope.ssInfo.user_idx}">
+	                   
+	                    <div class="block2-txt-child2 flex-r p-t-3">
+	                        <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" onclick="loveInsert(${list.pro_idx },${sessionScope.ssInfo.user_idx})">
+	                            <img class="icon-heart1 dis-block trans-04" src="images/icon/icon-heart-01.png" alt="ICON">
+	                            <img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icon/icon-heart-02.png" alt="ICON">
+	                        </a>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	   			 </c:forEach>
+			</div>
+			
+			<div style="height: 40px;"></div>
+			
+			<!-- page -->
+				<div class="container-xl paging">
+	               <nav aria-label="Page navigation example">
+	                  <div class="pagination pagination-sm justify-content-center">
+	                  ${pageStr}
+	                  </div>
+	               </nav>
+	          </div>
+		</div>
+	</div>
 
 <!--===============================================================================================-->
 	<script src="vendor/animsition/js/animsition.min.js"></script>
 <!--===============================================================================================-->
 	<script src="vendor/bootstrap/js/popper.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/daterangepicker/moment.min.js"></script>
-	<script src="vendor/daterangepicker/daterangepicker.js"></script>
 <!--===============================================================================================-->
 	<script src="vendor/slick/slick.min.js"></script>
 	<script src="js/slick-custom.js"></script>
@@ -253,13 +188,16 @@
 		    });
 		});
 	</script>
-<!--===============================================================================================-->
+<!--=========페이지 모양 유지해줌===========-->
 	<script src="vendor/isotope/isotope.pkgd.min.js"></script>
-<!--===============================================================================================-->
+
+
+<!--=========아마 찜하기 팝업이었을 거임==========-->
 	<script src="vendor/sweetalert/sweetalert.min.js"></script>
 <script>
 function loveInsert(pro_idx,user_idx) {
-	  $.ajax({
+//찜 추가
+	$.ajax({
 	    type: "POST",
 	    url: "loveInsert.do",
 	    data: {
@@ -277,37 +215,26 @@ function loveInsert(pro_idx,user_idx) {
 </script>
 
 <script>
-$(".filter-tope-group button:not(:first-child)").click(function() {
-	  // 요소를 숨깁니다.
-	  $(".flex-c-m.flex-w.w-full.p-t-38").hide();
-	});
+//전체 외 페이징 숨기기
+const allBtn = document.querySelector('[data-filter="*"]');
+const filterBtns = document.querySelectorAll('.filter-tope-group button:not([data-filter="*"])');
+const pagination = document.querySelector('.paging');
 
-	// "전체" 버튼을 클릭할 때 실행됩니다.
-	$(".filter-tope-group button:first-child").click(function() {
-	  // 요소를 보여줍니다.
-	  $(".flex-c-m.flex-w.w-full.p-t-38").show();
-	});
+// 전체 카테고리를 선택했을 때
+allBtn.addEventListener('click', () => {
+  pagination.style.display = 'block'; // 페이징을 보이도록 설정
+});
+
+// 다른 카테고리를 선택했을 때
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    pagination.style.display = 'none'; // 페이징을 숨기도록 설정
+  });
+});
+
 </script>
 
-<!--===============================================================================================-->
-	<script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-	<script>
-		$('.js-pscroll').each(function(){
-			$(this).css('position','relative');
-			$(this).css('overflow','hidden');
-			var ps = new PerfectScrollbar(this, {
-				wheelSpeed: 1,
-				scrollingThreshold: 1000,
-				wheelPropagation: false,
-			});
-
-			$(window).on('resize', function(){
-				ps.update();
-			})
-		});
-	</script>
-<!--===============================================================================================-->
-	<script src="js/main.js"></script>
+<script src="js/main.js"></script>
 <%@include file="/WEB-INF/views/footer.jsp" %>
 </body>
 </html>

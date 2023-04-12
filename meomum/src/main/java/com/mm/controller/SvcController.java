@@ -4,9 +4,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.mm.member.model.MemberDAO;
 import com.mm.member.model.MemberDTO;
+import com.mm.order.model.OrderProDTO;
 import com.mm.payment.model.PaymentDAO;
 import com.mm.payment.model.PaymentDTO;
 import com.mm.point.model.PointDAO;
@@ -331,7 +334,6 @@ public class SvcController {
 
 		/* PointDTO rdto = pdao.pointTotal(user_idx); */
 		int result = pdao.pointTotal(user_idx);
-		System.out.println(user_idx);
 		ModelAndView mav = new ModelAndView();
 		
 		mav.addObject("dto",dto);
@@ -343,15 +345,27 @@ public class SvcController {
 	
 		return mav;
 	}
-	
 
 	
 	/**사용자: 정리일상 결제(payment 테이블 insert)*/
 	@RequestMapping(value="/svcPay.do")
-	public ModelAndView svcPay(@RequestBody PaymentDTO payDto) {
-		int result = payDao.paymentInsert(payDto);
+	public ModelAndView svcPay(@RequestBody Map<String,Object> data) {
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		
+		PaymentDTO paydto = objectMapper.convertValue(data.get("PaymentDTO"), PaymentDTO.class);
+	    PointDTO pdto = objectMapper.convertValue(data.get("PointDTO"), PointDTO.class);
+	    IdxDTO idto = objectMapper.convertValue(data.get("IdxDTO"),IdxDTO.class);
+	    
+	   
+		int payInsert = payDao.paymentInsert(paydto);
+		int pointInsert = pdao.pointInsert(pdto);
+		int svcUpdate = svcDao.updateSvcState(idto);
+		int payUpdate = svcDao.updatePayState(idto);
 		
 		ModelAndView mav = new ModelAndView();
+		
+		int result = payInsert + pointInsert + svcUpdate + payUpdate;
 		
 		String msg = result>0?"결제가 완료되었습니다":"다시 시도해주세요";
 		String link = result>0?"svcIngList.do":"svcIngContent.do";
@@ -363,7 +377,7 @@ public class SvcController {
 		return mav;
 	}
 	
-	/**사용자: 정리일상 결제(point 테이블 insert)*/
+	/**사용자: 정리일상 결제(point 테이블 insert)
 	@RequestMapping(value="/insertPoint.do")
 	public ModelAndView svcPay(@RequestBody PointDTO pdto) {
 		
@@ -378,9 +392,9 @@ public class SvcController {
 		mav.setViewName("mmJson");
 		
 		return mav;
-	}
+	}*/
 	
-	/**정리일상 결제 시 상태 변경*/
+	/**정리일상 결제 시 상태 변경
 	//svc_member
 	@RequestMapping(value="/updateState.do")
 	public ModelAndView updateState(@RequestBody IdxDTO dto) {
@@ -390,7 +404,7 @@ public class SvcController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("mmJson");
 		return mav;
-	}
+	}*/
 	
 	//svc_ing
 	/**예약시간 가져오기*/

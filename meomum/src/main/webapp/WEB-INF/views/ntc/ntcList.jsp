@@ -126,14 +126,12 @@
 	<div class="container my-5">
 		<div class="row justify-content-center">
 			<div class="col-md-8">
-				<ul class="pagination justify-content-center">${pageStr}
-				</ul>
+				<div class="pagination justify-content-center">${pageStr}
+				</div>
 			</div>
 		</div>
 	</div>
-	
-	
-	</ul>
+
 	
 	
 	<%@include file="/WEB-INF/views/footer.jsp"%>

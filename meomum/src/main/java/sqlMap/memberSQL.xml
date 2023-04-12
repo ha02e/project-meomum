@@ -23,6 +23,27 @@
 		)
 	</insert>
 
+	<select id="selectLastInsertId" resultType="Integer">
+	  	SELECT 
+        LAST_NUMBER-1 FROM 
+        USER_SEQUENCES WHERE 
+        SEQUENCE_NAME = 'MEMBER_USER_IDX'
+	</select>
+	
+	<insert id="insertJoinPoint" parameterType="Integer">
+	  INSERT INTO point VALUES (
+	    point_idx.nextval, 
+	    'join', 
+	    #{user_idx},
+	    0, 
+	    sysdate,
+	    '첫 가입 축하 적립',
+	    2000
+	  )
+	</insert>
+
+
+
 
 	<select id="login" parameterType="String"
 		resultType="com.mm.member.model.MemberDTO">
