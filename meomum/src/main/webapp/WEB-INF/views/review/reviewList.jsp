@@ -44,7 +44,9 @@
 	margin-top: 30px; 
 }
 
-
+.card-body{
+	cursor: pointer;
+}
 .card-body.img{
 	position: relative;
 	overflow: hidden;
@@ -59,6 +61,13 @@
   	left: 50%;
   	transform: translate(-50%, -50%);
 }
+.card-body a{
+	color: var(--p-color) !important;
+}
+.card-body a:hover{
+    color:#FE8A7F !important;
+}
+
 .entry-meta ul{
 	padding:0;
 }
@@ -67,6 +76,12 @@
     color:#FFD400;
 }
 
+.read-more a{
+    color:#85745D !important;
+}
+.read-more a:hover{
+    color:#FE8A7F !important;
+}
 
 .pagination{
 	margin:40px 0 60px 0;

@@ -10,6 +10,39 @@
 <link rel="stylesheet" href="assets/css/style_reviewCon.css">
 
 <style>
+/*헤더 이미지용 url에 이미지 추가하면 됩니다.*/
+.page-header {
+	background: linear-gradient(rgba(36, 39, 38, 0.5), rgba(36, 39, 38, 0.5)),
+		rgba(36, 39, 38, 0.5)
+		url(https://images.unsplash.com/photo-1618221381711-42ca8ab6e908?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1332&q=80)
+		no-repeat center;
+	background-size: cover;
+	margin: 0;
+	border-bottom: none;
+	padding-bottom: 0px;
+}
+
+.page-caption {
+	padding: 90px 0px;
+	position: relative;
+	z-index: 1;
+	color: #fff;
+	text-align: center;
+}
+
+.page-title {
+	color: #fff;
+	font-size: 40px;
+	font-weight: 400;
+	letter-spacing: -1px;
+}
+/**헤더 이미지용 끝*/
+
+section {
+    padding: 0;
+    overflow: hidden;
+}
+
 .blog .entry .entry-title {
     font-size: 34px;
     font-weight: bold;
@@ -38,6 +71,18 @@ element.style {
 <body>
 <%@include file="../header.jsp"%> 
 
+<!-- 헤더 이미지 넣을때 css도 가져갈것...  -->
+	<div class="page-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="page-caption">
+						<h2 class="page-title">후기</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 <section class="reviewCon">
 	    <!-- ======= Blog Single Section ======= -->
@@ -50,7 +95,7 @@ element.style {
 
             <article class="entry entry-single">
 
-              <h1 class="entry-title">${dto.subject}</h1>
+              <h1 class="entry-title text-truncate">${dto.subject}</h1>
 
               <div class="entry-meta">
                 <ul class="d-flex justify-content-center">
