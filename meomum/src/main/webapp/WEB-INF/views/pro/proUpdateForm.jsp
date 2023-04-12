@@ -35,15 +35,15 @@ function calPrice(){
 		<input type="hidden" name="pro_idx" value="${lists[0].pro_idx}">
 		<ul>
 			<li>대표 사진
-			<img alt="thumbnail" src="/meomum/items/${lists[0].pro_thumb}" style="width:40px; height:40px;">
+			<img alt="thumbnail" src="/meomum/images/items/${lists[0].pro_thumb}" style="width:40px; height:40px;">
 			</li>
 			
 			<li>이미지 1
-			<img alt="img1" src="/meomum/items/${lists[0].pro_img1}" style="width:40px; height:40px;">
+			<img alt="img1" src="/meomum/images/items/${lists[0].pro_img1}" style="width:40px; height:40px;">
 			</li>
 			
 			<li>이미지 2
-			<img alt="img2" src="/meomum/items/${lists[0].pro_img2}" style="width:40px; height:40px;">
+			<img alt="img2" src="/meomum/images/items/${lists[0].pro_img2}" style="width:40px; height:40px;">
 			</li>
 			
 			<li>카테고리
@@ -97,14 +97,14 @@ function calPrice(){
 			
 			<li><input type="submit" value="등록하기"><input type="reset" value="다시 작성"></li>
 		</ul>
-		</form>
+		
 		
 				</div>
 			</div>
-		
-		<%@include file="/WEB-INF/views/footer_a.jsp"%>
-		
 		</div>
+	</form>	
+	
+		<%@include file="/WEB-INF/views/footer_a.jsp"%>	
 		
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
