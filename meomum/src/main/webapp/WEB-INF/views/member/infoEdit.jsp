@@ -34,7 +34,7 @@
 .page-header {
 	background: linear-gradient(rgba(36, 39, 38, 0.5), rgba(36, 39, 38, 0.5)),
 		rgba(36, 39, 38, 0.5)
-		url(https://images.unsplash.com/photo-1630904989936-da6328c2f92d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80)
+		url(https://images.unsplash.com/photo-1575805501150-e064fbd815dd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80)
 		no-repeat center;
 	background-size: cover;
 	margin: 0;
@@ -49,6 +49,7 @@
 	color: #fff;
 	text-align: center;
 }
+
 /**헤더 이미지용 끝*/
 </style>
 
@@ -63,7 +64,7 @@
 			<div class="row">
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<div class="page-caption">
-						<h2 class="page-title">마이페이지</h2>
+						<h2 class="page-title">나의 정보 수정</h2>
 					</div>
 				</div>
 			</div>
@@ -72,7 +73,7 @@
 	<!-- 헤더 이미지 끝 -->
 
 
-		<div class="container">
+		<div class="container" style="overflow: auto; margin-bottom: 50px; margin-top: 50px;">
 			<div class="row">
 				<%@include file="../myMenu.jsp"%>
 				<div class="col-xl-9 col-md-9">
@@ -80,23 +81,21 @@
 						<div class="card">
 							<div class="card-body">
 
-								<h4 class="card-title mb-4 text-center">나의 정보 수정</h4>
-
 								<form name="userInfo_Update" action="infoEditOK.do" method="post">
 									<input type="hidden" name="user_idx"
 										value="${sessionScope.ssInfo.user_idx}" required="required">
-									<div class="form-group">
+									<div class="form-group my-3">
 										<label for="user_id">이메일</label> <input type="text"
 											class="form-control" id="user_id" name="user_id"
 											value="${info.user_id}" readonly="readonly" required="required">
 									</div>
-									<div class="form-group">
+									<div class="form-group my-3">
 										<label for="user_name">이름</label> <input type="text"
 											class="form-control" id="user_name" name="user_name"
 											value="${info.user_name}" placeholder="이름" required="required">
 									</div>
-									<div class="form-group">
-										<label for="user_pcode">우편번호</label>
+									<div class="form-group my-3">
+										<label for="user_pcode">주소</label>
 										<div class="input-group mb-3">
 											<input type="text" class="form-control" id="user_pcode"
 												name="user_pcode" value="${info.user_pcode}"
@@ -107,17 +106,17 @@
 											</div>
 										</div>
 									</div>
-									<div class="form-group">
+									<div class="form-group my-3">
 										<input type="text" class="form-control" id="user_addr"
 											name="user_addr" value="${info.user_addr}"
 											readonly="readonly" required="required">
 									</div>
-									<div class="form-group">
+									<div class="form-group my-3">
 										<input type="text" class="form-control" id="addr_detail"
 											name="addr_detail" value="${info.addr_detail}"
 											placeholder="상세주소">
 									</div>
-									<div class="form-group">
+									<div class="form-group my-3">
 										<label for="user_tel">연락처</label>
 										<div class="input-group">
 										</div>
@@ -125,10 +124,10 @@
 											placeholder="-제외하고 입력" value="${info.user_tel}" required="required">
 									</div>
 
-									<div class="text-center">
-										<button type="submit" class="btn btn-primary">나의 정보
+									<div class="text-center my-3">
+										<button type="submit" class="btn btn-primary">정보
 											수정</button>
-										<button type="button" class="btn btn-primary"
+										<button type="button" class="btn btn-outline-success"
 											data-bs-toggle="modal" data-bs-target="#pwdChange">비밀번호
 											변경</button>
 
@@ -136,11 +135,11 @@
 								</form>
 							</div>
 							
-							<div class="text-end" 
+							<a href="#" class="text-end my-3" 
 							     data-bs-toggle="modal" 
 							     data-bs-target="#member_drop" >
 							     회원 탈퇴하기
-							</div>
+							</a>
 							<!-- 본문 작성 끝 -->
 							
 							

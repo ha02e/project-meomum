@@ -23,13 +23,13 @@ font-size: 25px;
     height: 45px;
     border-radius: 50% !important;
     color: #FFFFFF;
-    background-color: #EAA636;
-    border-color: #EAA636;
+    background-color: #00AE5F;
+    border-color: #00AE5F;
     
 }
 .topbutton:hover{
- background-color: #EAA636;
-    border-color: #EAA636;
+ background-color: #395E57;
+    border-color: #395E57;
 }
 
 #kakao {
@@ -72,8 +72,6 @@ font-size: 25px;
 
                         <li class="footer-menu-item"><a href="ntcList.do" class="footer-menu-link">공지사항</a></li>
 
-                        <li class="footer-menu-item"><a href="#" class="footer-menu-link">Partner with us</a></li>
-                        <li class="footer-menu-item"><a href="#" class="footer-menu-link">Partner with us</a></li>
                       
                     </ul>
                 </div>

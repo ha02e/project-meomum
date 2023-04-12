@@ -128,7 +128,7 @@ function close_modal(){
 		</div>
 	</div>
 	<!-- 본문 시작 -->
-	<div class="container " style="overflow: auto;">
+	<div class="container" style="overflow: auto; margin-bottom: 30px; margin-top: 30px;">
 		<div class="row justify-content-center">
 			<div class="col-10">
 				<div class="d-flex justify-content-between align-items-center mb-3">
@@ -213,7 +213,7 @@ function close_modal(){
 			<div class="modal-content text-center">
 				<div class="modal-header">
 					<h5 class="modal-title text-center" id="myModalLabel"
-						style="color: black;">간단견적문의</h5>
+						style="color: black;">비밀글</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
 						aria-label="Close"></button>
 				</div>

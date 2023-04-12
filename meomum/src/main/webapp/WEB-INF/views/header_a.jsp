@@ -3,10 +3,41 @@
 <link href="/docs/5.2/dist/css/bootstrap.min.css" rel="stylesheet"
 	integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
 	crossorigin="anonymous">
+	
+<head>
+<style>
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+*{
 
+    font-family: 'Pretendard-Regular';
+}
+
+@font-face {
+    font-family: 'TheJamsil5Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+h1, h2, h3{
+ font-family: 'TheJamsil5Bold';
+}
+
+
+</style>
 <!-- App CSS -->
 <link id="theme-style" rel="stylesheet" href="assets/css/portal_a.css">
 <link rel="stylesheet" type="text/css" href="css/mainLayout_a.css">
+
+
+<!-- 구글 아이콘 -->
+
+</head>
+<body>
 <header class="app-header fixed-top">	            
 	<div class="app-header-inner">  
 	<div class="container-fluid py-2">
@@ -17,6 +48,7 @@
 					<a id="sidepanel-toggler" class="sidepanel-toggler d-inline-block d-xl-none" href="#">
 						<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" role="img"><title>Menu</title><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg>
 					</a>
+			
 				</div><!--//col-->
 				
 				<div class="app-utilities col-auto">
@@ -25,11 +57,12 @@
 					<!-- 계정 --> 
 					<div class="app-utility-item app-user-dropdown dropdown">
 						<a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
-							<span class="admin-name">${sessionScope.ssInfo.user_name}</span>
+							<span class="admin-name">${sessionScope.ssInfo.user_name} 님</span>
 						</a>
 				            <ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
-								<li><a class="dropdown-item" href="index.do">머뭄홈페이지</a></li>
-								<li><a class="dropdown-item" href="settings.html">Settings</a></li>
+								<li><a class="dropdown-item" href="index.do">머뭄 홈페이지
+
+								</a></li>
 								<li><hr class="dropdown-divider"></li>
 								<li><a class="dropdown-item" href="logout.do">로그아웃</a></li>
 							</ul>
@@ -56,7 +89,7 @@
 				<ul class="app-menu list-unstyled accordion" id="menu-accordion">
 					<li class="nav-item">
 					<!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-						<a class="nav-link" href="#">
+						<a class="nav-link" href="admin.do">
 							<span class="nav-icon">
 						        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bar-chart-line" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 								  <path fill-rule="evenodd" d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2zm1 12h2V2h-2v12zm-3 0V7H7v7h2zm-5 0v-3H2v3h2z"/>
@@ -174,3 +207,4 @@
 		</div><!--//sidepanel-inner-->
 	    </div><!--//app-sidepanel-->
 </header><!--//app-header-->
+</body>
