@@ -150,18 +150,17 @@ public class OrderController {
 		map.put("end", end);
 		map.put("user_idx", user_idx);
 
-		List<MyOrderListDTO> lists = orderDao.myOrderList(map);
+		List<MyOrderListDTO> lists = orderDao.mySubsAllList(map);
 		return lists;
 	}
 	
 	@RequestMapping("/subsProList.do")
-	@ResponseBody
 	public ModelAndView mysubsProList(@RequestParam(value = "cp", defaultValue = "1") int cp, HttpSession session) {
 		
 		MemberDTO mdto = (MemberDTO) session.getAttribute("ssInfo");
 		int user_idx = mdto.getUser_idx();
 
-		int totalCnt = orderDao.mySubsProTotalCnt(user_idx);
+		int totalCnt = orderDao.mySubsAllListCnt(user_idx);
 	    int listSize = 5;
 	    int pageSize = 5;
 
@@ -173,6 +172,40 @@ public class OrderController {
 		mav.addObject("list", list);
 		mav.addObject("pageStr", pageStr);
 		mav.setViewName("order/subsProList");
+		return mav;
+	}
+	
+	/** 마이페이지 반납내역 */
+	public List<MyOrderListDTO> myreturnProPage(int cp, int ls, int user_idx) {
+		int start = (cp - 1) * ls + 1;
+		int end = cp * ls;
+		Map map = new HashMap();
+		map.put("start", start);
+		map.put("end", end);
+		map.put("user_idx", user_idx);
+
+		List<MyOrderListDTO> lists = orderDao.myReturnProList(map);
+		return lists;
+	}
+	
+	@RequestMapping("/myReturnProList.do")
+	public ModelAndView myreturnProList(@RequestParam(value = "cp", defaultValue = "1") int cp, HttpSession session) {
+		
+		MemberDTO mdto = (MemberDTO) session.getAttribute("ssInfo");
+		int user_idx = mdto.getUser_idx();
+
+		int totalCnt = orderDao.myReturnProListCnt(user_idx);
+	    int listSize = 5;
+	    int pageSize = 5;
+
+	    String pageStr = com.mm.module.PageModule.makePage("myReturnProList.do", totalCnt, listSize, pageSize, cp);
+
+	    List<MyOrderListDTO> lists = myreturnProPage(cp, pageSize, user_idx);
+
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("lists", lists);
+		mav.addObject("pageStr", pageStr);
+		mav.setViewName("turnback/myReturnProList");
 		return mav;
 	}
 	

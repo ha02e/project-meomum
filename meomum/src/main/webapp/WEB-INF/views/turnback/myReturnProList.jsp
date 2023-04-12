@@ -188,7 +188,7 @@ function orderInfoOpen(url, name, options) {
 			<div class="row">
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<div class="page-caption">
-						<h2 class="page-title">구독 중인 상품</h2>
+						<h2 class="page-title">구독 반납 내역</h2>
 					</div>
 				</div>
 			</div>
@@ -227,21 +227,21 @@ function orderInfoOpen(url, name, options) {
 				<thead>
 					<tr class="users-table-info">
 						<th style="width:24%;">주문번호</th>
-						<th style="width:28%;">구독상품</th>
-						<th style="width:12%;">구독시작일</th>
-						<th style="width:12%;">구독종료일</th>
-						<th style="width:12%;">자동납부일</th>
+						<th style="width:28%;">반납상품</th>
+						<th style="width:12%;">반납신청일자</th>
+						<th style="width:12%;">회수날짜</th>
+						<th style="width:12%;">반납완료날짜</th>
 						<th style="width:12%;"></th>
 					</tr>
 				</thead>
 				
 				<tbody id="tableBody">
-					<c:if test="${empty list}">
+					<c:if test="${empty lists}">
 						<tr>
-								<td class="text-center" colspan="6">구독 중인 상품이 없습니다.</td>
+								<td class="text-center" colspan="6">구독 반납 내역이 없습니다.</td>
 						</tr>
 					</c:if>
-					<c:forEach var="dto" items="${list}">
+					<c:forEach var="dto" items="${lists}">
 							<tr>
 								<td>
 									<c:url var="orderDetailUrl" value="orderInfoDetail.do">
@@ -270,16 +270,21 @@ function orderInfoOpen(url, name, options) {
 			                    <td>${dto.sub_end}</td>
 			                    <td>${dto.pay_date}</td>
 			                    <td>
+			                    <c:choose>
+									<c:when test="${dto.order_status eq 5}">										
+										반납신청완료
+									</c:when>
+									<c:when test="${dto.order_status eq 6}">반납진행</c:when>
+									<c:when test="${dto.order_status eq 7}">반납완료</c:when>
+								</c:choose>
+			                    
+			                    
+			                    
+			                    
 			                    	<div class="buttons">
 				                    	<c:url var="returnFormUrl" value="returnForm.do">
 											<c:param name="order_idx">${dto.order_idx}</c:param>
 										</c:url>
-										<a href="#" class="orderNum" onclick="orderInfoOpen('${returnFormUrl}', 'orderInfoDetail', 'width=540,height=510'); return false;">
-											<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-dash-circle" viewBox="0 0 16 16">
-											  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-											  <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
-											</svg>&nbsp;반납신청
-										</a>
 										<script>
 										function returnFormOpen(url, name, options) {
 											  window.open(url, name, options);

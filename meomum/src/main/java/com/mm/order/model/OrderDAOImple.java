@@ -27,19 +27,6 @@ public class OrderDAOImple implements OrderDAO {
 		int count = sqlMap.insert("orderInsert", dto);
 		return count;
 	}
-
-	@Override
-	public List<MyOrderListDTO> myOrderList(Map map) {
-		List<MyOrderListDTO> lists = sqlMap.selectList("myOrderList", map);
-		return lists;
-	}
-	
-	@Override
-	public int mySubsProTotalCnt(int user_idx) {
-		int count=sqlMap.selectOne("mySubsProTotalCnt", user_idx);
-		count = count == 0 ? 1 : count;
-		return count;
-	}
 	
 	@Override
 	public List<OrderReportDTO> myOrderReport(Map map) {
@@ -88,6 +75,33 @@ public class OrderDAOImple implements OrderDAO {
 	@Override
 	public int order_proInsert(OrderProDTO dto) {
 		int count=sqlMap.insert("order_proInsert",dto);
+		return count;
+	}
+	
+	
+	@Override
+	public List<MyOrderListDTO> mySubsAllList(Map map) {
+		List<MyOrderListDTO> lists = sqlMap.selectList("mySubsAllList", map);
+		return lists;
+	}
+	
+	@Override
+	public int mySubsAllListCnt(int user_idx) {
+		int count=sqlMap.selectOne("mySubsAllListCnt", user_idx);
+		count = count == 0 ? 1 : count;
+		return count;
+	}
+	
+	@Override
+	public List<MyOrderListDTO> myReturnProList(Map map) {
+		List<MyOrderListDTO> lists = sqlMap.selectList("myReturnProList", map);
+		return lists;
+	}
+	
+	@Override
+	public int myReturnProListCnt(int user_idx) {
+		int count=sqlMap.selectOne("myReturnProListCnt", user_idx);
+		count = count == 0 ? 1 : count;
 		return count;
 	}
 }
