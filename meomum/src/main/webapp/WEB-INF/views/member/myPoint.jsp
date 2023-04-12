@@ -25,7 +25,7 @@
 .page-header {
 	background: linear-gradient(rgba(36, 39, 38, 0.5), rgba(36, 39, 38, 0.5)),
 		rgba(36, 39, 38, 0.5)
-		url(https://images.unsplash.com/photo-1575805501150-e064fbd815dd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80)
+		url(https://images.unsplash.com/photo-1516053256215-94022213b13c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80)
 		no-repeat center;
 	background-size: cover;
 	margin: 0;
@@ -109,13 +109,12 @@
 					</table>
 				</div>
 				<div>
-<nav class="d-flex justify-content-between align-items-center">
-					<div
-						class="col-10 justify-content-center align-items-start text-center">
+
+					<div>
 						<span class="pagination pagination-sm justify-content-center">
 							${pageStr} </span>
 					</div>
-				</nav>
+	
 
 
 

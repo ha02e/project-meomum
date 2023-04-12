@@ -61,7 +61,7 @@ FROM (
         ROW_NUMBER() OVER (ORDER BY point_usedate DESC) AS rnum2,
         ROW_NUMBER() OVER (ORDER BY point_usedate ASC) AS rnum
     FROM point
-    WHERE user_idx = #{user_idx}
+    WHERE user_idx = #{user_idx} and point_num !=0
 ) a
 WHERE rnum2 BETWEEN #{start} AND #{end}
 ORDER BY rnum DESC
@@ -69,7 +69,7 @@ ORDER BY rnum DESC
 	</select>
 	
 <select id="pointCnt" parameterType="Integer" resultType="Integer">
-	        select count(*) from point where user_idx =#{user_idx}
+	        select count(*) from point where user_idx =#{user_idx} and point_num !=0
 	
 	</select>
 	

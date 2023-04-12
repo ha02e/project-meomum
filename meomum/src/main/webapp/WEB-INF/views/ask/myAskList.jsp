@@ -162,16 +162,13 @@ function ask_click(clicked_idx, ask_userIdx) {
 					</table>
 				</div>
 
-				<nav class="d-flex justify-content-between align-items-center">
-					<div
-						class="col-10 justify-content-center align-items-start text-center">
+					<div class="text-end">
+						<a href="askWrite.do" class="btn btn-primary">글쓰기</a>
+					</div>
+					<div>
 						<span class="pagination pagination-sm justify-content-center">
 							${pageStr} </span>
 					</div>
-					<div class="col-auto">
-						<a href="askWrite.do" class="btn btn-primary">글쓰기</a>
-					</div>
-				</nav>
 			</div>
 		</div>
 	</div>

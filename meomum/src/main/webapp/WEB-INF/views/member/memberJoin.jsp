@@ -17,7 +17,7 @@
 <body>
 	<%@include file="/WEB-INF/views/header.jsp"%>
 
-	<div class="container" style="overflow: auto; margin-bottom: 30px; margin-top: 30px;">
+	<div class="container" style="overflow: auto; margin-bottom: 50px; margin-top: 50px;">
 		<div class="row justify-content-center">
 			<div class="col-md-6">
 				<h2 class="mb-3 text-center">회원가입</h2>
@@ -51,9 +51,14 @@
 							placeholder="비밀번호"  pattern="(?=.*\d)(?=.*[~`!@#$%\^&*()-+=])(?=.*[a-zA-Z]).{8,}" title="8자 이상, 숫자와 특수문자를 모두 포함해주세요." required="required">
 					</div>
 					<div class="form-group my-3">
-						<label for="user_pwd_confirm">비밀번호확인</label> <input type="password"
+						<label for="user_pwd_confirm">비밀번호 확인</label> <label id="pwd_confirm_msg" style="font-size:15px; color :red;"></label>
+						
+						<input type="password"
 							class="form-control" id="user_pwd_confirm" name="user_pwd_confirm"
-							placeholder="비밀번호"  pattern="(?=.*\d)(?=.*[~`!@#$%\^&*()-+=])(?=.*[a-zA-Z]).{8,}" title="8자 이상, 숫자와 특수문자를 모두 포함해주세요." required="required">
+							placeholder="비밀번호"  pattern="(?=.*\d)(?=.*[~`!@#$%\^&*()-+=])(?=.*[a-zA-Z]).{8,}" title="8자 이상, 숫자와 특수문자를 모두 포함해주세요." required="required"
+							 oninput="ccPassword()">
+							
+							
 					</div>
 					<div class="form-group my-3">
 						<label for="user_name">이름</label> <input type="text"
@@ -94,13 +99,13 @@
 						<input type="checkbox" name="allcheck" onclick="allCheck()">전체 동의<br> 
 							<input
 							type="checkbox" name="tos" id="tos" value="Y" required="required">(필수)이용약관 <a
-							href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">내용보기</a><br>
+							href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">[내용보기]</a><br>
 						<input type="checkbox" name="user_pia" id="user_pia" value="Y" required="required">(필수)개인정보처리방침<a
-							href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">내용보기</a>
+							href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">[내용보기]</a>
 					</div>
-					<div class="text-center my-3">
-						<button type="submit" class="btn btn-primary">회원가입</button>
-						<a href="login.do"><button type="button" class="btn btn-outline-primary">로그인</button></a>
+					<div class="text-center my-5 d-grid gap-2 ">
+						<button type="submit" class="btn btn-primary btn-lg">회원가입</button>
+						
 					</div>
 				</form>
 			</div>
@@ -191,6 +196,17 @@ function allCheck() {
 	  }
 	}
 	
+function ccPassword() {
+	  var password = document.getElementById("user_pwd").value;
+	  var confirmPassword = document.getElementById("user_pwd_confirm").value;
+	  var pwdMsg = document.getElementById("pwd_confirm_msg");
+
+	  if (password != confirmPassword) {
+	    pwdMsg.innerHTML = "(비밀번호가 일치하지 않습니다.)";
+	  } else {
+	    pwdMsg.innerHTML = "";
+	  }
+	}
 function checkPasswordMatch() {
 	  var input_id = document.getElementById("user_id").value;
 	  var password = document.getElementById("user_pwd").value;

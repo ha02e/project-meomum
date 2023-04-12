@@ -178,8 +178,8 @@ color : red;
 	<%@include file="/WEB-INF/views/header.jsp"%>
 	<div class="row">
 		<div id="carouselExampleRide" class="carousel slide"
-			data-bs-ride="true">
-			<div class="carousel-indicators">
+			data-bs-ride="carousel" >
+			<div class="carousel-indicators " data-bs-interval="2000">
 				<button type="button" data-bs-target="#carouselExampleIndicators"
 					data-bs-slide-to="0" class="active" aria-current="true"
 					aria-label="Slide 1"></button>
@@ -189,20 +189,20 @@ color : red;
 					data-bs-slide-to="2" aria-label="Slide 3"></button>
 			</div>
 			<div class="carousel-inner">
-				<div class="carousel-item active">
+				<div class="carousel-item active"data-bs-interval="2000" >
 					<img
 						src="https://images.unsplash.com/photo-1633505899118-4ca6bd143043?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80"
-						class="d-block  " alt="인테리어 이미지 " data-bs-interval="10000">
+						class="d-block  " alt="인테리어 이미지 " >
 				</div>
-				<div class="carousel-item">
+				<div class="carousel-item" data-bs-interval="2000">
 					<img
 						src="https://cdn.pixabay.com/photo/2014/08/11/21/40/bedroom-416062_960_720.jpg"
-						class="d-block  " alt="인테리어 이미지" data-bs-interval="10000">
+						class="d-block  " alt="인테리어 이미지" >
 				</div>
-				<div class="carousel-item">
+				<div class="carousel-item" data-bs-interval="2000">
 					<img
 						src="https://cdn.pixabay.com/photo/2020/12/16/00/10/home-5835289_960_720.jpg"
-						class="d-block " alt="인테리어 이미지" data-bs-interval="10000">
+						class="d-block " alt="인테리어 이미지">
 				</div>
 			</div>
 			<button class="carousel-control-prev" type="button"
@@ -237,7 +237,7 @@ color : red;
 				<p>머물고 싶은 공간을 만들어드립니다.<br>당신의 상쾌한 일상에 함께합니다.<br> 간단한 상담이 필요하다면 간단한 문의 먼저 해보세요!</p>
 
 				
-				<div class="main-more">정리일상 <a href="svc.do"><button type="button" class="btn btn-outline-info"> 간단문의</button></a></div>
+				<div class="main-more">정리일상 <a href="askList.do"><button type="button" class="btn btn-outline-info"> 간단문의</button></a></div>
 			</div>
 		</div>
 	</div>
