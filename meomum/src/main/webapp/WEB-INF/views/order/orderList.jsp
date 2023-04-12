@@ -33,6 +33,19 @@
 		}).open();
 	}
 </script>
+<script>
+	function findaddr() {
+		new daum.Postcode({
+			oncomplete : function(data) {
+				document.getElementById("buyer_pcode").value = data.zonecode;
+				document.getElementById("buyer_addr").value = data.address;
+				document.getElementById("buyer_detail").focus();
+			},
+			autoClose : true
+		// 팝업 자동 닫힘
+		}).open();
+	}
+</script>
 
 </head>
 
@@ -106,8 +119,8 @@
 				value="${sessionScope.ssInfo.user_name}" placeholder="이름을 입력해주세요">
 		</div>
 		<div>
-			<label for="receiver_tel">연락처</label> <input type="text"
-				class="form-control" id="receiver_tel" name="receiver_tel"
+			<label for="order_tel">연락처</label> <input type="text"
+				class="form-control" id="order_tel" name="order_tel"
 				value="${sessionScope.ssInfo.user_tel}" placeholder="연락처 -제외 하고 입력">
 		</div>
 		<div>
@@ -141,20 +154,20 @@
 			계약자와 동일<input type="checkbox" value="y" onclick="copyUserInfo()">
 		</div>
 		<div>
-			<label for="receiver_name">고객명</label> <input type="text"
-				class="form-control" id="receiver_name" name="receiver_name"
+			<label for="buyer_name">고객명</label> <input type="text"
+				class="form-control" id="buyer_name" name="buyer_name"
 				value="" placeholder="이름을 입력해주세요">
 		</div>
 		<div>
-			<label for="receiver_tel">연락처</label> <input type="text"
-				class="form-control" id="receiver_tel" name="receiver_tel" value=""
+			<label for="buyer_tel">연락처</label> <input type="text"
+				class="form-control" id="buyer_tel" name="buyer_tel" value=""
 				placeholder="연락처 -제외 하고 입력">
 		</div>
 		<div>
-			<label for="receiver_pcode">우편번호</label>
+			<label for="buyer_pcode">우편번호</label>
 			<div class="input-group mb-3">
-				<input type="text" class="form-control" id="receiver_pcode"
-					name="receiver_pcode" value="" placeholder="우편번호"
+				<input type="text" class="form-control" id="buyer_pcode"
+					name="buyer_pcode" value="" placeholder="우편번호"
 					readonly="readonly" onclick="findaddr()">
 				<div class="input-group-append">
 					<button class="btn btn-outline-secondary" type="button"
@@ -163,13 +176,13 @@
 			</div>
 		</div>
 		<div>
-			<label for="receiver_addr">기본주소</label> <input type="text"
-				class="form-control" id="receiver_addr" name="receiver_addr"
+			<label for="buyer_addr">기본주소</label> <input type="text"
+				class="form-control" id="buyer_addr" name="buyer_addr"
 				value="" placeholder="기본주소" readonly="readonly">
 		</div>
 		<div>
-			<label for="receiver_detail">상세주소</label> <input type="text"
-				class="form-control" id="receiver_detail" name="receiver_detail"
+			<label for="buyer_detail">상세주소</label> <input type="text"
+				class="form-control" id="buyer_detail" name="buyer_detail"
 				value="" placeholder="상세주소" required="required">
 		</div>
 
@@ -235,31 +248,50 @@
 				var milliseconds = today.getMilliseconds().toString();
 				var makeMerchantUid = year + month + day + hours + minutes
 						+ seconds;
-
+				
+				//계약자 및 사용자 정보//
 				var oName = document.getElementById("order_name").value;
 				var uid = "OMM" + makeMerchantUid;
 
 				var tp = document.getElementById("amount").value;
-				var bName = document.getElementById("order_name").value;
-				var bTel = document.getElementById("receiver_tel").value;
-				var addr = document.getElementById("order_addr").value;
-				var bPcode = document.getElementById("order_pcode").value;
+				var bName = document.getElementById("buyer_name").value;
+				if (!bName) {
+				    bName = document.getElementById("order_name").value;
+				}
+				var bTel = document.getElementById("buyer_tel").value;
+				if (!bTel) {
+					bTel = document.getElementById("order_tel").value;
+				}
+				var bPcode = document.getElementById("buyer_pcode").value;
+				if (!bPcode) {
+					bPcode = document.getElementById("order_pcode").value;
+				}
+				var bAddr = document.getElementById("buyer_addr").value;
+				if (!bAddr) {
+					bAddr = document.getElementById("order_addr").value;
+				}
+				var bAddr_detail = document.getElementById("buyer_detail").value;
+				if (!bAddr_detail) {
+					bAddr_detail = document.getElementById("order_detail").value;
+				}
+				var order_msg = document.getElementById("order_msg").value;
 				var order_tos = document.getElementById("checkbox").value;
-
-				var uidx = ${sessionScope.ssInfo.user_idx};
-				var pidx = ${dto.pro_idx};
-				var pAmount = ${param.cart_amount};
+				var point_num = document.getElementById("point_num").value;
+				//계약자및 사용자 정보 끝//
 				
+				var uidx = ${sessionScope.ssInfo.user_idx};//유저번호
+				var pidx = ${dto.pro_idx};//상품번호
+				var pAmount = ${param.cart_amount};//상품수량
+			
 				IMP.request_pay({
 					pg : "kakaopay", //"html5_inicis",
 					pay_method : 'card',
 					merchant_uid : uid,
 					name : oName,
 					amount : tp,
-					buyer_email : "",
 					buyer_name : bName,
 					buyer_tel : bTel,
-					buyer_addr : addr,
+					buyer_addr : bAddr,
 					buyer_postcode : bPcode
 				}, function(rsp) { // callback
 					if (rsp.success) {
@@ -294,21 +326,21 @@
 
 						var OrderDTO = {
 							order_idx : rsp.merchant_uid,
-							user_idx : 12,
-							order_name : "구독기간 테스트",
+							user_idx : uidx,
+							order_name : bName,
 							sub_start : makeMerchantUid,
-							sub_end : makeMerchantUid,
+							sub_end : makeMerchantUid,//수정 필요
 							order_pcode : bPcode,
-							receiver : 'r',
-							receiver_tel : 'r',
-							order_addr : "서울",
-							order_detail : "경기도",
-							order_msg : "요청",
-							using_point : 12,
+							receiver : bName,
+							receiver_tel : bName,
+							order_addr : bAddr,
+							order_detail : bAddr_detail,
+							order_msg : order_msg,
+							using_point : point_num,
 							pay_date : makeMerchantUid,
 							amount : tp,
 							order_status : 1,
-							order_date : 1,
+							order_date : makeMerchantUid,
 							order_tos : order_tos
 						};
 
