@@ -8,7 +8,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
 <link href="/docs/5.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    
+
+
 <!-- App CSS -->  
 <link id="theme-style" rel="stylesheet" href="assets/css/portal_a.css">
 <link rel="stylesheet" type="text/css" href="css/mainLayout_a.css">
@@ -41,11 +42,17 @@
     border-radius: 0rem;
     border: 1px solid #bcc1cb;
     padding : 0.1rem 0.4rem;
+    width:60px;
+    height:24px;
+    margin-right:0.2rem;
 }
 .state-box {
     border-radius: 0rem;
     border: 1px solid #bcc1cb;
     padding : 0.1rem 0.4rem;
+    width:50px;
+    height:24px;
+    margin-right:0.2rem;
 }
 </style>
 
@@ -148,7 +155,7 @@
 											</c:if>
 											<c:forEach var="dto" items="${lists}">
 												<tr>
-													<td class="cell">${dto.pro_idx}</td>
+													<td class="cell">${dto.pro_idx}<i class="bi bi-chevron-double-right"></i></td>
 													<td class="cell proname">
 														<div class="d-flex justify-content-start align-items-center">
 														<div class="thumb-box">
@@ -171,14 +178,15 @@
 													<td class="cell">${dto.pro_amount}</td>
 													<td class="cell">
 														<form action="proAmountUpdate.do?pro_idx=${dto.pro_idx}" name="proAmountUpdate" 
-																method="post" onsubmit="return validate()">
-															<input class="pro_amount" id="pro_amount" type="number" min="0" max="100" 
+																method="post" onsubmit="return validate()" class="d-flex justify-content-center align-items-center">
+															<input class="pro_amount" id="pro_amount" type="number" size="2" min="0" max="100" 
 																	name="pro_amount" value="${dto.pro_amount}" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
 															<input type="submit" class="btn-sm app-btn-secondary" value="수정">
 														</form>
 													</td>
 													<td class="cell">
-														<form action="proStateUpdate.do?pro_idx=${dto.pro_idx}" name="proStateUpdate" method="post">
+														<form action="proStateUpdate.do?pro_idx=${dto.pro_idx}" name="proStateUpdate" method="post"
+																class="d-flex justify-content-center align-items-center">
 															<select class="state-box w-auto" name="pro_state">
 																<option ${dto.pro_state==0?"selected":""} value="0">판매중</option>
 																<option ${dto.pro_state==1?"selected":""} value="1">품절</option>
