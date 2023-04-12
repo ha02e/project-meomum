@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -78,8 +78,7 @@
 						</tr>
 					</c:if>
 					
-				
-		
+	
 			<c:forEach var="list" items="${lists}">		
 					<tr>
 						<td class="cart_info_td table_row">
@@ -95,7 +94,7 @@
 							</div>
 						</td>
 						
-						<td>${list.pro_name}</td>
+						<td><a href="proContent.do?pro_idx=${list.pro_idx}">${list.pro_name}</a></td>
 						
 						<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.pro_subprice }" />원</td>
 						<td>${list.pro_month }개월
@@ -105,20 +104,20 @@
 							<div class="flex-w m-l-auto m-r-0">
 							
 							<!-- 마이너스 -->
-								<div class="btn-num-product-down">
+								<div id="minus-button" class="btn-num-product-down">
 									<i class="fs-16 zmdi zmdi-minus"></i>
 								</div>
 
 							<!-- 수량 조절 -->
 								
 								<input class="txt-center num-product update_amount_${list.cart_idx}" 
-								type="number" min="1" max="10" name="cart_amount"
+								type="number" min="1" max="${list.pro_amount-1}" name="cart_amount"
 								value="${list.cart_amount}" id="update_amount_${list.cart_idx}" 
 								onchange="updatePrice(this, ${list.pro_subprice}, ${list.pro_allprice})">
 								
 								
 							<!-- 플러스 -->
-								<div class="btn-num-product-up">
+								<div id="plus-button" class="btn-num-product-up">
 								  <i class="fs-16 zmdi zmdi-plus"></i>
 								</div>
 						</div>
@@ -140,8 +139,10 @@
 							</a>
 						</td>
 					</tr>
-					</c:forEach>	
-					</table>			
+				</c:forEach>	
+					</table>		
+					
+						
 					<div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
 						<div class="flex-w flex-m m-r-20 m-tb-5">
 							<div class="flex-c-m column-3">월 구독 가격: <span class="totalSub"></span>원 | </div>
@@ -203,8 +204,34 @@
 				</form>
 			
 				
+<script>
+const minusBtn = document.getElementById('minus-button');
+const plusBtn = document.getElementById('plus-button');
+const cartAmount = document.getElementById('update_amount_${list.cart_idx}');
 
-				
+const proAmount = parseFloat("${list.pro_amount}");
+
+function changeQuantity(newAmount) {
+  cartAmount.value = newAmount;
+}
+
+// 마이너스 버튼 클릭 시
+minusBtn.addEventListener('click', () => {
+  const currentAmount = parseInt(cartAmount.value);
+  if (currentAmount > 1) {
+    changeQuantity(currentAmount - 1);
+  }
+});
+
+// 플러스 버튼 클릭 시
+plusBtn.addEventListener('click', () => {
+  const currentAmount = parseInt(cartAmount.value);
+  if (currentAmount < proAmount) {
+    changeQuantity(currentAmount + 1);
+  }
+});
+
+</script>			
 				
 <script>
 $(document).ready(function() {

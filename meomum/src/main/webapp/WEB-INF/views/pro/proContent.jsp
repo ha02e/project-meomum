@@ -146,28 +146,29 @@
 						 
 						<div class="flex-w m-r-20 m-tb-10">
 							<!-- 마이너스 -->
-							<div id="minus-button" class="btn-num-product-down">
+							<div id="minus-button">
 								<i class="fs-16 zmdi zmdi-minus"></i>
 							</div>
 
 							<!-- 수량 조절 -->
-							<input class="txt-center num-product" id="cart_amount" 
-							type="number" name="cart_amount" value="1" 
-							onchange="updatePrice(this, ${lists[0].pro_subprice},${lists[0].pro_allprice},${lists[0].pro_delprice})" 
+							<input class="txt-center num-product" 
+							id="cart_amount" 
+							type="number" 
+							name="cart_amount" 
+							value="1" 
 							min="1" max="10">
 												
 							<!-- 플러스 -->
-							<div id="plus-button" class="btn-num-product-up">
+							<div id="plus-button">
 								<i class="fs-16 zmdi zmdi-plus"></i>
 							</div>
 						</div>
-						
+						<div><span id="subPrice">월 가격:<fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_subprice}" />원</span></div>
+    					<div><span id="allPrice">총 가격:<fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_allprice}" />원</span></div>
+    					<div><span id="delPrice">총 배송비:<fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_delprice}" />원</span></div>
 						<br>
-						<div><span id="subPrice"><fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_subprice}" />원</span></div>
-    					<div><span id="allPrice"><fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_allprice}" />원</span></div>
-    					<div><span id="totalDel"><fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_delprice}" />원</span></div>
-						<br>
-										<div class="flex-w flex-r-m p-b-10">
+							
+							<div class="flex-w flex-r-m p-b-10">
 								<div class="size-204 flex-w flex-m respon6-next">
 									<button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail"
 									type="submit" formaction="cartInsert.do">장바구니</button>
@@ -176,8 +177,8 @@
 									 type="submit" formaction="orderList.do">구매하기</button>
 								</div>
 							</div>	
-							</form>
-						</div>
+						</form>
+					</div>
 						
 						
 
@@ -385,51 +386,49 @@
 	</section>
 
 
+
 <script>
-function updatePrice(cartAmount, subPrice, allPrice, totalDel) {
-	  // num-product 값을 가져옴
-	  var amount = parseInt(cartAmount.value);
+  
+  const minusBtn = document.getElementById('minus-button');
+  const plusBtn = document.getElementById('plus-button');
+  const cartAmount = document.getElementById('cart_amount');
+  
+  const subPrice = document.getElementById('subPrice');
+  const allPrice = document.getElementById('allPrice');
+  const delPrice = document.getElementById('delPrice');
+  
+  // 현재 재고 수량 가져오기
+  const proAmount = parseFloat("${lists[0].pro_amount}")
 
-	  // subPrice 업데이트
-	  var subPriceElement = document.getElementById("subPrice");
-	  subPriceElement.innerText = subPrice * amount + "원";
+  // 수량 및 가격 변경 함수
+  const changeQuantity = (amount) => {
+    const subPriceValue = parseFloat("${lists[0].pro_subprice}") * amount;
+    const allPriceValue = parseFloat("${lists[0].pro_allprice}") * amount;
+    const delPriceValue = parseFloat("${lists[0].pro_delprice}") * amount;
+    cartAmount.value = amount;
+    subPrice.innerText = "월 구독 가격: "+ new Intl.NumberFormat('ko-KR').format(subPriceValue) + "원";
+    allPrice.innerText = "총 구독 가격: " + new Intl.NumberFormat('ko-KR').format(allPriceValue) + "원";
+    delPrice.innerText = "총 배송비 가격: " + amount+"개 "+ new Intl.NumberFormat('ko-KR').format(delPriceValue) + "원";
+  }
 
-	  // allPrice 업데이트
-	  var allPriceElement = document.getElementById("allPrice");
-	  allPriceElement.innerText = allPrice * amount + "원";
+  // 마이너스 버튼 클릭 시
+  minusBtn.addEventListener('click', () => {
+    const currentAmount = parseInt(cartAmount.value);
+    if (currentAmount > 1) {
+      changeQuantity(currentAmount - 1);
+    }
+  });
 
-	  // totalDel 업데이트
-	  var totalDelElement = document.getElementById("totalDel");
-	  totalDelElement.innerText = totalDel * amount + "원";
-	}
+  // 플러스 버튼 클릭 시
+  plusBtn.addEventListener('click', () => {
+    const currentAmount = parseInt(cartAmount.value);
+    if (currentAmount < proAmount-1) {
+      changeQuantity(currentAmount + 1);
+    }
+  });
 
-	// minus-button 클릭 시 num-product 값을 1 감소시키고 업데이트
-	document.getElementById("minus-button").addEventListener("click", function () {
-	  var cartAmountElement = document.getElementById("cart_amount");
-	  if (parseInt(cartAmountElement.value) > 1) {
-	    cartAmountElement.value = parseInt(cartAmountElement.value) - 1;
-	    updatePrice(
-	      cartAmountElement,
-	      ${lists[0].pro_subprice},
-	      ${lists[0].pro_allprice},
-	      ${lists[0].pro_delprice}
-	    );
-	  }
-	});
-
-	// plus-button 클릭 시 num-product 값을 1 증가시키고 업데이트
-	document.getElementById("plus-button").addEventListener("click", function () {
-	  var cartAmountElement = document.getElementById("cart_amount");
-	  if (parseInt(cartAmountElement.value) < 10) {
-	    cartAmountElement.value = parseInt(cartAmountElement.value) + 1;
-	    updatePrice(
-	      cartAmountElement,
-	      ${lists[0].pro_subprice},
-	      ${lists[0].pro_allprice},
-	      ${lists[0].pro_delprice}
-	    );
-	  }
-	});
+  // 초기값 설정
+  changeQuantity(1);
 </script>
 <!--===============================================================================================-->	
 	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
