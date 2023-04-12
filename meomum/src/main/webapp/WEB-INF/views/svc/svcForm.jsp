@@ -18,8 +18,8 @@
 .page-header {
 	background: linear-gradient(rgba(36, 39, 38, 0.5), rgba(36, 39, 38, 0.5)),
 		rgba(36, 39, 38, 0.5)
-		url(https://images.pexels.com/photos/2079246/pexels-photo-2079246.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)
-		/* url(https://images.pexels.com/photos/7282431/pexels-photo-7282431.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2) */
+		url(https://images.unsplash.com/photo-1615876234886-fd9a39fda97f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80)
+	
 		
 		 no-repeat center;
 	background-size: cover;
@@ -98,6 +98,7 @@ footer {
 	
 				<!-- ----------------------------------서비스영역---------------------------------- -->
 						<div class="input-group mb-3">
+						
 							<label class="input-group-text col-3 text-center" for="input_svc_area" style="font-weight:bold;">서비스 영역</label>
 							<div class="form-check form-check-inline">
 								<input class="form-check-input" type="checkbox" name="svc_area" id="svc_area"  value="집 전체"> 
@@ -188,6 +189,8 @@ footer {
 								<label class="btn btn-outline-secondary" for="timeC">16:00</label>
 							</div>
 						</div>
+
+
 
 						<!-- ----------------------------------요청사항--------------------------------- -->
 						<div class="input-group mb-3" style="max-height: 600px; overflow-y: auto;">
