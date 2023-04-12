@@ -91,7 +91,7 @@
 	    
 	<div class="app-content pt-3 p-md-3 p-lg-4">
 		<div class="container pt-5">
-			<h1 class="text-center mb-4">상품 재고 관리</h1>
+			<h1 class="text-center mb-4">구독 반납 내역</h1>
 			    
 			<div class="row g-3 mb-4 align-items-center justify-content-between">
 				    <div class="col-auto">
@@ -139,23 +139,25 @@
 							        <table class="table app-table-hover mb-0 text-center">
 										<thead>
 											<tr>
-												<th class="cell">상품번호</th>
-												<th class="cell">상품명</th>
-												<th class="cell">카테고리</th>
-												<th class="cell">기존수량</th>
-												<th class="cell">재고수정</th>
-												<th class="cell">판매상태</th>
+												<th class="cell">반품번호</th>
+												<th class="cell">주문번호</th>
+												<th class="cell">반납상품</th>
+												<th class="cell">반납신청일자</th>
+												<th class="cell">회수날짜</th>
+												<th class="cell">반납완료날짜</th>
+												<th class="cell">상태</th>
 											</tr>
 										</thead>
 										<tbody>
 											<c:if test="${empty lists}">
 												<tr>
-													<td class="align-middle" colspan="6">등록된 상품이 없습니다.</td>
+													<td class="align-middle" colspan="6">구독 반납 내역이 없습니다.</td>
 												</tr>
 											</c:if>
 											<c:forEach var="dto" items="${lists}">
 												<tr>
-													<td class="cell">${dto.pro_idx}</td>
+													<td class="cell">${dto.return_idx}</td>
+													<td class="cell">${dto.order_idx}</td>
 													<td class="cell proname">
 														<div class="d-flex justify-content-start align-items-center">
 														<div class="thumb-box">
@@ -164,35 +166,17 @@
 														<span class="truncate">${dto.pro_name}</span>
 														</div>
 													</td>
+													<td class="cell">${dto.return_date}</td>
+													<td class="cell">${dto.return_start_date}</td>
+													<td class="cell">${dto.return_end_date}</td>
 													<td class="cell">
-														<span class="badge bg-success">
-															<c:choose>
-																<c:when test="${dto.pro_cate eq 1}">침대</c:when>
-																<c:when test="${dto.pro_cate eq 2}">테이블</c:when>
-																<c:when test="${dto.pro_cate eq 3}">의자</c:when>
-																<c:when test="${dto.pro_cate eq 4}">소파</c:when>
-																<c:when test="${dto.pro_cate eq 5}">조명</c:when>
-															</c:choose>
-														</span>
-													</td>
-													<td class="cell">${dto.pro_amount}</td>
-													<td class="cell">
-														<form action="proAmountUpdate.do?pro_idx=${dto.pro_idx}" name="proAmountUpdate" 
-																method="post" onsubmit="return validate()" class="d-flex justify-content-center align-items-center">
-															<input class="pro_amount" id="pro_amount" type="number" size="2" min="0" max="100" 
-																	name="pro_amount" value="${dto.pro_amount}" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
-															<input type="submit" class="btn-sm app-btn-secondary" value="수정">
-														</form>
-													</td>
-													<td class="cell">
-														<form action="proStateUpdate.do?pro_idx=${dto.pro_idx}" name="proStateUpdate" method="post"
-																class="d-flex justify-content-center align-items-center">
-															<select class="state-box w-auto" name="pro_state">
-																<option ${dto.pro_state==0?"selected":""} value="0">판매중</option>
-																<option ${dto.pro_state==1?"selected":""} value="1">품절</option>
-															</select>
-															<input type="submit" class="btn-sm app-btn-secondary" value="수정">
-														</form>
+														<c:choose>
+															<c:when test="${dto.order_status eq 5}">										
+																반납신청완료
+															</c:when>
+															<c:when test="${dto.order_status eq 6}">반납진행</c:when>
+															<c:when test="${dto.order_status eq 7}">반납완료</c:when>
+														</c:choose>
 													</td>
 												</tr>
 											</c:forEach>

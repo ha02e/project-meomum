@@ -172,7 +172,7 @@ h1, h2, h3{
 							        <li class="submenu-item"><a class="submenu-link" href="proAdmin.do">상품 관리</a></li>
 							        <li class="submenu-item"><a class="submenu-link" href="proAmount_a.do">상품 재고 관리</a></li>
 							        <li class="submenu-item"><a class="submenu-link" href="orderReport_a.do">주문/배송 내역</a></li>
-							        <li class="submenu-item"><a class="submenu-link" href="#">구독 반납 내역</a></li>
+							        <li class="submenu-item"><a class="submenu-link" href="returnProList_a.do">구독 반납 내역</a></li>
 						        </ul>
 					        </div>
 					    </li><!--//nav-item-->
