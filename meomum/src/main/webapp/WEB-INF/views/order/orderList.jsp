@@ -246,27 +246,10 @@
 				var bPcode = document.getElementById("order_pcode").value;
 				var order_tos = document.getElementById("checkbox").value;
 
-				var uidx = $
-				{
-					sessionScope.ssInfo.user_idx
-				}
-				;
-				var pidx = $
-				{
-					dto.pro_idx
-				}
-				;
-				var pAmount = $
-				{
-					param.cart_amount
-				}
-				;
-				var pidx = $
-				{
-					dto.pro_idx
-				}
-				;
-
+				var uidx = ${sessionScope.ssInfo.user_idx};
+				var pidx = ${dto.pro_idx};
+				var pAmount = ${param.cart_amount};
+				
 				IMP.request_pay({
 					pg : "kakaopay", //"html5_inicis",
 					pay_method : 'card',
