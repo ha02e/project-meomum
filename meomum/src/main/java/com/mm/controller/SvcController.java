@@ -26,6 +26,7 @@ import com.mm.payment.model.PaymentDTO;
 import com.mm.point.model.PointDAO;
 import com.mm.point.model.PointDTO;
 import com.mm.point.model.ResultDTO;
+import com.mm.svc.model.IdxDTO;
 import com.mm.svc.model.SvcContentDTO;
 import com.mm.svc.model.SvcDAO;
 import com.mm.svc.model.SvcMemDTO;
@@ -51,6 +52,7 @@ public class SvcController {
 	@Autowired
 	private PaymentDAO payDao;
 	
+	/**방문 견적 신청 폼 이동*/
 	@RequestMapping("/svc.do")
 	public ModelAndView svc(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
@@ -95,7 +97,7 @@ public class SvcController {
 		return mav; 
 	}
 	
-	/**관리자 페이지-예약 리스트*/
+	/**관리자 페이지-방문 견적 신청자 리스트*/
 	@RequestMapping("/asvcList.do")
 	public ModelAndView asvcList(@RequestParam(value="cp",defaultValue="1")int cp) {
 		int totalCnt = svcDao.getTotalCnt();
@@ -118,22 +120,30 @@ public class SvcController {
 			@RequestParam("maxDate") String maxDate,
             @RequestParam(value="category",defaultValue="1") int category,
             @RequestParam("keyword") String keyword,
-            @RequestParam("state[]") List<String> state){
+            @RequestParam("state[]") List<String> state,
+            @RequestParam(value="cp",defaultValue="1")int cp){
 		
+	    int totalCnt = svcDao.svcSelectDetailCnt(minDate, maxDate, category, keyword, state);
+	    int listSize = 10;
+	    int pageSize = 5;
+
+	    String pageStr = com.mm.module.PageModule.makePage("svcSearch.do", totalCnt, listSize, pageSize, cp);
+
 		ArrayList<String> arr = new ArrayList<String>();
 		for(int i=0;i<state.size();i++) {
 			arr.add(state.get(i));
 		}
 		
-		List<SvcSelectAllDTO> list = svcDao.svcSelectDetail(minDate,maxDate,category,keyword,arr);
+		List<SvcSelectAllDTO> list = svcDao.svcSelectDetail(minDate,maxDate,category,keyword,arr,cp,listSize);
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("list", list);
+		mav.addObject("pageStr", pageStr);
 		mav.setViewName("mmJson");
 		return mav;
 	}
 	
-	/**관리자-예약 상세 보기*/
+	/**관리자- 방문 견적 상세 보기*/
 	@RequestMapping("/asvcContent.do")
 	public ModelAndView asvcInfo(@RequestParam("svc_idx")String idx) {
 		SvcContentDTO dto = svcDao.svcContent(idx);
@@ -146,14 +156,13 @@ public class SvcController {
 		return mav;
 	}
 	
-
-	/**관리자-서비스 견적 추가 팝업창으로 이동*/
+	/**관리자-정리일상 견적 추가 팝업창으로 이동*/
 	@RequestMapping("/asvcIngPopup.do")
 	public String asvcIngPopup() {
 		return "svc/a_svcIngPopup";
 	}
 
-	/**관리자-서비스 견적 추가*/
+	/**관리자-정리일상 견적 추가*/
 	@RequestMapping("/svcIngInsert.do")
 	public ModelAndView svcIngInsert(SvcIngDTO dto) {
 		int result = svcDao.svcIngInsert(dto);
@@ -167,7 +176,7 @@ public class SvcController {
 		return mav;
 	}
 	
-	/**관리자-서비스 견적 상세 보기*/
+	/**관리자-정리일상 견적 상세 보기*/
 	@RequestMapping("asvcIngContent.do")
 	public ModelAndView asvcIngContent(@RequestParam("svc_idx")String idx) {
 		SvcIngDTO ingDto = svcDao.svcIngContent(idx);
@@ -176,7 +185,6 @@ public class SvcController {
 		mav.setViewName("svc/a_svcIngContent");
 		return mav;
 	}
-
 
 	/**관리자 페이지-방문 견적 수정*/
 	@RequestMapping("/asvcUpdate.do")
@@ -198,7 +206,7 @@ public class SvcController {
 		return mav;
 	}
 	
-	/**관리자-서비스 신청 수정*/
+	/**관리자-정리일상 견적 수정*/
 	@RequestMapping("/asvcIngUpdate.do")
 	public ModelAndView asvcIngUpdate(SvcIngDTO dto,SvcMemDTO memDto) {
 		int ingUpdate = svcDao.svcIngUpdate(dto);
@@ -210,7 +218,7 @@ public class SvcController {
 	}
 
 
-	/**마이페이지-방문 견적 내역 리스트*/
+	/**마이페이지-방문 견적 예약 내역*/
 	@RequestMapping("/svcList.do")
 	public ModelAndView svcUserList(HttpSession session,@RequestParam(value="cp",defaultValue="1")int cp) {
 		session.getAttribute("ssInfo");
@@ -232,28 +240,7 @@ public class SvcController {
 		return mav;
 	}
 	
-	/**마이페이지-정리일상 진행 리스트*/
-	@RequestMapping("/svcIngList.do")
-	public ModelAndView svcIngList(HttpSession session,@RequestParam(value="cp",defaultValue="1")int cp) {
-		session.getAttribute("ssInfo");
-		MemberDTO sdto =(MemberDTO) session.getAttribute("ssInfo");
-		int user_idx = sdto.getUser_idx();
-		
-		int totalCnt = svcDao.svcIngListCnt(user_idx);
-		int listSize = 5;
-		int pageSize = 5;
-		String pageStr = com.mm.module.PageModule.makePage("svcIngList.do", totalCnt, listSize, pageSize, cp);
-		List<SvcIngDTO> list = svcDao.svcIngList(cp,listSize,user_idx);
-		ModelAndView mav = new ModelAndView();
-		
-		mav.addObject("list", list);
-		mav.addObject("pageStr", pageStr);
-		mav.setViewName("svc/svcIngList");
-		return mav;
-		
-	}
-	
-	/**마이페이지-예약 상세 보기(방문 견적 신청 내역)*/
+	/**마이페이지-예약 상세 보기(방문 견적 예약 내역)*/
 	@RequestMapping("/svcContent.do")
 	public ModelAndView svcInfo(@RequestParam("svc_idx")String idx) {
 		SvcContentDTO dto = svcDao.svcContent(idx);
@@ -266,27 +253,7 @@ public class SvcController {
 		return mav;
 	}
 	
-	/**마이페이지-예약 상세 보기(정리일상 진행 현황)*/
-	@RequestMapping("/svcIngContent.do")
-	public ModelAndView svcIngContent_a(@RequestParam("svc_idx")String idx,@RequestParam("user_idx")int user_idx) {
-		SvcContentDTO dto = svcDao.svcContent(idx);
-		SvcIngDTO ingdto = svcDao.svcIngContent(idx);
-
-		/* PointDTO rdto = pdao.pointTotal(user_idx); */
-		int result = pdao.pointTotal(user_idx);
-		ModelAndView mav = new ModelAndView();
-		
-		mav.addObject("dto",dto);
-		mav.addObject("ingdto",ingdto);
-		/* mav.addObject("rdto", rdto); */
-		mav.addObject("result", result);
-	
-		mav.setViewName("svc/svcIngContent");
-	
-		return mav;
-	}
-	
-	/**사용자 페이지-예약 수정 폼*/
+	/**사용자 페이지-방문 견적 예약 수정 폼*/
 	@RequestMapping("/svcUpdateForm.do")
 	public ModelAndView updateForm(@RequestParam("svc_idx")String idx) {
 		SvcContentDTO dto = svcDao.svcContent(idx);
@@ -296,7 +263,7 @@ public class SvcController {
 		return mav;
 	}
 	
-	/**사용자 페이지-예약 수정*/
+	/**사용자 페이지-방문 견적 예약 수정*/
 	@RequestMapping("/svcUpdate.do")
 	public ModelAndView svcUpdate(SvcMemDTO memDto,SvcDetailDTO detailDto, SvcDateDTO dateDto) {
 		int memUpdate = svcDao.svcMemUpdate(memDto);
@@ -317,7 +284,6 @@ public class SvcController {
 		return mav;
 	}
 	
-
 	/**사용자-방문견적 예약 취소*/
 	@RequestMapping("/svcCancle.do")
 	public ModelAndView svcDelete(@ModelAttribute SvcContentDTO dto) {
@@ -336,6 +302,49 @@ public class SvcController {
 		
 		return mav;
 	}
+	
+	/**마이페이지-정리일상 진행 현황*/
+	@RequestMapping("/svcIngList.do")
+	public ModelAndView svcIngList(HttpSession session,@RequestParam(value="cp",defaultValue="1")int cp) {
+		session.getAttribute("ssInfo");
+		MemberDTO sdto =(MemberDTO) session.getAttribute("ssInfo");
+		int user_idx = sdto.getUser_idx();
+		
+		int totalCnt = svcDao.svcIngListCnt(user_idx);
+		int listSize = 5;
+		int pageSize = 5;
+		String pageStr = com.mm.module.PageModule.makePage("svcIngList.do", totalCnt, listSize, pageSize, cp);
+		List<SvcIngDTO> list = svcDao.svcIngList(cp,listSize,user_idx);
+		ModelAndView mav = new ModelAndView();
+		
+		mav.addObject("list", list);
+		mav.addObject("pageStr", pageStr);
+		mav.setViewName("svc/svcIngList");
+		return mav;
+	}
+	
+	/**마이페이지-예약 상세 보기(정리일상 진행 현황)*/
+	@RequestMapping("/svcIngContent.do")
+	public ModelAndView svcIngContent_a(@RequestParam("svc_idx")String idx,@RequestParam("user_idx")int user_idx) {
+		SvcContentDTO dto = svcDao.svcContent(idx);
+		SvcIngDTO ingdto = svcDao.svcIngContent(idx);
+
+		/* PointDTO rdto = pdao.pointTotal(user_idx); */
+		int result = pdao.pointTotal(user_idx);
+		System.out.println(user_idx);
+		ModelAndView mav = new ModelAndView();
+		
+		mav.addObject("dto",dto);
+		mav.addObject("ingdto",ingdto);
+		/* mav.addObject("rdto", rdto); */
+		mav.addObject("result", result);
+	
+		mav.setViewName("svc/svcIngContent");
+	
+		return mav;
+	}
+	
+
 	
 	/**사용자: 정리일상 결제(payment 테이블 insert)*/
 	@RequestMapping(value="/svcPay.do")
@@ -371,10 +380,22 @@ public class SvcController {
 		return mav;
 	}
 	
+	/**정리일상 결제 시 상태 변경*/
+	//svc_member
+	@RequestMapping(value="/updateState.do")
+	public ModelAndView updateState(@RequestBody IdxDTO dto) {
+		int svcUpdate = svcDao.updateSvcState(dto);
+		int payUpdate = svcDao.updatePayState(dto);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("mmJson");
+		return mav;
+	}
+	
+	//svc_ing
 	/**예약시간 가져오기*/
 	@RequestMapping(value="/svcCalendar.do")
 	public ModelAndView SvcCalendarForm() {
-		
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
 		SimpleDateFormat sdf2 = new SimpleDateFormat("M월");

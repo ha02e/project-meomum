@@ -84,10 +84,19 @@
 		        tableTd += '<td>' + rowData.user_tel + '</td>';
 		        tableTd += '<td>' + rowData.svc_state + '</td>';
 		        tableTd += '</tr>';
-		        $('#tableBody').append(tableTd);
+		         $('#tableBody').append(tableTd);
+		         
+		        //var paging = '<input type="submit" value="선택 삭제">';
+		       // paging += '<nav class="d-flex justify-content-between align-items-center">';
+		        //paging += '<div class="col-10 justify-content-center align-items-start text-center">';
+		       // paging += '<span class="pagination pagination-sm justify-content-center">${pageStr} </span>';
+		       // paging += '</div>';
+		        //pging += '</nav>;
+
 				}
 			}
 		}).fail(function() {
 			alert('다시 시도해주세요');
 		});
 	}
+	

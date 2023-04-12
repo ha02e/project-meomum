@@ -85,8 +85,6 @@
 				</tr>
 				<thead>
 				
-
-				
 				<tbody id="tableBody">
 				<c:if test="${empty svcDTO}">
 					<tr>
@@ -108,13 +106,12 @@
 				</c:forEach>
 				</tbody>
 			</table>
-			<input type="submit" value="선택 삭제">
-			<nav class="d-flex justify-content-between align-items-center">
-				<div class="col-10 justify-content-center align-items-start text-center">
-					<span class="pagination pagination-sm justify-content-center">
-						${pageStr} </span>
-				</div>
-			</nav>
+				<input type="submit" value="선택 삭제">
+				   <div class="container-xl paging">
+             		<nav aria-label="Page navigation example">
+                  		<ul class="pagination pagination-sm justify-content-center"> ${pageStr}</ul>
+               		</nav>
+            		</div>				
 		</fieldset>
 	</section>
 </div>
