@@ -109,4 +109,10 @@
 		set order_status=2
 		where order_idx=#{order_idx}
 	</update>
+	
+	<update id="returnApplyUpdate" parameterType="String">
+		update orders
+		set order_status=5
+		where order_idx=#{order_idx}
+	</update>
   </mapper>

@@ -20,5 +20,8 @@ public interface OrderDAO {
 	public int reportTotalCnt();
 	
 	public OrderReportDTO orderData(String order_idx);
+	
 	public int shipStartUpdate(String order_idx);
+	public int returnApplyUpdate(String order_idx);
+	
 }
