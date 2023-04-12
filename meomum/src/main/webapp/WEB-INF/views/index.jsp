@@ -171,7 +171,7 @@ object-fit: cover;
 			<div class="carousel-inner">
 				<div class="carousel-item active">
 					<img
-						src="https://cdn.pixabay.com/photo/2016/08/26/15/06/home-1622401_960_720.jpg"
+						src="https://images.unsplash.com/photo-1633505899118-4ca6bd143043?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80"
 						class="d-block  " alt="인테리어 이미지 " data-bs-interval="10000">
 				</div>
 				<div class="carousel-item">

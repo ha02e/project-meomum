@@ -30,7 +30,7 @@
 .page-header {
 	background: linear-gradient(rgba(36, 39, 38, 0.5), rgba(36, 39, 38, 0.5)),
 		rgba(36, 39, 38, 0.5)
-		url(https://cdn.pixabay.com/photo/2016/06/24/10/47/house-1477041_960_720.jpg)
+		url(https://images.unsplash.com/photo-1618220048045-10a6dbdf83e0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80)
 		no-repeat center;
 	background-size: cover;
 	margin: 0;
@@ -110,12 +110,11 @@ footer {
 							</div>
 						</div>
 					</c:forEach>
-				<nav class="d-flex justify-content-between align-items-center">
-					<div class="col-10 justify-content-center align-items-start text-center">
-					<span class="pagination pagination-sm justify-content-center">
-						${pageStr} </span>
-					</div>
-				</nav>
+					<div class="container-xl paging">
+             			<nav aria-label="Page navigation example">
+                  			<ul class="pagination pagination-sm justify-content-center"> ${pageStr}</ul>
+               			</nav>
+            		</div>			
 				</div>
 			</div>
 		</div>
