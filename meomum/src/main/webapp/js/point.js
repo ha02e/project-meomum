@@ -22,7 +22,7 @@ real_total.value = total.value;
        }
        getTotal();
    }
-
+	//포인트가 결제금액보다 많을 경우, 총 결제 금액 0원으로 변하게
    function getTotal() {
        var remainingPoint = point_total.value; 
        var usePoint = point_num.value;
@@ -38,10 +38,12 @@ real_total.value = total.value;
            }
            else{
                real_total.value = total.value - usePoint;
+               console.log("amount"+real_total.value);
 
            }
        }else{
        real_total.value = total.value - usePoint;
+       console.log("amount"+real_total.value);
     
        }
       }

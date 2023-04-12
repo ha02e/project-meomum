@@ -1,5 +1,3 @@
-/** 결제 */
-
 var IMP = window.IMP;
 IMP.init("imp51432774"); 
 
@@ -9,7 +7,7 @@ function requestPay() {
   var milliseconds = today.getMilliseconds().toString();
   var makeMerchantUid =seconds + milliseconds;  
   
-  var svcIdx = document.getElementById('svc_idx').value;
+ var svcIdx = document.getElementById('svc_idx').value;
   console.log(svcIdx);
   var amount = document.getElementById('amount').value;
    console.log(amount);
@@ -17,15 +15,15 @@ function requestPay() {
    console.log(user_name);
   var user_tel = document.getElementById('user_tel').value;
    console.log(user_tel);
- var user_email = document.getElementById('user_email').value;
+ var user_email = document.getElementById('user_id').value;
   console.log(user_email);
-   var user_idx= "${sessionScope.ssInfo.user_idx}";
+   var user_idx= document.getElementById('user_idx').value;
   console.log(user_idx);
   var uid = svcIdx + makeMerchantUid;
   console.log(uid);
   
-  
-  /**var svcIdx = "${dto.svc_idx}";
+  /**
+  var svcIdx = "${dto.svc_idx}";
   console.log(svcIdx);
   var amount = document.getElementById('amount').value;
   console.log(amount);
@@ -37,7 +35,6 @@ function requestPay() {
   console.log(email);*/
   
 
-  event.preventDefault();
 
   IMP.request_pay({
     pg : "kakaopay", //html5_inicis
@@ -52,7 +49,7 @@ function requestPay() {
     if (rsp.success) {
         
         var PaymentDTO ={
-                    payment_idx: rsp.imp_uid, //payment_idx로 들어갈 값
+                  payment_idx: rsp.imp_uid, //payment_idx로 들어갈 값
                   cate_idx: rsp.merchant_uid, //인식번호(cate_idx)
                   payment_cate: 1, //payment_cate 카테고리
                   pay_method: rsp.pay_method, //pay_mehtod 지불수단
@@ -60,8 +57,8 @@ function requestPay() {
                   pay_buydate: rsp.paid_at, //pay_buydate 결제일
                   pay_cancleDate:null,//pay_cancleDate 취소일(임시'-'로 지정)
                   pay_state: rsp.status,//pay_state
-
         };
+
         var PointDTO = {
                    cate_idx: svcIdx,
                   user_idx: user_idx,
@@ -69,54 +66,32 @@ function requestPay() {
                     point_info:'정리일상 결제',
                     point_num: $("#point_num").val()
         };
+
         var IdxDTO = {
                 svc_idx: svcIdx
         };
+
         console.log(PaymentDTO);
         console.log(PointDTO);
-       //첫번째 ajax요청 - PaymentDTO insert
+       
         $.ajax({
             type: 'POST',
             url: "svcPay.do",
-            data: JSON.stringify(PaymentDTO),
+            data: JSON.stringify({PaymentDTO:PaymentDTO, PointDTO: PointDTO, IdxDTO: IdxDTO}),
             contentType: "application/json",
+            dataType :"json",
             success: function (data) {
               console.log(data);
-              alert('완료:payment테이블');
-              // 두 번째 ajax 요청 - PointDTO insert
-              $.ajax({
-                type: 'POST',
-                url: "insertPoint.do",
-                data: JSON.stringify(PointDTO),
-                contentType: "application/json",
-                success: function (data) {
-                  console.log(data);
-                  alert('완료:point테이블');
-				//세 번째 ajax 요청-state update
-                  $.ajax({
-                      type: 'POST',
-                      url: "updateState.do",
-                      data:JSON.stringify(IdxDTO),
-                      contentType: "application/json",
-                      success:function(data){
-                          console.log(data);
-                          alert('완료:state 변경 성공');
-                      },
-                      error:function(xhr, status, error){
-                          alert('state 변경 실패');
-                      }
-                  })
-                },
-                error: function (xhr, status, error) {
-                  alert('PointDTO insert 실패');
-                }
-              });
-            },
-            error: function (xhr, status, error) {
-              alert('PaymentDTO insert 실패');
-            }
-          });
+              alert('완료:테이블 성공');
+             },
+             error:function(xhr, status, error){
+                  alert('실패');
+             }
+             });
+             
+            alert('결제 성공');
         } else {
+        	console.log(rsp);
           alert('다시 시도해주세요');
         }
       }); 
