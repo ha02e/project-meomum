@@ -12,6 +12,7 @@ import java.util.*;
 	public List<ProDTO> proUpdateList(int pro_idx);
 	public int proUpdate(ProDTO dto);
 	public String proFindFile(Integer idx);
+	public List<ProDTO> proBest();
 	
 	public ProDTO proSelect(int pro_idx);
 	public int proAmountUpdate(ProDTO dto);

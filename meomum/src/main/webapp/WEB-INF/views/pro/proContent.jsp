@@ -6,6 +6,37 @@
 <head>
 <meta charset="UTF-8">
 <title>[사용자] 상세 페이지</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="images/icons/favicon.png"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/linearicons-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/slick/slick.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/MagnificPopup/magnific-popup.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/proUtil.css">
+	<link rel="stylesheet" type="text/css" href="css/proMain.css">
+<!--===============================================================================================-->
 </head>
 <%@include file="/WEB-INF/views/header.jsp" %>
 <body class="animsition">
@@ -354,36 +385,51 @@
 	</section>
 
 
-	<!-- Back to top -->
-	<div class="btn-back-to-top" id="myBtn">
-		<span class="symbol-btn-back-to-top">
-			<i class="zmdi zmdi-chevron-up"></i>
-		</span>
-	</div>
-	
-
 <script>
-function updatePrice(input, subprice, allprice, delprice) {
-    var cartAmount = input.value;
-    var subPrice = cartAmount * subprice;
-    var allPrice = cartAmount * allprice;
-    var totalDel = cartAmount * delprice;
-    
-    // 하위 요소에서 ID를 이용하여 값을 업데이트합니다.
-    document.getElementById("subPrice").innerHTML = "총 월 구독 가격 :"+ subPrice.toLocaleString() + "원";
-    document.getElementById("allPrice").innerHTML = "총 구독 가격 :"+ allPrice.toLocaleString() + "원";
-    document.getElementById("totalDel").innerHTML = "총 배송비 :"+ totalDel.toLocaleString() + "원";
-}
- /*
-  function updatePrice(input, subPrice, allPrice) {
-  let cartAmount = input.value;
-  let subPrice = cartAmount * subprice;
-  let allPrice = cartAmount * allprice;
-  
-  document.getElementById("subPrice").textContent = subPrice.toLocaleString() + "원";
-  document.getElementById("allPrice").textContent = allPrice.toLocaleString() + "원";
+function updatePrice(cartAmount, subPrice, allPrice, totalDel) {
+	  // num-product 값을 가져옴
+	  var amount = parseInt(cartAmount.value);
+
+	  // subPrice 업데이트
+	  var subPriceElement = document.getElementById("subPrice");
+	  subPriceElement.innerText = subPrice * amount + "원";
+
+	  // allPrice 업데이트
+	  var allPriceElement = document.getElementById("allPrice");
+	  allPriceElement.innerText = allPrice * amount + "원";
+
+	  // totalDel 업데이트
+	  var totalDelElement = document.getElementById("totalDel");
+	  totalDelElement.innerText = totalDel * amount + "원";
 	}
-  */
+
+	// minus-button 클릭 시 num-product 값을 1 감소시키고 업데이트
+	document.getElementById("minus-button").addEventListener("click", function () {
+	  var cartAmountElement = document.getElementById("cart_amount");
+	  if (parseInt(cartAmountElement.value) > 1) {
+	    cartAmountElement.value = parseInt(cartAmountElement.value) - 1;
+	    updatePrice(
+	      cartAmountElement,
+	      ${lists[0].pro_subprice},
+	      ${lists[0].pro_allprice},
+	      ${lists[0].pro_delprice}
+	    );
+	  }
+	});
+
+	// plus-button 클릭 시 num-product 값을 1 증가시키고 업데이트
+	document.getElementById("plus-button").addEventListener("click", function () {
+	  var cartAmountElement = document.getElementById("cart_amount");
+	  if (parseInt(cartAmountElement.value) < 10) {
+	    cartAmountElement.value = parseInt(cartAmountElement.value) + 1;
+	    updatePrice(
+	      cartAmountElement,
+	      ${lists[0].pro_subprice},
+	      ${lists[0].pro_allprice},
+	      ${lists[0].pro_delprice}
+	    );
+	  }
+	});
 </script>
 <!--===============================================================================================-->	
 	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
@@ -392,17 +438,6 @@ function updatePrice(input, subprice, allprice, delprice) {
 <!--===============================================================================================-->
 	<script src="vendor/bootstrap/js/popper.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/select2/select2.min.js"></script>
-	<script>
-		$(".js-select2").each(function(){
-			$(this).select2({
-				minimumResultsForSearch: 20,
-				dropdownParent: $(this).next('.dropDownSelect2')
-			});
-		})
-	</script>
-<!--===============================================================================================-->
 	<script src="vendor/daterangepicker/moment.min.js"></script>
 	<script src="vendor/daterangepicker/daterangepicker.js"></script>
 <!--===============================================================================================-->

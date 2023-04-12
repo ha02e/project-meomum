@@ -44,6 +44,15 @@ private SqlSessionTemplate sqlMap;
 				return lists;
 			}
 		
+		
+		
+	//베스트인 척하는 pro_date asc순
+	@Override
+		public List<ProDTO> proBest() {
+			List<ProDTO> lists=sqlMap.selectList("proBest");
+			return lists;
+		}
+		
 	
 	//상품 검색
 	@Override
