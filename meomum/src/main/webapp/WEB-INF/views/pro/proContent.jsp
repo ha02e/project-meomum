@@ -144,14 +144,14 @@
 						 <input type="hidden" name="pro_subprice" value="${lists[0].pro_subprice}">
 						 <input type="hidden" name="pro_delprice" value="${lists[0].pro_delprice }">
 						 
-						<div class="wrap-num-product flex-w m-r-20 m-tb-10">
+						<div class="flex-w m-r-20 m-tb-10">
 							<!-- 마이너스 -->
 							<div id="minus-button" class="btn-num-product-down">
 								<i class="fs-16 zmdi zmdi-minus"></i>
 							</div>
 
 							<!-- 수량 조절 -->
-							<input class="mtext-104 cl3 txt-center num-product" id="cart_amount" 
+							<input class="txt-center num-product" id="cart_amount" 
 							type="number" name="cart_amount" value="1" 
 							onchange="updatePrice(this, ${lists[0].pro_subprice},${lists[0].pro_allprice},${lists[0].pro_delprice})" 
 							min="1" max="10">
@@ -443,25 +443,6 @@ function updatePrice(cartAmount, subPrice, allPrice, totalDel) {
 <!--===============================================================================================-->
 	<script src="vendor/slick/slick.min.js"></script>
 	<script src="js/slick-custom.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/parallax100/parallax100.js"></script>
-	<script>
-        $('.parallax100').parallax100();
-	</script>
-<!--===============================================================================================-->
-	<script src="vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
-	<script>
-		$('.gallery-lb').each(function() { // the containers for all your galleries
-			$(this).magnificPopup({
-		        delegate: 'a', // the selector for gallery item
-		        type: 'image',
-		        gallery: {
-		        	enabled:true
-		        },
-		        mainClass: 'mfp-fade'
-		    });
-		});
-	</script>
 <!--===============================================================================================-->
 	<script src="vendor/isotope/isotope.pkgd.min.js"></script>
 <!--===============================================================================================-->

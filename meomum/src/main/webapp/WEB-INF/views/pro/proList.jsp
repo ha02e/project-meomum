@@ -94,33 +94,33 @@
       
       
     <!-- Search product -->
-  <form name="itemFind" action="itemFind.do">
-    <div class="dis-flex panel-search w-full p-t-10 p-b-15">
-      
-      <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="proF" placeholder="Search">
-      <button type="submit" 
-      class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
-        <i class="zmdi zmdi-search"></i>
-      </button>
-    </div>
-  </form>
-</div>
+		  <form name="itemFind" action="itemFind.do">
+		    <div class="dis-flex panel-search w-full p-t-10 p-b-15">
+		      
+		      <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="proF" placeholder="Search">
+		      <button type="submit" 
+		      class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
+		        <i class="zmdi zmdi-search"></i>
+		      </button>
+		    </div>
+		  </form>
+		</div>
 
 	
 	<!-- products -->
-	<div class="row isotope-grid">
-	    <c:forEach var="list" items="${lists}">
-	        <div class="col-sm-6 col-md-4 col-lg-4 p-b-35 isotope-item ${list.pro_cate}" >
-	            <!-- Block2 -->
-	            <div class="block2">
-	                <div class="block2-pic hov-img1">
-	                    <a href="proContent.do?pro_idx=${list.pro_idx}"><img src="/meomum/images/items/${list.pro_thumb}" alt="IMG-PRODUCT"></a>
-	
-	                    <a href="proContent.do?pro_idx=${list.pro_idx}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-	                       ${list.pro_month }개월
-	                    </a>
-	                </div>
-	
+		<div class="row isotope-grid">
+		    <c:forEach var="list" items="${lists}">
+		        <div class="col-sm-6 col-md-4 col-lg-4 p-b-35 isotope-item ${list.pro_cate}" >
+		            <!-- Block2 -->
+		            <div class="block2">
+		                <div class="block2-pic hov-img1">
+		                    <a href="proContent.do?pro_idx=${list.pro_idx}"><img src="/meomum/images/items/${list.pro_thumb}" alt="IMG-PRODUCT"></a>
+		
+		                    <a href="proContent.do?pro_idx=${list.pro_idx}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+		                       ${list.pro_month }개월
+		                    </a>
+		                </div>
+		
 	                <div class="block2-txt flex-w flex-t p-t-14">
 	                    <div class="block2-txt-child1 flex-col-l ">
 	                        <a href="proContent.do?pro_idx=${list.pro_idx}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">

@@ -1752,26 +1752,36 @@ button.mfp-close {
 /*//////////////////////////////////////////////////////////////////
 [ Num Product ]*/
 .wrap-num-product {
-  width: 140px;
-  height: 45px;
+  width: 100px;
+  height: 30px;
   border: 1px solid #e6e6e6;
   border-radius: 3px;
   overflow: hidden;
+  display: flex;
+  flex-wrap: nowrap;
 }
 
 .btn-num-product-up,
 .btn-num-product-down {
-  width: 45px;
+  width: 30px;
   height: 100%;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-num-product-down {
+  width: 25px;
 }
 
 .num-product {
-  width: calc(100% - 90px);
+  width: 40px;
   height: 100%;
   border-left: 1px solid #e6e6e6;
   border-right: 1px solid #e6e6e6;
   background-color: #f7f7f7;
+  text-align: center;
 }
 
 input.num-product {
@@ -1785,7 +1795,6 @@ input.num-product::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0; 
 }
-
 /*//////////////////////////////////////////////////////////////////
 [ Tolltip100 ]*/
 .tooltip100 {
