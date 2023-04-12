@@ -6,6 +6,37 @@
 <head>
 <meta charset="UTF-8">
 <title>[사용자] 상세 페이지</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="images/icons/favicon.png"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/linearicons-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/slick/slick.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/MagnificPopup/magnific-popup.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/proUtil.css">
+	<link rel="stylesheet" type="text/css" href="css/proMain.css">
+<!--===============================================================================================-->
 </head>
 <%@include file="/WEB-INF/views/header.jsp" %>
 <body class="animsition">
@@ -113,30 +144,31 @@
 						 <input type="hidden" name="pro_subprice" value="${lists[0].pro_subprice}">
 						 <input type="hidden" name="pro_delprice" value="${lists[0].pro_delprice }">
 						 
-						<div class="wrap-num-product flex-w m-r-20 m-tb-10">
+						<div class="flex-w m-r-20 m-tb-10">
 							<!-- 마이너스 -->
-							<div id="minus-button" class="btn-num-product-down">
+							<div id="minus-button">
 								<i class="fs-16 zmdi zmdi-minus"></i>
 							</div>
 
 							<!-- 수량 조절 -->
-							<input class="mtext-104 cl3 txt-center num-product" id="cart_amount" 
-							type="number" name="cart_amount" value="1" 
-							onchange="updatePrice(this, ${lists[0].pro_subprice},${lists[0].pro_allprice},${lists[0].pro_delprice})" 
+							<input class="txt-center num-product" 
+							id="cart_amount" 
+							type="number" 
+							name="cart_amount" 
+							value="1" 
 							min="1" max="10">
 												
 							<!-- 플러스 -->
-							<div id="plus-button" class="btn-num-product-up">
+							<div id="plus-button">
 								<i class="fs-16 zmdi zmdi-plus"></i>
 							</div>
 						</div>
-						
+						<div><span id="subPrice">월 가격:<fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_subprice}" />원</span></div>
+    					<div><span id="allPrice">총 가격:<fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_allprice}" />원</span></div>
+    					<div><span id="delPrice">총 배송비:<fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_delprice}" />원</span></div>
 						<br>
-						<div><span id="subPrice"><fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_subprice}" />원</span></div>
-    					<div><span id="allPrice"><fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_allprice}" />원</span></div>
-    					<div><span id="totalDel"><fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_delprice}" />원</span></div>
-						<br>
-										<div class="flex-w flex-r-m p-b-10">
+							
+							<div class="flex-w flex-r-m p-b-10">
 								<div class="size-204 flex-w flex-m respon6-next">
 									<button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail"
 									type="submit" formaction="cartInsert.do">장바구니</button>
@@ -145,8 +177,8 @@
 									 type="submit" formaction="orderList.do">구매하기</button>
 								</div>
 							</div>	
-							</form>
-						</div>
+						</form>
+					</div>
 						
 						
 
@@ -354,36 +386,49 @@
 	</section>
 
 
-	<!-- Back to top -->
-	<div class="btn-back-to-top" id="myBtn">
-		<span class="symbol-btn-back-to-top">
-			<i class="zmdi zmdi-chevron-up"></i>
-		</span>
-	</div>
-	
 
 <script>
-function updatePrice(input, subprice, allprice, delprice) {
-    var cartAmount = input.value;
-    var subPrice = cartAmount * subprice;
-    var allPrice = cartAmount * allprice;
-    var totalDel = cartAmount * delprice;
-    
-    // 하위 요소에서 ID를 이용하여 값을 업데이트합니다.
-    document.getElementById("subPrice").innerHTML = "총 월 구독 가격 :"+ subPrice.toLocaleString() + "원";
-    document.getElementById("allPrice").innerHTML = "총 구독 가격 :"+ allPrice.toLocaleString() + "원";
-    document.getElementById("totalDel").innerHTML = "총 배송비 :"+ totalDel.toLocaleString() + "원";
-}
- /*
-  function updatePrice(input, subPrice, allPrice) {
-  let cartAmount = input.value;
-  let subPrice = cartAmount * subprice;
-  let allPrice = cartAmount * allprice;
   
-  document.getElementById("subPrice").textContent = subPrice.toLocaleString() + "원";
-  document.getElementById("allPrice").textContent = allPrice.toLocaleString() + "원";
-	}
-  */
+  const minusBtn = document.getElementById('minus-button');
+  const plusBtn = document.getElementById('plus-button');
+  const cartAmount = document.getElementById('cart_amount');
+  
+  const subPrice = document.getElementById('subPrice');
+  const allPrice = document.getElementById('allPrice');
+  const delPrice = document.getElementById('delPrice');
+  
+  // 현재 재고 수량 가져오기
+  const proAmount = parseFloat("${lists[0].pro_amount}")
+
+  // 수량 및 가격 변경 함수
+  const changeQuantity = (amount) => {
+    const subPriceValue = parseFloat("${lists[0].pro_subprice}") * amount;
+    const allPriceValue = parseFloat("${lists[0].pro_allprice}") * amount;
+    const delPriceValue = parseFloat("${lists[0].pro_delprice}") * amount;
+    cartAmount.value = amount;
+    subPrice.innerText = "월 구독 가격: "+ new Intl.NumberFormat('ko-KR').format(subPriceValue) + "원";
+    allPrice.innerText = "총 구독 가격: " + new Intl.NumberFormat('ko-KR').format(allPriceValue) + "원";
+    delPrice.innerText = "총 배송비 가격: " + amount+"개 "+ new Intl.NumberFormat('ko-KR').format(delPriceValue) + "원";
+  }
+
+  // 마이너스 버튼 클릭 시
+  minusBtn.addEventListener('click', () => {
+    const currentAmount = parseInt(cartAmount.value);
+    if (currentAmount > 1) {
+      changeQuantity(currentAmount - 1);
+    }
+  });
+
+  // 플러스 버튼 클릭 시
+  plusBtn.addEventListener('click', () => {
+    const currentAmount = parseInt(cartAmount.value);
+    if (currentAmount < proAmount-1) {
+      changeQuantity(currentAmount + 1);
+    }
+  });
+
+  // 초기값 설정
+  changeQuantity(1);
 </script>
 <!--===============================================================================================-->	
 	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
@@ -392,41 +437,11 @@ function updatePrice(input, subprice, allprice, delprice) {
 <!--===============================================================================================-->
 	<script src="vendor/bootstrap/js/popper.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/select2/select2.min.js"></script>
-	<script>
-		$(".js-select2").each(function(){
-			$(this).select2({
-				minimumResultsForSearch: 20,
-				dropdownParent: $(this).next('.dropDownSelect2')
-			});
-		})
-	</script>
-<!--===============================================================================================-->
 	<script src="vendor/daterangepicker/moment.min.js"></script>
 	<script src="vendor/daterangepicker/daterangepicker.js"></script>
 <!--===============================================================================================-->
 	<script src="vendor/slick/slick.min.js"></script>
 	<script src="js/slick-custom.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/parallax100/parallax100.js"></script>
-	<script>
-        $('.parallax100').parallax100();
-	</script>
-<!--===============================================================================================-->
-	<script src="vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
-	<script>
-		$('.gallery-lb').each(function() { // the containers for all your galleries
-			$(this).magnificPopup({
-		        delegate: 'a', // the selector for gallery item
-		        type: 'image',
-		        gallery: {
-		        	enabled:true
-		        },
-		        mainClass: 'mfp-fade'
-		    });
-		});
-	</script>
 <!--===============================================================================================-->
 	<script src="vendor/isotope/isotope.pkgd.min.js"></script>
 <!--===============================================================================================-->

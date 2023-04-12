@@ -76,10 +76,13 @@ public class ProController {
 		
 		
 		List<ProDTO> lists=proPage(cp,listSize);
+		List<ProDTO> lists2=proDao.proBest();
+		
 		
 		ModelAndView mav=new ModelAndView();
 		mav.setViewName("pro/proList");
 		mav.addObject("lists", lists);
+		mav.addObject("lists2", lists2);
 		mav.addObject("pageStr", pageStr);
 		
 		return mav;
@@ -512,6 +515,7 @@ public class ProController {
 		mav.setViewName("pro/proList");
 		return mav;
 	}
+	
 
 	
 }
