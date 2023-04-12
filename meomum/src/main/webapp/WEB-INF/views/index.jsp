@@ -152,6 +152,26 @@ object-fit: cover;
 .hidden-sm-up {
     display: none!important;
 }
+
+@font-face {
+     font-family: 'DungGeunMo';
+     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff') format('woff');
+     font-weight: normal;
+     font-style: normal;
+}
+.meomumeum{
+     font-family: 'DungGeunMo';
+	color :#6F4933;
+    font-size: 33px;
+
+
+}
+.typed-text{
+color : red;
+	font-weight: bold;
+	color : #FF8765;
+}
+
 </style>
 </head>
 <body id="mainintro">
@@ -200,12 +220,12 @@ object-fit: cover;
 
 
 
-	<div class="contain text-center">
-		<h2 >머뭄은 <span class="color-primary">
-		<br class="hidden-sm-up">
-		<span class="typed-text" data-typed-text="['beautiful','gorgeous','outstanding','remarkable','stunning'">gorgeous</span>
+	<div class="contain text-center" style="margin-top: 100px; margin-bottom: 10px;">
+		<h2  class="meomumeum"> <span class="color-primary">
+		<br class="hidden-sm-up">머뭄은
+		<span class="typed-text" data-typed-text='함께 만들어 갑니다., 훌륭한, 행복한, 놀라운, 멋진, 머물고 싶은'>훌륭한</span>
 		<span class="typed-cursor"></span>
-		</span><br class="hidden-sm-up"> 합니다.</h2>
+		</span>공간을 만듭니다.<br class="hidden-sm-up"> </h2>
 	</div>
 
 
@@ -225,43 +245,31 @@ object-fit: cover;
 
 <div class="main-process">
 		<div class="contain" style="display: block;">
-			<h2 class="main-tit">서비스 프로세스</h2>
+			<h2 class="main-tit">서비스 소개</h2>
 			<ul>
 				<li class="wow fadeInLeft" data-wow-delay="0.3s" data-wow-duration="0.6s" style="visibility: visible; animation-duration: 0.6s; animation-delay: 0.3s; animation-name: fadeInLeft;">
 					<div class="num">01</div>
-					<div class="tit"><span>간단문의 견적</span> 어떤 점이 <br>불편하실까요?</div>
+					<div class="tit"><span>간단문의</span> 어떤 점이 <br>불편하실까요?</div>
 					<div class="icon"><img src="https://jnewlife.com/images/main/process_icon1.png" alt="도움아이콘"></div>
 				</li>
 				<li class="wow fadeInLeft" data-wow-delay="0.4s" data-wow-duration="0.6s" style="visibility: visible; animation-duration: 0.6s; animation-delay: 0.4s; animation-name: fadeInLeft;">
 					<div class="num">02</div>
-					<div class="tit"><span>해피콜</span> 고객의<br>삶을 공감합니다.</div>
+					<div class="tit"><span>방문견적</span> 견적 먼저<br>받아보세요.</div>
 					<div class="icon"><img src="https://jnewlife.com/images/main/process_icon2.png" alt="공감아이콘"></div>
 				</li>
 				<li class="wow fadeInLeft" data-wow-delay="0.5s" data-wow-duration="0.6s" style="visibility: visible; animation-duration: 0.6s; animation-delay: 0.5s; animation-name: fadeInLeft;">
 					<div class="num">03</div>
-					<div class="tit"><span>방문미팅</span> 고객의<br>요구사항을 파악합니다.</div>
+					<div class="tit"><span>정리일상</span> 고객의<br>요구사항을 <br>파악합니다.</div>
 					<div class="icon"><img src="https://jnewlife.com/images/main/process_icon3.png" alt="호응아이콘"></div>
 				</li>
 				<li class="wow fadeInLeft" data-wow-delay="0.6s" data-wow-duration="0.6s" style="visibility: visible; animation-duration: 0.6s; animation-delay: 0.6s; animation-name: fadeInLeft;">
 					<div class="num">04</div>
-					<div class="tit"><span>공간크리에이팅</span>가치있는 공간을<br>만듭니다. </div>
+					<div class="tit"><span>구독일상</span>가치있는 <br>공간을<br>만듭니다. </div>
 					<div class="icon"><img src="https://jnewlife.com/images/main/process_icon4.png" alt="손아이콘"></div>
 				</li>
 			</ul>
 		</div>
 	</div>
-
-<div class="main-about wow fadeInUp" data-wow-delay="0.3s" data-wow-duration="0.6s" style="visibility: visible; animation-duration: 0.6s; animation-delay: 0.3s; animation-name: fadeInUp;">
-		<div class="contain">
-			<div class="img"><img src="https://cdn.pixabay.com/photo/2020/05/11/06/45/cutlery-5156696_960_720.jpg" alt="정리된 서랍장"></div>
-			<div class="cnt">
-				<h2 class="main-tit">새로운 삶의 문을 열어주는 '새삶'</h2>
-				<p>공간이 바뀌면 인생이 달라집니다. <br>비움과 활용으로 공간을 가치있게 디자인하고 새로운 삶을 살아갈 <br>당신을 응원합니다.</p>
-				<div class="main-more"><a href="service.php">바로가기</a></div>
-			</div>
-		</div>
-	</div>
-
 
 	<%@include file="/WEB-INF/views/footer.jsp"%>
 

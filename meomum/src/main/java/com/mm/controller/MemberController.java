@@ -126,7 +126,7 @@ public class MemberController {
 		ModelAndView mav = new ModelAndView();
 		
 		if(session.getAttribute("ssInfo")==null) {
-			mav.addObject("msg", "잘못된 접근입니다.");
+			mav.addObject("msg", "로그인을 해주세요.");
 			mav.addObject("gopage","location.href='index.do';");
 			mav.setViewName("mainMsg");
 			return mav;
@@ -145,7 +145,7 @@ public class MemberController {
 		
 		ModelAndView mav = new ModelAndView();
 		if(session.getAttribute("ssInfo")==null) {
-			mav.addObject("msg", "잘못된 접근입니다.");
+			mav.addObject("msg", "로그인을 해주세요.");
 			mav.addObject("gopage","location.href='index.do';");
 			mav.setViewName("mainMsg");
 			return mav;
@@ -239,7 +239,20 @@ public class MemberController {
 	public ModelAndView memManList(@RequestParam(value="cp",defaultValue = "1")int cp,
 									@RequestParam(value="fvalue",defaultValue = "")String fvalue,
 									@RequestParam(value="type",defaultValue = "no")String type,
-									@RequestParam(value="orderby",defaultValue = "1")String orderby) {
+									@RequestParam(value="orderby",defaultValue = "1")String orderby,
+									HttpSession session) {
+		
+		ModelAndView mav = new ModelAndView();
+		MemberDTO ssInfo = (MemberDTO) session.getAttribute("ssInfo");
+
+		
+		if(ssInfo==null||!ssInfo.getUser_info().equals("관리자")) {
+			mav.addObject("msg", "관리자만 이용할 수 있습니다.");
+			mav.addObject("gopage","location.href='index.do';");
+			mav.setViewName("mainMsg");
+			return mav;
+		}
+
 		
 		int rtotalCnt = mdao.getuserTTCnt(fvalue);
 		int totalCnt = rtotalCnt==0?1:rtotalCnt;
@@ -251,7 +264,6 @@ public class MemberController {
 		
 		List<MemberListDTO> lists = mdao.memberList(cp, listSize,type,fvalue,orderby);
 
-		ModelAndView mav = new ModelAndView();
 		mav.setViewName("member/memManList");
 		
 		mav.addObject("order",orderby);
@@ -299,8 +311,18 @@ public class MemberController {
 	public ModelAndView managerList(@RequestParam(value="cp",defaultValue = "1")int cp,
 									@RequestParam(value="fvalue",defaultValue = "")String fvalue,
 									@RequestParam(value="type",defaultValue = "no")String type,
-									@RequestParam(value="orderby",defaultValue = "1")String orderby) {
+									@RequestParam(value="orderby",defaultValue = "1")String orderby,HttpSession session) {
 		
+		ModelAndView mav = new ModelAndView();
+
+		MemberDTO ssInfo = (MemberDTO) session.getAttribute("ssInfo");
+		if(ssInfo==null||!ssInfo.getUser_info().equals("관리자")) {
+			mav.addObject("msg", "잘못된 접근입니다.");
+			mav.addObject("gopage","location.href='index.do';");
+			mav.setViewName("mainMsg");
+			return mav;
+		}
+
 		int rtotalCnt = mdao.getmanagerTTCnt(fvalue);
 		int totalCnt = rtotalCnt==0?1:rtotalCnt;
 		int listSize = 10;
@@ -311,7 +333,6 @@ public class MemberController {
 		
 		List<MemberListDTO> lists = mdao.managerList(cp, listSize,type,fvalue,orderby);
 
-		ModelAndView mav = new ModelAndView();
 		mav.setViewName("member/managerList");
 		
 		mav.addObject("order",orderby);
@@ -446,6 +467,7 @@ public class MemberController {
 		}
 		return mav;
 	}
+
 
 	
 }

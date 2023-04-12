@@ -1,5 +1,9 @@
 package com.mm.point.model;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 
 public class PointDAOImple implements PointDAO {
@@ -29,4 +33,25 @@ public class PointDAOImple implements PointDAO {
 		return count;
 	}
 
+	/**포인트 리스트*/
+	@Override
+	public List<PointDTO> pointList(int user_idx,int cp, int ls) {
+		int start = (cp - 1) * ls + 1;
+		int end = cp * ls;
+
+		Map map = new HashMap();
+		map.put("start", start);
+		map.put("end", end);
+		map.put("user_idx", user_idx);
+		
+		List<PointDTO> lists = sqlMap.selectList("pointList", map);
+		return lists;
+	}
+	
+	/**포인트 총 개수*/
+	@Override
+	public int pointCnt(int user_idx) {
+		int cnt = sqlMap.selectOne("pointCnt",user_idx);
+		return cnt;
+	}
 }

@@ -6,23 +6,59 @@
 <head>
 <meta charset="UTF-8">
 <title>간단문의 글작성</title>
+<style>
+
+/*헤더 이미지용 url에 이미지 추가하면 됩니다.*/
+.page-header {
+	background: linear-gradient(rgba(36, 39, 38, 0.5), rgba(36, 39, 38, 0.5)),
+		rgba(36, 39, 38, 0.5)
+		url(https://images.unsplash.com/photo-1630904989936-da6328c2f92d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80)
+		no-repeat center;
+	background-size: cover;
+	margin: 0;
+	border-bottom: none;
+	padding-bottom: 0px;
+}
+
+.page-caption {
+	padding: 90px 0px;
+	position: relative;
+	z-index: 1;
+	color: #fff;
+	text-align: center;
+}
+
+/**헤더 이미지용 끝*/
+</style>
 </head>
 <body>
 <%@include file="/WEB-INF/views/header.jsp" %>
 
 
+	<div class="page-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="page-caption">
+						<h2 class="page-title">간단 문의 글 작성</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 
 	<!-- 본문 시작 -->
-<div class="container">
+<div class="container"  style="margin-bottom: 30px;">
   <div class="row">
-    <div class="col-6 mx-auto">
+    <div class="col-8 mx-auto">
     <br><br>
     
-    <h4 class="text-center">간단문의글 작성</h4>
       <form name="askWrite" action= "askWrite.do" method="post" enctype="multipart/form-data">
       <input type="hidden" name="user_idx" value="${empty sessionScope.ssInfo.user_idx ? 0 : sessionScope.ssInfo.user_idx}">
 		 <div class="input-group mb-3">
-		  <label class="input-group-text col-3 text-center" for="inputGroupSelect01">공간유형</label>
+		  <label class="input-group-text col-2 text-center" for="inputGroupSelect01">공간유형</label>
 		  <select class="form-select" id="inputGroupSelect01" name="rsd_type" required="required" >
 		    <option value="" selected disabled hidden>공간유형 선택</option>
 		    <option value="아파트">아파트</option>
@@ -33,35 +69,35 @@
 		  </select>
 		</div>
 		 <div class="input-group mb-3">
-          <label for="default" class="input-group-text col-3 text-center" >평수</label>
-          <input type="text" class="form-control input-group-text-fixed" id="default" name="rsd_py" required="required" placeholder="평수를 입력해주세요">
-          <span class="input-group-text">평</span>
+          <label for="default" class="input-group-text col-2 text-center" >평수</label>
+			<input type="text" class="form-control input-group-text-fixed" id="default" name="rsd_py" required="required" placeholder="숫자만 입력해주세요" pattern="[0-9]+" title="숫자만 입력하세요">
+          <span class="input-group-text col-2 ">평</span>
         </div>
         <div class="input-group mb-3">
-          <label for="title" class="input-group-text col-3 text-center">제목</label>
+          <label for="title" class="input-group-text col-2 text-center">제목</label>
           <input type="text" class="form-control input-group-text-fixed" id="title" name="ask_title"required="required" placeholder="제목을 입력해주세요"  maxlength="50">
         </div>
         <div class="input-group mb-3">
-          <label for="author" class="input-group-text col-3 text-center">작성자</label>
+          <label for="author" class="input-group-text col-2 text-center">작성자</label>
           <input type="text" class="form-control input-group-text-fixed" id="author" name="ask_writer" value="${sessionScope.ssInfo.user_name}" required="required" placeholder="작성자를 입력해주세요"  minlength="2" maxlength="30">
         </div>
         <div class="input-group mb-3">
-          <label for="contact" class="input-group-text col-3 text-center">연락처</label>
+          <label for="contact" class="input-group-text col-2 text-center">연락처</label>
           <input type="text" class="form-control input-group-text-fixed" id="contact" name="ask_tel" value="${sessionScope.ssInfo.user_tel}"pattern="[0-9]{3}-[0-9]{3,4}-[0-9]{4}"
 							placeholder="휴대폰 번호 (ex. 010-1234-5678)" required="required">
         </div>
 
         <div class="input-group mb-3">
-          <label class="input-group-text col-3 text-center" for="inputGroupFile01">첨부 파일</label>
+          <label class="input-group-text col-2 text-center" for="inputGroupFile01">첨부 파일</label>
           <input type="file" class="form-control" id="inputGroupFile01" name="file"  accept="image/*">
         </div>
 		<div class="input-group mb-3" style="max-height: 600px; overflow-y: auto;">
-		  <label for="question" class="input-group-text col-3 text-center">문의사항<br>(2000자이내)*</label>
-		  <textarea class="form-control input-group-text-fixed" id="question" aria-label="With textarea" style="height: 300px; resize: none;" name="ask_content" required="required" placeholder="내용을 입력해주세요"></textarea>
+		  <label for="question" class="input-group-text col-2 text-center">문의사항<br>(1000자이내)*</label>
+ 			 <textarea class="form-control input-group-text-fixed" id="question" aria-label="With textarea" style="height: 300px; resize: none;" name="ask_content" required="required" placeholder="내용을 입력해주세요" maxlength="1000"></textarea>
 		</div>
 		<c:if test="${empty sessionScope.ssInfo}">
         <div class="input-group mb-3">
-          <label for="password" class="input-group-text col-3 text-center">비밀번호</label>
+          <label for="password" class="input-group-text col-2 text-center">비밀번호</label>
           <input type="password" class="form-control input-group-text-fixed" id="password" name="ask_pwd" required="required" placeholder="비밀번호로 게시글을 확인할 수 있습니다.">
         </div>
         </c:if>
@@ -69,13 +105,13 @@
           <input type="hidden" class="form-control input-group-text-fixed" id="password" name="ask_pwd" required="required">
         </c:if>
 		  <div class="input-group mb-3">
-		  <input class="form-check-input" type="checkbox" id="checkbox" value="Y" name="ask_tos" required="required">개인정보 이용동의합니다.
+		<input class="form-check-input" type="checkbox" id="checkbox" value="Y" name="ask_tos" required="required"> 개인정보 이용동의합니다.
 		  <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"> (내용보기)</a>
 		</div>
 
-        <div class="d-flex justify-content-center">
-          <span><input type="submit" value="글작성" class="btn btn-primary"> </span>
-           <span><a href="askList.do"><button type="button" class="btn btn-outline-info" >목록으로</button></a></span>
+        <div class="d-flex justify-content-center ">
+          <span><input type="submit" value=" 글작성 " class="btn btn-primary "> </span>
+           <span style="margin-left: 10px"> <a href="askList.do"><button type="button" class="btn btn-outline-secondary" >  목록으로</button></a></span>
         </div>
         
       </form>

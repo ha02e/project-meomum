@@ -8,6 +8,7 @@
 <script type="text/javascript" src="/meomum/js/request.js"></script>
 
 <script type="text/javascript">
+
 	function findID() {
 		var input_name = document.getElementById("input_name").value;
 		var input_tel = document.getElementById("input_tel").value;
@@ -44,7 +45,7 @@
 
 				}
 			} else {
-				alert('전송에 실패하였습니다.');
+				alert('아이디를 찾을 수 없습니다. \n고객센터로 연락바랍니다.');
 			}
 		}
 	}
@@ -134,10 +135,17 @@
 		}
 	}
 </script>
+<style type="text/css">
+.section a{
+font-size : 18px;
+color : black;
+}
+</style>
 </head>
 <body>
 	<%@include file="/WEB-INF/views/header.jsp"%>
 
+	<div class="section">
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="col-lg-6">
@@ -145,10 +153,11 @@
 				<div class="card border-0">
 
 					<div class="card-header bg-white pt-4 pb-4 text-center">
-						<h4>로그인</h4>
+						<h2 class="mb-3 text-center">로그인</h2>
+
 					</div>
 
-					<div class="card-body">
+					<div class="card-body my-3">
 						<form name="login" action="login.do" method="post">
 
 							<div class="form-group">
@@ -162,34 +171,38 @@
 									class="form-control" placeholder="비밀번호">
 							</div>
 
-							<div class="form-check mb-3">
+							<div class="form-check mb-3 my-3">
 								<input type="checkbox" name="saveid" value="ok"
 									class="form-check-input"
 									${empty cookie.saveid.value?'':'checked'}> <label
 									class="form-check-label">아이디 기억하기</label>
 							</div>
+							<div class="d-grid gap-2">
+								<button type="submit" class="btn btn-primary btn-block">로그인</button>
+							</div>
 
-							<button type="submit" class="btn btn-primary btn-block">로그인</button>
 						</form>
 					</div>
 
 					<div class="card-footer bg-white pt-4 pb-4 text-center">
 						<div class="mb-3">
 							<a href="memberJoin.do">회원가입</a> <span class="mx-2">|</span> <a
-								href="#" data-bs-toggle="modal" data-bs-target="#idFindModal">아이디찾기</a>
+								href="#" data-bs-toggle="modal" data-bs-target="#idFindModal">아이디 찾기</a>
 							<span class="mx-2">|</span> <a href="#" data-bs-toggle="modal"
 								data-bs-target="#passwordFindModal">비밀번호 찾기</a>
 						</div>
-						<div>
-							<div>간편로그인</div>
+						<div >
 							<div>
-								<a class="p-2"
+								<label >- 간편 로그인 -</label>
+							</div>
+							<div>
+								<a class="p-2" title="카카오에 등록된 이메일로 로그인 할 수 있습니다."
 									href="https://kauth.kakao.com/oauth/authorize?client_id=f9f8f92fec61a14408e68cf856744293&redirect_uri=http://localhost:9090/meomum/kakao_login.do&response_type=code">
 									<img src="/meomum/images/icon/kakao_login_medium_narrow.png">
 								</a>
 							</div>
 						</div>
-						<br><br><br><br>
+						
 					</div>
 				</div>
 			</div>
@@ -203,19 +216,19 @@
 		<div class="modal-dialog ">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h1 class="modal-title fs-5 ">회원 아이디 찾기</h1>
+					<h1 class="modal-title fs-5 ">아이디 찾기</h1>
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
 						aria-label="Close"></button>
 				</div>
 
 				<div class="modal-body">
 					<form>
-						<div class="form-group">
+						<div class="form-group my-3">
 							<label for="name">이름</label> <input type="text"
 								class="form-control" id="input_name" name="input_name"
 								placeholder="이름을 입력해주세요." required="required">
 						</div>
-						<div class="form-group">
+						<div class="form-group my-3">
 							<label for="user_tel">휴대폰 번호</label> <input type="tel"
 								class="form-control" id="input_tel" name="input_tel"
 								pattern="[0-9]{3}-[0-9]{3,4}-[0-9]{4}"
@@ -239,13 +252,13 @@
 		<div class="modal-dialog ">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h1 class="modal-title fs-5 ">회원 아이디 정보</h1>
+					<h1 class="modal-title fs-5 ">아이디 찾기</h1>
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
 						aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
 					<p>
-						회원 아이디는 <span id="userIdSpan"
+						회원님의 아이디는 <span id="userIdSpan"
 							style="font-weight: bold; font-size: 1.2rem;"></span> 입니다.
 					</p>
 
@@ -269,23 +282,23 @@
 		<div class="modal-dialog ">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h1 class="modal-title fs-5 ">회원 비밀번호 찾기</h1>
+					<h1 class="modal-title fs-5 ">비밀번호 찾기</h1>
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
 						aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
 					<form>
-						<div class="form-group">
+						<div class="form-group my-3">
 							<label for="email">아이디</label> <input type="email"
 								class="form-control" id="inputp_id" name="inputp_id"
 								placeholder="이메일(ex. abc@a.a)" required="required">
 						</div>
-						<div class="form-group">
+						<div class="form-group my-3">
 							<label for="input_name">이름</label> <input type="text"
 								class="form-control" id="inputp_name" name="inputp_name"
 								placeholder="이름을 입력해주세요." required="required">
 						</div>
-						<div class="form-group">
+						<div class="form-group my-3">
 							<label for="input_tel">휴대폰 번호</label> <input type="tel"
 								class="form-control" id="inputp_tel" name="inputp_tel"
 								pattern="[0-9]{3}-[0-9]{3,4}-[0-9]{4}"
@@ -295,15 +308,15 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
-						data-bs-dismiss="modal" onclick="location.reload();">Close</button>
-					<button type="button" class="btn btn-primary" onclick="findpwd()" id="mail-Check-Btn">확인</button>
+						data-bs-dismiss="modal" onclick="location.reload();">닫기</button>
+					<button type="button" class="btn btn-primary" onclick="findpwd()" id="mail-Check-Btn">비밀번호 초기화</button>
 				</div>
 			</div>
 		</div>
 	</div>
 	<!-- 회원 비밀번호 찾기 끝 -->
 	
-	
+	</div>
 	<%@include file="/WEB-INF/views/footer.jsp"%>
 
 </body>
