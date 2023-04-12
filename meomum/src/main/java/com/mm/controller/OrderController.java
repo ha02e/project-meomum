@@ -58,10 +58,10 @@ public class OrderController {
 			session.getAttribute("ssInfo");
 			MemberDTO sdto =(MemberDTO) session.getAttribute("ssInfo");
 			int user_idx = sdto.getUser_idx();
-			System.out.println(user_idx);
+			
 			ProDTO dto = orderDao.orderList(idx);
 			int result = pdao.pointTotal(user_idx);
-			System.out.println(result);
+			
 			mav.addObject("dto", dto);
 			mav.addObject("result", result);
 			mav.setViewName("order/orderList");
@@ -93,16 +93,16 @@ public class OrderController {
 		return mav;
 	}
 
-	@RequestMapping(value = "/orderForm.do", method = RequestMethod.POST)
-	public ModelAndView order(OrderDTO dto) {
-		int result = orderDao.orderInsert(dto);
-		String msg = result > 0 ? "폼 저장 성공" : "폼 저장 성공 실패";
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("msg", msg);
-		mav.addObject("goUrl", "/meomum/index.do");
-		mav.setViewName("ntc/ntcMsg");
-		return mav;
-	}
+//	@RequestMapping(value = "/orderForm.do", method = RequestMethod.POST)
+//	public ModelAndView order(OrderDTO dto) {
+//		int result = orderDao.orderInsert(dto);
+//		String msg = result > 0 ? "폼 저장 성공" : "폼 저장 성공 실패";
+//		ModelAndView mav = new ModelAndView();
+//		mav.addObject("msg", msg);
+//		mav.addObject("goUrl", "/meomum/index.do");
+//		mav.setViewName("ntc/ntcMsg");
+//		return mav;
+//	}
 
 	//결제부분 시작//
 //	@RequestMapping(value = "/orderPay.do")
@@ -282,14 +282,16 @@ public class OrderController {
 	    PointDTO pdto = objectMapper.convertValue(requestData.get("pdto"), PointDTO.class);
 	    PaymentDTO paydto = objectMapper.convertValue(requestData.get("paydto"), PaymentDTO.class);
 	    OrderProDTO odto = objectMapper.convertValue(requestData.get("odto"), OrderProDTO.class);
+	    OrderDTO ordto= objectMapper.convertValue(requestData.get("ordto"), OrderDTO.class);
 	    
 	    int result1 = pdao.pointInsert(pdto);
 	    int result2 = payDao.paymentInsert(paydto);
 	    int result3 = orderDao.order_proInsert(odto);
+	    int result4 = orderDao.orderInsert(ordto);
 			    
 	    ModelAndView mav = new ModelAndView();
-	    String msg = (result1 > 0 && result2 > 0 && result3 > 0) ? "결제가 완료되었습니다" : "다시 시도해주세요";
-	    String link = (result1 > 0 && result2 > 0 && result3 > 0) ? "index.do" : "proList.do";
+	    String msg = (result1 > 0 && result2 > 0 && result3  > 0 && result4  > 0) ? "결제가 완료되었습니다" : "다시 시도해주세요";
+	    String link = (result1 > 0 && result2 > 0 && result3 > 0 && result4  > 0) ? "index.do" : "proList.do";
 
 	    mav.addObject("msg", msg);
 	    mav.addObject("link", link);
@@ -297,6 +299,10 @@ public class OrderController {
 			
 	    return mav;
 	}
-
+	
+	@RequestMapping(value = "/orderCancel.do")
+	public String cancel() {
+		return "order/orderCancel";
+	}
 
 }
