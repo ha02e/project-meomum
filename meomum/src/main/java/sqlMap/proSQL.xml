@@ -27,7 +27,24 @@
 	<select id="proList" parameterType="Map" resultType="com.mm.pro.model.ProDTO">
 	 select * from
 	(select rownum as rnum,a.* from
-	(select * from product order by pro_idx desc
+	(select * 
+	from product 
+	order by pro_idx desc
+	) a
+	
+	) b 
+	where rnum <![CDATA[>=]]>#{start}
+	and rnum<![CDATA[<=]]>#{end}
+ 	</select>
+ 	
+ 	
+ 	<select id="proItemList" parameterType="Map" resultType="com.mm.pro.model.ProDTO">
+	 select * from
+	(select rownum as rnum,a.* from
+	(select * 
+	from product
+	where pro_state != 1 
+	order by pro_idx desc
 	) a
 	
 	) b 
@@ -117,16 +134,18 @@
 	</update>
 	
 	
-	<select id="proFindFile" parameterType="Integer" resultType="String">
-	    select pro_thumb
+	<select id="proFindFile" parameterType="String" resultType="Integer">
+	    select count(*)
 	    from product 
-	    where pro_idx=#{pro_idx}
+	    where pro_thumb=#{pro_thumb}
 	</select>
 	
 	
 	<select id="proBest" resultType="com.mm.pro.model.ProDTO">
 	select * from (
-	  select * from product order by pro_date ASC
+	  select * from product 
+	  where pro_state != 1
+	  order by pro_date ASC
 	) where rownum <![CDATA[<=]]> 4
 	</select>
 	

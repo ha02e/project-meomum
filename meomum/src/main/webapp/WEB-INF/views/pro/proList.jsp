@@ -10,6 +10,7 @@
 <style>
 .block2-pic {
   text-align: center;
+  position: relative;
 }
 
 .block2-btn {
@@ -18,19 +19,18 @@
 }
 </style>
 
-<!--==============돋보기용====================-->
+<!--===================돋보기용====================-->
 	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
-<!--===============================================================================================-->	
+<!--=============================================-->
 	<link rel="stylesheet" type="text/css" href="css/proUtil.css">
 	<link rel="stylesheet" type="text/css" href="css/proMain.css">
-<!--===============================================================================================-->
+<!--=============================================-->
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 </head>
 <%@include file="/WEB-INF/views/header.jsp" %>
 <body class="animsition">
 
-	<div style="height: 70px;"></div>
-
+	<div style="height: 60px;"></div>
 
 <!-- BEST PRODUCTS -->
 		<div class="container">
@@ -64,7 +64,7 @@
 		</div>
    
 
-	<div style="height: 50px;"></div>
+	<div style="height: 30px;"></div>
 	
 	<!-- CATEGORY -->
 	<div class="bg0 m-t-23 p-b-140">
@@ -110,7 +110,8 @@
 	<!-- products -->
 		<div class="row isotope-grid">
 		    <c:forEach var="list" items="${lists}">
-		        <div class="col-sm-6 col-md-4 col-lg-4 p-b-35 isotope-item ${list.pro_cate}" >
+	<div style="margin-bottom: 40px;" class="col-sm-6 col-md-4 col-lg-4 p-b-35 isotope-item ${list.pro_cate}">
+
 		            <!-- Block2 -->
 		            <div class="block2">
 		                <div class="block2-pic hov-img1">
@@ -161,20 +162,15 @@
 		</div>
 	</div>
 
-<!--===============================================================================================-->
+<!--=============================================-->
 	<script src="vendor/animsition/js/animsition.min.js"></script>
-<!--===============================================================================================-->
+<!--=============================================-->
 	<script src="vendor/bootstrap/js/popper.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-<!--===============================================================================================-->
+<!--=============================================-->
 	<script src="vendor/slick/slick.min.js"></script>
 	<script src="js/slick-custom.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/parallax100/parallax100.js"></script>
-	<script>
-        $('.parallax100').parallax100();
-	</script>
-<!--===============================================================================================-->
+<!--=============================================-->
 	<script src="vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
 	<script>
 		$('.gallery-lb').each(function() { // the containers for all your galleries

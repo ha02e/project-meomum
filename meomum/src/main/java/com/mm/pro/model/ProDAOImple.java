@@ -37,13 +37,21 @@ private SqlSessionTemplate sqlMap;
 		}
 
 	
-	//상품 리스트 출력
-		@Override
-			public List<ProDTO> proList(Map map) {
-				List<ProDTO> lists=sqlMap.selectList("proList", map);
-				return lists;
-			}
-		
+	//관리자용 상품 리스트 출력 (품절 보임)
+	@Override
+		public List<ProDTO> proList(Map map) {
+			List<ProDTO> lists=sqlMap.selectList("proList", map);
+			return lists;
+		}
+	
+	
+	//사용자용 상품 리스트 출력 (품절 안 보임)
+	@Override
+		public List<ProDTO> proItemList(Map map) {
+		List<ProDTO> lists=sqlMap.selectList("proItemList", map);
+			return lists;
+		}
+			
 		
 		
 	//베스트인 척하는 pro_date asc순
@@ -124,11 +132,9 @@ private SqlSessionTemplate sqlMap;
 	
 	//파일 이름 찾기
 	@Override
-		public String proFindFile(Integer idx) {
-		
-		String result =  sqlMap.selectOne("proFindFile", idx);
-		 
-		return result;
+		public boolean proFindFile(String name) {
+		int result =  sqlMap.selectOne("proFindFile", name);
+		return result>0?true:false;
 		}
 	
 	

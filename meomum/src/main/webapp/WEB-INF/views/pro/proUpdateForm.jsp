@@ -25,25 +25,76 @@ function calPrice(){
 </head>
 <body class="app">
 	<%@include file="/WEB-INF/views/header_a.jsp"%>
+	
+	
+	<div class="container"  style="margin-bottom: 30px;">
+ 	 <div class="row">
+   		 <div class="col-8 mx-auto">
+		 	<div class="input-group mb-3">
+
+		</div>
+        <div class="input-group mb-3">
+          <label for="title" class="input-group-text col-2 text-center">상품명</label>
+          <input type="text" class="form-control input-group-text-fixed" name="pro_name" required="required" placeholder="제목을 입력해주세요"  maxlength="50">
+        </div>
+        <div class="input-group mb-3">
+          <label for="author" class="input-group-text col-2 text-center">정가</label>
+          <input type="text" class="form-control input-group-text-fixed" id="author" name="ask_writer" value="${sessionScope.ssInfo.user_name}" required="required" placeholder="작성자를 입력해주세요"  minlength="2" maxlength="30">
+        </div>
+        
+        
+        
+        <div class="input-group mb-3">
+          <label for="contact" class="input-group-text col-2 text-center">연락처</label>
+          <input type="text" class="form-control input-group-text-fixed" id="contact" name="ask_tel" value="${sessionScope.ssInfo.user_tel}"pattern="[0-9]{3}-[0-9]{3,4}-[0-9]{4}"
+							placeholder="휴대폰 번호 (ex. 010-1234-5678)" required="required">
+        </div>
+
+        <div class="input-group mb-3">
+          <label class="input-group-text col-2 text-center" for="inputGroupFile01">첨부 파일</label>
+          <input type="file" class="form-control" id="inputGroupFile01" name="file"  accept="image/*">
+        </div>
+		<div class="input-group mb-3" style="max-height: 600px; overflow-y: auto;">
+		  <label for="question" class="input-group-text col-2 text-center">문의사항<br>(1000자이내)*</label>
+ 			 <textarea class="form-control input-group-text-fixed" id="question" aria-label="With textarea" style="height: 300px; resize: none;" name="ask_content" required="required" placeholder="내용을 입력해주세요" maxlength="1000"></textarea>
+		</div>
+
+		<!-- 버튼 구역 -->
+		<div class="d-flex justify-content-center">
+		   
+		    <input type="reset" value="다시 작성" class="btn btn-outline-secondary">
+		    <span style="margin-left: 10px"></span>
+		   
+		    <a href="proAdmin.do"><button type="button" class="btn btn-outline-secondary">목록으로</button></a>
+		    <span style="margin-left: 10px"></span>
+		   
+		    <button type="submit" class="btn btn-primary">수정하기</button>
+		</div>
+        
+    </div>
+  </div>
+</div>
+	
+	
 	<form name="proUpdate" action="proUpdate.do" method="post">
 	
 	<div class="app-wrapper">
 		<div class="app-content pt-3 p-md-3 p-lg-4">
 			<div class="container pt-5">
-				<h2 class="text-center mb-4">상품 수정하기</h2>
+				<h1 class="text-center mb-4">상품 수정</h1>
 	
 		<input type="hidden" name="pro_idx" value="${lists[0].pro_idx}">
 		<ul>
 			<li>대표 사진
-			<img alt="thumbnail" src="/meomum/items/${lists[0].pro_thumb}" style="width:40px; height:40px;">
+			<img alt="thumbnail" src="/meomum/images/items/${lists[0].pro_thumb}" style="width:40px; height:40px;">
 			</li>
 			
 			<li>이미지 1
-			<img alt="img1" src="/meomum/items/${lists[0].pro_img1}" style="width:40px; height:40px;">
+			<img alt="img1" src="/meomum/images/items/${lists[0].pro_img1}" style="width:40px; height:40px;">
 			</li>
 			
 			<li>이미지 2
-			<img alt="img2" src="/meomum/items/${lists[0].pro_img2}" style="width:40px; height:40px;">
+			<img alt="img2" src="/meomum/images/items/${lists[0].pro_img2}" style="width:40px; height:40px;">
 			</li>
 			
 			<li>카테고리
@@ -97,14 +148,14 @@ function calPrice(){
 			
 			<li><input type="submit" value="등록하기"><input type="reset" value="다시 작성"></li>
 		</ul>
-		</form>
+		
 		
 				</div>
 			</div>
-		
-		<%@include file="/WEB-INF/views/footer_a.jsp"%>
-		
 		</div>
+	</form>	
+	
+		<%@include file="/WEB-INF/views/footer_a.jsp"%>	
 		
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"

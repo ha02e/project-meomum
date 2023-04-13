@@ -31,77 +31,150 @@ function addConfirm() {
 <body class="app">
 	<%@include file="/WEB-INF/views/header_a.jsp"%>
 	<!-- 본문 시작 -->
+	
+	
 	<div class="app-wrapper">
 		<div class="app-content pt-3 p-md-3 p-lg-4">
 			<div class="container pt-5">
-				<h2 class="text-center mb-4">상품 등록</h2>
+				
+				<h1 class="text-center mb-4">상품 등록</h1>
 			
-				<form name="addPro" action="proAdd.do" enctype="multipart/form-data" method="post" onsubmit="return addConfirm();">
-		<ul>
-			<li>대표 사진
-			<input type="file" name="pro_thumb">
-			</li>
-			
-			<li>이미지 1
-			<input type="file" name="pro_img1">
-			</li>
-			
-			<li>이미지 2
-			<input type="file" name="pro_img2">
-			</li>
-			
-			<li>카테고리
-				<select name="pro_cate">
+	<div class="container"  style="margin-bottom: 30px;">
+	
+	<form name="addPro" action="proAdd.do" enctype="multipart/form-data" method="post" onsubmit="return addConfirm();">
+	 
+	 	 <div class="row">
+	   		 <div class="col-8 mx-auto">
+		
+		<div class="input-group mb-3">
+          <label class="input-group-text col-2 text-center" for="pro_thumb">대표 사진</label>
+          <input type="file" class="form-control" id="pro_thumb" name="pro_thumb" accept="image/*">
+        </div>
+        
+        <div class="input-group mb-3">
+          <label class="input-group-text col-2 text-center" for="pro_img1">이미지1</label>
+          <input type="file" class="form-control" id="pro_img1" name="pro_img1" accept="image/*">
+        </div>
+        
+        <div class="input-group mb-3">
+          <label class="input-group-text col-2 text-center" for="pro_img2">이미지2</label>
+          <input type="file" class="form-control" id="pro_img2" name="pro_img2" accept="image/*">
+        </div>
+        
+         <div class="input-group mb-3">
+          <label class="input-group-text col-2 text-center" for="pro_content">상세 이미지</label>
+          <input type="file" class="form-control" id="pro_content" name="pro_content" accept="image/*">
+        </div>
+        
+        <div class="input-group mb-3">
+		  <label class="input-group-text col-2 text-center" for="pro_cate">카테고리</label>
+		  <select class="form-select" id="pro_cate" name="pro_cate" required="required" >
+		    <option value="" selected disabled hidden>카테고리 선택</option>
 				<option value="1">침대</option>				
 				<option value="2">테이블</option>				
 				<option value="3">의자</option>				
 				<option value="4">소파</option>				
-				<option value="5">조명</option>				
-				</select>
-			</li>
-			
-			<li>상품명
-				<input type="text" name="pro_name">
-			</li>
-			<li>정가
-				<input type="text" id="pro_price" name="pro_price">
-			</li>
-			<li>재고 수량
-				<input type="text" name="pro_amount">
-			</li>
-			
-			<li>재고 상태
-			<input type="radio" name="pro_state" value="0">판매 중
-			<input type="radio" name="pro_state" value="1">품절
-			</li>
-			
-			<li>구독 개월 수
-			<input type="radio" name="pro_month" value="1" onclick="calPrice()">1
-			<input type="radio" name="pro_month" value="6" onclick="calPrice()">6
-			<input type="radio" name="pro_month" value="12" onclick="calPrice()">12
-			</li>
-			
-			<li>월 구독 가격
-			<input type="text" id="pro_subprice" name="pro_subprice">
-			</li>
-			
-			<li>총 구독 가격
-			<input type="text" id="pro_allprice" name="pro_allprice">
-			</li>
-			
-			<li>상세 내용
-			<input type="file" name="pro_content">
-			</li>
-			<li><input type="submit" value="등록하기"><input type="reset" value="다시 작성"></li>
-			</ul>
-				</form>
-			</div>
+				<option value="5">조명</option>		
+		  </select>
 		</div>
+		
+        <div class="input-group mb-3">
+          <label for="pro_name" class="input-group-text col-2 text-center">상품명</label>
+	          <input type="text" class="form-control input-group-text-fixed" name="pro_name" 
+	          required="required" placeholder="상품명을 입력해주세요"  maxlength="30">
+        </div>
+        
+        <div class="input-group mb-3">
+          <label for="pro_price" class="input-group-text col-2 text-center">정가</label>
+	          <input type="text" class="form-control input-group-text-fixed" id="pro_price"
+	          name="pro_price" required="required" placeholder="정가를 입력해주세요" 
+   	          pattern="[0-9]+" minlength="2" maxlength="12">
+        </div>
+        
+        <div class="input-group mb-3">
+          <label for="pro_amount" class="input-group-text col-2 text-center">재고 수량</label>
+	          <input type="text" class="form-control input-group-text-fixed" id="pro_amount" 
+	          name="pro_amount" required="required" placeholder="재고 수량을 입력해주세요"  
+	          minlength="1" maxlength="3" pattern="[0-9]+">
+        </div>
+        
+        
+        <div class="input-group mb-3">
+		  <label for="pro_state" class="input-group-text col-2 text-center">재고 상태</label>
+		  &nbsp;&nbsp;&nbsp;
+		  
+		  <div class="form-check form-check-inline">
+		    <input class="form-check-input" type="radio" name="pro_state" id="pro_state" value="0"> 
+		    <label class="form-check-label" for="pro_state">판매 중</label>
+		  </div>
+		  
+		  <div class="form-check form-check-inline">
+		    <input class="form-check-input" type="radio" name="pro_state" id="pro_state" value="1"> 
+		    <label class="form-check-label" for="pro_state">품절</label>
+		  </div>
+		</div>
+        
+      
+      
+        <div class="input-group mb-3">
+          <label for="pro_month" class="input-group-text col-2 text-center">구독 개월 수</label>
+          &nbsp;&nbsp;&nbsp;
+          
+		<div class="form-check form-check-inline">
+		    <input class="form-check-input" type="radio" name="pro_month" id="pro_month" value="1"> 
+		    <label class="form-check-label" for="pro_month" onclick="calPrice()">1</label>
+		  </div>
+		  
+		  <div class="form-check form-check-inline">
+		    <input class="form-check-input" type="radio" name="pro_month" id="pro_month" value="6"> 
+		    <label class="form-check-label" for="pro_month" onclick="calPrice()">6</label>
+		  </div>
+		  
+		  		  <div class="form-check form-check-inline">
+		    <input class="form-check-input" type="radio" name="pro_month" id="pro_month" value="12"> 
+		    <label class="form-check-label" for="pro_month" onclick="calPrice()">12</label>
+		  </div>
+		</div>
+          
+        
+        <div class="input-group mb-3">
+          <label for="pro_subprice" class="input-group-text col-2 text-center">월 구독 가격</label>
+          <input type="text" class="form-control input-group-text-fixed" id="pro_subprice" name="pro_subprice" 
+         placeholder="정가와 구독 개월 수를 입력하면 자동으로 월 구독 가격이 입력됩니다." required="required">
+        </div>
+        
+        <div class="input-group mb-3">
+          <label for="pro_allprice" class="input-group-text col-2 text-center">총 구독 가격</label>
+          <input type="text" class="form-control input-group-text-fixed" id="pro_allprice" name="pro_allprice" 
+          placeholder="정가와 구독 개월 수를 입력하면 자동으로 총 구독 가격이 입력됩니다." required="required">
+        </div>
+		</div>
+		
+
+		<!-- 버튼 구역 -->
+		<div style="margin-top: 10px" class="d-flex justify-content-center">
+		   
+		    <input type="reset" value="다시 작성" class="btn btn-outline-secondary">
+		    <span style="margin-left: 10px"></span>
+		   
+		    <a href="proAdmin.do"><button type="button" class="btn btn-outline-secondary">목록으로</button></a>
+		    <span style="margin-left: 10px"></span>
+		   
+		    <button type="submit" class="btn btn-primary">등록하기</button>
+		</div>
+          
+          
+          </div>
+	    </form>
+	  </div>
 	</div>
+</div>
+		
 		<!-- 본문 끝 -->
 		<%@include file="/WEB-INF/views/footer_a.jsp"%>
 	<!-- app-wrapper 끝-->
-
+	</div>
+	
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
