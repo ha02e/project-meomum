@@ -143,6 +143,7 @@
 						 <input type="hidden" name="pro_name" value="${lists[0].pro_name}">
 						 <input type="hidden" name="pro_subprice" value="${lists[0].pro_subprice}">
 						 <input type="hidden" name="pro_delprice" value="${lists[0].pro_delprice }">
+						 <input type="hidden" name="pro_month" value="${lists[0].pro_month }">
 						 
 						<div class="flex-w m-r-20 m-tb-10">
 							<!-- 마이너스 -->

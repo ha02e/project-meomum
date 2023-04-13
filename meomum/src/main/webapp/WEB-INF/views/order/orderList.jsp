@@ -158,9 +158,10 @@ input:invalid {
 										<td><fmt:formatNumber type="number" maxFractionDigits="3"
 												value="${(dto.pro_subprice*param.cart_amount)+dto.pro_delprice}" />원</td>
 									</tr>
-						
+									
 									<input type="hidden" name="pro_idx" value="${dto.pro_idx}">
                                     <input type="hidden" name="pro_amount" value="${param.cart_amount}">
+                                    <input type="hidden" id="pro_month" value="${dto.pro_month}">
 							</c:if>
 						</tbody>
 					</table>
@@ -386,6 +387,10 @@ input:invalid {
 				var milliseconds = today.getMilliseconds().toString();
 				var makeMerchantUid = year + month + day + hours + minutes
 						+ seconds;
+				
+				var monthsToAdd = parseInt(document.getElementById("pro_month").value);
+				
+				
 
 				//계약자 및 사용자 정보//
 				var oName = document.getElementById("order_name").value;
@@ -466,11 +471,11 @@ input:invalid {
 							order_idx : rsp.merchant_uid,
 							user_idx : uidx,
 							order_name : bName,
-							sub_start : makeMerchantUid,
-							sub_end : makeMerchantUid,//수정 필요
+							//sub_start : ,
+							//sub_end : ,//수정 필요
 							order_pcode : bPcode,
 							receiver : bName,
-							receiver_tel : bName,
+							receiver_tel : bTel,
 							order_addr : bAddr,
 							order_detail : bAddr_detail,
 							order_msg : order_msg,
