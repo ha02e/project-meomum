@@ -22,7 +22,7 @@
 <script
 	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-	function findaddr() {
+	function findaddra() {
 		new daum.Postcode({
 			oncomplete : function(data) {
 				document.getElementById("order_pcode").value = data.zonecode;
@@ -35,7 +35,7 @@
 	}
 </script>
 <script>
-	function findaddr() {
+	function findaddrb() {
 		new daum.Postcode({
 			oncomplete : function(data) {
 				document.getElementById("buyer_pcode").value = data.zonecode;
@@ -118,10 +118,10 @@ input:invalid {
 			</div>
 		</div>
 	</div>
-	<br><br>
-	
-	<div class="container" style="margin-bottom: 50px;">
+
+	<div class="container" style="margin-bottom: 50px;margin-top: 50px;">
 		<div class="row">
+		<h2 class="mb-4 text-center">주 문 상 품</h2>
 			<div class="border">
 			<table class="table" >
 						<thead>
@@ -178,7 +178,7 @@ input:invalid {
 						</div>
 				</div>
 			</div>
-		<hr>
+		<hr style="margin-top: 50px;">
 			<form name="ordersForm" id="ordersForm">
 
 			<h2 class="text-center mb-4" style="margin-top: 50px;">배송 정보 입력</h2>
@@ -204,10 +204,10 @@ input:invalid {
 			<div class="input-group mb-3">
 				<input type="text" class="form-control" id="order_pcode"
 					name="order_pcode" value="${sessionScope.ssInfo.user_pcode}"
-					placeholder="우편번호" readonly="readonly" onclick="findaddr()">
+					placeholder="우편번호" readonly="readonly" onclick="findaddra()">
 				<div class="input-group-append">
 					<button class="btn btn-outline-secondary" type="button"
-						onclick="findaddr()">우편번호 검색</button>
+						onclick="findaddra()">우편번호 검색</button>
 				</div>
 			</div>
 	
@@ -229,12 +229,12 @@ input:invalid {
 		<h4 class="useTitle text-center my-3">사용자 정보</h4>
 		<div >
 			<input type="checkbox" value="y"
-				onclick="copyUserInfo(); toggleDivVisibility()"> <label style="color :#C45630; ">계약자와
+				onclick="copyUserInfo();"> <label style="color :#C45630; ">계약자와
 				동일</label>
 		</div>
 		<div id="user_info" class="mb-3">
 			<label for="buyer_name">고객명</label> <input type="text"
-				class="form-control" id="buyer_name" name="buyer_name"  required="required" pattern="[가-힣]{2,5}">
+				class="form-control" id="buyer_name" name="buyer_name"  required="required" pattern="[가-힣]{2,5}"
 				placeholder="이름을 입력해주세요"> <label for="buyer_tel" >연락처</label>
 			<input type="text" class="form-control" id="buyer_tel"
 				name="buyer_tel" value="" placeholder="연락처 -제외 하고 입력" required="required" pattern="[0-9]{3}-[0-9]{3,4}-[0-9]{4}"> <label
@@ -242,17 +242,17 @@ input:invalid {
 			<div class="input-group mb-3">
 				<input type="text" class="form-control" id="buyer_pcode"
 					name="buyer_pcode"  placeholder="우편번호" readonly="readonly" required="required"
-					onclick="findaddr()">
+					onclick="findaddrb()">
 				<div class="input-group-append">
 					<button class="btn btn-outline-secondary" type="button"
-						onclick="findaddr()">우편번호 검색</button>
+						onclick="findaddrb()">우편번호 검색</button>
 				</div>
 			</div>
 			<label for="buyer_addr">기본주소</label> <input type="text"
 				class="form-control" id="buyer_addr" name="buyer_addr" value=""
 				placeholder="기본주소" readonly="readonly" required="required"> <label
 				for="buyer_detail">상세주소</label> <input type="text"
-				class="form-control" id="buyer_detail" name="buyer_detail" value=""
+				class="form-control" id="buyer_detail" name="buyer_detail" 
 				placeholder="상세주소" required="required">
 
 		<div>
@@ -267,10 +267,14 @@ input:invalid {
 		<div class="container bg-light my-5" style="width:70%">
 		
 			<label for="checkbox"> 개인정보이용동의 </label>
-			<div class="form-control">
-				개인정보 이용동의합니다.<input class="form-check-input" type="checkbox"
+			
+			<div class="form-control"> 
+			<input class="form-check-input" type="checkbox"
 					id="checkbox" value="Y" name="order_tos" class="form-control"
 					required="required">
+			
+			개인정보이용에 동의합니다.<a href="#" data-bs-toggle="modal" data-bs-target="#usecheckModal">[내용]
+				</a>
 			</div>
 		</div>
 </div>
@@ -312,12 +316,36 @@ input:invalid {
 
 	<%@include file="../footer.jsp"%>
 <!-- -------------------------------------------------------------------------------------- -->
+<!-- 이용약관 Modal -->
+	<div class="modal fade" id="usecheckModal" tabindex="-1"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">머뭄 개인정보 처리 방침</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					여러분을 환영합니다. <br>
+					머뭄서비스 및 제품(이하 ‘서비스’)을
+					이용해 주셔서 감사합니다. 본 약관은 다양한  머뭄 서비스의 이용과 관련하여  머뭄 서비스를 제공하는  머뭄
+					주식회사(이하 ‘ 머뭄’)와 이를 이용하는  머뭄 서비스 회원(이하 ‘회원’) 또는 비회원과의 관계를 설명하며, 아울러
+					여러분의  머뭄 서비스 이용에 도움이 될 수 있는 유익한 정보를 포함하고 있습니다.  머뭄 서비스를 이용하시거나  머뭄
+					서비스 회원으로 가입하실 경우 여러분은 본 약관 및 관련 운영 정책을 확인하거나 동의하게 되므로, 잠시 시간을 내시어
+					주의 깊게 살펴봐 주시기 바랍니다.</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">닫기</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 
 
-
-
+<!-- ------------------------------------------------------------------------------- -->
 		<!-- 포인트 조회 및 사용-->
 		<script src="js/point.js">
 			console.log(amount)
@@ -330,10 +358,19 @@ input:invalid {
 				var checked = document
 						.querySelector('input[type="checkbox"][value="y"]').checked;
 				if (checked) {
+				  toggleDivVisibility();
+					document.querySelector('#buyer_name').value = document.querySelector('#order_name').value;
+					document.querySelector('#buyer_tel').value = document.querySelector('#order_tel').value;
+					document.querySelector('#buyer_pcode').value = document.querySelector('#order_pcode').value;
+					document.querySelector('#buyer_addr').value = document.querySelector('#order_addr').value;
+					document.querySelector('#buyer_detail').value = document.querySelector('#order_detail').value;
+					
+				}else{
 					document.querySelector('#buyer_name').value = '';
-					document.querySelector('#buyer_tel').value = '';
-					document.querySelector('#buyer_pcode').value = '';
-					document.querySelector('#buyer_addr').value = '';
+			        document.querySelector('#buyer_tel').value = '';
+			        document.querySelector('#buyer_pcode').value = '';
+			        document.querySelector('#buyer_addr').value = '';
+			        document.querySelector('#buyer_detail').value = '';
 				}
 			}
 
@@ -353,19 +390,20 @@ input:invalid {
 			IMP.init("imp77686458");
 
 			
-			function validateForm() {
+            function validateForm() {
                 var form = document.ordersForm;
                   if (!form.checkValidity()) { // HTML5 폼 유효성 검사
                         form.querySelector(':invalid').focus(); // 유효하지 않은 입력 필드에 포커스
+                        alert('입력을 하지 않았거나\n올바른 값을 입력하지 않았습니다.');
 
                     return false;
                   }
                   return true;
             }
-			
+            
 			
 			function requestPay() {
-				if (!validateForm()) {
+                if (!validateForm()) {
                     return;
                   }
 				var today = new Date();
@@ -506,6 +544,10 @@ input:invalid {
 
 			}
 		</script>
+
+
+
+
 
 </body>
 </html>
