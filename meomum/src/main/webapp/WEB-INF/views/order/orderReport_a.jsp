@@ -47,8 +47,6 @@ document.addEventListener("DOMContentLoaded", function() {
 	border-radius:2px;
 	height:40px;
 }
-
-
 .datatable-table{
 	margin:20px 0 10px 0;
 }
@@ -74,12 +72,9 @@ thead th a{
 .btn-sm{
 	padding: 0.2rem 0.8rem;
 }
-
 .paging{
 	margin:20px;
 }
-
-
 </style>
 
 <script>
@@ -89,18 +84,15 @@ function orderInfoOpen(url, name, options) {
 function shipFormOpen(url, name, options) {
   window.open(url, name, options);
 }
-
 //function trackingOpen(){
 //	window.open('http://info.sweettracker.co.kr/tracking/4','tracking','width=400px,height=600px');
 //}
-
 //        $(document).ready(function() {
 //            $("#btnSubmit").click(function(event) {
 //                event.preventDefault(); // 페이지 새로고침 방지
 //
 //               var trackingNumber = $("#trackingNumber").val(); // 입력값 가져오기
 //                var apiUrl = "/deliveryTracker/" + trackingNumber; // API URL 생성
-
 //                $.ajax({
 //                    url: apiUrl,
 //                    type: "GET",
@@ -117,7 +109,6 @@ function shipFormOpen(url, name, options) {
 //               });
 //           });
 //       });
-
 </script>
 </head>
 

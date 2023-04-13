@@ -312,12 +312,13 @@ public class SvcController {
 		session.getAttribute("ssInfo");
 		MemberDTO sdto =(MemberDTO) session.getAttribute("ssInfo");
 		int user_idx = sdto.getUser_idx();
-		
+
 		int totalCnt = svcDao.svcIngListCnt(user_idx);
 		int listSize = 5;
 		int pageSize = 5;
 		String pageStr = com.mm.module.PageModule.makePage("svcIngList.do", totalCnt, listSize, pageSize, cp);
 		List<SvcIngDTO> list = svcDao.svcIngList(cp,listSize,user_idx);
+	
 		ModelAndView mav = new ModelAndView();
 		
 		mav.addObject("list", list);

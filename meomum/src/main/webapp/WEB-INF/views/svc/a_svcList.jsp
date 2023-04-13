@@ -7,123 +7,267 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="/docs/5.2/dist/css/bootstrap.min.css" rel="stylesheet" >
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
+<!-- 관리자 헤더 CSS -->  
 <link id="theme-style" rel="stylesheet" href="assets/css/portal_a.css">
-<link rel="stylesheet" type="text/css" href="css/mainLayout_a.css"> 
+<link rel="stylesheet" type="text/css" href="css/mainLayout_a.css">
+
+<!-- 데이터테이블 css&js -->
+<link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" type="text/css">
+<script src="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+	  var table = document.getElementById("svc_table");
+	  
+	  if (table) {
+	    $(table).DataTable({
+	    	lengthChange: false,
+	    	info: false,
+	    	paging: false,
+	    	order: [ [ 0, "desc" ] ],
+	    	responsive: true,
+	    	searching: false
+	    });
+	  }
+});
+</script>
+
 <style>
-.title{
+.title {
 	text-align: center;
 	font-weight: bold;
 	margin: 30px 0;
 }
+
+#searchCard{
+	margin-bottom:10px;
+}
+
+#searchCard select#category {
+  font-size: 20px; 
+}
+
+#searchCard select#category + .datatable-search {
+  margin-left: 20px; 
+}
+
+@media only screen and (min-width: 768px) {
+  #searchCard .card-body > div {
+    font-size: 18px; 
+  }
+}
+
+.datatable-input {
+	margin: 0 4px 0 10px;
+	width: 250px;
+	height: 40px;
+}
+
+.datatable-selector {
+	height: 40px;
+}
+
+.button {
+	border-radius: 2px;
+	height: 40px;
+}
+
+.datatable-table {
+	margin: 20px 0 10px 0;
+}
+
+.datatable-table tbody tr:hover {
+	background-color: #f5f5f5;
+}
+
+.datatable-table>tbody>tr>th {
+	padding: 1rem 0;
+}
+
+.datatable-table>tbody>tr>td {
+	font-size: .875rem;
+	padding: 1rem 0;
+}
+
+thead th a {
+	text-align: center;
+	cursor: pointer;
+}
+
+.svc_idx {
+	color: #0055FF;
+}
+
+.del {
+  color: black;
+}
+
+.del:hover {
+  color: red;
+  font-size: 1em; 
+}
+
+/* .state div {
+	padding: 0.2rem 0;
+	width: 40%;
+	text-align: center;
+} */
+
+.btn-sm {
+	padding: 0.2rem 0.8rem;
+}
+
+.paging {
+	margin: 20px;
+}
 </style>
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
 
 <script src="js/svc/a_svcList.js"></script>
 
 </head>
-<body>
-<%@include file="/WEB-INF/views/header_a.jsp"%> 
-<div class="app-wrapper">
-	    <div class="app-content pt-3 p-md-3 p-lg-4">
-		    <div class="container-xl">
-	<!-- 세부 검색 -->
-	<h2 class="title">방문 견적 예약 리스트 </h2>
-	<section>
-		<article>
-			<form name="searchDetail">
-				<div id="detaildiv">
-					<fieldset>
-						<ul>
-							<li>예약일 
-								<input type="date" name="minDate" id="minDate">&nbsp;~
-								<input type="date" name="maxDate" id="maxDate">&nbsp;
-							</li>
-							
-							<li>
-								<select name="category" id="category">
-									<option value="1">고객성함</option>
-									<option value="2">전화번호</option>
-								</select> 
-								<input type="text" name="keyword" id="keyword" placeholder="검색어를 입력하세요" size="60">
-							</li>
-							
-							<li>예약상태 
-								<input type="checkbox" name="svc_state" value="전체">전체&nbsp;
-								<input type="checkbox" name="svc_state" value="예약확정">예약확정&nbsp;
-								<input type="checkbox" name="svc_state" value="예약취소">예약취소&nbsp;
-								<input type="checkbox" name="svc_state" value="견적완료">견적완료&nbsp;
-								<input type="checkbox" name="svc_state" value="결제대기">결제대기&nbsp;
-								<input type="checkbox" name="svc_state" value="결제완료">결제완료&nbsp;
-								<input type="checkbox" name="svc_state" value="결제취소">결제취소&nbsp;
-								<input type="checkbox" name="svc_state" value="작업완료">작업완료&nbsp;
-							</li>
-							<div>
-								<input type="button" value="검색" onclick="selectDetail()">
-								<input type="reset" value="초기화"> 
-							</div>
-						</ul>
-					</fieldset>
-				</div>
-			</form>
-		</article>
-	</section>
-
-	<!-- 리스트 출력 -->
-	<section>
-		<fieldset>
-			<table>
-				<thead>
-				<tr>
-					<th><input type="checkbox" name="check" value=""></th>
-					<th>예약번호</th>
-					<th>예약일</th>
-					<th>고객성함</th>
-					<th>전화번호</th>
-					<th>상태</th>
-				</tr>
-				<thead>
+<body class="app">
+	<%@include file="../header_a.jsp"%>
+	<div class="app-wrapper">
+		<div class="app-content pt-3 p-md-3 p-lg-4">
+			<div class="container pt-5">
+				<h1 class="text-center mb-4">방문 견적 예약</h1>
 				
-				<tbody id="tableBody">
-				<c:if test="${empty svcDTO}">
-					<tr>
-						<td colspan="6">예약한 회원이 없습니다</td>
-					</tr>
-				</c:if>
-				<c:forEach var="dto" items="${svcDTO}">
-					<tr>
-						<td><input type="checkbox" name="check" value=""></td>
-						<td>${dto.svc_idx}</td>
-						<td>${dto.svc_regdate}</td>
-						<c:url var="contentUrl" value="asvcContent.do">
-							<c:param name="svc_idx">${dto.svc_idx}</c:param>
-						</c:url>
-						<td><a href="${contentUrl}">${dto.user_name}</a></td>
-						<td>${dto.user_tel}</td>
-						<td>${dto.svc_state}</td>
-					</tr>
-				</c:forEach>
-				</tbody>
-			</table>
-				<input type="submit" value="선택 삭제">
-				   <div class="container-xl paging">
-             		<nav aria-label="Page navigation example">
-                  		<ul class="pagination pagination-sm justify-content-center"> ${pageStr}</ul>
-               		</nav>
-            		</div>				
-		</fieldset>
-	</section>
-</div>
-</div>
-	<%@include file="/WEB-INF/views/footer_a.jsp"%>
-</div>
+				 <div class="card" id="searchCard">
+				 
+				    <div class="card-body">
+				      <div class="datatable-top d-flex justify-content-right align-items-center">
+				        <div class="datatable-search">
+				          예약일 <input type="date" name="minDate" id="minDate">&nbsp;~
+				          <input type="date" name="maxDate" id="maxDate">&nbsp;
+				        </div>
+				      </div>
+				      <div class="datatable-top d-flex justify-content-right align-items-center">
+				        <div class="datatable-search">
+				          <select class="datatable-selector" name="category" id="category">
+				            <option value="1" selected>고객성함</option>
+				            <option value="2">전화번호</option>
+				          </select>
+				          <input class="datatable-input" placeholder="검색어를 입력해주세요" type="text" name="keyword" id="keyword">
+				        </div>
+				      </div>
+				      <div class="datatable-top d-flex justify-content-right align-items-center">
+				        <div class="datatable-search">
+				          예약상태 
+				          <input type="checkbox" name="svc_state" value="전체">전체&nbsp;
+				          <input type="checkbox" name="svc_state" value="예약확정">예약확정&nbsp;
+				          <input type="checkbox" name="svc_state" value="예약취소">예약취소&nbsp;
+				          <input type="checkbox" name="svc_state" value="견적완료">견적완료&nbsp;
+				          <input type="checkbox" name="svc_state" value="결제대기">결제대기&nbsp;
+				          <input type="checkbox" name="svc_state" value="결제완료">결제완료&nbsp;
+				          <input type="checkbox" name="svc_state" value="결제취소">결제취소&nbsp;
+				          <input type="checkbox" name="svc_state" value="작업완료">작업완료&nbsp;
+				        </div>
+				      </div>
+				      <div class="datatable-top d-flex justify-content-between align-items-center">
+						    <div class="datatable-search text-center">
+						        <button class="btn app-btn-primary button" onclick="selectDetail()">검색
+						    </div>
+						    <div class="datatable-search text-center">
+						        <button class="btn app-btn-secondary button" onclick="location.reload()">초기화
+						    </div>
+					</div>
+				    </div>
+				  
+				</div>
+				<!-- 세부 검색 div end -->
+				<div class="card">
+					<div class="card-body">
+						<div class="datatable-container">
+							<table class="datatable-table" id="svc_table">
+								<thead>
+									<tr>
+										<th data-sortable="true" style="width: 18%;"
+											aria-sort="descending" class="datatable-descending"><a
+											href="#" class="datatable-sorter">예약번호</a></th>
+										<th data-sortable="true" style="width: 18%;"
+											aria-sort="descending" class="datatable-descending"><a
+											href="#" class="datatable-sorter">예약일</a></th>
+										<th data-sortable="true" style="width: 10%;"
+											aria-sort="descending" class="datatable-descending"><a
+											href="#" class="datatable-sorter">고객성함</a></th>
+										<th data-sortable="true" style="width: 18%;"
+											aria-sort="descending" class="datatable-descending"><a
+											href="#" class="datatable-sorter">전화번호</a></th>
+										<th data-sortable="true" style="width: 10%;"
+											aria-sort="descending" class="datatable-descending"><a
+											href="#" class="datatable-sorter">상태</a></th>
+										<th class="text-center" style="width: 10%;">삭제</th>
+									</tr>
+								</thead>
+
+								<tbody id="tableBody">
+									<c:if test="${empty svcDTO}">
+										<tr>
+											<td class="text-center" colspan="6">예약한 회원이 없습니다</td>
+										</tr>
+									</c:if>
+									<c:forEach var="dto" items="${svcDTO}">
+										<c:url var="contentUrl" value="asvcContent.do">
+												<c:param name="svc_idx">${dto.svc_idx}</c:param>
+										</c:url>
+										<tr>
+											<td class="svc_idx text-center "><a href="${contentUrl}">${dto.svc_idx}</a></td>
+											<td class="text-center">${dto.svc_regdate}</td>
+											<td class="text-center">${dto.user_name}</td>
+											<td class="text-center">${dto.user_tel}</td>
+											<td class="text-center"><c:choose>
+													<c:when test="${dto.svc_state eq '예약확정'}">
+														<span
+															class="text-warning d-flex justify-content-center align-items-center">${dto.svc_state}</span>
+													</c:when>
+													<c:when test="${dto.svc_state eq '결제완료'}">
+														<span
+															class="text-info d-flex justify-content-center align-items-center">${dto.svc_state}</span>
+													</c:when>
+													<c:when
+														test="${dto.svc_state eq '예약취소' || dto.svc_state eq '결제취소'}">
+														<span
+															class="text-danger d-flex justify-content-center align-items-center">${dto.svc_state}</span>
+													</c:when>
+													<c:when
+														test="${dto.svc_state eq '견적완료' || dto.svc_state eq '작업완료'}">
+														<span
+															class="text-success d-flex justify-content-center align-items-center">${dto.svc_state}</span>
+													</c:when>
+												</c:choose></td>
+
+											<td class="text-center">
+											<c:url var="contentUrl" value="asvcContent.do">
+												<c:param name="svc_idx">${dto.svc_idx}</c:param>
+											</c:url>
+											<a href="${deleteUrl}" class="del">X</a></td>
+										</tr>
+									</c:forEach>
+							</table>
+						</div>
+					</div>
+					<!--card-body end-->
+			</div>
+			<!--container end-->
+			<div class="container-xl paging">
+				<nav aria-label="Page navigation example">
+					<ul class="pagination pagination-sm justify-content-center">
+						${pageStr}
+					</ul>
+				</nav>
+			</div>
+		</div>
+		<!--app-content~end-->
 
 
-	   <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-      crossorigin="anonymous">
-   </script>
+
+		<%@include file="/WEB-INF/views/footer_a.jsp"%>
+	</div>
+	<!-- End:app-wrapper -->
+	<!-- Javascript -->
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
