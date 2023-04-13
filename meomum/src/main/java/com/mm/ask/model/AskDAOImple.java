@@ -113,14 +113,28 @@ public class AskDAOImple implements AskDAO {
 		map.put("start", start);
 		map.put("end", end);
 		map.put("checklist", checklist);
-		if(type.equals("yes")) {
-			map.put("fvalue","%" + fvalue + "%");
-		}
+		
+		map.put("fvalue","%" + fvalue + "%");
+		
 		
 		List<AskDTO> lists = sqlMap.selectList("askList_a",map);
 		return lists;
 	}
 
+	/**간단문의 관리자용 총 게시글 수*/
+	 @Override
+	public int askCnt_a(String fvalue,String checklist) {
+	
+			Map map = new HashMap();
+			map.put("checklist", checklist);
+			map.put("fvalue","%" + fvalue + "%");
+			
+		int cnt = sqlMap.selectOne("askCnt_a", map);
+
+		return cnt;
+	}
+	 
+	
 	
 	
 	/**회원 본인 간단문의 리스트*/

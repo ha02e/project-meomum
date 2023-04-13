@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <!DOCTYPE html>
 <html>
@@ -44,7 +45,9 @@
 	margin-top: 30px; 
 }
 
-
+.card-body{
+	cursor: pointer;
+}
 .card-body.img{
 	position: relative;
 	overflow: hidden;
@@ -59,6 +62,13 @@
   	left: 50%;
   	transform: translate(-50%, -50%);
 }
+.card-body a{
+	color: var(--p-color) !important;
+}
+.card-body a:hover{
+    color:#FE8A7F !important;
+}
+
 .entry-meta ul{
 	padding:0;
 }
@@ -67,6 +77,12 @@
     color:#FFD400;
 }
 
+.read-more a{
+    color:#85745D !important;
+}
+.read-more a:hover{
+    color:#FE8A7F !important;
+}
 
 .pagination{
 	margin:40px 0 60px 0;
@@ -138,7 +154,20 @@
 							<li class="list-group-item">
               					<div class="entry-meta">
 									<ul class="d-flex justify-content-between">
-										<li class="d-flex align-items-center"><i class="bi bi-person"></i>&nbsp;${dto.writer}</li>
+										<li class="d-flex align-items-center"><i class="bi bi-person"></i>&nbsp;
+											<c:set var="writerLength" value="${fn:length(dto.writer)}"/>
+											<c:choose>
+												<c:when test="${fn:length(dto.writer)>2}">
+													<c:set var="startIndex" value="${(writerLength - 1) / 2}" />
+													<c:set var="endIndex" value="${startIndex + 2 - writerLength % 2}" />
+													<c:set var="maskedWriter" value="${fn:substring(dto.writer, 0, startIndex)}*${fn:substring(dto.writer, endIndex, writerLength)}" />
+												</c:when>
+												<c:otherwise>
+													<c:set var="maskedWriter" value="${fn:substring(dto.writer, 0, 1)}*"/>
+												</c:otherwise>
+											</c:choose>
+										 	${maskedWriter}
+										</li>
 					                  	<li class="d-flex align-items-center review-star">
 					                  		<c:forEach var="i" begin="1" end="${dto.star}" step="1">
 						                  		<i class="bi bi-star-fill"></i>&nbsp;

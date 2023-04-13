@@ -93,12 +93,13 @@ function ask_ok() {
 
             } else {
                 alert('비밀번호가 일치하지 않습니다.');
-                $('#myModal').modal('hide');
+                location.reload();
             }
         },
         error: function () {
             alert('오류가 발생했습니다.');
             $('#myModal').modal('hide');
+            location.reload();
         }
     });
 }
@@ -128,12 +129,15 @@ function close_modal(){
 		</div>
 	</div>
 	<!-- 본문 시작 -->
-	<div class="container" style="overflow: auto; margin-bottom: 30px; margin-top: 30px;">
+	<div class="container" style="overflow: auto; margin-bottom: 50px; margin-top: 50px;">
 		<div class="row justify-content-center">
 			<div class="col-10">
 				<div class="d-flex justify-content-between align-items-center mb-3">
-					<p class="mb-0">
-						전체 글 수: <span id="total-users">${totalCnt}</span>개
+					<p class="mb-0" style="font-weight:bold;">
+						전체 글 수 : <span id="total-users">${totalCnt}</span>개
+						<c:if test="${!empty param.fvalue}"> | <span style="color :#FF6A89;"> 검색 내용 : ${param.fvalue } 
+				         <a href="askList.do" style="color:#FF6A89;border: 1px solid #FF6A89;">검색 취소</a> </span>
+				          </c:if>
 					</p>
 					<form name="searchask" action="askList.do">
 						<div class="input-group">
@@ -191,16 +195,16 @@ function close_modal(){
 					</table>
 				</div>
 
-				<nav class="d-flex justify-content-between align-items-center">
+				
+					<div class="text-end">
+						<a href="askWrite.do" class="btn btn-primary">글쓰기</a>
+					</div>
 					<div
-						class="col-10 justify-content-center align-items-start text-center">
+						class="justify-content-center align-items-start text-center">
 						<span class="pagination pagination-sm justify-content-center">
 							${pageStr} </span>
 					</div>
-					<div class="col-auto">
-						<a href="askWrite.do" class="btn btn-primary">글쓰기</a>
-					</div>
-				</nav>
+			
 			</div>
 			<!-- 본문끝 -->
 		</div>
@@ -230,7 +234,7 @@ function close_modal(){
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
-						data-bs-dismiss="modal">취소</button>
+						data-bs-dismiss="modal" onclick="location.reload()">취소</button>
 					<button type="button" class="btn btn-primary" id="password-submit"
 						onclick="ask_ok()">확인</button>
 				</div>

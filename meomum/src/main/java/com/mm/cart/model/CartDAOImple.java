@@ -69,6 +69,16 @@ public class CartDAOImple implements CartDAO {
 		return dto;
 	}
 
+
+/**구매시 장바구니 삭제*/
+@Override
+public void orderCartDelete(int user_idx, int pro_idx) {
+	Map map=new HashMap();
+	map.put("user_idx", user_idx);
+	map.put("pro_idx", pro_idx);
+	int result = sqlMap.delete("orderCartDelete",map);
+
+}
 	
 
 }

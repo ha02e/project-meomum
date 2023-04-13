@@ -19,6 +19,7 @@
 <!-- 아이콘 -->
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
@@ -206,7 +207,7 @@ h2{
 						<div
 							class="dropdown-menu rounded-0 rounded-bottom border-0 shadow-sm m-0">
 							<a href="proList.do" class="dropdown-item">가구 구독</a> <a
-								href="svc.do" class="dropdown-item">이용 방법</a>
+								href="howtouse.do" class="dropdown-item">이용 방법</a>
 						</div>
 					</div>
 					<span style="margin-right: 30px;"></span>

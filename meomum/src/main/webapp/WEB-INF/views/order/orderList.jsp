@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>머뭄 주문/결제</title>
 <meta http-equiv="Content-Security-Policy"
 	content="upgrade-insecure-requests">
 
@@ -33,7 +34,74 @@
 		}).open();
 	}
 </script>
+<script>
+	function findaddr() {
+		new daum.Postcode({
+			oncomplete : function(data) {
+				document.getElementById("buyer_pcode").value = data.zonecode;
+				document.getElementById("buyer_addr").value = data.address;
+				document.getElementById("buyer_detail").focus();
+			},
+			autoClose : true
+		// 팝업 자동 닫힘
+		}).open();
+	}
+</script>
 
+<style>
+#user_info {
+	display: block;
+}
+
+#user_info.hidden {
+	display: none;
+}
+
+.page-header {
+	background: linear-gradient(rgba(36, 39, 38, 0.5), rgba(36, 39, 38, 0.5)),
+		rgba(36, 39, 38, 0.5)
+		url(https://images.unsplash.com/photo-1513694203232-719a280e022f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80)
+		no-repeat center;
+	background-size: cover;
+	margin: 0;
+	border-bottom: none;
+	padding-bottom: 0px;
+}
+
+.page-caption {
+	padding: 90px 0px;
+	position: relative;
+	z-index: 1;
+	color: #fff;
+	text-align: center;
+}
+
+.thumbimg{
+width: 60px;
+  height: 60px;
+  object-fit: cover;
+}
+/**헤더 이미지용 끝*/
+
+
+input:invalid {
+  border-color: red;
+  outline: none;
+}
+@font-face {
+    font-family: 'KimjungchulGothic-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/KimjungchulGothic-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+.useTitle{
+    font-family: 'KimjungchulGothic-Bold';
+	color : #478368;
+	
+}
+
+</style>
 </head>
 
 <body>
@@ -50,67 +118,88 @@
 			</div>
 		</div>
 	</div>
+	<br><br>
+	
+	<div class="container" style="margin-bottom: 50px;">
+		<div class="row">
+			<div class="border">
+			<table class="table" >
+						<thead>
+							<tr>
+								<th scope="col">상품 이미지</th>
+								<th scope="col">상품명</th>
+								<th scope="col">상품 가격</th>
+								<th scope="col">구독월수</th>
+								<th scope="col">배송비</th>
+								<th scope="col">수량</th>
+								<th scope="col">결제 금액</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:if test="${empty dto}">
+								<tr>
+									<td colspan="7">존재하지 않거나 삭제된 상품입니다.</td>
+								</tr>
+							</c:if>
+							<c:if test="${!empty dto}">
+								<input type="hidden" name="order_idx" id="orderIdxInput" value="">
+								
+									<tr>
+										<td><img alt="pro_img" class="thumbimg"
+											src="/meomum/images/items/${dto.pro_thumb}">
+											</td>
+										<td>${dto.pro_name}</td>
+										<td><fmt:formatNumber type="number" maxFractionDigits="3"
+												value="${dto.pro_subprice}" />원</td>
+										<td>${dto.pro_month}개월</td>
+										<td><fmt:formatNumber type="number" maxFractionDigits="3"
+												value="${dto.pro_delprice*param.cart_amount}" />원</td>
+										<td>${param.cart_amount}개</td>
+										<td><fmt:formatNumber type="number" maxFractionDigits="3"
+												value="${(dto.pro_subprice*param.cart_amount)+dto.pro_delprice}" />원</td>
+									</tr>
+						
+									<input type="hidden" name="pro_idx" value="${dto.pro_idx}">
+                                    <input type="hidden" name="pro_amount" value="${param.cart_amount}">
+							</c:if>
+						</tbody>
+					</table>
+					
 
-	<div class="form-group">
-
-
-		<h2>구매 상품 정보</h2>
-		<c:if test="${empty dto}">
-			<div>존재하지 않거나 삭제된 상품입니다.</div>
-		</c:if>
-
-		<div>
-			상품번호:${dto.pro_idx} <input type="hidden" name="pro_idx"
-				value="${dto.pro_idx}" />
-		</div>
-		<input type="hidden" name="order_idx" id="orderIdxInput" value="">
-		<div>
-			<div>상품이름:${dto.pro_name}</div>
-			<div>
-				<img alt="pro_img" src="/meomum/items/${dto.pro_thumb}">
+		
+						<div>
+							<div class="text-center" style = "font-size:20px;">
+								월 구독 가격 + 총 배송비 :
+								<span style="color:red;">
+								<fmt:formatNumber type="number" maxFractionDigits="3"
+									value="${(dto.pro_subprice*param.cart_amount)+dto.pro_delprice}" />
+								</span>원
+							</div>
+						</div>
+				</div>
 			</div>
-		</div>
-		<div>
-			상품 가격:
-			<fmt:formatNumber type="number" maxFractionDigits="3"
-				value="${dto.pro_subprice}" />
-			원
-		</div>
-		<div>
-			배송비:
-			<fmt:formatNumber type="number" maxFractionDigits="3"
-				value="${dto.pro_delprice*param.cart_amount}" />
-			원
-		</div>
-		<div>
-			수량:${param.cart_amount}개 <input type="hidden" name="pro_amount"
-				value="${param.cart_amount}" />
-		</div>
-		<div>
-			합계:
-			<fmt:formatNumber type="number" maxFractionDigits="3"
-				value="${(dto.pro_subprice*param.cart_amount)+dto.pro_delprice}" />
-			원
-		</div>
+		<hr>
+			<form name="ordersForm" id="ordersForm">
 
+			<h2 class="text-center mb-4" style="margin-top: 50px;">배송 정보 입력</h2>
+	<div class="container bg-light" style="width:70%">
 		<div>
 
-			<h2>배송 정보를 입력해주세요.</h2>
-			<h3>계약자 정보</h3>
-			<input type="hidden" name="user_idx"
+			<h4 class="useTitle text-center my-3">계약자 정보</h4>
+			<input type="hidden" name="user_idx" 
 				value="${sessionScope.ssInfo.user_idx}">
 		</div>
-		<div>
+		<div class="mb-3">
 			<label for="order_name">고객명</label> <input type="text"
 				class="form-control" id="order_name" name="order_name"
 				value="${sessionScope.ssInfo.user_name}" placeholder="이름을 입력해주세요">
 		</div>
-		<div>
-			<label for="receiver_tel">연락처</label> <input type="text"
-				class="form-control" id="receiver_tel" name="receiver_tel"
+		<div  class="mb-3">
+			<label for="order_tel">연락처</label> <input type="text"
+				class="form-control" id="order_tel" name="order_tel"
 				value="${sessionScope.ssInfo.user_tel}" placeholder="연락처 -제외 하고 입력">
 		</div>
-		<div>
+		<div  class="mb-3">
 			<label for="order_pcode">우편번호</label>
 			<div class="input-group mb-3">
 				<input type="text" class="form-control" id="order_pcode"
@@ -121,7 +210,7 @@
 						onclick="findaddr()">우편번호 검색</button>
 				</div>
 			</div>
-		</div>
+	
 		<div>
 			<label for="order_addr">기본주소</label> <input type="text"
 				class="form-control" id="order_addr" name="order_addr"
@@ -134,51 +223,49 @@
 				value="${sessionScope.ssInfo.addr_detail}" placeholder="상세주소"
 				required="required">
 		</div>
-
-
-		<h3>사용자 정보</h3>
-		<div>
-			계약자와 동일<input type="checkbox" value="y" onclick="copyUserInfo()">
+	</div>
+</div>
+	<div class="container bg-light" style="width:70%">
+		<h4 class="useTitle text-center my-3">사용자 정보</h4>
+		<div >
+			<input type="checkbox" value="y"
+				onclick="copyUserInfo(); toggleDivVisibility()"> <label style="color :#C45630; ">계약자와
+				동일</label>
 		</div>
-		<div>
-			<label for="receiver_name">고객명</label> <input type="text"
-				class="form-control" id="receiver_name" name="receiver_name"
-				value="" placeholder="이름을 입력해주세요">
-		</div>
-		<div>
-			<label for="receiver_tel">연락처</label> <input type="text"
-				class="form-control" id="receiver_tel" name="receiver_tel" value=""
-				placeholder="연락처 -제외 하고 입력">
-		</div>
-		<div>
-			<label for="receiver_pcode">우편번호</label>
+		<div id="user_info" class="mb-3">
+			<label for="buyer_name">고객명</label> <input type="text"
+				class="form-control" id="buyer_name" name="buyer_name"  required="required" pattern="[가-힣]{2,5}">
+				placeholder="이름을 입력해주세요"> <label for="buyer_tel" >연락처</label>
+			<input type="text" class="form-control" id="buyer_tel"
+				name="buyer_tel" value="" placeholder="연락처 -제외 하고 입력" required="required" pattern="[0-9]{3}-[0-9]{3,4}-[0-9]{4}"> <label
+				for="buyer_pcode">우편번호</label>
 			<div class="input-group mb-3">
-				<input type="text" class="form-control" id="receiver_pcode"
-					name="receiver_pcode" value="" placeholder="우편번호"
-					readonly="readonly" onclick="findaddr()">
+				<input type="text" class="form-control" id="buyer_pcode"
+					name="buyer_pcode"  placeholder="우편번호" readonly="readonly" required="required"
+					onclick="findaddr()">
 				<div class="input-group-append">
 					<button class="btn btn-outline-secondary" type="button"
 						onclick="findaddr()">우편번호 검색</button>
 				</div>
 			</div>
-		</div>
-		<div>
-			<label for="receiver_addr">기본주소</label> <input type="text"
-				class="form-control" id="receiver_addr" name="receiver_addr"
-				value="" placeholder="기본주소" readonly="readonly">
-		</div>
-		<div>
-			<label for="receiver_detail">상세주소</label> <input type="text"
-				class="form-control" id="receiver_detail" name="receiver_detail"
-				value="" placeholder="상세주소" required="required">
-		</div>
+			<label for="buyer_addr">기본주소</label> <input type="text"
+				class="form-control" id="buyer_addr" name="buyer_addr" value=""
+				placeholder="기본주소" readonly="readonly" required="required"> <label
+				for="buyer_detail">상세주소</label> <input type="text"
+				class="form-control" id="buyer_detail" name="buyer_detail" value=""
+				placeholder="상세주소" required="required">
 
 		<div>
 			<label for="order_msg">배송 메세지</label> <input type="text"
 				class="form-control" id="order_msg" name="order_msg"
 				placeholder="배송메세지">
 		</div>
+		</div>
+		</div>
+	
 		<div>
+		<div class="container bg-light my-5" style="width:70%">
+		
 			<label for="checkbox"> 개인정보이용동의 </label>
 			<div class="form-control">
 				개인정보 이용동의합니다.<input class="form-check-input" type="checkbox"
@@ -186,32 +273,50 @@
 					required="required">
 			</div>
 		</div>
-
-		<div>
-			<h3>결제 금액</h3>
-		</div>
-		<div>
+</div>
+		<h2 class="text-center mb-4">결제 금액</h2>
+	<div class="container bg-light" style="width:70% ;">
+	
+		<div class="mb-3">
 			<label for="orderPay">주문 금액</label> <input type="text" name="total"
 				id="total"
 				value="${dto.pro_subprice * param.cart_amount + dto.pro_delprice}"
 				class="form-control">
 		</div>
-		<div>
+		<div class="mb-3">
 			<label for="point_total">사용 가능포인트</label> <input type="text"
 				id="point_total" value="${result}" readonly> <input
 				type="checkbox" id="check" onclick="checkPt()">전액사용
 		</div>
-		<div>
+		<div class="mb-3">
 			<label for="point_num">포인트 사용</label> <input type="text"
 				id="point_num" oninput="getTotal()">
 		</div>
-		<div>
+		<div class="mb-3">
 			<label for="amount">최종 결제금액</label> <input type="text" id="amount"
 				readonly="readonly">
 		</div>
-
+	</div>
 		<!-- 결제하기 버튼 생성 -->
-		<button onclick="requestPay()">결제하기</button>
+					<div class="d-grid d-md-flex justify-content-center mx-auto">
+					<button type="button" class="btn btn-primary mb-2 mb-md-0"
+						onclick="requestPay()">결제하기</button> 
+						  <span style="margin: 0 10px;"></span>
+						<button type="button" class="btn btn-outline-secondary" onclick="location.href='proList.do'"
+						>목록으로</button>
+					</div>
+					</form>
+		</div>
+		
+
+
+	<%@include file="../footer.jsp"%>
+<!-- -------------------------------------------------------------------------------------- -->
+
+
+
+
+
 
 		<!-- 포인트 조회 및 사용-->
 		<script src="js/point.js">
@@ -219,12 +324,50 @@
 		</script>
 
 
+
+		<script>
+			function copyUserInfo() {
+				var checked = document
+						.querySelector('input[type="checkbox"][value="y"]').checked;
+				if (checked) {
+					document.querySelector('#buyer_name').value = '';
+					document.querySelector('#buyer_tel').value = '';
+					document.querySelector('#buyer_pcode').value = '';
+					document.querySelector('#buyer_addr').value = '';
+				}
+			}
+
+			function toggleDivVisibility() {
+				var userInfoDiv = document.getElementById("user_info");
+				if (userInfoDiv.classList.contains("hidden")) {
+					userInfoDiv.classList.remove("hidden");
+				} else {
+					userInfoDiv.classList.add("hidden");
+				}
+			}
+		</script>
+
+
 		<script>
 			var IMP = window.IMP;
 			IMP.init("imp77686458");
 
-			function requestPay() {
+			
+			function validateForm() {
+                var form = document.ordersForm;
+                  if (!form.checkValidity()) { // HTML5 폼 유효성 검사
+                        form.querySelector(':invalid').focus(); // 유효하지 않은 입력 필드에 포커스
 
+                    return false;
+                  }
+                  return true;
+            }
+			
+			
+			function requestPay() {
+				if (!validateForm()) {
+                    return;
+                  }
 				var today = new Date();
 				var year = today.getFullYear().toString();
 				var month = (today.getMonth() + 1).toString().padStart(2, "0"); // 월은 0부터 시작하므로 1을 더해줌
@@ -236,23 +379,39 @@
 				var makeMerchantUid = year + month + day + hours + minutes
 						+ seconds;
 
+				//계약자 및 사용자 정보//
 				var oName = document.getElementById("order_name").value;
 				var uid = "OMM" + makeMerchantUid;
 
 				var tp = document.getElementById("amount").value;
-				var bName = document.getElementById("order_name").value;
-				var bTel = document.getElementById("receiver_tel").value;
-				var addr = document.getElementById("order_addr").value;
-				var bPcode = document.getElementById("order_pcode").value;
+				var bName = document.getElementById("buyer_name").value;
+				if (!bName) {
+					bName = document.getElementById("order_name").value;
+				}
+				var bTel = document.getElementById("buyer_tel").value;
+				if (!bTel) {
+					bTel = document.getElementById("order_tel").value;
+				}
+				var bPcode = document.getElementById("buyer_pcode").value;
+				if (!bPcode) {
+					bPcode = document.getElementById("order_pcode").value;
+				}
+				var bAddr = document.getElementById("buyer_addr").value;
+				if (!bAddr) {
+					bAddr = document.getElementById("order_addr").value;
+				}
+				var bAddr_detail = document.getElementById("buyer_detail").value;
+				if (!bAddr_detail) {
+					bAddr_detail = document.getElementById("order_detail").value;
+				}
+				var order_msg = document.getElementById("order_msg").value;
 				var order_tos = document.getElementById("checkbox").value;
+				var point_num = document.getElementById("point_num").value;
+				//계약자및 사용자 정보 끝//
 
-				var uidx = ${sessionScope.ssInfo.user_idx};
-	            var pidx = ${dto.pro_idx};
-	            var pAmount = ${param.cart_amount};
-	            var pidx = ${dto.pro_idx};
-				
-				
-				
+				var uidx = ${sessionScope.ssInfo.user_idx};//유저번호
+				var pidx = ${dto.pro_idx};//상품번호
+				var pAmount = ${param.cart_amount};//상품수량
 
 				IMP.request_pay({
 					pg : "kakaopay", //"html5_inicis",
@@ -260,24 +419,23 @@
 					merchant_uid : uid,
 					name : oName,
 					amount : tp,
-					buyer_email : "",
 					buyer_name : bName,
 					buyer_tel : bTel,
-					buyer_addr : addr,
+					buyer_addr : bAddr,
 					buyer_postcode : bPcode
 				}, function(rsp) { // callback
 					if (rsp.success) {
 						console.log(rsp);
 
 						var PaymentDTO = {
-							payment_idx : rsp.imp_uid, //payment_idx로 들어갈 값
-							cate_idx : rsp.merchant_uid, //인식번호(cate_idx)
-							payment_cate : 2, //payment_cate 카테고리
-							pay_method : rsp.pay_method, //pay_mehtod 지불수단
-							amount : rsp.paid_amount, //amount 금액
-							pay_buydate : rsp.paid_at, //pay_buydate 결제일
-							pay_cancleDate : null,//pay_cancleDate 취소일(임시'-'로 지정)
-							pay_state : rsp.status,//pay_stat
+								payment_idx : rsp.imp_uid, //payment_idx로 들어갈 값
+								cate_idx : rsp.merchant_uid, //인식번호(cate_idx)
+								payment_cate : 2, //payment_cate 카테고리
+								pay_method : rsp.pay_method, //pay_mehtod 지불수단
+								amount : rsp.paid_amount, //amount 금액
+								pay_buydate : rsp.paid_at, //pay_buydate 결제일
+								pay_cancleDate : null,//pay_cancleDate 취소일(임시'-'로 지정)
+								pay_state : rsp.status,//pay_stat
 
 						};
 
@@ -298,21 +456,21 @@
 
 						var OrderDTO = {
 							order_idx : rsp.merchant_uid,
-							user_idx : 12,
-							order_name : "구독기간 테스트",
+							user_idx : uidx,
+							order_name : bName,
 							sub_start : makeMerchantUid,
-							sub_end : makeMerchantUid,
+							sub_end : makeMerchantUid,//수정 필요
 							order_pcode : bPcode,
-							receiver : 'r',
-							receiver_tel : 'r',
-							order_addr : "서울",
-							order_detail : "경기도",
-							order_msg : "요청",
-							using_point : 12,
+							receiver : bName,
+							receiver_tel : bName,
+							order_addr : bAddr,
+							order_detail : bAddr_detail,
+							order_msg : order_msg,
+							using_point : point_num,
 							pay_date : makeMerchantUid,
 							amount : tp,
 							order_status : 1,
-							order_date : 1,
+							order_date : makeMerchantUid,
 							order_tos : order_tos
 						};
 
@@ -329,10 +487,10 @@
 							dataType : "json",
 							success : function(data) {
 								console.log(data);
-								alert('전송 성공!');
+								location.href="index.do";
 							},
 							error : function(xhr, status, error) {
-								alert('전송 실패: ' + error);
+								alert('결제는 되었으나 주문이 되지 않았습니다. 고객센터로 문의바랍니다.');
 							}
 						});
 
@@ -349,7 +507,5 @@
 			}
 		</script>
 
-	</div>
-	<%@include file="../footer.jsp"%>
 </body>
 </html>

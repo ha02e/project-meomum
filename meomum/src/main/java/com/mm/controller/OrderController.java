@@ -1,9 +1,9 @@
 package com.mm.controller;
 
-import java.util.List;
+import java.util.List;	
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -11,13 +11,12 @@ import javax.servlet.http.HttpSession;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
 
 import com.mm.cart.model.CartDAO;
 import com.mm.cart.model.CartDTO;
@@ -70,11 +69,26 @@ public class OrderController {
 		return mav;
 	}
 
+	/**장바구니 상품 결제*/
 	@RequestMapping("/orderListss.do")
 	public ModelAndView orderAllList(@RequestParam("cart_idx") int[] cartIdx, @RequestParam("totalSub") int totalSub,
 			@RequestParam("totalCount") int totalCount, @RequestParam("totalDel") int totalDel,
-			@RequestParam("finalTotalPrice") int finalTotalPrice) {
+			@RequestParam("finalTotalPrice") int finalTotalPrice,HttpSession session) {
 
+		ModelAndView mav = new ModelAndView();
+
+		if (session.getAttribute("ssInfo") == null) {
+
+			mav.addObject("msg", "로그인 후 이용가능합니다");
+			mav.addObject("link", "login.do");
+			mav.setViewName("msg");
+			return mav;
+		}
+		
+		session.getAttribute("ssInfo");
+		MemberDTO sdto =(MemberDTO) session.getAttribute("ssInfo");
+		int user_idx = sdto.getUser_idx();
+		
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		map.put("totalSub", totalSub);
 		map.put("totalCount", totalCount);
@@ -86,7 +100,9 @@ public class OrderController {
 			lists.add(cdao.orderListCartIDX(cartIdx[i]));
 
 		}
-		ModelAndView mav = new ModelAndView();
+		int result = pdao.pointTotal(user_idx);
+		
+		mav.addObject("result", result);
 		mav.addObject("lists", lists);
 		mav.addObject("total", map);
 		mav.setViewName("order/orderLists");
@@ -146,31 +162,65 @@ public class OrderController {
 		map.put("end", end);
 		map.put("user_idx", user_idx);
 
-		List<MyOrderListDTO> lists = orderDao.myOrderList(map);
+		List<MyOrderListDTO> lists = orderDao.mySubsAllList(map);
 		return lists;
 	}
-
+	
 	@RequestMapping("/subsProList.do")
 	public ModelAndView mysubsProList(@RequestParam(value = "cp", defaultValue = "1") int cp, HttpSession session) {
-
+		
 		MemberDTO mdto = (MemberDTO) session.getAttribute("ssInfo");
 		int user_idx = mdto.getUser_idx();
 
-		int totalCnt = orderDao.mySubsProTotalCnt(user_idx);
-		int listSize = 5;
-		int pageSize = 5;
+		int totalCnt = orderDao.mySubsAllListCnt(user_idx);
+	    int listSize = 5;
+	    int pageSize = 5;
 
-		String pageStr = com.mm.module.PageModule.makePage("subsProList.do", totalCnt, listSize, pageSize, cp);
+	    String pageStr = com.mm.module.PageModule.makePage("subsProList.do", totalCnt, listSize, pageSize, cp);
 
-		List<MyOrderListDTO> lists = mySubsProPage(cp, pageSize, user_idx);
+	    List<MyOrderListDTO> list = mySubsProPage(cp, pageSize, user_idx);
+
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("list", list);
+		mav.addObject("pageStr", pageStr);
+		mav.setViewName("order/subsProList");
+		return mav;
+	}
+	
+	/** 마이페이지 반납내역 */
+	public List<MyOrderListDTO> myreturnProPage(int cp, int ls, int user_idx) {
+		int start = (cp - 1) * ls + 1;
+		int end = cp * ls;
+		Map map = new HashMap();
+		map.put("start", start);
+		map.put("end", end);
+		map.put("user_idx", user_idx);
+
+		List<MyOrderListDTO> lists = orderDao.myReturnProList(map);
+		return lists;
+	}
+	
+	@RequestMapping("/myReturnProList.do")
+	public ModelAndView myreturnProList(@RequestParam(value = "cp", defaultValue = "1") int cp, HttpSession session) {
+		
+		MemberDTO mdto = (MemberDTO) session.getAttribute("ssInfo");
+		int user_idx = mdto.getUser_idx();
+
+		int totalCnt = orderDao.myReturnProListCnt(user_idx);
+	    int listSize = 5;
+	    int pageSize = 5;
+
+	    String pageStr = com.mm.module.PageModule.makePage("myReturnProList.do", totalCnt, listSize, pageSize, cp);
+
+	    List<MyOrderListDTO> lists = myreturnProPage(cp, pageSize, user_idx);
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("lists", lists);
-		mav.setViewName("order/subsProList");
 		mav.addObject("pageStr", pageStr);
+		mav.setViewName("turnback/myReturnProList");
 		return mav;
-
 	}
+	
 
 	/** 마이페이지 주문배송내역 */
 	public List<OrderReportDTO> myReportPage(int cp, int ls, int user_idx) {
@@ -305,4 +355,47 @@ public class OrderController {
 		return "order/orderCancel";
 	}
 
+	
+	
+	
+	
+	//장바구니 상품 결제 (여러개 상품)
+	@RequestMapping(value="/totalOrderss.do",method = RequestMethod.POST)
+	public ModelAndView totalOrders(@RequestBody Map<String, Object> requestData,HttpSession session) {
+
+		ModelAndView mav = new ModelAndView();
+		
+		 MemberDTO sdto =(MemberDTO) session.getAttribute("ssInfo");
+	     int user_idx = sdto.getUser_idx();
+	     
+	    ObjectMapper objectMapper = new ObjectMapper();
+
+	    PointDTO pdto = objectMapper.convertValue(requestData.get("pdto"), PointDTO.class);
+	    PaymentDTO paydto = objectMapper.convertValue(requestData.get("paydto"), PaymentDTO.class);
+	    OrderProDTO[] odtos = objectMapper.convertValue(requestData.get("odto"), OrderProDTO[].class);
+	    List<OrderProDTO> orderProList = Arrays.asList(odtos);
+	    OrderDTO ordto= objectMapper.convertValue(requestData.get("ordto"), OrderDTO.class);
+
+	    int result1 = pdao.pointInsert(pdto);
+	    int result2 = payDao.paymentInsert(paydto);
+	    int result3 = 0;
+	    for(int i=0;i<orderProList.size();i++) {
+	        result3 += orderDao.order_proInsert(orderProList.get(i));
+	        if(result3>0) {
+	        	cdao.orderCartDelete(user_idx,orderProList.get(i).getPro_idx());
+	            int cartnum = cdao.userCartCount(user_idx);
+	            session.setAttribute("cart", cartnum);
+	        }
+	    }
+	    int result4 = orderDao.orderInsert(ordto);
+
+	    String msg = (result1 > 0 && result2 > 0 && result3  > 0 && result4  > 0) ? "결제가 완료되었습니다" : "다시 시도해주세요";
+	    String link = (result1 > 0 && result2 > 0 && result3 > 0 && result4  > 0) ? "index.do" : "proList.do";
+
+	    mav.addObject("msg", msg);
+	    mav.addObject("link", link);
+	    mav.setViewName("mmJson");
+
+	    return mav;
+	}
 }

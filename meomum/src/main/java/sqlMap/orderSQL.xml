@@ -7,30 +7,58 @@
   	select * from product where pro_idx= #{pro_idx}
   	</select>
   	<insert id="orderInsert" parameterType="com.mm.order.model.OrderDTO">
-  		insert into orders values(#{order_idx}, #{user_idx}, #{order_name}, sysdate, sysdate + INTERVAL '1' MONTH, #{order_pcode}, 'r', 'r', #{order_addr}, #{order_detail}, #{order_msg}, 1, sysdate, 1, 1, sysdate, #{order_tos})
+  		insert into orders values(#{order_idx}, #{user_idx}, #{order_name}, sysdate, sysdate + INTERVAL '1' MONTH, #{order_pcode}, 'r', 'r', #{order_addr}, #{order_detail}, #{order_msg}, 1, TO_DATE(TO_CHAR(SYSDATE + 7, 'DD'), 'DD'), 1, 1, sysdate, #{order_tos})
 	</insert>
 	<insert id="order_proInsert" parameterType="com.mm.order.model.OrderProDTO">
   		insert into order_pro values(#{order_idx},#{user_idx},#{pro_idx},#{pro_amount})
 	</insert>
 
-	<select id="myOrderList" parameterType="Map" resultType="com.mm.order.model.MyOrderListDTO">
+	<select id="mySubsAllList" parameterType="Map" resultType="com.mm.order.model.MyOrderListDTO">
 		select * from
 			(select rownum as rnum, e.*from(
 				SELECT *FROM orders o
 				JOIN order_pro op ON o.order_idx = op.order_idx
 				JOIN product p ON op.pro_idx = p.pro_idx
 				WHERE o.user_idx = #{user_idx}
+					and o.order_status=4
 				order by order_date desc
 			)e )f
 		where rnum<![CDATA[>=]]>#{start} and rnum<![CDATA[<=]]>#{end}
 	</select>
-	<select id="mySubsProTotalCnt" parameterType="Integer" resultType="Integer">
+	<select id="mySubsAllListCnt" parameterType="Integer" resultType="Integer">
 		select count(*) from
 			orders o
 		JOIN order_pro op ON o.order_idx = op.order_idx
 		JOIN product p ON op.pro_idx = p.pro_idx
 		WHERE o.user_idx = #{user_idx}
+			and o.order_status=4
 	</select>
+	
+	<select id="myReturnProList" parameterType="Map" resultType="com.mm.order.model.MyOrderListDTO">
+		select * from
+			(select rownum as rnum, e.*from(
+				SELECT *FROM orders o
+				JOIN order_pro op ON o.order_idx = op.order_idx
+				JOIN product p ON op.pro_idx = p.pro_idx
+				WHERE o.user_idx = #{user_idx}
+					and o.order_status=5
+					and o.order_status=6
+					and o.order_status=7
+				order by order_date desc
+			)e )f
+		where rnum<![CDATA[>=]]>#{start} and rnum<![CDATA[<=]]>#{end}
+	</select>
+	<select id="myReturnProListCnt" parameterType="Integer" resultType="Integer">
+		select count(*) from
+			orders o
+		JOIN order_pro op ON o.order_idx = op.order_idx
+		JOIN product p ON op.pro_idx = p.pro_idx
+		WHERE o.user_idx = #{user_idx}
+			and o.order_status=5
+			and o.order_status=6
+			and o.order_status=7
+	</select>
+	
 	
 	
 	<select id="myOrderReport" parameterType="Map" resultType="com.mm.order.model.OrderReportDTO">
@@ -108,5 +136,20 @@
 		update orders
 		set order_status=2
 		where order_idx=#{order_idx}
+	</update>
+	
+	<update id="returnApplyUpdate" parameterType="String">
+		update orders
+		set order_status=5
+		where order_idx=#{order_idx}
+	</update>
+	
+	<update id="returnSubmitUpdate" parameterType="Map">
+		update orders o
+		set o.order_status = 6
+		where o.order_idx in (select op.order_idx
+                    		from order_pro op
+                    		where op.pro_idx=#{pro_idx}
+                    		)
 	</update>
   </mapper>
