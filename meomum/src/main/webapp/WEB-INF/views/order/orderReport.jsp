@@ -263,7 +263,14 @@ function showTracker(t_key, t_code,t_invoice){
 														</c:when>
 														<c:when test="${dto.order_status eq 4}">
 															<div class="text-success"><strong>배송완료</strong></div>
-															<button type="button" id="btnSubmit" class="btn-sm app-btn-secondary">후기 작성하기</button>
+															<div class="buttons">
+																<c:url var="reviewWriteUrl" value="reviewWrite.do">
+																	<c:param name="activity_idx">${dto.order_idx}</c:param>
+																	<c:param name="writer">${dto.user_name}</c:param>
+																	<c:param name="category">구독일상</c:param>
+																</c:url>
+																<a href="${reviewWriteUrl}"><i class="bi bi-pencil"></i>&nbsp;후기쓰기</a>
+															</div>
 														</c:when>
 														<c:when test="${dto.order_status eq 5}">										
 															<div class="text-danger"><strong>반납신청</strong></div>
