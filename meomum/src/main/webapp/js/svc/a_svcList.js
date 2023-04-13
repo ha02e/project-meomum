@@ -77,14 +77,17 @@
 		        var formatDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
 	
 		        var tableTd = '<tr>';
-		        tableTd += '<td><input type="checkbox" name="check" value=""></td>';
-		        tableTd += '<td>' + rowData.svc_idx + '</td>';
-		        tableTd += '<td>' + formatDate + '</td>';
-		        tableTd += '<td><a href="asvcContent.do?svc_idx=' + rowData.svc_idx + '">' + rowData.user_name + '</a></td>';
-		        tableTd += '<td>' + rowData.user_tel + '</td>';
-		        tableTd += '<td>' + rowData.svc_state + '</td>';
-		        tableTd += '</tr>';
-		         $('#tableBody').append(tableTd);
+	
+				tableTd += '<td class="svc_idx text-center"><a href="asvcContent.do?svc_idx=' + rowData.svc_idx + '">' + rowData.svc_idx + '</a></td>';
+
+				tableTd += '<td class="text-center">' + formatDate + '</td>';
+				tableTd += '<td class="text-center">' + rowData.user_name + '</td>';
+				tableTd += '<td class="text-center">' + rowData.user_tel + '</td>';
+				tableTd += '<td class="text-center"><span class="'+svcStateColor(rowData.svc_state) + ' d-flex justify-content-center align-items-center">' + rowData.svc_state + '</span></td>';
+				tableTd += '<td class="text-center"><a href="asvcContent.do?svc_idx=' + rowData.svc_idx + '">X</a></td>';
+				tableTd += '</tr>';
+				$('#tableBody').append(tableTd);
+
 		         
 		        //var paging = '<input type="submit" value="선택 삭제">';
 		       // paging += '<nav class="d-flex justify-content-between align-items-center">';
@@ -98,5 +101,19 @@
 		}).fail(function() {
 			alert('다시 시도해주세요');
 		});
+
+		function svcStateColor(state) {
+		if (state == '예약확정') {
+			return 'text-warning';
+		} else if (state == '결제완료') {
+			return 'text-info';
+		} else if (state == '예약취소' || state == '결제취소') {
+			return 'text-danger';
+		} else if (state == '견적완료' || state == '작업완료') {
+			return 'text-success';
+		} else {
+			return '';
+		}
+		}
 	}
 	

@@ -1,6 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+    
 
 <!doctype html>
 <html>
@@ -31,7 +32,7 @@ ul.list-group-item{
 
   li.list-group-item > div {
     text-align: left;
-    margin-right: 20px;
+    margin-right: 40px;
   }
   
     li.list-group-item input[type="text"] {
@@ -68,6 +69,10 @@ ul.list-group-item{
 
 .btn-group .btn {
 	margin-right: 10px;
+}
+
+#total{
+	display:inline-block;
 }
 
 footer {
@@ -123,6 +128,8 @@ footer {
 	box-shadow: none;
 }
 
+
+
 .form-control {
 	border: none;
 }
@@ -156,14 +163,18 @@ footer {
 				<%-- <c:if test="${dto.svc_state eq '견적완료'}"> --%>
 				<div class="col-md-6 col-lg-4 order-md-last">
 					<h4 class="d-flex justify-content-between align-items-center mb-3">
-						<span class="text-primary">결제금액</span>
+						<span class="text-primary" style="font-family: 'GmarketSansMedium';">결제금액(수정중)</span>
 					</h4>
 					<ul class="list-group mb-3">
-						<li class="list-group-item d-flex justify-content-between lh-sm">
-							<div style="white-space: nowrap;"  id="buy">
-								<sapn>견적금액</sapn>
+						<li class="list-group-item d-flex justify-content-between lh-sm row">
+							<!-- <div class="col d-flex justify-content-between"  id="buy"> -->
+							<div class="col" id="buy">
+								<span>견적금액</span>
+							</div>
+							<div class="col">
 								<input type="text" id="total" value="${ingdto.total}" readonly >
 							</div>
+							
 						</li>
 						<li class="list-group-item d-flex justify-content-between lh-sm">
 							<div style="white-space: nowrap;">
@@ -177,13 +188,13 @@ footer {
 						<li
 							class="list-group-item d-flex justify-content-between bg-body-tertiary">
 							<div class="text-success" style="white-space: nowrap;">
-								<sapn>사용 포인트<span>
-								<input type="text" id="point_num" oninput="getTotal()">
+								<span>사용 포인트</span>
+								<input type="text" id="point_num" oninput="getTotal()">점
 						</li>
 						<li class="list-group-item d-flex justify-content-between">
 						<div style="white-space: nowrap;">
 						<span>총 결제금액</span> 
-						<strong> <input type="text" id="amount" style="width: 70%;" readonly></strong></li>
+						<strong> <input type="text" id="amount" style="width: 70%;" readonly>원</strong></li>
 					</ul>
 					<div class="form-check">
 						<input class="form-check-input" type="checkbox" id="checkbox"
@@ -201,32 +212,27 @@ footer {
 				<%-- </c:if> --%>
 				<!-- 결제 div 끝 -->
 				
-				<!-- 예약 상세 내용 수정 -->
-				<div class="col-md-7 col-lg-8 order-md-first">
+				<!-- 예약 상세 내용 -->
+				<div class="col-md-7 col-lg-8 order-md-first mx-auto">
 					<h4 class="d-flex justify-content-between align-items-center mb-3">
-						<span class="text-primary">예약 상세 내용</span>
+						<span class="text-primary" style="font-family: 'GmarketSansMedium';">예약 상세 내용</span>
 					</h4>
 					
 					<ul class="list-group mb-3">
-						<input type="hidden" id="user_id"
-							value="${sessionScope.ssInfo.user_id}">
-						<input type="hidden" id="user_idx"
-							value="${sessionScope.ssInfo.user_idx}">
-						<li class="list-group-item d-flex justify-content-between lh-sm">
-							<div>
-								<sapn>예약번호</sapn>
+						<input type="hidden" id="user_id" value="${sessionScope.ssInfo.user_id}">
+						<input type="hidden" id="user_idx" value="${sessionScope.ssInfo.user_idx}">
+						<li class="list-group-item d-flex justify-content-between lh-sm row">
+							<div class="col">
+								<span>예약번호</span>
 							</div>
-							<div>
-								<input type="text" class="form-control" id="svc_idx"
-									value="${ingdto.svc_idx}" readonly>
-							</div>
+							<div div class="col">${ingdto.svc_idx}</div>
 						</li>
 						<!-- ---------------------------------------------------------- -->
-						<li class="list-group-item d-flex justify-content-between lh-sm">
-							<div>
-								<sapn>서비스 일시</sapn>
+						<li class="list-group-item d-flex justify-content-between lh-sm row">
+							<div class="col">
+								<span>서비스 일시</span>
 							</div>
-							<div>
+							<div class="col">
 								<c:if test="${dto.svc_state ne '결제취소'}">
 	      						${dto.svc_days}&nbsp;|&nbsp;${dto.svc_time}
 	      						</c:if>
@@ -236,73 +242,66 @@ footer {
 							</div>
 						</li>
 						<!-- ---------------------------------------------------------- -->
-						<li
-							class="list-group-item d-flex justify-content-between bg-body-tertiary">
-							<div>
-								<sapn>예약 상세 내용</sapn>
+						<li class="list-group-item d-flex justify-content-between bg-body-tertiary row">
+							<div class="col">
+								<strong><span>예약 상세 내용</span></strong>
 							</div>
 
 						</li>
 						<!-- ---------------------------------------------------------- -->
-						<li class="list-group-item d-flex justify-content-between lh-sm">
-							<div>
-								<sapn>지역</sapn>
+						<li class="list-group-item d-flex justify-content-between lh-sm row">
+							<div class="col">
+								<span>지역</span>
 							</div>
-							<div>${dto.user_addr}${dto.user_detail}</div>
+							<div class="col">${dto.user_addr}${dto.user_detail}</div>
 						</li>
 						<!-- ---------------------------------------------------------- -->
-						<li class="list-group-item d-flex justify-content-between lh-sm">
-							<div>
-								<sapn>거주형태</sapn>
+						<li class="list-group-item d-flex justify-content-between lh-sm row">
+							<div class="col">
+								<span>거주형태</span>
 							</div>
-							<div>${dto.svc_type}</div>
+							<div class="col">${dto.svc_type}</div>
 						</li>
 						<!-- ---------------------------------------------------------- -->
-						<li class="list-group-item d-flex justify-content-between lh-sm">
-							<div>
-								<sapn>서비스 영역</sapn>
+						<li class="list-group-item d-flex justify-content-between lh-sm row">
+							<div class="col">
+								<span>서비스 영역</span>
 							</div>
-							<div>${dto.svc_area}</div>
+							<div class="col">${dto.svc_area}</div>
 						</li>
 						<!-- ---------------------------------------------------------- -->
-						<li class="list-group-item d-flex justify-content-between lh-sm">
-							<div>
-								<sapn>거주 평수(공급면적)</sapn>
+						<li class="list-group-item d-flex justify-content-between lh-sm row">
+							<div class="col">
+								<span>거주 평수(공급면적)</span>
 							</div>
-							<div>${dto.svc_py}평</div>
+							<div class="col">${dto.svc_py}평</div>
 						</li>
 						<!-- ---------------------------------------------------------- -->
-						<li class="list-group-item d-flex justify-content-between lh-sm">
-							<div>
-								<sapn>요청사항</sapn>
+						<li class="list-group-item d-flex justify-content-between lh-sm row">
+							<div class="col">
+								<span>요청사항</span>
 							</div>
-							<div>${dto.svc_req}</div>
+							<div class="col">${dto.svc_req}</div>
 						</li>
 						<!-- ---------------------------------------------------------- -->
-						<li
-							class="list-group-item d-flex justify-content-between bg-body-tertiary">
-							<div>
-								<sapn>예약자 정보</sapn>
-							</div>
-						</li>
-						<!-- ---------------------------------------------------------- -->
-						<li class="list-group-item d-flex justify-content-between lh-sm">
-							<div>
-								<sapn>성함</sapn>
-							</div>
-							<div>
-								<input type="text" class="form-control" id="user_name"
-									value="${dto.user_name}">
+						<li class="list-group-item d-flex justify-content-between bg-body-tertiary row">
+							<div class="col">
+								<strong><span>예약자 정보</span></strong>
 							</div>
 						</li>
 						<!-- ---------------------------------------------------------- -->
-						<li class="list-group-item d-flex justify-content-between lh-sm">
-							<div>
-								<sapn>휴대전화</sapn>
+						<li class="list-group-item d-flex justify-content-between lh-sm row">
+							<div class="col">
+								<span>성함</span>
 							</div>
-							<div>
-								<input type="text" class="form-control" id="user_tel"
-									value="${dto.user_tel}">
+							<div class="col">${dto.user_name}</div>
+						</li>
+						<!-- ---------------------------------------------------------- -->
+						<li class="list-group-item d-flex justify-content-between lh-sm row">
+							<div class="col">
+								<span>휴대전화</span>
+							</div>
+							<div class="col">${dto.user_tel}
 							</div>
 						</li>
 					</ul>

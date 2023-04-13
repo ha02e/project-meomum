@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,7 +48,9 @@
 	color: #fff;
 	text-align: center;
 }
-
+.container p{
+	font-family: 'GmarketSansMedium';
+}
 .card {
 	margin: 0 0 20px 0;
 }
@@ -83,8 +87,8 @@ footer {
 					</c:if>
 					<c:forEach var="list" items="${list}">
 						<div class="card mb-3">
-							<div class="card-header bg-secondary text-white">
-								<h5>${list.pay_state}</h5>
+							<div class="card-header bg-#85745D text-black">
+								<h5 style="font-family: 'GmarketSansMedium';">${list.pay_state}</h5>
 							</div>
 							<div class="card-body">
 								<p class="card-text">
@@ -92,21 +96,14 @@ footer {
 										<c:param name="svc_idx">${list.svc_idx}</c:param>
 										<c:param name="user_idx">${sessionScope.ssInfo.user_idx}</c:param>
 									</c:url>
-									<a href="${contentUrl}">예약번호:${list.svc_idx}</a>
+									<a href="${contentUrl}">예약번호: ${list.svc_idx}</a>
 								</p>
 								<p class="card-text">
 									서비스일: ${list.svc_datetime}
 								</p>
 								<p class="card-text">
-									결제금액: ${list.total}원
+									결제금액: <fmt:formatNumber type="number" maxFractionDigits="3" value="${list.total}"/>원
 								</p>
-<%-- 								<c:if test="${list.svc_state ne '예약취소'}">
-								방문 예약 일시:${list.svc_days}&nbsp;|&nbsp;${list.svc_time}
-								</c:if>
-								<c:if test="${list.svc_state eq '예약취소'}">
-								방문 예약 일시:${list.svc_days.substring(1)} | ${list.svc_time.substring(1)}
-								</c:if>
-								</p> --%>
 							</div>
 						</div>
 					</c:forEach>

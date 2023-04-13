@@ -261,13 +261,13 @@
 		ORDER BY  svc_ing_idx DESC
 		)a
 	)b
-	WHERE rnum <![CDATA[>= ]]> #{start} and rnum <![CDATA[<=]]> #{end}
+	WHERE rnum <![CDATA[>=]]> #{start} and rnum <![CDATA[<=]]> #{end}
 	</select>
 	
 	<!--마이페이지: 정리일상 진행 현황 총 게시글 -->
 	<select id="svcIngListCnt" parameterType="Map" resultType="Integer">
 	SELECT count(*)
-	FROM(SSELECT * 
+	FROM (SELECT * 
 		FROM svc_ing
 		WHERE user_idx = #{user_idx}
 	)

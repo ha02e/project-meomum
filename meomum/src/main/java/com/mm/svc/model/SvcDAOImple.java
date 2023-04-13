@@ -202,7 +202,7 @@ public class SvcDAOImple implements SvcDAO {
 	/**마이페이지: 정리일상 진행 현황 총 게시글*/
 	@Override
 	public int svcIngListCnt(int user_idx) {
-		int count = sqlMap.selectOne("svcAdminListCnt",user_idx);
+		int count = sqlMap.selectOne("svcIngListCnt",user_idx);
 		count = count==0?1:count;
 		return count;
 	}
