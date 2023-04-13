@@ -116,11 +116,12 @@ public class ReturnController {
 		map.put("order_idx", order_idx);
 		map.put("pro_idx", pro_idx);
 		
-		int result=orderDao.returnSubmitUpdate(map); //주문상태 반납진행으로 변경
+		int result=orderDao.returnSubmitUpdate(map); //주문상태 반납진행으로 변경하기
+		int returnUpdate=returnDao.returnStartUpdate(map);//turnback 테이블 반납시작날짜, 반납승인여부 변경하기
 		
 		ModelAndView mav=new ModelAndView();
 		
-		if(result>0) {
+		if(result>0 && returnUpdate>0) {
 			//배송처리도 해야됨!!!
 			
 			

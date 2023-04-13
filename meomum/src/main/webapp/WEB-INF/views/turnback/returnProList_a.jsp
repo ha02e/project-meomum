@@ -38,25 +38,9 @@
 .truncate{
 	margin-left:0.6rem;
 }
-.pro_amount {
-    border-radius: 0rem;
-    border: 1px solid #bcc1cb;
-    padding : 0.1rem 0.4rem;
-    width:60px;
-    height:24px;
-    margin-right:0.2rem;
-}
-.state-box {
-    border-radius: 0rem;
-    border: 1px solid #bcc1cb;
-    padding : 0.1rem 0.4rem;
-    width:50px;
-    height:24px;
-    margin-right:0.2rem;
-}
 
-.btn-sm{
-	padding: 0.2rem 0.8rem !important;
+.button .btn-sm{
+	padding: 0.3rem 0.6rem !important;
 }
 </style>
 
@@ -107,124 +91,83 @@ function returnSubmitForm(url, name, options) {
 				    </div><!--//col-auto-->
 			    </div><!--//row-->
 			   
-			    
-			    <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
-				    <a class="flex-sm-fill text-sm-center nav-link active" id="orders-all-tab" data-bs-toggle="tab" href="#orders-all" role="tab" aria-controls="orders-all" aria-selected="true">모두보기</a>
-				    <a class="flex-sm-fill text-sm-center nav-link"  id="orders-paid-tab" data-bs-toggle="tab" href="#orders-paid" role="tab" aria-controls="orders-paid" aria-selected="false">판매중</a>
-				    <a class="flex-sm-fill text-sm-center nav-link" id="orders-pending-tab" data-bs-toggle="tab" href="#orders-pending" role="tab" aria-controls="orders-pending" aria-selected="false">품절</a>
-				</nav>
-				
-				
-				<div class="tab-content" id="orders-table-tab-content">
-			        <div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
-					    <div class="app-card app-card-orders-table shadow-sm mb-5">
-						    <div class="app-card-body">
-							    <div class="table-responsive">
-							        <table class="table app-table-hover mb-0 text-center">
-										<thead>
-											<tr>
-												<th class="cell" style="width:10%">반품번호</th>
-												<th class="cell" style="width:20%">주문번호</th>
-												<th class="cell" style="width:26%">반납상품</th>
-												<th class="cell" style="width:10%">반납신청일자</th>
-												<th class="cell" style="width:10%">회수날짜</th>
-												<th class="cell" style="width:10%">반납완료날짜</th>
-												<th class="cell" style="width:14%">상태</th>
-											</tr>
-										</thead>
-										<tbody>
-											<c:if test="${empty lists}">
-												<tr>
-													<td class="align-middle" colspan="6">구독 반납 내역이 없습니다.</td>
-												</tr>
-											</c:if>
-											<c:forEach var="dto" items="${lists}">
-												<tr>
-													<td class="cell">${dto.return_idx}</td>
-													<td class="cell">${dto.order_idx}</td>
-													<td class="cell proname">
-														<div class="d-flex justify-content-start align-items-center">
-														<div class="thumb-box">
-															<img src="/meomum/images/items/${dto.pro_thumb}" alt="IMG-PRODUCT">
-														</div>
-														<span class="truncate">${dto.pro_name}</span>
-														</div>
-													</td>
-													<td class="cell">${dto.return_date}</td>
-													<td class="cell">${dto.return_start_date}</td>
-													<td class="cell">${dto.return_end_date}</td>
-													<td class="cell">
-														<c:choose>
-															<c:when test="${dto.order_status eq 5}">										
-																<span class="text-danger">반납신청</span>
-																<a href="#" class="btn-sm app-btn-secondary" 
-																	onclick="returnSubmitForm('returnSubmitForm.do?order_idx=${dto.order_idx}', 'returnSubmitForm', 'width=540,height=600'); return false;">
+				<div class="app-card app-card-orders-table shadow-sm mb-5">
+					<div class="app-card-body">
+						<div class="table-responsive">
+							<table class="table app-table-hover mb-0 text-center">
+								<thead>
+									<tr>
+										<th class="cell" style="width:10%">반품번호</th>
+										<th class="cell" style="width:20%">주문번호</th>
+										<th class="cell" style="width:26%">반납상품</th>
+										<th class="cell" style="width:10%">반납신청일자</th>
+										<th class="cell" style="width:10%">회수날짜</th>
+										<th class="cell" style="width:10%">반납완료날짜</th>
+										<th class="cell" style="width:14%">상태</th>
+									</tr>
+								</thead>
+								
+								<tbody>
+									<c:if test="${empty lists}">
+										<tr>
+											<td class="align-middle" colspan="6">구독 반납 내역이 없습니다.</td>
+										</tr>
+									</c:if>
+									<c:forEach var="dto" items="${lists}">
+										<tr>
+											<td class="cell">${dto.return_idx}</td>
+											<td class="cell">${dto.order_idx}</td>
+											<td class="cell proname">
+												<div class="d-flex justify-content-start align-items-center">
+													<div class="thumb-box">
+														<img src="/meomum/images/items/${dto.pro_thumb}" alt="IMG-PRODUCT">
+													</div>
+													<span class="truncate">${dto.pro_name}</span>
+												</div>
+											</td>
+											<td class="cell">${dto.return_date}</td>
+											<td class="cell">${dto.return_start_date}</td>
+											<td class="cell">${dto.return_end_date}</td>
+											<td class="cell button">
+												<c:choose>
+													<c:when test="${dto.order_status eq 5}">										
+														<span class="text-danger">반납신청</span>
+														<c:url var="returnSubmitUrl" value="returnSubmitForm.do">
+															<c:param name="order_idx">${dto.order_idx}</c:param>
+															<c:param name="pro_idx">${dto.pro_idx}</c:param>
+														</c:url>
+															<a href="#" class="btn-sm app-btn-secondary" 
+																	onclick="returnSubmitForm('${returnSubmitUrl}', 'returnSubmitForm', 'width=540,height=600'); return false;">
 																	반납처리
-																</a>
-															</c:when>
-															<c:when test="${dto.order_status eq 6}">반납진행</c:when>
-															<c:when test="${dto.order_status eq 7}">반납완료</c:when>
-														</c:choose>
-													</td>
-												</tr>
-											</c:forEach>
-										</tbody>
-									</table>
-						        </div><!--//table-responsive-->
+															</a>
+													</c:when>
+													<c:when test="${dto.order_status eq 6}">반납진행</c:when>
+													<c:when test="${dto.order_status eq 7}">반납완료</c:when>
+												</c:choose>
+											</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div><!--//table-responsive-->
 						       
-						    </div><!--//app-card-body-->		
-						</div><!--//app-card-->
+					</div><!--//app-card-body-->		
+				</div><!--//app-card-->
 						
-						<nav aria-label="Page navigation example">
-							<ul class="pagination pagination-sm justify-content-center">
-								${pageStr}
-							</ul>
-						</nav>
+				<nav aria-label="Page navigation example">
+					<ul class="pagination pagination-sm justify-content-center">
+						${pageStr}
+					</ul>
+				</nav>
 
-			        </div><!--//tab-pane-->
-			        
-			        <div class="tab-pane fade" id="orders-paid" role="tabpanel" aria-labelledby="orders-paid-tab">
-					    <div class="app-card app-card-orders-table mb-5">
-						    <div class="app-card-body">
-							    <div class="table-responsive">
-								    
-								</div>
-						    </div><!--//app-card-body-->		
-						</div><!--//app-card-->
-			        </div><!--//tab-pane-->
-			        
-			        <div class="tab-pane fade" id="orders-pending" role="tabpanel" aria-labelledby="orders-pending-tab">
-					    <div class="app-card app-card-orders-table mb-5">
-						    <div class="app-card-body">
-							    <div class="table-responsive">
-							  
-						        </div><!--//table-responsive-->
-						    </div><!--//app-card-body-->		
-						</div><!--//app-card-->
-			        </div><!--//tab-pane-->
-			        <div class="tab-pane fade" id="orders-cancelled" role="tabpanel" aria-labelledby="orders-cancelled-tab">
-					    <div class="app-card app-card-orders-table mb-5">
-						    <div class="app-card-body">
-							    <div class="table-responsive">
-							        
-						        </div><!--//table-responsive-->
-						    </div><!--//app-card-body-->		
-						</div><!--//app-card-->
-			        </div><!--//tab-pane-->
-				</div><!--//tab-content-->
+		</div>        
+	</div><!--//tab-content-->
 
-		</div>
-	</div>
 
 <%@include file="../footer_a.jsp"%>    
 </div><!--//app-wrapper-->    					
 
-<!-- Javascript -->          
-<!-- <script src="assets/plugins/popper.min.js"></script> -->
-
-<!-- Page Specific JS -->
-<!-- <script src="assets/js/app.js"></script> --> 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" ></script>
 
 </body>
 </html>
