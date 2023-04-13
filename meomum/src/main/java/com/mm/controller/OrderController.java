@@ -2,6 +2,7 @@ package com.mm.controller;
 
 import java.util.List;	
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -330,34 +331,41 @@ public class OrderController {
 	
 	//장바구니 상품 결제 (여러개 상품)
 	@RequestMapping(value="/totalOrderss.do",method = RequestMethod.POST)
-	public ModelAndView totalOrders(@RequestBody Map<String, Object> requestData,@RequestParam("odto")OrderProDTO [] orderProDTOs) {
-		    
-		  ObjectMapper objectMapper = new ObjectMapper();
-		  org.codehaus.jackson.map.type.TypeFactory typeFactory = objectMapper.getTypeFactory();
+	public ModelAndView totalOrders(@RequestBody Map<String, Object> requestData,HttpSession session) {
 
-		    PointDTO pdto = objectMapper.convertValue(requestData.get("pdto"), PointDTO.class);
-		    PaymentDTO paydto = objectMapper.convertValue(requestData.get("paydto"), PaymentDTO.class);
-		    OrderDTO ordto= objectMapper.convertValue(requestData.get("ordto"), OrderDTO.class);
-			    
-	    System.out.println(orderProDTOs);
+		ModelAndView mav = new ModelAndView();
+		
+		 MemberDTO sdto =(MemberDTO) session.getAttribute("ssInfo");
+	     int user_idx = sdto.getUser_idx();
+	     
+	    ObjectMapper objectMapper = new ObjectMapper();
+
+	    PointDTO pdto = objectMapper.convertValue(requestData.get("pdto"), PointDTO.class);
+	    PaymentDTO paydto = objectMapper.convertValue(requestData.get("paydto"), PaymentDTO.class);
+	    OrderProDTO[] odtos = objectMapper.convertValue(requestData.get("odto"), OrderProDTO[].class);
+	    List<OrderProDTO> orderProList = Arrays.asList(odtos);
+	    OrderDTO ordto= objectMapper.convertValue(requestData.get("ordto"), OrderDTO.class);
+
 	    int result1 = pdao.pointInsert(pdto);
 	    int result2 = payDao.paymentInsert(paydto);
 	    int result3 = 0;
-	    for(int i=0;i<orderProDTOs.length;i++) {
-	    	
-	    	 result3 = orderDao.order_proInsert(orderProDTOs[i]);
-	    	
+	    for(int i=0;i<orderProList.size();i++) {
+	        result3 += orderDao.order_proInsert(orderProList.get(i));
+	        if(result3>0) {
+	        	cdao.orderCartDelete(user_idx,orderProList.get(i).getPro_idx());
+	            int cartnum = cdao.userCartCount(user_idx);
+	            session.setAttribute("cart", cartnum);
+	        }
 	    }
 	    int result4 = orderDao.orderInsert(ordto);
-			    
-	    ModelAndView mav = new ModelAndView();
+
 	    String msg = (result1 > 0 && result2 > 0 && result3  > 0 && result4  > 0) ? "결제가 완료되었습니다" : "다시 시도해주세요";
 	    String link = (result1 > 0 && result2 > 0 && result3 > 0 && result4  > 0) ? "index.do" : "proList.do";
 
 	    mav.addObject("msg", msg);
 	    mav.addObject("link", link);
 	    mav.setViewName("mmJson");
-			
+
 	    return mav;
 	}
 }
