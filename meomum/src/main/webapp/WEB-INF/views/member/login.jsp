@@ -146,7 +146,7 @@ color : black;
 	<%@include file="/WEB-INF/views/header.jsp"%>
 
 	<div class="section">
-	<div class="container">
+	<div class="container" style="margin-bottom: 50px; margin-top: 50px;">
 		<div class="row justify-content-center">
 			<div class="col-lg-6">
 
@@ -178,7 +178,7 @@ color : black;
 									class="form-check-label">아이디 기억하기</label>
 							</div>
 							<div class="d-grid gap-2">
-								<button type="submit" class="btn btn-primary btn-block">로그인</button>
+								<button type="submit" class="btn btn-primary btn-block btn-lg">로그인</button>
 							</div>
 
 						</form>

@@ -60,18 +60,19 @@
 		 <div class="input-group mb-3">
 		  <label class="input-group-text col-2 text-center" for="inputGroupSelect01">공간유형</label>
 		  <select class="form-select" id="inputGroupSelect01" name="rsd_type" required="required" >
-		    <option value="" selected disabled hidden>공간유형 선택</option>
+		    <option value="" selected disabled hidden>거주형태 선택</option>
 		    <option value="아파트">아파트</option>
 		    <option value="빌라">빌라</option>
-		    <option value="주상복합">주상복합</option>
-		    <option value="주택">주상복합</option>
+		    <option value="주택">주택</option>
+		    <option value="복층">복층</option>
+		    <option value="오피스텔">오피스텔</option>
 		    <option value="기타">기타</option>
 		  </select>
 		</div>
 		 <div class="input-group mb-3">
           <label for="default" class="input-group-text col-2 text-center" >평수</label>
 			<input type="text" class="form-control input-group-text-fixed" id="default" name="rsd_py" required="required" placeholder="숫자만 입력해주세요" pattern="[0-9]+" title="숫자만 입력하세요">
-          <span class="input-group-text col-2 ">평</span>
+          <span class="input-group-text col-2 "> 평</span>
         </div>
         <div class="input-group mb-3">
           <label for="title" class="input-group-text col-2 text-center">제목</label>

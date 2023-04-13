@@ -14,9 +14,38 @@ public class MemberListDTO {
 	private int reviewCount;
 	private String user_memo;
 	
+	
+	private int total_point;
 	public MemberListDTO() {
 		super();
 	}
+	
+	
+	
+	
+	
+	/**포인트 추가된*/
+	public MemberListDTO(int user_idx, String user_info, String user_id, String user_name, String user_tel,
+			Date joindate, int svcCount, int orderCount, int reviewCount, String user_memo, int total_point) {
+		super();
+		this.user_idx = user_idx;
+		this.user_info = user_info;
+		this.user_id = user_id;
+		this.user_name = user_name;
+		this.user_tel = user_tel;
+		this.joindate = joindate;
+		this.svcCount = svcCount;
+		this.orderCount = orderCount;
+		this.reviewCount = reviewCount;
+		this.user_memo = user_memo;
+		this.total_point = total_point;
+	}
+
+
+
+
+
+
 	public MemberListDTO(int user_idx, String user_info, String user_id, String user_name, String user_tel,
 			Date joindate, int svcCount, int orderCount, int reviewCount, String user_memo) {
 		super();
@@ -90,6 +119,22 @@ public class MemberListDTO {
 	}
 	public void setUser_memo(String user_memo) {
 		this.user_memo = user_memo;
+	}
+
+
+
+
+
+	public int getTotal_point() {
+		return total_point;
+	}
+
+
+
+
+
+	public void setTotal_point(int total_point) {
+		this.total_point = total_point;
 	}
 	
 	
