@@ -34,4 +34,9 @@ public class ReturnDAOImple implements ReturnDAO {
 		return count;
 	}
 	
+	@Override
+	public ReturnListDTO returnData(String order_idx) {
+		ReturnListDTO dto=sqlMap.selectOne("returnData", order_idx);
+		return dto;
+	}
 }

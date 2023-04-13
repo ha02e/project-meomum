@@ -54,9 +54,16 @@
     height:24px;
     margin-right:0.2rem;
 }
+
+.btn-sm{
+	padding: 0.2rem 0.8rem !important;
+}
 </style>
 
 <script>
+function returnSubmitForm(url, name, options) {
+  window.open(url, name, options);
+}
 //function validate() {
 //	var pro_amount = document.getElementById("pro_amount").value;
 	
@@ -139,13 +146,13 @@
 							        <table class="table app-table-hover mb-0 text-center">
 										<thead>
 											<tr>
-												<th class="cell">반품번호</th>
-												<th class="cell">주문번호</th>
-												<th class="cell">반납상품</th>
-												<th class="cell">반납신청일자</th>
-												<th class="cell">회수날짜</th>
-												<th class="cell">반납완료날짜</th>
-												<th class="cell">상태</th>
+												<th class="cell" style="width:10%">반품번호</th>
+												<th class="cell" style="width:20%">주문번호</th>
+												<th class="cell" style="width:26%">반납상품</th>
+												<th class="cell" style="width:10%">반납신청일자</th>
+												<th class="cell" style="width:10%">회수날짜</th>
+												<th class="cell" style="width:10%">반납완료날짜</th>
+												<th class="cell" style="width:14%">상태</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -173,7 +180,10 @@
 														<c:choose>
 															<c:when test="${dto.order_status eq 5}">										
 																<span class="text-danger">반납신청</span>
-																<div>반납처리</div>
+																<a href="#" class="btn-sm app-btn-secondary" 
+																	onclick="returnSubmitForm('returnSubmitForm.do?order_idx=${dto.order_idx}', 'returnSubmitForm', 'width=540,height=600'); return false;">
+																	반납처리
+																</a>
 															</c:when>
 															<c:when test="${dto.order_status eq 6}">반납진행</c:when>
 															<c:when test="${dto.order_status eq 7}">반납완료</c:when>

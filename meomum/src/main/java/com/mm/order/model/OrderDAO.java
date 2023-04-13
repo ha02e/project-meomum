@@ -20,6 +20,7 @@ public interface OrderDAO {
 	
 	public int shipStartUpdate(String order_idx);
 	public int returnApplyUpdate(String order_idx);
+	public int returnSubmitUpdate(Map map);
 
 	public List<MyOrderListDTO> mySubsAllList(Map map);
 	public int mySubsAllListCnt(int user_idx);

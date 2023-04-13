@@ -73,6 +73,12 @@ public class OrderDAOImple implements OrderDAO {
 	}
 	
 	@Override
+	public int returnSubmitUpdate(Map map) {
+		int count=sqlMap.update("returnSubmitUpdate",map);
+		return count;
+	}
+	
+	@Override
 	public int order_proInsert(OrderProDTO dto) {
 		int count=sqlMap.insert("order_proInsert",dto);
 		return count;

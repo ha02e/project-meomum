@@ -143,4 +143,13 @@
 		set order_status=5
 		where order_idx=#{order_idx}
 	</update>
+	
+	<update id="returnSubmitUpdate" parameterType="Map">
+		update orders o
+		set o.order_status = 6
+		where o.order_idx in (select op.order_idx
+                    		from order_pro op
+                    		where op.pro_idx=#{pro_idx}
+                    		)
+	</update>
   </mapper>

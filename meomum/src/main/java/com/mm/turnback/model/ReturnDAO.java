@@ -10,4 +10,6 @@ public interface ReturnDAO {
 
 	public List<ReturnListDTO> returnProList(Map map);
 	public int returnProListCnt();
+	
+	public ReturnListDTO returnData(String order_idx);
 }

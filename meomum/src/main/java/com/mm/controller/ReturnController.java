@@ -8,10 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.mm.order.model.MyOrderListDTO;
 import com.mm.order.model.OrderDAO;
 import com.mm.order.model.OrderReportDTO;
 import com.mm.turnback.model.ReturnDAO;
@@ -98,4 +96,46 @@ public class ReturnController {
 			
 	}
 
+	
+	/** 관리자페이지 반납처리 폼 */
+	@RequestMapping("/returnSubmitForm.do")
+	public ModelAndView returnSubmitForm(@RequestParam("order_idx") String order_idx) {
+		ReturnListDTO dto = returnDao.returnData(order_idx);
+
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("dto", dto);
+		mav.setViewName("turnback/returnSubmitForm");
+		return mav;
+	}
+	
+	@RequestMapping("/returnSubmit.do")
+	public ModelAndView returnSubmit(@RequestParam("order_idx") String order_idx,
+										@RequestParam("pro_idx") int pro_idx) {
+		
+		Map map = new HashMap();
+		map.put("order_idx", order_idx);
+		map.put("pro_idx", pro_idx);
+		
+		int result=orderDao.returnSubmitUpdate(map); //주문상태 반납진행으로 변경
+		
+		ModelAndView mav=new ModelAndView();
+		
+		if(result>0) {
+			//배송처리도 해야됨!!!
+			
+			
+			/////////////////////
+			mav.addObject("msg", "반납승인 처리가 완료되었습니다.");
+			mav.addObject("gopage", "opener.document.location.reload(); self.close()");
+			mav.setViewName("mainMsg");
+		}else {
+			mav.addObject("msg", "반납승인 처리에 실패하였습니다.");
+			mav.addObject("gopage", "location.href='returnSubmitForm.do';");
+			mav.setViewName("mainMsg");
+		}
+		
+		return mav;
+		
+	}
+	
 }

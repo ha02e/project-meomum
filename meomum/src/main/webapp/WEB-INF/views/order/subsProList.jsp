@@ -268,7 +268,10 @@ function orderInfoOpen(url, name, options) {
 								</td>
 			                    <td>${dto.sub_start}</td>
 			                    <td>${dto.sub_end}</td>
-			                    <td>${dto.pay_date}</td>
+			                    <td>
+			                    ${dto.pay_date}
+			                    
+			                    </td>
 			                    <td>
 			                    	<div class="buttons">
 				                    	<c:url var="returnFormUrl" value="returnForm.do">
