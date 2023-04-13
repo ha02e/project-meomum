@@ -257,8 +257,8 @@ public class ReviewController {
 		
 		ModelAndView mav=new ModelAndView();
 		mav.addObject("msg", msg);
-		mav.addObject("link", "myReviewList.do");
-		mav.setViewName("/msg");
+		mav.addObject("gopage","location.href = document.referrer;");
+		mav.setViewName("mainMsg");
 		
 		return mav;
 	}

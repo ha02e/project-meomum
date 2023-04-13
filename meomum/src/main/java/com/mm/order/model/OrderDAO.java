@@ -11,14 +11,19 @@ public interface OrderDAO {
 	public int orderInsert(OrderDTO dto);
 	public int order_proInsert(OrderProDTO dto);
 	
-	public List<MyOrderListDTO> myOrderList(Map map);
-	public int mySubsProTotalCnt(int user_idx);
-	
 	public List<OrderReportDTO> myOrderReport(Map map);
 	public int myReportTotalCnt(int user_idx);
 	public List<OrderReportDTO> orderReport(Map map);
 	public int reportTotalCnt();
 	
 	public OrderReportDTO orderData(String order_idx);
+	
 	public int shipStartUpdate(String order_idx);
+	public int returnApplyUpdate(String order_idx);
+	public int returnSubmitUpdate(Map map);
+
+	public List<MyOrderListDTO> mySubsAllList(Map map);
+	public int mySubsAllListCnt(int user_idx);
+	public List<MyOrderListDTO> myReturnProList(Map map);
+	public int myReturnProListCnt(int user_idx);
 }

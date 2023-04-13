@@ -149,4 +149,8 @@
 	) where rownum <![CDATA[<=]]> 4
 	</select>
 	
+	<delete id="orderCartDelete" parameterType="Map">
+		delete from cart 
+ 	 where pro_idx=#{pro_idx} and user_idx = #{user_idx}
+	</delete>
 </mapper> 

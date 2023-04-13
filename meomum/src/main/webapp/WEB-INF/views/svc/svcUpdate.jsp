@@ -1,11 +1,51 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
-<html>
+
+
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>방문견적신청</title>
+<!-- 부트스트랩 CSS 파일 추가 -->
+<link
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-9gVRbX+6ePRepvpODvJy27JQ+wh2StsQJz9TYs2X0Pm6Rc8IljaUksdQRVvoxv3"
+	crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
 <style>
+/*헤더 이미지용 url에 이미지 추가하면 됩니다.*/
+.page-header {
+	background: linear-gradient(rgba(36, 39, 38, 0.5), rgba(36, 39, 38, 0.5)),
+		rgba(36, 39, 38, 0.5)
+		url(https://images.unsplash.com/photo-1615876234886-fd9a39fda97f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80)
+	
+		
+		 no-repeat center;
+	background-size: cover;
+	margin: 0;
+	border-bottom: none;
+	padding-bottom: 0px;
+	margin-bottom: 40px;
+}
+
+.page-caption {
+	padding: 90px 0px;
+	position: relative;
+	z-index: 1;
+	color: #fff;
+	text-align: center;
+}
+
+.page-title {
+	color: #fff;
+	font-size: 40px;
+	font-weight: 400;
+	letter-spacing: -1px;
+}
+
 textarea {
 	width: 50%;
 	height: 6.25em;
@@ -13,33 +53,44 @@ textarea {
 	resize: none;
 }
 
-/* 세부사항 토글관련 */
-label.detail {
-	background: #00cdac;
-	color: white;
-	display: inline-block;
-	width: 100px;
-	line-height: 32px;
-	padding: 2px 0;
-	cursor: pointer;
-	text-align: center;
-	font-size: 14px;
-}
 
-label:hover, label:active, input:hover+label, input:active+label {
-	background: #00cdac;
-	transition: 0.3s;
-}
 
 #detaildiv {
-	height: 150px;
-	margin-top: 10px;
-	border-radius: 12px;
-	border: 2px solid #DDDDDF;
-	background: white;
+  display: none;
+  margin-top: 5px;
 }
 
-input#detail {
+#timeDetail:checked ~ #detaildiv {
+  display: block;
+}
+
+#timeSpan:hover,{
+  background: #85745D;
+  transition: 0.3s;
+}
+
+/* 희망일자 토글관련
+label.timeDetail {
+  background: #00cdac;
+  color: white;
+  display: inline-block;
+  width: 100px;
+  line-height: 32px;
+  padding: 2px 0;
+  cursor: pointer;
+  text-align: center;
+  font-size: 14px;
+} 
+
+label.timeDetail:hover,
+label.timeDetail:active,
+input:hover + label.timeDetail,
+input:active + label.timeDetail {
+  background: #85745D;
+  transition: 0.3s;
+}
+
+.timeDetail input#detail {
 	display: none;
 }
 
@@ -47,12 +98,34 @@ div#detaildiv {
 	display: none;
 }
 
-input#detail:checked+div#detaildiv {
-	display: block;
+#detaildiv {
+  height: 150px;
+  margin-top: 10px;
+  border-radius: 12px;
+  border: 2px solid #ddd;
+  background: white;
+  display: none;
 }
-</style>
 
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+#detaildiv input[type="date"] {
+  display: block;
+  margin: 10px auto;
+}
+
+#detaildiv span {
+  margin-left: 10px;
+  margin-right: 20px;
+}
+
+input#timeDetail:checked + #detaildiv {
+  display: block;
+}*/
+
+footer {
+	margin-top: 20px;
+}
+
+ </style>
 
 
 <script>
@@ -98,77 +171,214 @@ $(function() {
 	});
 });
 </script>
+
 </head>
+
 <body>
-	<h1>방문 견적 예약</h1>
-	<form name="svcUpdate" action="svcUpdate.do" method="post">
-	<input type="hidden" name="svc_state" value="${dto.svc_state}">
-	<input type="hidden" name="svc_know" value="${dto.svc_know}">
-	<input type="hidden" name="svc_memo" value="${dto.svc_memo}">
-		<ul>
-			<li>예약번호 <input type="text" name="svc_idx" value="${dto.svc_idx}" readonly>
-			</li>
-
-			<li>거주형태 
-				<select name="svc_type">
-					<option value="아파트" ${dto.svc_type =="아파트"?"selected":""}>아파트</option>
-					<option value="빌라" ${dto.svc_type =="빌라"?"selected":""}>빌라</option>
-					<option value="주택" ${dto.svc_type =="주택"?"selected":""}>주택</option>
-					<option value="복층" ${dto.svc_type =="복층"?"selected":""}>복층</option>
-					<option value="오피스텔" ${dto.svc_type =="오피스텔"?"selected":""}>오피스텔</option>
-					<option value="기타" ${dto.svc_type =="기타"?"selected":""}>기타</option>
-				</select>
-			</li>
-
-			<li>서비스 영역 
-				<input type="checkbox" name="svc_area" value="전체" ${dto.svc_area.contains("전체")?"checked":""}>전체 
-				<input type="checkbox" name="svc_area" value="주방" ${dto.svc_area.contains("주방")?"checked":""}>주방 
-				<input type="checkbox" name="svc_area" value="침실" ${dto.svc_area.contains("침실")?"checked":""}>침실 
-				<input type="checkbox" name="svc_area" value="화장실" ${dto.svc_area.contains("화장실")?"checked":""}>화장실 
-				<input type="checkbox" name="svc_area" value="자녀방" ${dto.svc_area.contains("자녀방")?"checked":""}>자녀방 
-				<input type="checkbox" name="svc_area" value="옷장" ${dto.svc_area.contains("옷장")?"checked":""}>옷장 
-				<input type="checkbox" name="svc_area" value="기타" ${dto.svc_area.contains("기타")?"checked":""}>기타
-			</li>
-
-
-			<li>거주 평수(공급면적) <input type="text" name="svc_py" value="${dto.svc_py}">
-			</li>
-
-			<li>성함 <input type="text" name="user_name" value="${dto.user_name}">
-			</li>
-			<li>휴대전화 <input type="text" name="user_tel" value="${dto.user_tel}">
-			</li>
-
-			<li>지역 
-				<input id="user_pcode" type="text" name="user_pcode" readonly value="${dto.user_pcode}"><br>
-				<div onclick="findAddr()">우편번호찾기</div> 
-				<input id="user_addr" type="text" name="user_addr" readonly value="${dto.user_addr}"><br> 
-				<input type="text" name="user_detail" placeholder="상세 주소" value="${dto.user_detail}">
-			</li>
-
-			<li>방문 희망일자 ${dto.svc_days} &nbsp;&nbsp; ${dto.svc_time}</li>
-
-			<label class="detail" for="detail">수정</label>
-			<input type="checkbox" id="detail">
-			<div id="detaildiv">
-				<input id="svc_days" type="date" name="svc_days"
-					value="${dto.svc_days}" onclick="setMinDate()"> 
-					<input id="timeA" type="radio" name="svc_time" value="10:00" ${dto.svc_time =="10:00"?"checked":""}>10:00<span></span> 
-					<input id="timeB" type="radio" name="svc_time" value="13:00" ${dto.svc_time =="13:00"?"checked":""}>13:00<span></span> 
-					<input id="timeC" type="radio" name="svc_time" value="16:00" ${dto.svc_time =="16:00"?"checked":""}>16:00<span></span>
+	<%@include file="../header.jsp"%>
+	<div class="page-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="page-caption">
+						<h2 class="page-title">방문 견적 예약 수정</h2>
+					</div>
+				</div>
 			</div>
-
-			<li>요청사항<br> 
-				<textarea name="svc_req" rows="5" cols="35">${dto.svc_req}</textarea>
-			</li>
-			
-			
-		</ul>
-
-		<div>
-			<input type="submit" value="수정"> <input type="reset" value="초기화">
 		</div>
-	</form>
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-10 mx-auto">
+				<form name="svcUpdate" action="svcUpdate.do" method="post">
+						<input type="hidden" name="svc_state" value="${dto.svc_state}">
+						<input type="hidden" name="svc_know" value="${dto.svc_know}">
+						<input type="hidden" name="svc_memo" value="${dto.svc_memo}">
+				<!-- -------------------------------------예약번호------------------------------- -->	
+						<div class="input-group mb-3">
+							<label class="input-group-text col-3 text-center" for="input_svc_idx" style="font-weight:bold;">예약번호</label> 
+								<input type="text" class="form-control input-group-text-fixed" name="svc_idx" id="svc_idx" value="${dto.svc_idx}" required="required" readonly>
+						</div>
+				<!-- -------------------------------------거주형태------------------------------- -->	
+						<div class="input-group mb-3">
+							<label class="input-group-text col-3 text-center" for="input_svc_type" style="font-weight:bold;">거주형태</label> 
+								<select class="form-select" id="svc_type" name="svc_type" required="required">
+									<option value="아파트" ${dto.svc_type =="아파트"?"selected":""}>아파트</option>
+									<option value="빌라" ${dto.svc_type =="빌라"?"selected":""}>빌라</option>
+									<option value="주택" ${dto.svc_type =="주택"?"selected":""}>주택</option>
+									<option value="복층" ${dto.svc_type =="복층"?"selected":""}>복층</option>
+									<option value="오피스텔" ${dto.svc_type =="오피스텔"?"selected":""}>오피스텔</option>
+									<option value="기타" ${dto.svc_type =="기타"?"selected":""}>기타</option>
+								</select>
+						</div>
+	
+				<!-- ----------------------------------서비스영역---------------------------------- -->
+						<div class="input-group mb-3">
+						
+							<label class="input-group-text col-3 text-center" for="input_svc_area" style="font-weight:bold;">서비스 영역</label>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="checkbox" name="svc_area" id="svc_area"  value="전체" ${dto.svc_area.contains("전체")?"checked":""}> 
+								<label class="form-check-label" for="전체">전체</label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="checkbox" name="svc_area" id="svc_area" value="주방" ${dto.svc_area.contains("주방")?"checked":""}> 
+								<label class="form-check-label" for="주방">주방</label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="checkbox" name="svc_area" id="svc_area" value="침실" ${dto.svc_area.contains("침실")?"checked":""}> 
+								<label
+									class="form-check-label" for="침실">침실</label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="checkbox" name="svc_area" id="svc_area" value="화장실" ${dto.svc_area.contains("화장실")?"checked":""}> 
+								<label class="form-check-label" for="화장실">화장실</label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="checkbox" name="svc_area" id="svc_area" value="자녀방" ${dto.svc_area.contains("자녀방")?"checked":""}> 
+								<label class="form-check-label" for="자녀방">자녀방</label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="checkbox" name="svc_area" id="svc_area" value="옷장" ${dto.svc_area.contains("옷장")?"checked":""}> 
+								<label class="form-check-label" for="옷장">옷장</label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="checkbox" name="svc_area" id="svc_area" value="기타" ${dto.svc_area.contains("기타")?"checked":""}> 
+								<label class="form-check-label" for="기타">기타</label>
+							</div>
+						</div>
+
+
+						<!-- ----------------------------------거주 평수--------------------------------- -->
+						<div class="input-group mb-3">
+							<label class="input-group-text col-3 text-center" for="input_svc_py" style="font-weight:bold;">거주 평수(공급면적)</label> 
+								<input type="text" class="form-control input-group-text-fixed" name="svc_py" id="svc_py" value="${dto.svc_py}" required="required" placeholder="평수를 입력해주세요">
+								<span class="input-group-text">평</span>
+						</div>
+						
+						<!-- ----------------------------------성함--------------------------------- -->
+						<div class="input-group mb-3">
+							<label class="input-group-text col-3 text-center" for="input_user_name" style="font-weight:bold;">성함</label> 
+							<input type="text" class="form-control input-group-text-fixed" name="user_name" value="${dto.user_name}" required="required" placeholder="성함을 입력해주세요">
+						</div>
+						
+						<!-- ----------------------------------휴대전화--------------------------------- -->
+						<div class="input-group mb-3">
+							<label class="input-group-text col-3 text-center" for="input_user_tel" style="font-weight:bold;">휴대전화</label>
+							<input type="text" class="form-control input-group-text-fixed" name="user_tel" required="required" value="${dto.user_tel}" placeholder="010-1234-5678 형태로 기재해주세요">
+						</div>
+						
+						<!-- ----------------------------------주소--------------------------------- -->
+						<div class="input-group mb-3">
+					    <label class="input-group-text col-3 text-center" for="input_user_addr" style="font-weight:bold;">주소</label> 
+					    <div class="col-sm-9">
+					        <div class="input-group">
+					            <input id="user_pcode" type="text" class="form-control" name="user_pcode" placeholder="우편번호" value="${dto.user_pcode}" required="required" onclick="findAddr()" readonly>
+					            <div class="input-group-append">
+					                <button class="btn btn-outline-secondary" type="button" onclick="findAddr()"  style="font-weight:bold;">우편번호 검색</button>
+					            </div>
+					        </div>
+					        <div>
+					            <input id="user_addr" type="text" class="form-control" name="user_addr" value="${dto.user_addr}" required="required" readonly placeholder="기본주소"> 
+					        </div>
+					        <div>
+					            <input type="text" class="form-control" name="user_detail" value="${dto.user_detail}" placeholder="상세주소를 입력해주세요">
+					        </div>
+					    </div>
+					</div>
+						<!-- ----------------------------------방문 희망일--------------------------------- -->
+					<div class="input-group mb-3" >
+					<label class="input-group-text col-3 text-center" for="input_svc_date" style="font-weight:bold;">방문 희망일</label> 
+					<div class="col-sm-9">
+					<input type="text" class="form-control input-group-text-fixed" name="svc_date" value="${dto.svc_days} &nbsp;&nbsp; ${dto.svc_time}">
+					 
+					 
+					
+						<span id="timeSpan">방문 희망일 수정</span><input type="checkbox" id="timeDetail">
+						<div id="detaildiv">
+							<input id="svc_days" type="date" name="svc_days" value="${dto.svc_days}" onclick="setMinDate()"> 
+							<input id="timeA" type="radio" name="svc_time" value="10:00" ${dto.svc_time =="10:00"?"checked":""}>10:00<span></span> 
+							<input id="timeB" type="radio" name="svc_time" value="13:00" ${dto.svc_time =="13:00"?"checked":""}>13:00<span></span> 
+							<input id="timeC" type="radio" name="svc_time" value="16:00" ${dto.svc_time =="16:00"?"checked":""}>16:00<span></span>
+						</div>
+					</div>
+					</div>
+					<!--  -->
+				<%-- <div class="input-group mb-3">
+				<label class="input-group-text col-3 text-center" for="input_user_addr" style="font-weight:bold;">방문 희망일</label> 
+					    <div class="col-sm-9">
+					        <div class="input-group">
+					            <input type="text" class="form-control"  value="${dto.svc_days} &nbsp;&nbsp; ${dto.svc_time}" readonly>
+					            <div class="input-group-append" id="timeCb">
+					            	<span>방문 희망일 수정</span><input type="checkbox" >
+					                <!-- <button class="btn btn-outline-secondary" type="button" onclick="findAddr()"  style="font-weight:bold;">우편번호 검색</button> -->
+					            </div>
+					        </div>
+					    </div>
+				</div> --%>
+			
+ 
+						<!-- ----------------------------------요청사항--------------------------------- -->
+						<div class="input-group mb-3" style="max-height: 600px; overflow-y: auto;">
+							<label for="input_svc_req"
+								class="input-group-text col-3 text-center" style="font-weight:bold;">요청사항<br>(2000자이내)</label>
+							<textarea class="form-control input-group-text-fixed"
+								id="svc_req" aria-label="With textarea"
+								style="height: 300px; resize: none;" name="svc_req"
+								placeholder="내용을 입력해주세요">${dto.svc_req}</textarea>
+						</div>
+						
+						<!-- ----------------------------------개인정보 수집 이용 동의--------------------------------- -->
+						<div class="input-group mb-3" >
+							<div class="card w-100">
+  								<div class="card-header" style="font-weight:bold;"> 개인정보 수집 및 이용에 대한 안내</div>
+ 								 <div class="card-body">
+    									<p class="card-text">
+    									주식회사 머뭄은 기업/단체 및 개인의 정보 수집 및 이용 등 처리에 있어
+										아래의 사항을 관계법령에 따라 고지하고 안내해 드립니다.<br>
+
+										1. 정보수집의 이용 목적 : 상담 및 진행<br>
+										2. 수집/이용 항목 : 이름, 연락처, 내용 등<br>
+										3. 보유 및 이용기간 : 상담 종료후 6개월, 정보제공자의 삭제 요청시 즉시<br>
+										4. 개인정보처리담당 : 전화 1234-1004 / 이메일 meomum@meomum.com</p>
+  								</div>
+							</div>
+						</div>
+
+						<!-- ----------------------------------동의 여부--------------------------------- -->
+						<div class="input-group mb-3">
+						  <div class="form-check">
+						    <input class="form-check-input" type="checkbox" id="svc_pia" value="Y" name="svc_pia" required="required">
+						    <label class="form-check-label" for="svc_pia" style="font-weight: bold;">(필수)개인정보 수집 및 이용에 동의합니다</label>
+						  </div>
+						</div>
+
+						<!-- ----------------------------------유의사항--------------------------------- -->
+						<div class="input-group mb-3">
+						  <div class="card w-100">
+						    <div class="card-header" style="font-weight:bold;"> 유의사항</div>
+						    <div class="card-body">
+						      <p class="card-text">
+						        방문 견적 신청 2일 전에는 수정 불가한 점 참고 부탁드립니다.<br>
+						        피치 못할 사정으로 취소 시, 1234-1004로 전화부탁드립니다. </p>
+						    </div>
+						  </div>
+						</div>
+						<!-- ----------------------------------예약버튼--------------------------------- -->
+						<div class="d-flex justify-content-between align-items-center">
+							<div>
+						        <input type="reset" value="초기화" class="btn btn-secondary btn-block" style="font-weight:bold;">
+						    </div>
+						    <div>
+						        <input type="submit" value="수정" class="btn btn-primary btn-block" style="font-weight:bold;">
+						    </div>
+
+						</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
 
 	<!-- 현재 시간보다 이전 시간 선택 불가 제약 -->
 	<script>
@@ -184,43 +394,16 @@ $(function() {
 		}
 	</script>
 
+
 	<!-- 카카오 주소 API -->
 	<script
 		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-	<script>
-		function findAddr(){
-			var width = 500; //팝업의 너비
-			var height = 600; //팝업의 높이
-	
-			new daum.Postcode({
-		 		width: width,
-		 		height: height,
-        		oncomplete: function(data) {
-            		var zonecode = data.zonecode;
-            		var roadAddr = data.roadAddress; // 도로명 주소 변수
-            		var jibunAddr = data.jibunAddress; // 지번 주소 변수
-
-            		document.getElementById('user_pcode').value = zonecode;
-            		
-            		if(roadAddr !== ''){
-                		document.getElementById('user_addr').value = roadAddr;
-            		} 
-            		else if(jibunAddr !== ''){
-                		document.getElementById('user_addr').value = jibunAddr;
-            		}
-        		}
-    		}).open({
-        		left: (window.screen.width / 2) - (width / 2),
-        		top: (window.screen.height / 2) - (height / 2)
-    	});
-	}
+	<script src="js/svc/findAddr.js">
+		
 	</script>
-	   <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-      crossorigin="anonymous">
-	   </script>
-</body>
 
+
+	<%@include file="/WEB-INF/views/footer.jsp"%>
+</body>
 
 </html>

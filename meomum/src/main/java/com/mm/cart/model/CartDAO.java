@@ -11,4 +11,5 @@ public interface CartDAO {
 	public int cartNumUpdate(int cart_amount, int cart_idx);
     public int userCartCount(int user_idx);
     public CartDTO orderListCartIDX(int cart_idx);
+    public void orderCartDelete(int user_idx,int pro_idx);
 }

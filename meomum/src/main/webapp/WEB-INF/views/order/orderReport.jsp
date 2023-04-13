@@ -132,6 +132,21 @@ tbody{
 }
 
 </style>
+<script>
+function showTracker(t_key, t_code,t_invoice){
+    var frmPop= document.getElementById('frmData');
+    var url = 'http://info.sweettracker.co.kr/tracking/4';
+    window.open(url,'showTracker','width=460,height=600');  
+     
+    frmPop.action = url;
+    frmPop.target = 'showTracker';
+    frmPop.t_key.value = t_key;
+    frmPop.t_code.value = t_code;  
+    frmPop.t_invoice.value = t_invoice;  
+    frmPop.submit();   
+     
+}
+</script>
 
 </head>
 <body>
@@ -235,11 +250,11 @@ tbody{
 														</c:when>
 														<c:when test="${dto.order_status eq 2}">
 															<div class="text-success">배송중</div>
-															<form action="http://info.sweettracker.co.kr/tracking/4" method="post">
+															<form name="frmData" id="frmData" method="post">
 																<input type="hidden" id="t_key" name="t_key" value="sjLmbhJEhPXnO5neAx7FNg">
 																<input type="hidden" id="t_code" name="t_code" value="04">
 																<input type="hidden" id="t_invoice" name="t_invoice" value="566250609912">
-																<button type="submit" class="btn-sm app-btn-secondary">배송조회</button>
+																<input type="button" value="배송조회" onclick="showTracker('sjLmbhJEhPXnO5neAx7FNg', '04', '566250609912')" class="btn-sm app-btn-secondary">
 															</form>
 														</c:when>
 														<c:when test="${dto.order_status eq 3}">
@@ -247,6 +262,12 @@ tbody{
 														</c:when>
 														<c:when test="${dto.order_status eq 4}">
 															<div>배송완료</div>
+															<form name="frmData" id="frmData" method="post">
+																<input type="hidden" id="t_key" name="t_key" value="sjLmbhJEhPXnO5neAx7FNg">
+																<input type="hidden" id="t_code" name="t_code" value="04">
+																<input type="hidden" id="t_invoice" name="t_invoice" value="566250609912">
+																<input type="button" value="배송조회" onclick="showTracker('sjLmbhJEhPXnO5neAx7FNg', '04', '566250609912')" class="btn-sm app-btn-secondary">
+															</form>
 															<button type="button" id="btnSubmit" class="btn-sm app-btn-secondary">후기 작성하기</button>
 														</c:when>
 														<c:when test="${dto.order_status eq 5}">										
