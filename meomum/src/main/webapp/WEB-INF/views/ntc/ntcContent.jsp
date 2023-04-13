@@ -5,16 +5,80 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>머뭄 공지사항</title>
+<style>
+.page-header {
+	background: linear-gradient(rgba(36, 39, 38, 0.5), rgba(36, 39, 38, 0.5)),
+		rgba(36, 39, 38, 0.5)
+		url(https://images.unsplash.com/photo-1462530260150-162092dbf011?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1086&q=80)
+		no-repeat center;
+	background-size: cover;
+	margin: 0;
+	border-bottom: none;
+	padding-bottom: 0px;
+}
+
+.page-caption {
+	padding: 90px 0px;
+	position: relative;
+	z-index: 1;
+	color: #fff;
+	text-align: center;
+}
+@font-face {
+    font-family: 'OAGothic-ExtraBold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/OAGothic-ExtraBold.woff2') format('woff2');
+    font-weight: 800;
+    font-style: normal;
+}
+.page-title {
+	color: #fff;
+	font-size: 40px;
+	font-weight: 400;
+	letter-spacing: -1px;
+	
+}
+
+@font-face {
+    font-family: 'SBAggroB';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SBAggroB.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+.card-title{
+    font-family: 'SBAggroB';
+}
+.card-text{
+	font-size : 15px;
+    font-family: 'SBAggroB';
+    color :#677381;
+
+
+
+}
+/**헤더 이미지용 끝*/
+</style>
 </head>
 <body>
 	<%@include file="/WEB-INF/views/header.jsp"%>
-	<div class="container mt-4 text-center">
-		<h1 class="text-center mb-4">공지사항 본문</h1>
-		<div class="text-right">
-			<a href="/meomum/ntcList.do" class="btn btn-secondary">목록</a>
+	
+	<div class="page-header" style="margin-bottom: 70px;">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="page-caption">
+						<h4 class="page-title">공지사항</h4>
+					</div>
+				</div>
+			</div>
 		</div>
-		<hr>
+	</div>
+	
+	
+	
+	<div class="container mt-4 text-center" style="margin-bottom: 100px;">
+		
+
 		<c:choose>
 			<c:when test="${empty list}">
 				<div class="alert alert-danger">삭제되었거나 존재하지 않는 게시글입니다.</div>
@@ -22,34 +86,29 @@
 			<c:otherwise>
 				<div class="card mb-4">
 					<div class="card-header">
-						<h5 class="card-title">${list.ntc_title}</h5>
-						<p class="card-text">${list.ntc_date}작성</p>
+						<span class="card-text text-end">${list.ntc_date}  <i class="bi bi-eye-fill"></i> ${list.ntc_viewCnt}</span>
+						<h3 class="card-title">${list.ntc_title}</h3>
 					</div>
+					
 					<div class="card-body">
-						<table class="table table-bordered">
-							<tbody>
-								<tr>
-									<th>작성자</th>
-									<td>관리자</td>
-									<th>카테고리</th>
-									<td>${list.ntc_ctg}</td>
-								</tr>
+						
 								<c:if test="${not empty list.ntc_img}">
 									<tr>
 										<td colspan="4"><img
 											src="/meomum/ntcImages/${list.ntc_img}" class="img-fluid"></td>
 									</tr>
 								</c:if>
-								<tr>
-									<td colspan="4">${list.ntc_content}</td>
-								</tr>
-							</tbody>
-						</table>
+								
+									${list.ntc_content}
 					</div>
 				</div>
 			</c:otherwise>
 		</c:choose>
+		<div class="text-end">
+				<a href="ntcList.do" class="btn btn-primary btn-lg" style="width : 150px;">목록</a>
+		</div>SS
 	</div>
+
 	<%@include file="/WEB-INF/views/footer.jsp"%>
 </body>
 </html>

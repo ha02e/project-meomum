@@ -27,7 +27,10 @@
 	color: #fff;
 	text-align: center;
 }
-
+input:invalid {
+  border-color: red;
+  outline: none;
+}
 /**헤더 이미지용 끝*/
 </style>
 </head>
@@ -85,7 +88,7 @@
         <div class="input-group mb-3">
           <label for="contact" class="input-group-text col-2 text-center">연락처</label>
           <input type="text" class="form-control input-group-text-fixed" id="contact" name="ask_tel" value="${sessionScope.ssInfo.user_tel}"pattern="[0-9]{3}-[0-9]{3,4}-[0-9]{4}"
-							placeholder="휴대폰 번호 (ex. 010-1234-5678)" required="required">
+							placeholder=" - 포함하여 입력 (ex. 010-1234-5678)" required="required">
         </div>
 
         <div class="input-group mb-3">

@@ -116,7 +116,7 @@
 	<div class="app-wrapper">
 		<div class="app-content pt-3 p-md-3 p-lg-4">
 			<div class="container pt-5">
-				<h3 class="text-center mb-4">전체 스케줄 보기</h3>
+				<h1 class="text-center mb-4">전체 스케줄 보기</h1>
 
 
 
