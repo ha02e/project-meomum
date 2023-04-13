@@ -339,7 +339,7 @@ public class OrderController {
 		    PaymentDTO paydto = objectMapper.convertValue(requestData.get("paydto"), PaymentDTO.class);
 		    OrderDTO ordto= objectMapper.convertValue(requestData.get("ordto"), OrderDTO.class);
 			    
-	    
+	    System.out.println(orderProDTOs);
 	    int result1 = pdao.pointInsert(pdto);
 	    int result2 = payDao.paymentInsert(paydto);
 	    int result3 = 0;

@@ -73,6 +73,13 @@ ORDER BY rnum DESC
 	
 	</select>
 	
+		<!-- 관리자용 포인트 사용 및 적립-->
+	<insert id="pointInsertManager" parameterType="com.mm.point.model.PointDTO">
+		INSERT 
+		INTO point
+		VALUES (point_idx.nextval, 'manager',#{user_idx},#{point_use},sysdate,#{point_info},#{point_num})
+	</insert>
+	
 	
 	
 </mapper>

@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mm.member.model.MemberDTO;
@@ -65,6 +67,21 @@ public class PointController {
 
 		return mav;
 
+	}
+	
+	
+	@RequestMapping(value="/pointUpdate.do",method = RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView userMemoUpdate(PointDTO dto) {
+		
+		
+	   
+		int result = pDao.pointInsertManager(dto);
+	    String msg = result>0?"포인트가 지급/회수 되었습니다.":"포인트 지급/회수에 실패하였습니다.";
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("msg", msg);
+	    mav.setViewName("mmJson");
+	    return mav;
 	}
 
 }
