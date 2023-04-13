@@ -65,4 +65,11 @@
 		where t.order_idx=#{order_idx}
 			and t.pro_idx=#{pro_idx}
 	</update>
+	
+	<update id="returnCancelUpdate" parameterType="Map">
+		update turnback t
+		set t.return_ok='N'
+		where t.order_idx=#{order_idx}
+			and t.pro_idx=#{pro_idx}
+	</update>
 </mapper>

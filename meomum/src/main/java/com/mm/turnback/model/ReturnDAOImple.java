@@ -43,7 +43,12 @@ public class ReturnDAOImple implements ReturnDAO {
 	@Override
 	public int returnStartUpdate(Map map) {
 		int count=sqlMap.update("returnStartUpdate", map);
-		return 0;
+		return count;
 	}
 	
+	@Override
+	public int returnCancelUpdate(Map map) {
+		int count=sqlMap.update("returnCancelUpdate", map);
+		return count;
+	}
 }
