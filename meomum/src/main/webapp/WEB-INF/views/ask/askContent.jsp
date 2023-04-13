@@ -60,7 +60,7 @@
 
 			
 
-				<table class="table table-bordered">
+				<table class="table table-bordered ">
 					<colgroup>
 						<col style="width: 20%;">
 						<col style="width: 30%;">
@@ -70,7 +70,7 @@
 					<tbody>
 						<tr>
 							<th class="bg-light text-center">제목</th>
-							<td colspan="3">${ask.ask_title}</td>
+							<td colspan="3" align="center">${ask.ask_title}</td>
 						</tr>
 						<tr>
 							<th class="bg-light text-center">작성자</th>
@@ -79,11 +79,11 @@
 							<td>${ask.ask_wdate}</td>
 						</tr>
 							<tr>
-							<th class="bg-light text-center">공간유형</th>
-							<td>${ask.rsd_type}</td>
-							<th class="bg-light text-center">평수</th>
-							<td>${ask.rsd_py}평</td>
-						</tr>
+								<th class="bg-light text-center">공간유형</th>
+								<td>${ask.rsd_type}</td>
+								<th class="bg-light text-center">평수</th>
+								<td>${ask.rsd_py}평</td>
+							</tr>
 						<tr>
 							<th class="bg-light text-center">내용</th>
 							<td colspan="3" style="height: 300px;"><textarea

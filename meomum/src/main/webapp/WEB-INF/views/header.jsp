@@ -207,7 +207,7 @@ h2{
 						<div
 							class="dropdown-menu rounded-0 rounded-bottom border-0 shadow-sm m-0">
 							<a href="proList.do" class="dropdown-item">가구 구독</a> <a
-								href="svc.do" class="dropdown-item">이용 방법</a>
+								href="howtouse.do" class="dropdown-item">이용 방법</a>
 						</div>
 					</div>
 					<span style="margin-right: 30px;"></span>

@@ -10,8 +10,14 @@
 <title>간단문의 관리하기</title>
 
 <script type="text/javascript">
-	function checklist(checklist) {
-			window.location.href = 'askList_a.do?checklist=' + checklist;
+	function checklist(checklist, type, fvalue) {
+		
+			if (type == 'yes') {
+				window.location.href = 'askList_a.do?checklist=' + checklist +'&type=yes&fvalue=' + fvalue;
+			} else {
+				window.location.href = 'askList_a.do?checklist=' + checklist;
+			}
+		
 	}
 </script>
 </head>
@@ -19,17 +25,21 @@
 
 				<%@include file="/WEB-INF/views/header_a.jsp"%>
 				
-				<div class="app-wrapper" style="overflow: auto;">
+				<div class="app-wrapper"  style="margin-bottom: 50px;margin-top: 50px;">
 				  <div class="app-content pt-3 p-md-3 p-lg-4">
 				    <div class="container pt-5">
 				      <h1 class="text-center mb-4">간단문의 게시글 관리</h1>
 				      <div class="d-flex justify-content-between align-items-center mb-3">
 				        <p class="mb-0">
-				          전체 글 수: <span id="total-users">${totalCnt}</span>개
+				          전체 글 수: <span id="total-users">${totalCnt}</span>개 
+				          <c:if test="${!empty fvalue}"> | 검색 내용 : ${fvalue } 
+				         <a href="askList_a.do" style="color:#FF6A89;border: 1px solid #FF6A89;">검색 취소</a> 
+				          </c:if>
 				        </p>
 				        <form name="searchask" action="askList_a.do" class="ms-auto me-auto">
 				          <div class="input-group">
 				            <input type="hidden" name="type" value="yes">
+				           <input type="hidden" name="checklist" value="${checklist}">
 				            <input type="text" class="form-control" placeholder="검색 내용" name="fvalue">
 				            <button class="btn btn-primary" type="submit">검색</button>
 				          </div>
@@ -38,7 +48,7 @@
 				          <div class="d-flex justify-content-end align-items-center">
 							<select class="form-select w-auto"
 								name="checklist"
-								onchange="checklist(this.value)">
+								onchange="checklist(this.value, '${type}', '${fvalue}')">
 								<option value="1" ${checklist == '1' ? 'selected' : ''}>전체보기</option>
 								<option value="2" ${checklist == '2' ? 'selected' : ''}>답변미완료글</option>
 								<option value="3" ${checklist == '3' ? 'selected' : ''}>당일 작성글</option>

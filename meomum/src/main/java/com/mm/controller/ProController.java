@@ -516,6 +516,12 @@ public class ProController {
 		return mav;
 	}
 	
+	
+	/**이용방법리스트*/
+	@RequestMapping("howtouse.do")
+	public String howToUse() {
+		return "pro/how_to_use";
+	}
 
 	
 }

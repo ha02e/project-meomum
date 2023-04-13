@@ -1,27 +1,22 @@
 package com.mm.controller;
 
-import java.util.List;
+import java.util.List;	
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.google.gson.Gson;
+
 import com.mm.cart.model.CartDAO;
 import com.mm.cart.model.CartDTO;
 import com.mm.member.model.MemberDTO;
@@ -35,7 +30,6 @@ import com.mm.payment.model.PaymentDTO;
 import com.mm.point.model.PointDAO;
 import com.mm.point.model.PointDTO;
 import com.mm.pro.model.ProDTO;
-import com.mm.svc.model.SvcSelectAllDTO;
 
 @Controller
 public class OrderController {
@@ -74,11 +68,26 @@ public class OrderController {
 		return mav;
 	}
 
+	/**장바구니 상품 결제*/
 	@RequestMapping("/orderListss.do")
 	public ModelAndView orderAllList(@RequestParam("cart_idx") int[] cartIdx, @RequestParam("totalSub") int totalSub,
 			@RequestParam("totalCount") int totalCount, @RequestParam("totalDel") int totalDel,
-			@RequestParam("finalTotalPrice") int finalTotalPrice) {
+			@RequestParam("finalTotalPrice") int finalTotalPrice,HttpSession session) {
 
+		ModelAndView mav = new ModelAndView();
+
+		if (session.getAttribute("ssInfo") == null) {
+
+			mav.addObject("msg", "로그인 후 이용가능합니다");
+			mav.addObject("link", "login.do");
+			mav.setViewName("msg");
+			return mav;
+		}
+		
+		session.getAttribute("ssInfo");
+		MemberDTO sdto =(MemberDTO) session.getAttribute("ssInfo");
+		int user_idx = sdto.getUser_idx();
+		
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		map.put("totalSub", totalSub);
 		map.put("totalCount", totalCount);
@@ -90,7 +99,9 @@ public class OrderController {
 			lists.add(cdao.orderListCartIDX(cartIdx[i]));
 
 		}
-		ModelAndView mav = new ModelAndView();
+		int result = pdao.pointTotal(user_idx);
+		
+		mav.addObject("result", result);
 		mav.addObject("lists", lists);
 		mav.addObject("total", map);
 		mav.setViewName("order/orderLists");
@@ -343,4 +354,40 @@ public class OrderController {
 		return "order/orderCancel";
 	}
 
+	
+	
+	
+	
+	//장바구니 상품 결제 (여러개 상품)
+	@RequestMapping(value="/totalOrderss.do",method = RequestMethod.POST)
+	public ModelAndView totalOrders(@RequestBody Map<String, Object> requestData,@RequestParam("odto")OrderProDTO [] orderProDTOs) {
+		    
+		  ObjectMapper objectMapper = new ObjectMapper();
+		  org.codehaus.jackson.map.type.TypeFactory typeFactory = objectMapper.getTypeFactory();
+
+		    PointDTO pdto = objectMapper.convertValue(requestData.get("pdto"), PointDTO.class);
+		    PaymentDTO paydto = objectMapper.convertValue(requestData.get("paydto"), PaymentDTO.class);
+		    OrderDTO ordto= objectMapper.convertValue(requestData.get("ordto"), OrderDTO.class);
+			    
+	    System.out.println(orderProDTOs);
+	    int result1 = pdao.pointInsert(pdto);
+	    int result2 = payDao.paymentInsert(paydto);
+	    int result3 = 0;
+	    for(int i=0;i<orderProDTOs.length;i++) {
+	    	
+	    	 result3 = orderDao.order_proInsert(orderProDTOs[i]);
+	    	
+	    }
+	    int result4 = orderDao.orderInsert(ordto);
+			    
+	    ModelAndView mav = new ModelAndView();
+	    String msg = (result1 > 0 && result2 > 0 && result3  > 0 && result4  > 0) ? "결제가 완료되었습니다" : "다시 시도해주세요";
+	    String link = (result1 > 0 && result2 > 0 && result3 > 0 && result4  > 0) ? "index.do" : "proList.do";
+
+	    mav.addObject("msg", msg);
+	    mav.addObject("link", link);
+	    mav.setViewName("mmJson");
+			
+	    return mav;
+	}
 }

@@ -16,22 +16,22 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </head>
-<body>
+<body class="app">
 
 
 <%@include file="/WEB-INF/views/header_a.jsp"%>
 <br><br><br><br>
-<div class="container">
+<div class="container" style="margin-top: 30px; margin-bottom: 40px;">
   <div class="row justify-content-center">
     <div class="col-md-9">
       <div class="row">
         <div class="text-center">
-          <h4>간단견적 내용</h4>
+          <h1>간단견적 내용</h1>
         </div>
 
       </div>
 
-     <table class="table table-bordered">
+     <table class="table table-bordered bg-white my-3">
 	  <colgroup>
 	    <col style="width: 20%;">
 	    <col style="width: 30%;">
@@ -49,6 +49,12 @@
 	      <th class="bg-light text-center">작성일</th>
 	      <td>${ask.ask_wdate}</td>
 	    </tr>
+	    <tr>
+			<th class="bg-light text-center">공간유형</th>
+			<td>${ask.rsd_type}</td>
+			<th class="bg-light text-center">평수</th>
+			<td>${ask.rsd_py}평</td>
+		</tr>
 		<tr>
 			<th class="bg-light text-center">내용</th>
 			<td colspan="3" style="height: 300px;"><textarea
@@ -94,30 +100,29 @@
 	  </tbody>
 	</table>
 	<div class="text-center">
-	 <button type="button" class="btn btn-primary" onclick="deleteData()">삭제</button>
-	 <a href="askList_a.do" class="btn btn-primary text-center">목록으로 돌아가기</a>
+	 <button type="button" class="btn btn-danger" onclick="deleteData()" style="width:150px;">삭제</button>
+	 <a href="askList_a.do" class="btn btn-primary text-center">목록</a>
 	 </div>
 	 
 	 <!-- 관리자 댓글용 -->
 	 <c:if test="${empty comm }">
-	      <div class="mt-5">
-	        <h4>답글 작성</h4>
+	      <div class="mt-5 my-3">
 	        <form name="commentInsert" action="aksComm.do" method="post">
+	        <label style="font-size:18px; font-weight:bold;">[답글 내용 작성]  <button type="submit" class="btn btn-success">등록</button></label>
 	        <input type="hidden" name="ask_idx" value="${ask.ask_idx}">
 	        <input type="hidden" name="user_idx" value="${sessionScope.ssInfo.user_idx}">
 	          <div class="form-group">
-	            <label for="comm_content">내용</label>
-	            <textarea name="comm_cont" id="comm_cont" class="form-control"></textarea>
+	            <textarea name="comm_cont" id="comm_cont" class="form-control" style="overflow-y: scroll; resize: none; height:300px"></textarea>
 	          </div>
-	          <button type="submit" class="btn btn-primary">댓글 작성</button>
+	        
 	        </form>
 	      </div>
       </c:if>
 <!-- 답글시작 -->
 		<c:if test="${!empty comm }">
-			<div class="card mb-3">
+			<div class="card mb-3 my-3">
 				<div class="card-header">
-					관리자:${mInfo.user_name} (${comm.comm_date})  <button type="button" class="btn btn-primary" onclick="deleteComm()">삭제</button>
+					관리자 : ${mInfo.user_name} (${comm.comm_date})<button type="button" class="btn btn-outline-danger"  onclick="deleteComm()">X</button>
 				</div>
 				<div class="card-body">
 					<p class="card-text">${comm.comm_cont}</p>
@@ -143,7 +148,7 @@
 	};
 
 	function deleteData() {
-		if (confirm("정말로 삭제하시겠습니까?")) {
+		if (confirm("글을 정말로 삭제하시겠습니까?")) {
 			$.ajax({
 				url : "askDelete.do",
 				type : "POST",
@@ -162,7 +167,7 @@
 	}
 	
 	function deleteComm() {
-		if (confirm("정말로 삭제하시겠습니까?")){ 
+		if (confirm("댓글을 정말로 삭제하시겠습니까?")){ 
 			var ask_idx = '${ask.ask_idx}';
 
 		  $.ajax({
