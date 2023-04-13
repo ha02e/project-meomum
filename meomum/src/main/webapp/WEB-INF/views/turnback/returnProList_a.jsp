@@ -172,7 +172,8 @@
 													<td class="cell">
 														<c:choose>
 															<c:when test="${dto.order_status eq 5}">										
-																반납신청완료
+																<span class="text-danger">반납신청</span>
+																<div>반납처리</div>
 															</c:when>
 															<c:when test="${dto.order_status eq 6}">반납진행</c:when>
 															<c:when test="${dto.order_status eq 7}">반납완료</c:when>

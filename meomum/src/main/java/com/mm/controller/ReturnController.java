@@ -51,7 +51,7 @@ public class ReturnController {
 		if(result>0) {
 			int statusUpdate=orderDao.returnApplyUpdate(order_idx);
 			String msg=statusUpdate>0?"반납 신청이 완료되었습니다.":"반납 신청에 실패하였습니다.";
-			String gopage = statusUpdate>0?"self.close()":"location.href='returnForm.do';";
+			String gopage = statusUpdate>0?"opener.document.location.reload(); self.close()":"location.href='returnForm.do';";
 			mav.addObject("dto", dto);
 			mav.addObject("msg", msg);
 			mav.addObject("gopage", gopage);
