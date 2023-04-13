@@ -19,7 +19,7 @@
 <!-- 관리자후기관리 css -->
 <link rel="stylesheet" type="text/css" href="css/mainLayout_a.css">
 </head>
-<body>
+<body class="app">
 	<%@include file="/WEB-INF/views/header_a.jsp"%>
 	<div class="container mt-5">
 		<h1 class="display-5 mb-3">공지사항 본문</h1>
