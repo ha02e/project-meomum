@@ -37,6 +37,7 @@ public class NtcController {
 	@Autowired
 	private NtcDAO ntcDao;
 
+	/*
 	public List<NtcDTO> ntcPage(int cp, int ls) {
 		int start = (cp - 1) * ls + 1;
 		int end = cp * ls;
@@ -45,24 +46,29 @@ public class NtcController {
 		map.put("end", end);
 		List<NtcDTO> lists = ntcDao.ntcList(map);
 		return lists;
-	}
+	}*/
 
 	@RequestMapping("/ntcList_a.do") // 관리자 공지사항
-	public ModelAndView ntcList_a(@RequestParam(value = "cp", defaultValue = "1") int cp) {
+	public ModelAndView ntcList_a(@RequestParam(value = "cp", defaultValue = "1") int cp,
+			@RequestParam(value="fvalue",defaultValue = "") String fvalue) {
 
-		int totalCnt = ntcDao.getTotalCnt();
-		int listSize = 6;
+		int resultCnt = ntcDao.ntcTotalCnt(fvalue);
+		int totalCnt = resultCnt==0?1:resultCnt;
+		int listSize = 5;
 		int pageSize = 5;
+		String param = "&fvalue="+fvalue;
 
-		String pageStr = com.mm.module.PageModule.makePage("ntcList_a.do", totalCnt, listSize, pageSize, cp);
+		String pageStr = com.mm.module.PageModule.makePageParam("ntcList_a.do", totalCnt, listSize, pageSize, cp,param);
 
-		List<NtcDTO> lists = ntcPage(cp, listSize);
+		List<NtcDTO> lists = ntcDao.ntcList(cp, pageSize, fvalue);
 
 		ModelAndView mav = new ModelAndView();
+		mav.addObject("totalCnt",resultCnt);
 		mav.addObject("lists", lists);
-		mav.setViewName("ntc/ntcList_a");
 		mav.addObject("pageStr", pageStr);
+		mav.setViewName("ntc/ntcList_a"); 
 		return mav;
+		
 	}
 
 	@RequestMapping(value = "/ntcWrite.do", method = RequestMethod.GET)
@@ -156,20 +162,23 @@ public class NtcController {
 	}
 
 	@RequestMapping("/ntcList.do")
-	public ModelAndView ntcList(@RequestParam(value = "cp", defaultValue = "1") int cp) {
+	public ModelAndView ntcList(@RequestParam(value = "cp", defaultValue = "1") int cp,@RequestParam(value="fvalue",defaultValue = "")String fvalue) {
 
-		int totalCnt = ntcDao.getTotalCnt();
+		int resultCnt = ntcDao.ntcTotalCnt(fvalue);
+		int totalCnt = resultCnt==0?1:resultCnt;
 		int listSize = 5;
 		int pageSize = 5;
+		String param = "&fvalue="+fvalue;
 
-		String pageStr = com.mm.module.PageModule.makePage("ntcList.do", totalCnt, listSize, pageSize, cp);
+		String pageStr = com.mm.module.PageModule.makePageParam("ntcList.do", totalCnt, listSize, pageSize, cp,param);
 
-		List<NtcDTO> lists = ntcPage(cp, listSize);
+		List<NtcDTO> lists = ntcDao.ntcList(cp, pageSize, fvalue);
 
 		ModelAndView mav = new ModelAndView();
+		mav.addObject("totalCnt",resultCnt);
 		mav.addObject("lists", lists);
-		mav.setViewName("ntc/ntcList");
 		mav.addObject("pageStr", pageStr);
+		mav.setViewName("ntc/ntcList");
 		return mav;
 	}
 
@@ -267,13 +276,15 @@ public class NtcController {
 		return mav;
 	}
 
-	@RequestMapping("/ntcSerch.do")
+	
+/*	
+ * @RequestMapping("/ntcSerch.do")
 	public ModelAndView ntcSerch(@RequestParam("keyword") String keyword) {
 		List<NtcDTO> list = ntcDao.ntcSearch(keyword);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("lists", list);
 		mav.setViewName("ntc/ntcList");
 		return mav;
-	}
+	}*/
 
 }

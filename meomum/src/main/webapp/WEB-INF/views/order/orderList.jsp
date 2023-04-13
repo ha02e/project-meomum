@@ -237,7 +237,7 @@ input:invalid {
 				class="form-control" id="buyer_name" name="buyer_name"  required="required" pattern="[가-힣]{2,5}"
 				placeholder="이름을 입력해주세요"> <label for="buyer_tel" >연락처</label>
 			<input type="text" class="form-control" id="buyer_tel"
-				name="buyer_tel" value="" placeholder="연락처 -제외 하고 입력" required="required" pattern="[0-9]{3}-[0-9]{3,4}-[0-9]{4}"> <label
+				name="buyer_tel" value="" placeholder="-를 포함하여 입력 (ex.010-1234-5678)" required="required" pattern="[0-9]{3}-[0-9]{3,4}-[0-9]{4}"> <label
 				for="buyer_pcode">우편번호</label>
 			<div class="input-group mb-3">
 				<input type="text" class="form-control" id="buyer_pcode"

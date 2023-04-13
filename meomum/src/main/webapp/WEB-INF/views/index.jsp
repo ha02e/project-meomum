@@ -196,12 +196,12 @@ color : red;
 				</div>
 				<div class="carousel-item" data-bs-interval="2000">
 					<img
-						src="https://cdn.pixabay.com/photo/2014/08/11/21/40/bedroom-416062_960_720.jpg"
+						src="https://images.unsplash.com/photo-1651571473132-241d7fcbfa8f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80"
 						class="d-block  " alt="인테리어 이미지" >
 				</div>
 				<div class="carousel-item" data-bs-interval="2000">
 					<img
-						src="https://cdn.pixabay.com/photo/2020/12/16/00/10/home-5835289_960_720.jpg"
+						src="https://images.unsplash.com/photo-1596205250168-c3583813eea0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
 						class="d-block " alt="인테리어 이미지">
 				</div>
 			</div>

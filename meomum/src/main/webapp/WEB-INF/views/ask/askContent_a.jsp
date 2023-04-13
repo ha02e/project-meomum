@@ -7,21 +7,25 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>간단견적 문의 내용</title>
-<link href="/docs/5.2/dist/css/bootstrap.min.css" rel="stylesheet"
-	integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
-	crossorigin="anonymous">
+
 <!-- App CSS -->
 <link id="theme-style" rel="stylesheet" href="assets/css/portal_a.css">
 <link rel="stylesheet" type="text/css" href="css/mainLayout_a.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+.table th{
+    color : #DEA01E;
+}
 
+</style>
 </head>
 <body class="app">
 
 
 <%@include file="/WEB-INF/views/header_a.jsp"%>
-<br><br><br><br>
-<div class="container" style="margin-top: 30px; margin-bottom: 40px;">
+<div class="app-wrapper"  style="margin-bottom: 50px;margin-top: 50px;">
+<div class="app-content pt-3 p-md-3 p-lg-4">
+<div class="container" >
   <div class="row justify-content-center">
     <div class="col-md-9">
       <div class="row">
@@ -44,15 +48,15 @@
 	      <td colspan="3">${ask.ask_title}</td>
 	    </tr>
 	    <tr>
-	      <th class="bg-light text-center">작성자</th>
+	      <th class="text-center">작성자</th>
 	      <td>${ask.ask_writer}</td>
-	      <th class="bg-light text-center">작성일</th>
+	      <th class="text-center">작성일</th>
 	      <td>${ask.ask_wdate}</td>
 	    </tr>
 	    <tr>
-			<th class="bg-light text-center">공간유형</th>
+			<th class="text-center">공간유형</th>
 			<td>${ask.rsd_type}</td>
-			<th class="bg-light text-center">평수</th>
+			<th class="text-center">평수</th>
 			<td>${ask.rsd_py}평</td>
 		</tr>
 		<tr>
@@ -100,10 +104,10 @@
 	  </tbody>
 	</table>
 	<div class="text-center">
-	 <button type="button" class="btn btn-danger" onclick="deleteData()" style="width:150px;">삭제</button>
+	 <button type="button" class="btn btn-warning" onclick="deleteData()" style="width:150px;">삭제</button>
 	 <a href="askList_a.do" class="btn btn-primary text-center">목록</a>
 	 </div>
-	 
+	 <hr>
 	 <!-- 관리자 댓글용 -->
 	 <c:if test="${empty comm }">
 	      <div class="mt-5 my-3">
@@ -133,6 +137,7 @@
     </div>
   </div>
 </div>
+</div></div>
 
 <%@include file="/WEB-INF/views/footer_a.jsp" %>
 

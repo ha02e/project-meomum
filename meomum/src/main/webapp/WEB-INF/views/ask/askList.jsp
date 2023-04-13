@@ -181,10 +181,10 @@ function close_modal(){
 									<td>${ask.ask_writer}</td>
 									<td><c:if test="${ask.ask_ask>0}">
 											<button type="button"
-												class="btn btn-success btn-sm align-middle disabled">답변완료</button>
+												class="btn btn-success btn-sm align-middle disabled" style="width:75px;">답변완료</button>
 										</c:if> <c:if test="${ask.ask_ask==0}">
 											<button type="button"
-												class="btn btn-outline-danger btn-sm align-middle disabled">진행중</button>
+												class="btn btn-outline-danger btn-sm align-middle disabled" style="width:75px;">진행중</button>
 										</c:if></td>
 
 									<td>${ask.ask_date}</td>
