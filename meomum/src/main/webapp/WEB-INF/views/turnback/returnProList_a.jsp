@@ -64,29 +64,6 @@
 function returnSubmitForm(url, name, options) {
   window.open(url, name, options);
 }
-//function validate() {
-//	var pro_amount = document.getElementById("pro_amount").value;
-	
-		/*수량을 입력하지 않았을 경우*/
-//		if (pro_amount == null || pro_amount.trim() == "") {
-//			alert("수량을 입력해주세요.");
-//		    return false;
-//		}
-		
-		/*숫자로 입력하지 않았을 경우*/
-//		 if (isNaN(pro_amount)) {
-//			alert("수량은 숫자로만 입력 가능합니다.");
-//			return false;
-//		}
-		
-		/*문자열이 섞여있는 경우*/
-//		if (pro_amount.match(/[^0-9]/)) {
-//			alert("수량은 숫자로만 입력 가능합니다.");
-//			return false;
-//		}
-		 
-//		return true;
-//}
 </script>  
 
 </head>
