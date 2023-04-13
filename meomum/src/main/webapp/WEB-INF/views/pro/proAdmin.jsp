@@ -18,19 +18,19 @@ function confirmDel(pro_idx){
 	}
 }
 
-function sortUsers(orderby) {
+function sortUsers(cate) {
 	
-	if(orderby=='all') {
+	if(cate=='0') {
 	    window.location.href = 'proAdmin.do';
-	  }else if(orderby=='1'){
+	  }else if(cate=='1'){
 	    window.location.href = 'proFind.do?proF=침대';
-	}else if(orderby=='2'){
+	}else if(cate=='2'){
 		window.location.href = 'proFind.do?proF=테이블';
-	}else if(orderby=='3'){
+	}else if(cate=='3'){
 		window.location.href = 'proFind.do?proF=의자';
-	}else if(orderby=='4'){
+	}else if(cate=='4'){
 		window.location.href = 'proFind.do?proF=소파';
-	}else if(orderby=='5'){
+	}else if(cate=='5'){
 		window.location.href = 'proFind.do?proF=조명';
 	}
 }
@@ -42,7 +42,7 @@ function sortUsers(orderby) {
 	<div class="app-wrapper">
 		<div class="app-content pt-3 p-md-3 p-lg-4">
 			<div class="container pt-5">
-				<h2 class="text-center mb-4">상품 관리</h2>
+				<h1 class="text-center mb-4">상품 관리</h1>
 				
 	<div class="row justify-content-between mb-3">
     <div class="col-md-6">
@@ -58,13 +58,13 @@ function sortUsers(orderby) {
 	    <div class="col-md-6">
 	        <div class="d-flex justify-content-end align-items-center">
 	       <span class="me-2">카테고리:</span> 
-		<select class="form-select w-auto" id="orderby" name="orderby" onchange="sortUsers(this.value)">
-	  <option value="all" ${orderby == 'all' ? 'selected' : ''}>전체</option>
-	  <option value="1" ${orderby == '1' ? 'selected' : ''}>침대</option>
-	  <option value="2" ${orderby == '2' ? 'selected' : ''}>테이블</option>
-	  <option value="3" ${orderby == '3' ? 'selected' : ''}>의자</option>
-	  <option value="4" ${orderby == '4' ? 'selected' : ''}>소파</option>
-	  <option value="5" ${orderby == '5' ? 'selected' : ''}>조명</option>
+		<select class="form-select w-auto" name="cate" onchange="sortUsers(this.value)">
+	  <option value="all" ${cate == '0' ? 'selected' : ''}>전체</option>
+		<option value="1" ${cate == '1' ? 'selected' : ''}>침대</option>
+		<option value="2" ${cate == '2' ? 'selected' : ''}>테이블</option>
+		<option value="3" ${cate == '3' ? 'selected' : ''}>의자</option>
+		<option value="4" ${cate == '4' ? 'selected' : ''}>소파</option>
+		<option value="5" ${cate == '5' ? 'selected' : ''}>조명</option>
 		</select>
 	    </div>
 	</div>
@@ -120,7 +120,7 @@ function sortUsers(orderby) {
 									</c:choose>
 									</span>
 								</td>
-								<td><a href="proContent.do?pro_idx=${list.pro_idx}">${list.pro_name }</a></td>	
+								<td><a href="proContent.do?pro_idx=${list.pro_idx}" target="_blank">${list.pro_name }</a></td>
 								<td>${list.pro_amount}</td>
 								<td>
 									<c:choose> 

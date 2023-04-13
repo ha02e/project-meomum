@@ -64,7 +64,7 @@ public class ProController {
 	}
 	
 	
-	//사용자 상품 리스트
+	//사용자 상품 리스트 출력
 	@RequestMapping("/proList.do")
 	public ModelAndView itemList(@RequestParam(value="cp",defaultValue="1")int cp) {
 		
@@ -75,7 +75,7 @@ public class ProController {
 		String pageStr=com.mm.module.PageModule.makePage("proList.do", totalCnt, listSize, pageSize, cp);
 		
 		
-		List<ProDTO> lists=proPage(cp,listSize);
+		List<ProDTO> lists=proItemPage(cp,listSize);
 		List<ProDTO> lists2=proDao.proBest();
 		
 		
@@ -107,24 +107,51 @@ public class ProController {
 	        HttpServletRequest req) {
 	    
 	    ProDTO dto = new ProDTO();
-	    dto.setPro_thumb(pro_thumb.getOriginalFilename());
-	    dto.setPro_img1(pro_img1.getOriginalFilename());
-	    dto.setPro_img2(pro_img2.getOriginalFilename());
+	    
 	    dto.setPro_cate(pro_cate);
 	    dto.setPro_name(pro_name);
 	    dto.setPro_price(pro_price);
 	    dto.setPro_amount(pro_amount);
 	    dto.setPro_state(pro_state);
 	    dto.setPro_month(pro_month);
-	    dto.setPro_content(pro_content.getOriginalFilename());
 	    dto.setPro_subprice(pro_subprice);
 	    dto.setPro_allprice(pro_allprice);
 	    
+	    int num1 = 0;
+	    int num2 = 0;
+	    int num3 = 0;
+	    int num4 = 0;
+
 	    String name1=pro_thumb.getOriginalFilename();
 	    String name2=pro_img1.getOriginalFilename();
 	    String name3=pro_img2.getOriginalFilename();
 	    String name4=pro_content.getOriginalFilename();
 	    
+	    while(proDao.proFindFile(name1)) {
+	    	num1++;
+	    	name1 = num1+name1;
+	    }
+	    
+	    while(proDao.proFindFile(name2)) {
+	    	num2++;
+	    	name2 = num2+name2;
+	    }
+	    
+	    while(proDao.proFindFile(name3)) {
+	    	num3++;
+	    	name3 = num3+name3;
+	    }
+	    
+	    while(proDao.proFindFile(name4)) {
+	    	num4++;
+	    	name4 = num4+name4;
+	    }
+	    
+	    dto.setPro_thumb(name1);
+	    dto.setPro_img1(name2);
+	    dto.setPro_img2(name3);
+	    dto.setPro_content(name4);
+	   
 	    //사진 물리 저장
 	    copyInto(pro_thumb, req,name1);
 	    copyInto(pro_img1, req,name2);
@@ -171,7 +198,7 @@ public class ProController {
 	
 	
 	
-	//페이징 모듈
+	//페이징 모듈 (관리자용)
 	public List<ProDTO> proPage(int cp,int ls) {
 		int start=(cp-1)*ls+1;
 		int end=cp*ls;
@@ -183,21 +210,46 @@ public class ProController {
 	}
 	
 	
+	//페이징 모듈 (사용자용)
+	public List<ProDTO> proItemPage(int cp,int ls) {
+		int start=(cp-1)*ls+1;
+		int end=cp*ls;
+		Map map=new HashMap();
+		map.put("start", start);
+		map.put("end", end);
+		List<ProDTO> lists=proDao.proItemList(map);
+		return lists;
+	}
+	
+	
 	
 	//관리자 상품 관리 페이지
 	@RequestMapping("/proAdmin.do")
-	public ModelAndView proAdminList(@RequestParam(value="cp",defaultValue="1")int cp) {
+	public ModelAndView proAdminList(
+			@RequestParam(value="cp",defaultValue="1")int cp,
+			HttpSession session) {
+		
+		MemberDTO ssInfo = (MemberDTO) session.getAttribute("ssInfo");
+
+		ModelAndView mav=new ModelAndView();
+		
+		if(ssInfo==null||!ssInfo.getUser_info().equals("관리자")) {
+			mav.addObject("msg", "관리자만 이용할 수 있습니다.");
+			mav.addObject("link","index.do");
+			mav.setViewName("pro/proMsg");
+			return mav;
+		}
 		
 		int totalCnt=proDao.getTotalCnt();
 		int listSize=10;
 		int pageSize=5;
 		
+		
 		String pageStr=com.mm.module.PageModule.makePage("proAdmin.do", totalCnt, listSize, pageSize, cp);
 		
+		List<ProDTO> lists=proPage(cp, pageSize);
 		
-		List<ProDTO> lists=proPage(cp,listSize);
 		
-		ModelAndView mav=new ModelAndView();
 		mav.setViewName("pro/proAdmin");
 		mav.addObject("lists", lists);
 		mav.addObject("pageStr", pageStr);

@@ -110,7 +110,8 @@
 	<!-- products -->
 		<div class="row isotope-grid">
 		    <c:forEach var="list" items="${lists}">
-		        <div class="col-sm-6 col-md-4 col-lg-4 p-b-35 isotope-item ${list.pro_cate}" >
+	<div style="margin-bottom: 40px;" class="col-sm-6 col-md-4 col-lg-4 p-b-35 isotope-item ${list.pro_cate}">
+
 		            <!-- Block2 -->
 		            <div class="block2">
 		                <div class="block2-pic hov-img1">
@@ -169,11 +170,6 @@
 <!--===============================================================================================-->
 	<script src="vendor/slick/slick.min.js"></script>
 	<script src="js/slick-custom.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/parallax100/parallax100.js"></script>
-	<script>
-        $('.parallax100').parallax100();
-	</script>
 <!--===============================================================================================-->
 	<script src="vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
 	<script>
