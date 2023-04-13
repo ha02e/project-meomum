@@ -46,6 +46,9 @@
 	text-align: center;
 }
 
+.container p{
+	font-family: 'GmarketSansMedium';
+}
 .card {
 	margin: 0 0 20px 0;
 }
@@ -77,13 +80,13 @@ footer {
 				<div class="col-xl-9 col-md-9">
 					<c:if test="${empty list}">
 						<div class="card">
-							<div class="card-body">방문 견적 예약 내역이 없습니다</div>
+							<div class="card-body" style="font-family: 'GmarketSansMedium';">방문 견적 예약 내역이 없습니다</div>
 						</div>
 					</c:if>
 					<c:forEach var="list" items="${list}">
 						<div class="card mb-3">
-							<div class="card-header bg-secondary text-white">
-								<h5>${list.svc_state}</h5>
+							<div class="card-header bg-#85745D text-black">
+								<h5 style="font-family: 'GmarketSansMedium';">${list.svc_state}</h5>
 							</div>
 							<div class="card-body">
 								<p class="card-text">
@@ -91,8 +94,7 @@ footer {
 										<c:param name="svc_idx">${list.svc_idx}</c:param>
 									</c:url>
 									<a href="${contentUrl}"
-										class="text-decoration-none text-primary">예약번호:
-										${list.svc_idx}</a>
+										class="text-decoration-none text-primary">예약번호: ${list.svc_idx}</a>
 								</p>
 								<p class="card-text">
 									<c:if test="${list.svc_state ne '예약취소'}">

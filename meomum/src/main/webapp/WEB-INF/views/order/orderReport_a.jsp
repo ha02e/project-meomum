@@ -90,9 +90,19 @@ function shipFormOpen(url, name, options) {
   window.open(url, name, options);
 }
 
-//function trackingOpen(){
-//	window.open('http://info.sweettracker.co.kr/tracking/4','tracking','width=400px,height=600px');
-//}
+function showTracker(t_key, t_code,t_invoice){
+    var frmPop= document.getElementById('frmData');
+    var url = 'http://info.sweettracker.co.kr/tracking/4';
+    window.open(url,'showTracker','width=460,height=600');  
+     
+    frmPop.action = url;
+    frmPop.target = 'showTracker';
+    frmPop.t_key.value = t_key;
+    frmPop.t_code.value = t_code;  
+    frmPop.t_invoice.value = t_invoice;  
+    frmPop.submit();   
+     
+}
 
 //        $(document).ready(function() {
 //            $("#btnSubmit").click(function(event) {
@@ -128,8 +138,8 @@ function shipFormOpen(url, name, options) {
 <div class="app-wrapper">
 	    
 	<div class="app-content pt-3 p-md-3 p-lg-4">
-		<div class="container-xl">
-			<h2 class="title">주문/배송 내역</h2>
+		<div class="container pt-5">
+			<h1 class="text-center mb-4">주문/배송 내역</h1>
 			<div class="card">
 			<div class="card-body">
 			
@@ -152,10 +162,10 @@ function shipFormOpen(url, name, options) {
 				<table class="datatable-table" id="order-table">
 				<thead>
 					<tr>
-						<th data-sortable="true"style="width:18%;" aria-sort="descending" class="datatable-descending" >
+						<th data-sortable="true"style="width:20%;" aria-sort="descending" class="datatable-descending" >
 							<a href="#" class="datatable-sorter">주문번호</a>
 						</th>
-						<th data-sortable="true" style="width:20%;">
+						<th data-sortable="true" style="width:18%;">
 							<a href="#" class="datatable-sorter">구독상품</a>
 						</th>
 						<th data-sortable="true" style="width:10%">
@@ -200,49 +210,33 @@ function shipFormOpen(url, name, options) {
 								<c:choose>
 									<c:when test="${dto.order_status eq 1}">
 										<div class="text-warning">상품준비중</div>
-										<a href="#" onclick="shipFormOpen('shipForm.do?order_idx=${dto.order_idx}', 'shipForm', 'width=540,height=600'); return false;">배송처리</a>
-										<!-- <button type="button" class="btn-sm app-btn-secondary" onclick="shipFormOpen()">배송처리</button>-->
+										<a href="#" class="btn-sm app-btn-secondary" 
+											onclick="shipFormOpen('shipForm.do?order_idx=${dto.order_idx}', 'shipForm', 'width=540,height=600'); return false;">배송처리</a>
 									</c:when>
 									<c:when test="${dto.order_status eq 2}">
 										<div class="text-success">배송중</div>
-											<button type="button" class="btn-sm app-btn-secondary" onclick="sendRequest()">배송조회</button>
-										
-											<script>
-											function sendRequest(){
-												var xhr = new XMLHttpRequest();
-												
-												var url='http://openapi.epost.go.kr/trace/retrieveLongitudinalService/retrieveLongitudinalService/getLongitudinalDomesticList';
-												var queryParams='?' + encodeURIComponent('serviceKey') + '='+'1vQo9cVpa0Dh3VkuWlejTJ98PPHc0AsrpqMo4Pymlp3%2Fipgtycu5jmA%2BZOUtK3U%2B3O26sJ7IVysVOoABmofX1g%3D%3D';
-												queryParams += '&' + encodeURIComponent('rgist') + '=' + encodeURIComponent('6897102086554');
-												
-												xhr.open('GET', url+queryParams);
-												
-												xhr.onreadystatechange=function(){
-													if (this.readyState == 4) {
-														
-												        alert('Status: '+this.status+'\nHeaders: '+JSON.stringify(this.getAllResponseHeaders())+'\nBody: '+this.responseText);
-												    }
-												};
-												xhr.send();
-											}
-											</script>
-										
+										<form name="frmData" id="frmData" method="post">
+											<input type="hidden" id="t_key" name="t_key" value="sjLmbhJEhPXnO5neAx7FNg">
+											<input type="hidden" id="t_code" name="t_code" value="04">
+											<input type="hidden" id="t_invoice" name="t_invoice" value="566250609912">
+											<input type="button" value="배송조회" onclick="showTracker('sjLmbhJEhPXnO5neAx7FNg', '04', '566250609912')" class="btn-sm app-btn-secondary">
+										</form>
 									</c:when>
 									<c:when test="${dto.order_status eq 3}">
 										<div class="text-danger">주문취소</div>
 									</c:when>
 									<c:when test="${dto.order_status eq 4}">
 										<div>배송완료</div>
-										<form action="http://info.sweettracker.co.kr/tracking/4" method="post">
+										<form name="frmData" id="frmData" method="post">
 											<input type="hidden" id="t_key" name="t_key" value="sjLmbhJEhPXnO5neAx7FNg">
 											<input type="hidden" id="t_code" name="t_code" value="04">
 											<input type="hidden" id="t_invoice" name="t_invoice" value="566250609912">
-											<button type="submit" id="btnSubmit" class="btn-sm app-btn-secondary">배송조회</button>
+											<input type="button" value="배송조회" onclick="showTracker('sjLmbhJEhPXnO5neAx7FNg', '04', '566250609912')" class="btn-sm app-btn-secondary">
 										</form>
 									</c:when>
 									<c:when test="${dto.order_status eq 5}">										
 										<div class="text-danger">반납신청</div>
-										<a class="btn-sm app-btn-danger" href="#">반납처리</a>
+										<a class="btn-sm app-btn-secondary" href="#">반납처리</a>
 									</c:when>
 									<c:when test="${dto.order_status eq 6}">반납진행</c:when>
 									<c:when test="${dto.order_status eq 7}">반납완료</c:when>

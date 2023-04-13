@@ -44,6 +44,17 @@
 	border:1px solid #eeeeee;
 }
 
+.card-body a{
+	color: var(--p-color) !important;
+}
+.card-body a:hover{
+    color:#FE8A7F !important;
+}
+
+.card-title{
+	font-size:1.3rem;
+}
+
 .reviewThumb{
 	position: relative;
 	overflow: hidden;
@@ -68,6 +79,15 @@
 }
 </style>
 
+<script>
+function deleteReview(reviewIdx) {
+  if (confirm("정말로 삭제하시겠습니까?")) {
+	location.href = "reviewDel.do?review_idx=" + reviewIdx;
+  } else {
+	window.close();
+  }
+}
+</script>
 </head>
 <body>
 <%@include file="/WEB-INF/views/header.jsp"%> 
@@ -102,19 +122,23 @@
 			</c:if>
 			<div class="row row-cols-1 row-cols-md-2 g-4 mb-5">
 				<c:forEach var="dto" items="${lists}">
+					<c:url var="contentUrl" value="reviewContent.do">
+						<c:param name="review_idx">${dto.review_idx}</c:param>
+					</c:url>
 					<div class="col">
 						<div class="card">
 						<div class="reviewThumb">
-							<c:if test="${not empty dto.thumb}">
-								<img class="img-fluid card-img-top" src="/meomum/images/reviewImg/${dto.thumb}" alt="review thumb">
-							</c:if>
-							<c:if test="${empty dto.thumb}">
-								<img class="img-fluid card-img-top" src="/meomum/images/noimage.jpg" alt="no thumb">
-							</c:if>
-							
+							<a href="${contentUrl}">
+								<c:if test="${not empty dto.thumb}">
+									<img class="img-fluid card-img-top" src="/meomum/images/reviewImg/${dto.thumb}" alt="review thumb">
+								</c:if>
+								<c:if test="${empty dto.thumb}">
+									<img class="img-fluid card-img-top" src="/meomum/images/noimage.jpg" alt="no thumb">
+								</c:if>
+							</a>
 						</div>
 						<div class="card-body">
-							<h4 class="card-title text-truncate">${dto.subject}</h4>
+							<h4 class="card-title text-truncate"><a href="${contentUrl}">${dto.subject}</a></h4>
 							<div class="entry-meta">
 								<ul class="d-flex justify-content-between">
 									<li class="d-flex align-items-center"><i class="bi bi-person"></i>&nbsp;${dto.writer}</li>
@@ -129,17 +153,11 @@
 						</div>
 						<div class="card-footer text-center">
 							<input type="hidden" name="review_idx" value="${dto.review_idx}">
-							<c:url var="contentUrl" value="reviewContent.do">
-								<c:param name="review_idx">${dto.review_idx}</c:param>
-							</c:url>
 							<button class="btn btn-primary btn-sm" onclick="location.href='${contentUrl}'">자세히 보기</button>
 							<a href="reviewUpdateForm.do?review_idx=${dto.review_idx}">
 								<button class="btn btn-primary btn-sm">수정</button>
 							</a>
-							<a href="reviewDel.do?review_idx=${dto.review_idx}">
-								<button class="btn btn-danger btn-sm">삭제</button>
-							</a>
-							</form>
+							<button class="btn btn-danger btn-sm" onclick="deleteReview(${dto.review_idx})">삭제</button>
 						</div>
 					</div>
               		</div>
