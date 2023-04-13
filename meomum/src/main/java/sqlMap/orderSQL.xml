@@ -75,6 +75,7 @@
 				    and b.pro_idx=d.pro_idx
 				    and b.user_idx=c.user_idx
 				    and b.user_idx=#{user_idx}
+				order by a.order_date desc
 			)e )f
 		where rnum<![CDATA[>=]]>#{start} and rnum<![CDATA[<=]]>#{end}
 	</select>
