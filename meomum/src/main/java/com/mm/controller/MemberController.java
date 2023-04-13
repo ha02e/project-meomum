@@ -23,6 +23,7 @@ import com.mm.member.model.MailSendService;
 import com.mm.member.model.MemberDAO;
 import com.mm.member.model.MemberDTO;
 import com.mm.member.model.MemberListDTO;
+import com.mm.point.model.PointDAO;
 
 @Controller
 public class MemberController {
@@ -32,7 +33,8 @@ public class MemberController {
 	private MailSendService mailService;
 	@Autowired
 	private CartDAO cdao;
-	
+	@Autowired
+	private PointDAO pDao;
 	
 	/*회원가입 페이지 이동*/
 	@RequestMapping(value="/memberJoin.do",method = RequestMethod.GET)
@@ -263,7 +265,12 @@ public class MemberController {
 		String pageStr = com.mm.module.PageModule.makePageParam("menMan.do", totalCnt, listSize, pageSize, cp,param);
 		
 		List<MemberListDTO> lists = mdao.memberList(cp, listSize,type,fvalue,orderby);
-
+		
+		for(int i=0;i<lists.size();i++) {
+			int user_idx = lists.get(i).getUser_idx();
+			int user_point = pDao.pointTotal(user_idx);
+			lists.get(i).setTotal_point(user_point);
+		}
 		mav.setViewName("member/memManList");
 		
 		mav.addObject("order",orderby);

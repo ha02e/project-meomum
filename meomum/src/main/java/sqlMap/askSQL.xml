@@ -102,27 +102,25 @@
 		select * from
 		(select rownum as rnum,a.* from
 		(select * from ask
-
-
-		<choose>
-			<when test="checklist == 2">
-				where ask_ask <![CDATA[<]]>1
-			</when>
-			<when test="checklist == 3">
-				WHERE TO_CHAR(ask_wdate, 'YYYY-MM-DD') <![CDATA[=]]>
-				TO_CHAR(SYSDATE, 'YYYY-MM-DD')
-			</when>
-			<otherwise>
 				<if test="fvalue != null">
 					WHERE
-					ask_title LIKE #{fvale} oru
+					(ask_title LIKE #{fvalue} or
 					ask_writer LIKE
 					#{fvalue} or
 					ask_content LIKE #{fvalue} or
-					ask_tel LIKE #{fvalue}
+					ask_tel LIKE #{fvalue})
 				</if>
 
-			</otherwise>
+			<choose>
+			<when test="checklist == 2">
+				and (ask_ask <![CDATA[<]]>1 )
+				
+			</when>
+			<when test="checklist == 3">
+				and (TO_CHAR(ask_wdate, 'YYYY-MM-DD') <![CDATA[=]]>
+				TO_CHAR(SYSDATE, 'YYYY-MM-DD'))
+				
+			</when>
 		</choose>
 		order by ask_idx desc
 		)a
@@ -133,16 +131,28 @@
 
 
 	<select id="askCnt_a" resultType="Integer"
-		parameterType="String">
+		parameterType="Map">
 		select count(*) from ask
-		<if test="fvalue != null">
-			where
-			ask_title LIKE #{fvalue} or
-			ask_writer LIKE #{fvalue}
-			or
-			ask_content LIKE #{fvalue} or
-			ask_tel LIKE #{fvalue}
-		</if>
+			WHERE
+					(ask_title LIKE #{fvalue} or
+					ask_writer LIKE
+					#{fvalue} or
+					ask_content LIKE #{fvalue} or
+					ask_tel LIKE #{fvalue})
+			
+		
+		
+		<choose>
+			<when test="checklist == 2">
+				and (ask_ask <![CDATA[<]]>1)
+			</when>
+			<when test="checklist == 3">
+				and( TO_CHAR(ask_wdate, 'YYYY-MM-DD') <![CDATA[=]]>
+				TO_CHAR(SYSDATE, 'YYYY-MM-DD'))
+			</when>
+			
+					
+		</choose>
 	</select>
 	<select id="myaskList" parameterType="Map"
 		resultType="com.mm.ask.model.AskDTO">

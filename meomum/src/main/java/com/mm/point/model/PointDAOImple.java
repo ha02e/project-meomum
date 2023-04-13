@@ -54,4 +54,12 @@ public class PointDAOImple implements PointDAO {
 		int cnt = sqlMap.selectOne("pointCnt",user_idx);
 		return cnt;
 	}
+	
+	
+	/**관리자 포인트 지급/회수*/
+	@Override
+	public int pointInsertManager(PointDTO dto) {
+		int count = sqlMap.insert("pointInsertManager",dto);
+		return count;
+	}
 }

@@ -227,7 +227,7 @@ public class AskController {
 		}
 		
 		//페이징
-		int rtotalCnt = adao.askCnt(fvalue);
+		int rtotalCnt = adao.askCnt_a(fvalue,checklist);
 		int totalCnt = rtotalCnt==0?1:rtotalCnt;
 		int listSize = 10;
 		int pageSize = 5;
@@ -252,7 +252,8 @@ public class AskController {
 		}
 		mav.addObject("totalCnt",rtotalCnt);
 		mav.addObject("checklist",checklist);
-		
+		mav.addObject("type",type);
+		mav.addObject("fvalue",fvalue);
 		mav.addObject("lists",lists);
 		
 		

@@ -34,30 +34,6 @@
 	}
 </script>
 
-<script type="text/javascript">
-	// 이름 입력 필드를 가져옴
-	var nameInput = document.getElementById("order_name");
-
-	// 사용자가 새로운 이름을 입력했는지 확인
-	if (nameInput.value !== "${sessionScope.ssInfo.user_name}") {
-		// 입력된 이름 값을 폼 데이터에 있는 이름 필드에 할당
-		document.getElementsByName("order_name")[0].value = nameInput.value;
-	}
-
-	var nameInput = document.getElementById("receiver_tel");
-
-	if (nameInput.value !== document.getElementById("receiver_tel")) {
-
-		document.getElementsByName("receiver_tel")[0].value = nameInput.value;
-	}
-
-	var nameInput = document.getElementById("buyer_email");
-
-	if (nameInput.value !== document.getElementById("buyer_email")) {
-
-		document.getElementsByName("buyer_email")[0].value = nameInput.value;
-	}
-</script>
 <style>
 /*헤더 이미지용 url에 이미지 추가하면 됩니다.*/
 .page-header {
@@ -151,8 +127,9 @@ input:invalid {
 										<td><fmt:formatNumber type="number" maxFractionDigits="3"
 												value="${dto.pro_subprice * dto.cart_amount}" />원</td>
 									</tr>
+						
 									<input type="hidden" name="pro_idx" value="${dto.pro_idx}">
-									<input type="hidden" name="pro_amount" value="${dto.cart_amount}">
+                                    <input type="hidden" name="pro_amount" value="${dto.cart_amount}">
 								</c:forEach>
 							</c:if>
 						</tbody>
@@ -233,11 +210,35 @@ input:invalid {
 								class="form-check-label" for="checkbox">개인정보 이용동의합니다.</label>
 						</div>
 					</div>
+					<div class="text-center">결제 금액</div>
 					<div class="mb-3">
-						<label for="using_point" class="form-label">포인트</label> <input
-							type="number" name="using_point" value="${0}"
+						<label for="orderPay" class="form-label">주문금액</label> <input
+							type="number" name="total" value="${total.finalTotalPrice}" id="total"
 							class="form-control">
 					</div>
+					<div class="mb-3">
+						<label for="point_total" class="form-label">사용 가능 포인트 | 
+							<input type="checkbox" id="check" onclick="checkPt()">전액사용
+						</label> <input
+							type="number" name="point_total"id="point_total" value="${result}" readonly="readonly"
+							class="form-control">
+						
+					</div>
+					
+					<div class="mb-3">
+						<label for="point_num" class="form-label">포인트 사용</label> <input
+							type="number" name="point_num" oninput="getTotal()" id="point_num" 
+							class="form-control">
+					</div>
+					<div class="mb-3">
+						<label for="point_num" class="form-label">최종 결제 금액</label> <input
+							type="number" name="amount" id="amount" readonly="readonly"
+							class="form-control">
+					</div>
+					
+					
+					
+					
 					<div class="d-grid gap-2 col-4 mx-auto">
 					<button type="button" class="btn btn-primary"
 						onclick="requestPay()">결제하기</button> 
@@ -252,60 +253,68 @@ input:invalid {
 
 
 
-
+<script src="js/point.js">
+			console.log(amount)
+</script>
 
 
 		<script>
 			var IMP = window.IMP;
 			IMP.init("imp77686458");
 
-			var today = new Date();
-			var year = today.getFullYear().toString();
-			var month = (today.getMonth() + 1).toString().padStart(2, "0"); // 월은 0부터 시작하므로 1을 더해줌
-			var day = today.getDate().toString().padStart(2, "0");
-			var hours = today.getHours().toString();
-			var minutes = today.getMinutes().toString();
-			var seconds = today.getSeconds().toString();
-			var milliseconds = today.getMilliseconds().toString();
-			var makeMerchantUid = year + month + day + hours + minutes
-					+ seconds + milliseconds;
+            function validateForm() {
+                var form = document.ordersForm;
+                  if (!form.checkValidity()) { // HTML5 폼 유효성 검사
+                        form.querySelector(':invalid').focus(); // 유효하지 않은 입력 필드에 포커스
 
-			var oName = document.getElementById("order_name").value;
-			var uid = "OMM" + makeMerchantUid
-			
-			var tp = ${total.finalTotalPrice};
-			var bName =document.getElementById("order_name").value
-			var bTel= document.getElementById("receiver_tel").value
-			var addr= document.getElementById("order_addr").value;
-			var bPcode= document.getElementById("order_pcode").value
-			
-			var uidx = ${sessionScope.ssInfo.user_idx};
-			var pidx = [<c:forEach var="product" items="${lists}"><c:out value="${product.pro_idx}"/>, </c:forEach>];
-			var pAmount = [<c:forEach var="product" items="${lists}"><c:out value="${product.cart_amount}"/>, </c:forEach>];
-			
-			document.getElementById('orderIdxInput').setAttribute('value', uid);
+                    return false;
+                  }
+                  return true;
+            }
+            
+            
+            
+            function requestPay() {
+               	 if (!validateForm()) {
+                    return;
+                  }
+		
+				//주문번호 만들기
+				var today = new Date();
+				var year = today.getFullYear().toString();
+				var month = (today.getMonth() + 1).toString().padStart(2, "0"); // 월은 0부터 시작하므로 1을 더해줌
+				var day = today.getDate().toString().padStart(2, "0");
+				var hours = today.getHours().toString();
+				var minutes = today.getMinutes().toString();
+				var seconds = today.getSeconds().toString();
+				var milliseconds = today.getMilliseconds().toString();
+				var makeMerchantUid = year + month + day + hours + minutes
+						+ seconds;
 
-			function validateForm() {
-				var form = document.ordersForm;
-				  if (!form.checkValidity()) { // HTML5 폼 유효성 검사
-					    form.querySelector(':invalid').focus(); // 유효하지 않은 입력 필드에 포커스
+				
+				var oName = document.getElementById("order_name").value;
+				var uid = "OMM" + makeMerchantUid;
 
-				    return false;
-				  }
-				  return true;
-			}
-			function requestPay() {
-				if (!validateForm()) {
-				    return;
-				  }
-	
+				
+				var tp = document.getElementById("amount").value; //최종 결제금액
+				
+				var bName = document.getElementById("order_name").value;
+				var bTel = document.getElementById("receiver_tel").value;
+				var addr = document.getElementById("order_addr").value;
+				var bPcode = document.getElementById("order_pcode").value;
+				var order_tos = document.getElementById("checkbox").value;
+
+				var uidx = ${sessionScope.ssInfo.user_idx};
+				
+				  // pidx와 pAmount를 사용하여 필요한 처리를 수행
+		
 				IMP.request_pay({
 					pg : "kakaopay", //"html5_inicis",
 					pay_method : 'card',
 					merchant_uid : uid,
 					name : oName,
 					amount : tp,
-					buyer_email : "",
+					buyer_email : uid,
 					buyer_name : bName,
 					buyer_tel : bTel,
 					buyer_addr : addr,
@@ -314,49 +323,101 @@ input:invalid {
 					if (rsp.success) {
 						console.log(rsp);
 
-						var PaymentDTO ={
-			    			  	payment_idx: rsp.imp_uid, //payment_idx로 들어갈 값
-					            cate_idx: rsp.merchant_uid, //인식번호(cate_idx)
-					            payment_cate: 2, //payment_cate 카테고리
-					            pay_method: rsp.pay_method, //pay_mehtod 지불수단
-					            amount: rsp.paid_amount, //amount 금액
-					            pay_buydate: rsp.paid_at, //pay_buydate 결제일
-					            pay_cancleDate:null,//pay_cancleDate 취소일(임시'-'로 지정)
-					            pay_state: rsp.status,//pay_stat
+						var PaymentDTO = {
+							payment_idx : rsp.imp_uid, //payment_idx로 들어갈 값
+							cate_idx : rsp.merchant_uid, //인식번호(cate_idx)
+							payment_cate : 2, //payment_cate 카테고리
+							pay_method : rsp.pay_method, //pay_mehtod 지불수단
+							amount : rsp.paid_amount, //amount 금액
+							pay_buydate : rsp.paid_at, //pay_buydate 결제일
+							pay_cancleDate : null,//pay_cancleDate 취소일(임시'-'로 지정)
+							pay_state : rsp.status,//pay_stat
 
-			    	  };
+						};
 						
-					var OrderProDTO = {
-								order_idx: uid, //주문번호
-								user_idx: uidx, //유저번호
-								pro_idx: pidx, //상품번호
-								pro_amount: pAmount, //수량		
-					};
+						var lists = [];
+						<c:forEach var="dto" items="${lists}">
+						    lists.push({
+						        pro_name: '${dto.pro_name}',
+						        pro_thumb: '${dto.pro_thumb}',
+						        pro_price: ${dto.pro_price},
+						        pro_month: ${dto.pro_month},
+						        pro_delprice: ${dto.pro_delprice},
+						        cart_amount: ${dto.cart_amount},
+						        pro_subprice: ${dto.pro_subprice},
+						        pro_idx: ${dto.pro_idx},
+						        pro_amount: ${dto.cart_amount}
+						    });
+						</c:forEach>
+						
+						var OrderProDTOs = [];
+						for (var i = 0; i < lists.length; i++) {
+						    var list = lists[i];
+						    var OrderProDTO = {
+						        order_idx: rsp.merchant_uid, //주문번호
+						        user_idx: uidx, //유저번호
+						        pro_idx: list.pro_idx, //상품번호
+						        pro_amount: list.pro_amount, //수량
+						    };
+						    OrderProDTOs.push(OrderProDTO);
+						}
+						
+			
+
+
+						var PointDTO = {
+							cate_idx : rsp.merchant_uid,
+							user_idx : uidx,
+							point_use : 1,
+							point_info : '구독일상 결제',
+							point_num : $("#point_num").val()
+						};
+
+						var OrderDTO = {
+							order_idx : rsp.merchant_uid,
+							user_idx : uidx,
+							order_name : "구독기간 테스트",
+							sub_start : makeMerchantUid,
+							sub_end : makeMerchantUid,
+							order_pcode : bPcode,
+							receiver : 'r',
+							receiver_tel : 'r',
+							order_addr : "서울",
+							order_detail : "경기도",
+							order_msg : "요청",
+							using_point : 12,
+							pay_date : makeMerchantUid,
+							amount : tp,
+							order_status : 1,
+							order_date : 1,
+							order_tos : order_tos
+						};
+
 						$.ajax({
-					          type: 'POST',
-					          url: "orderPay.do",
-					          data: JSON.stringify(PaymentDTO),
-					          contentType: "application/json",
-					          success: function (data) {
-					        	 console.log(data);
-					            alert('컨트롤러 성공');
-					           
-					          },
-					          error: function (xhr, status, error) {
-					            alert('컨트롤러 실패');
-					            
-					          }
-					        });
-				    	   
-				        alert('결제가 완료되었습니다');
+							type : "POST",
+							url : "totalOrders.do",
+							data : JSON.stringify({
+								paydto : PaymentDTO,
+						        odto : OrderProDTOs, // 배열 객체 전달
+								pdto : PointDTO,
+								ordto : OrderDTO
+							}),
+							contentType : "application/json; charset=utf-8",
+							dataType : "json",
+							success : function(data) {
+								console.log(data);
+								alert('전송에 성공');
+							},
+							error : function(xhr, status, error) {
+								alert('전송 실패: ' + error);
+							}
+						});
+
 						var msg = '결제가 완료되었습니다.';
-						
-						document.ordersForm.submit();				
 
 					} else {
 						console.log(rsp);
 						var msg = '결제가 실패되었습니다.';
-						location.href = "/meomum/proList.do";
 					}
 
 					alert(msg);
