@@ -7,7 +7,7 @@ function requestPay() {
   var milliseconds = today.getMilliseconds().toString();
   var makeMerchantUid =seconds + milliseconds;  
   
- var svcIdx = document.getElementById('svc_idx').value;
+var svcIdx = document.getElementById('svc_idx').value;
   console.log(svcIdx);
   var amount = document.getElementById('amount').value;
    console.log(amount);
@@ -19,21 +19,22 @@ function requestPay() {
   console.log(user_email);
    var user_idx= document.getElementById('user_idx').value;
   console.log(user_idx);
-  var uid = svcIdx + makeMerchantUid;
+    var uid = svcIdx + makeMerchantUid;
   console.log(uid);
   
-  /**
-  var svcIdx = "${dto.svc_idx}";
+
+  /*var svcIdx = dto.svc_idx;
   console.log(svcIdx);
   var amount = document.getElementById('amount').value;
   console.log(amount);
-  var user_name = "${dto.user_name}";
+  var user_name = dto.user_name;
   console.log(user_name);
-  var user_tel = "${dto.user_tel}";
+  var user_tel = dto.user_tel;
   console.log(user_tel);
-  var user_email = "${dto.user_email}";
-  console.log(email);*/
-  
+  var user_email = dto.user_email;
+  console.log(user_email);
+  var uid = svcIdx + makeMerchantUid;
+  console.log(uid);*/
 
 
   IMP.request_pay({

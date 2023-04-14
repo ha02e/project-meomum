@@ -85,6 +85,19 @@ textarea {
 							<label class="input-group-text col-3 text-center" for="input_svc_idx" style="font-weight:bold;">예약번호</label> 
 								<input type="text" class="form-control input-group-text-fixed" name="svc_idx" id="svc_idx" value="${dto.svc_idx}" required="required" readonly>
 						</div>
+					<!-- ----------------------------------서비스 상태--------------------------------- -->
+					
+					<div class="input-group mb-3">
+					<label class="input-group-text col-3 text-center" for="input_svc_type" style="font-weight:bold;">예약상태</label> 
+								<select class="form-select" name="svc_state" id="svc_state" required="required">
+								<option value="예약확정" ${dto.svc_state =="예약확정"?"selected":""}>예약확정</option>
+								<option value="예약취소" ${dto.svc_state =="예약취소"?"selected":""}>예약취소</option>
+								<option value="견적완료" ${dto.svc_state =="견적완료"?"selected":""}>견적완료</option>
+								<option value="결제완료" ${dto.svc_state =="결제완료"?"selected":""}>결제완료</option>
+								<option value="결제취소" ${dto.svc_state =="결제취소"?"selected":""}>결제취소</option>
+								<option value="작업완료" ${dto.svc_state =="작업완료"?"selected":""}>작업완료</option>
+						</select>
+						</div>
 				<!-- -------------------------------------거주형태------------------------------- -->	
 						<div class="input-group mb-3">
 							<label class="input-group-text col-3 text-center" for="input_svc_type" style="font-weight:bold;">거주형태</label> 
@@ -187,21 +200,6 @@ textarea {
 					</div>
 					</div>
 					
-					
-					<!-- ----------------------------------서비스 상태--------------------------------- -->
-					
-					<div class="input-group mb-3">
-					<label class="input-group-text col-3 text-center" for="input_svc_type" style="font-weight:bold;">예약상태</label> 
-								<select class="form-select" name="svc_state" id="svc_state" required="required">
-								<option value="예약확정" ${dto.svc_state =="예약확정"?"selected":""}>예약확정</option>
-								<option value="예약취소" ${dto.svc_state =="예약취소"?"selected":""}>예약취소</option>
-								<option value="견적완료" ${dto.svc_state =="견적완료"?"selected":""}>견적완료</option>
-								<option value="결제완료" ${dto.svc_state =="결제완료"?"selected":""}>결제완료</option>
-								<option value="결제취소" ${dto.svc_state =="결제취소"?"selected":""}>결제취소</option>
-								<option value="작업완료" ${dto.svc_state =="작업완료"?"selected":""}>작업완료</option>
-						</select>
-						</div>
-						
 					<!-- ----------------------------------요청사항--------------------------------- -->
 						<div class="input-group mb-3" style="max-height: 600px; overflow-y: auto;">
 							<label for="input_svc_req"
@@ -214,7 +212,7 @@ textarea {
 					
 					<!-- ---------------------------------서비스 인지 경로--------------------------------- -->
 					<div class="input-group mb-3">
-							<label class="input-group-text col-3 text-center" for="svc_know" style="font-weight:bold;">성함</label> 
+							<label class="input-group-text col-3 text-center" for="svc_know" style="font-weight:bold;">서비스 인지경로</label> 
 							<input type="text" class="form-control input-group-text-fixed" name="svc_know" value="${dto.svc_know}" readonly>
 						</div>
 						
@@ -230,7 +228,21 @@ textarea {
 					
 					
 					<hr>
-					<!-- ---------------------------------관리자 메모--------------------------------- -->
+					<!-- ---------------------------------서비스 희망일--------------------------------- -->
+					<div class="input-group mb-3">
+					<c:if test="${empty ingdto}">
+								<div class="col  text-end">
+								<script src="js/svc/IngPopup.js"></script>
+								<input type="button" class="btn app-btn-primary button" value="서비스 희망일 및 견적 추가" onclick="svcIng()"></td>
+								</div>
+					</c:if>
+					<c:if test="${not empty ingdto}">
+								<div class="col text-end">
+								<script src="js/svc/IngContent.js"></script>
+								<input type="button" class="btn app-btn-primary button" value="서비스 희망일 및 견적 수정" onclick="openSvcIngContent()"></td>
+								</div>
+					</c:if>
+					</div>
 					<div class="input-group mb-3">
 							<label class="input-group-text col-3 text-center" for="input_svc_datetime" style="font-weight:bold;">서비스 희망일</label> 
 							<c:if test="${empty ingdto}">
@@ -242,7 +254,7 @@ textarea {
 					</div>
 					
 					<!-- 테이블 -->
-					<div class="input-group mb-3" >
+					<div class="input-group mb-3">
 					<table class="table" cellspacing="0">
 					  <thead class="table-dark text-center">
 							<th scope="col" style="width:18%">결제방식</th>
@@ -262,10 +274,7 @@ textarea {
 							</tr>
 							</tbody>
 							</table>
-								<div class="col text-right">
-								<script src="js/svc/IngPopup.js"></script>
-								<input type="button" class="btn app-btn-primary button" value="견적 추가" onclick="svcIng()"></td>
-								</div>
+								
 						</c:if>
 						<c:if test="${not empty ingdto}">
 						<tr>
@@ -283,18 +292,15 @@ textarea {
 						</tr>
 						</tbody>
 						</table>
-								<div class="col text-right">
-								<script src="js/svc/IngContent.js"></script>
-								<input type="button" class="btn app-btn-primary button" value="견적 수정" onclick="openSvcIngContent()"></td>
-								</div>
-						</c:if>
-						
+					</c:if>
+					</div>
+					<hr>
 					
 					<div class="row mt-3">
-						<div class="col text-center">
+						<div class="col text-first">
 						       <input type="reset" value="초기화" class="btn app-btn-secondary button" style="font-weight:bold;">
 						</div>
-						<div class="col text-center">
+						<div class="col text-end">
 						       <input type="submit" value="저장" class="btn app-btn-primary button" style="font-weight:bold;">
 						 </div>
 					</div>

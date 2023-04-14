@@ -114,7 +114,7 @@ public class SvcDAOImple implements SvcDAO {
 	@Override
 	public SvcContentDTO svcContent(String idx) {
 		SvcContentDTO dto = sqlMap.selectOne("svcContent",idx);
-		dto.setSvc_req(dto.getSvc_req().replaceAll("\n", "<br>"));
+		//dto.setSvc_req(dto.getSvc_req().replaceAll("\n", "<br>"));
 		return dto;
 	}
 	

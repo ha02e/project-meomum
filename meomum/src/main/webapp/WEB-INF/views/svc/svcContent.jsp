@@ -26,9 +26,7 @@
 }
 ul.list-group-item{
 	margin-left: 20px;
-	
 }
-
 
   li.list-group-item > div {
     text-align: left;
@@ -43,7 +41,7 @@ ul.list-group-item{
 .page-header {
 	background: linear-gradient(rgba(36, 39, 38, 0.5), rgba(36, 39, 38, 0.5)),
 		rgba(36, 39, 38, 0.5)
-		url(https://images.unsplash.com/photo-1618220048045-10a6dbdf83e0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80)
+		url(https://images.unsplash.com/photo-1606327054629-64c8b0fd6e4f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80)
 		no-repeat center;
 	background-size: cover;
 	margin: 0;
@@ -151,7 +149,7 @@ footer {
 			<div class="row">
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<div class="page-caption">
-						<h2 class="page-title">정리일상 진행 현황</h2>
+						<h2 class="page-title">방문 견적 예약 내역</h2>
 					</div>
 				</div>
 			</div>
@@ -159,17 +157,19 @@ footer {
 	</div>
 	<div class="container">
 		<main>
-			<div class="py-5 text-left">
-				<h2>${dto.svc_state}</h2>
+		<div class="col-md-10 col-lg-8 order-md-first mx-auto">
+			<h2 class="d-flex justify-content-between align-items-center mb-3" >
+				<span>${dto.svc_state}</span>
+			</h2>
 			</div>
 
 			<div class="row g-5">
 				
 				<!-- 예약 상세 내용 -->
 				<div class="col-md-10 col-lg-8 order-md-first mx-auto">
-					<h4 class="d-flex justify-content-between align-items-center mb-3">
+					<!-- <h5 class="d-flex justify-content-between align-items-center mb-3">
 						<span class="text-primary" style="font-family: 'GmarketSansMedium';">예약 상세 내용</span>
-					</h4>
+					</h5> -->
 					
 					<ul class="list-group mb-3">
 						<input type="hidden" id="user_id" value="${sessionScope.ssInfo.user_id}">
@@ -188,10 +188,10 @@ footer {
 							</div>
 							<div class="col">
 								<c:if test="${dto.svc_state ne '예약취소'}">
-	      						${dto.svc_days}&nbsp;|&nbsp;${dto.svc_time}
+	      						${dto.svc_days}&nbsp; &nbsp;${dto.svc_time}
 	      						</c:if>
 								<c:if test="${dto.svc_state eq '예약취소'}">
-	      						${dto.svc_days.substring(1)} | ${dto.svc_time.substring(1)}
+	      						${dto.svc_days.substring(1)} &nbsp; &nbsp; ${dto.svc_time.substring(1)}
 	      						</c:if>
 							</div>
 						</li>
@@ -207,7 +207,7 @@ footer {
 							<div class="col">
 								<span>지역</span>
 							</div>
-							<div class="col">${dto.user_addr}${dto.user_detail}</div>
+							<div class="col">${dto.user_addr},${dto.user_detail}</div>
 						</li>
 						<!-- ---------------------------------------------------------- -->
 						<li class="list-group-item d-flex justify-content-between lh-sm row">

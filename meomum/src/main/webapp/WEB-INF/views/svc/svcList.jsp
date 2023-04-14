@@ -67,7 +67,7 @@ footer {
 			<div class="row">
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<div class="page-caption">
-						<h2 class="page-title">마이페이지</h2>
+						<h2 class="page-title">방문 견적 예약 내역</h2>
 					</div>
 				</div>
 			</div>

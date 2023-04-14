@@ -23,7 +23,7 @@ font-family: 'GmarketSansMedium';
 <div class="container mt-5">
 	
 <h2 class="text-center mb-4">결제</h2>
-	<form name="svcIngUpdate" action="asvcIngUpdate.do" method="post"  >
+	<form name="svcIngUpdate" action="asvcIngUpdate.do" method="post" onkeypress="return event.keyCode != 13;" >
 	<input type="hidden" name="svc_idx" id="svc_idx" value="${ingdto.svc_idx}" >
 	<input type="hidden" name="user_idx" id="user_idx" value="${ingdto.user_idx}" >
 		<div class="row justify-content-center">

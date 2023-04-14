@@ -28,7 +28,7 @@ font-family: 'GmarketSansMedium';
 	<div class="container mt-5">
 	
 		<h2 class="text-center mb-4">결제</h2>
-		<form name="svcIngInsert" action="svcIngInsert.do" method="post" onsubmit="sendValue()">
+		<form name="svcIngInsert" action="svcIngInsert.do" method="post" onsubmit="sendValue()" onkeypress="return event.keyCode != 13;">
 			<input type="hidden" name="svc_idx" id="svc_idx"> <input
 				type="hidden" name="user_idx" id="user_idx">
 			<div class="row justify-content-center">

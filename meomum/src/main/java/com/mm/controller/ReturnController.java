@@ -1,6 +1,7 @@
 package com.mm.controller;
 
 import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
@@ -108,6 +109,8 @@ public class ReturnController {
 		return mav;
 	}
 	
+	
+	//관리자 - 반납승인
 	@RequestMapping("/returnSubmit.do")
 	public ModelAndView returnSubmit(@RequestParam("order_idx") String order_idx,
 										@RequestParam("pro_idx") int pro_idx) {
@@ -116,11 +119,12 @@ public class ReturnController {
 		map.put("order_idx", order_idx);
 		map.put("pro_idx", pro_idx);
 		
-		int result=orderDao.returnSubmitUpdate(map); //주문상태 반납진행으로 변경
+		int result=orderDao.returnSubmitUpdate(map); //주문상태 반납진행으로 변경하기
+		int returnUpdate=returnDao.returnStartUpdate(map);//turnback 테이블 반납시작날짜, 반납승인여부 변경하기
 		
 		ModelAndView mav=new ModelAndView();
 		
-		if(result>0) {
+		if(result>0 && returnUpdate>0) {
 			//배송처리도 해야됨!!!
 			
 			
@@ -134,6 +138,34 @@ public class ReturnController {
 			mav.setViewName("mainMsg");
 		}
 		
+		return mav;
+		
+	}
+	
+	//관리자 - 반납보류
+	@RequestMapping("/returnCancel.do")
+	public ModelAndView returnCancel(@RequestParam("order_idx") String order_idx,
+										@RequestParam("pro_idx") int pro_idx) {
+		Map map=new HashMap();
+		map.put("order_idx", order_idx);
+		map.put("pro_idx", pro_idx);
+		
+		int returnUpdate=returnDao.returnNoUpdate(map); //반납 승인여부 N 수정
+		int orderStatusUpdate=orderDao.returnCancelUpdate(map); //주문상태 8.반납보류로 수정
+		
+		ModelAndView mav=new ModelAndView();
+		
+		if(returnUpdate>0 && orderStatusUpdate>0) {
+			mav.addObject("msg", "반납보류 처리가 완료되었습니다.");
+			mav.addObject("gopage", "opener.document.location.reload(); self.close()");
+			mav.setViewName("mainMsg");
+			
+		}else {
+			mav.addObject("msg", "반납보류 처리에 실패하였습니다.");
+			mav.addObject("gopage", "location.href='returnSubmitForm.do';");
+			mav.setViewName("mainMsg");
+		}
+
 		return mav;
 		
 	}

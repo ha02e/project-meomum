@@ -46,6 +46,22 @@
 .btn-group .btn {
   margin-right: 10px;
 }
+label[for="input_svc"]::before{
+  content: "*";
+  color: #ff6666;
+  margin-right: 5px;
+}
+label[for="areaLabel"]::before{
+  content: "*";
+  color: #ff6666;
+  margin-right: 5px;
+}
+label[for="knowLabel"]::before{
+  content: "*";
+  color: #ff6666;
+  margin-right: 5px;
+}
+
 footer {
   margin-top: 20px;
 }
@@ -61,6 +77,71 @@ footer {
 
 <!-- 예약 완료된 시간 비활성화 -->
 <script src="js/svc/timeSelect.js"></script>
+
+<!-- 입력 제약 -->
+<script>
+/* var areaChk = document.querySelectorAll('input[type="checkbox"][name="svc_area"]');
+const errorMsg = "계속하시려면 해당 영역을 선택해주세요"; 
+
+function areaValidate() {
+  var checked = false;
+  areaChk.forEach((checkbox) => {
+    if (checkbox.checked) {
+      checked = true;
+    }
+  });
+
+  if (!checked) {
+    document.getElemetnById('error').value=erroMsg;
+  }
+  return checked;
+}
+
+const form = document.querySelector('form');
+form.addEventListener('submit', (event) => {
+  if (!validateCheckboxes()) {
+    event.preventDefault();
+  }
+}); 
+
+fucntion areaValidate(){
+	var areaChk = $("input[name=svc_area]:checkbox:checked").length;
+	console.log(areaChk);
+	if(areaChk<1){
+		alert('계속하시려면 해당 영역을 선택해주세요');
+	}
+}
+
+function timeValidate(){
+	  var timeChk = $("input[name=svc_time]:radio:checked").length;
+	  if(timeChk < 1){
+	    $("#error").html("시간을 선택해주세요.");
+	  } else {
+	    $("#error").html("");
+	  }
+	}*/
+	
+	
+	$(document).ready(function() {
+		  $('form').submit(function(e) {
+		    if ($("input[name='svc_area']:checked").length === 0) {
+		      $('#areaLabel')[0].scrollIntoView({ behavior: 'smooth' });
+		      $('#areaError').text('계속하시려면 해당 영역을 선택해주세요').show();
+		      e.preventDefault();
+		    } else if ($("input[name='svc_know']:checked").length === 0) {
+		      $('#knowLabel')[0].scrollIntoView({ behavior: 'smooth' });
+		      $('#knowError').text('계속하시려면 해당 영역을 선택해주세요').show();
+		      e.preventDefault();
+		    }
+		  });
+		});
+
+
+
+
+
+
+</script>
 </head>
 
 <body>
@@ -84,8 +165,8 @@ footer {
 					<input type="hidden" name="user_idx" value="${sessionScope.ssInfo.user_idx}">
 				<!-- -------------------------------------거주형태------------------------------- -->	
 						<div class="input-group mb-3">
-							<label class="input-group-text col-3 text-center" for="input_svc_type" style="font-weight:bold;">거주형태</label> 
-								<select class="form-select" id="svc_type" name="svc_type" required="required">
+							<label class="input-group-text col-3 text-center" for="input_svc" style="font-weight:bold;">거주형태</label> 
+								<select class="form-select" id="svc_type" name="svc_type" required ="required">
 								<option value="" selected disabled hidden>거주형태 선택</option>
 								<option value="아파트">아파트</option>
 								<option value="빌라">빌라</option>
@@ -99,9 +180,9 @@ footer {
 				<!-- ----------------------------------서비스영역---------------------------------- -->
 						<div class="input-group mb-3">
 						
-							<label class="input-group-text col-3 text-center" for="input_svc_area" style="font-weight:bold;">서비스 영역</label>
+							<label class="input-group-text col-3 text-center" for="input_svc" id="areaLabel" style="font-weight:bold;">서비스 영역</label>
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="checkbox" name="svc_area" id="svc_area"  value="집 전체"> 
+								<input class="form-check-input" type="checkbox" name="svc_area" id="svc_area"  value="전체"> 
 								<label class="form-check-label" for="전체">전체</label>
 							</div>
 							<div class="form-check form-check-inline">
@@ -129,31 +210,33 @@ footer {
 								<input class="form-check-input" type="checkbox" name="svc_area" id="svc_area" value="기타"> 
 								<label class="form-check-label" for="기타">기타</label>
 							</div>
+							<span id="areaError" style="color: red; "></span>
 						</div>
+						
 
 
 						<!-- ----------------------------------거주 평수--------------------------------- -->
 						<div class="input-group mb-3">
-							<label class="input-group-text col-3 text-center" for="input_svc_py" style="font-weight:bold;">거주 평수(공급면적)</label> 
+							<label class="input-group-text col-3 text-center" for="input_svc" style="font-weight:bold;">거주 평수(공급면적)</label> 
 								<input type="text" class="form-control input-group-text-fixed" name="svc_py" id="svc_py" required="required" placeholder="평수를 입력해주세요">
 								<span class="input-group-text">평</span>
 						</div>
 						
 						<!-- ----------------------------------성함--------------------------------- -->
 						<div class="input-group mb-3">
-							<label class="input-group-text col-3 text-center" for="input_user_name" style="font-weight:bold;">성함</label> 
+							<label class="input-group-text col-3 text-center" for="input_svc" style="font-weight:bold;">성함</label> 
 							<input type="text" class="form-control input-group-text-fixed" name="user_name" value="${sessionScope.ssInfo.user_name}" required="required" placeholder="성함을 입력해주세요">
 						</div>
 						
 						<!-- ----------------------------------휴대전화--------------------------------- -->
 						<div class="input-group mb-3">
-							<label class="input-group-text col-3 text-center" for="input_user_name" style="font-weight:bold;">휴대전화</label>
+							<label class="input-group-text col-3 text-center" for="input_svc" style="font-weight:bold;">휴대전화</label>
 							<input type="text" class="form-control input-group-text-fixed" name="user_tel" required="required" value="${sessionScope.ssInfo.user_tel}" placeholder="010-1234-5678 형태로 기재해주세요">
 						</div>
 						
 						<!-- ----------------------------------주소--------------------------------- -->
 						<div class="input-group mb-3">
-					    <label class="input-group-text col-3 text-center" for="input_user_addr" style="font-weight:bold;">주소</label> 
+					    <label class="input-group-text col-3 text-center" for="input_svc" style="font-weight:bold;">주소</label> 
 					    <div class="col-sm-9">
 					        <div class="input-group">
 					            <input id="user_pcode" type="text" class="form-control" name="user_pcode" placeholder="우편번호" value="${sessionScope.ssInfo.user_pcode}" required="required" onclick="findAddr()" readonly>
@@ -171,13 +254,13 @@ footer {
 					</div>
 						<!-- ----------------------------------방문 희망일--------------------------------- -->
 						<div class="input-group mb-3">
-							<label class="input-group-text col-3 text-center" for="input_svc_days" style="font-weight:bold;">방문 희망일</label> 
+							<label class="input-group-text col-3 text-center" for="input_svc" style="font-weight:bold;">방문 희망일</label> 
 							<input id="svc_days" type="date" class="form-control input-group-text-fixed" name="svc_days" required="required"
 								onclick="setMinDate()">
 						</div>
 						<!-- ----------------------------------시간--------------------------------- -->
 						<div class="input-group mb-3">
-							<label class="input-group-text col-3 text-center" for="input_svc_time" style="font-weight:bold;">시간</label>
+							<label class="input-group-text col-3 text-center" for="input_svc" style="font-weight:bold;">시간</label>
 							<div class="btn-group" role="group">
 								<input type="radio" class="btn-check" name="svc_time" id="timeA" value="10:00" autocomplete="off">
 								<label class="btn btn-outline-secondary" for="timeA">10:00</label>
@@ -203,7 +286,7 @@ footer {
 						</div>
 						<!-- ----------------------------------서비스 인지 경로--------------------------------- -->
 						<div class="input-group mb-3">
-							<label class="input-group-text col-3 text-center" for="input_svc_know" style="font-weight:bold;">서비스 영역</label>
+							<label class="input-group-text col-3 text-center" for="knowLabel" style="font-weight:bold;">서비스 인지경로</label>
 							<div class="form-check form-check-inline">
 								<input class="form-check-input" type="radio" name="svc_know" value="블로그"> 
 								<label class="form-check-label" for="블로그">블로그</label>
@@ -224,6 +307,7 @@ footer {
 								<input class="form-check-input" type="radio" name="svc_know" value="재이용고객"> 
 								<label class="form-check-label" for="재이용고객">재이용 고객</label>
 							</div>
+							<span id="knowError" style="color: red; "></span>
 						</div>
 						
 						<!-- ----------------------------------개인정보 수집 이용 동의--------------------------------- -->
@@ -247,7 +331,7 @@ footer {
 						<div class="input-group mb-3">
 						  <div class="form-check">
 						    <input class="form-check-input" type="checkbox" id="svc_pia" value="Y" name="svc_pia" required="required">
-						    <label class="form-check-label" for="svc_pia" style="font-weight: bold;">(필수)개인정보 수집 및 이용에 동의합니다</label>
+						    <label class="form-check-label" for="input_svc" style="font-weight: bold;">(필수)개인정보 수집 및 이용에 동의합니다</label>
 						  </div>
 						</div>
 
