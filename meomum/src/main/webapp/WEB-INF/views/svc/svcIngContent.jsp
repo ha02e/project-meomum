@@ -318,6 +318,41 @@ footer {
 							<%-- ${dto.user_tel} --%>
 							</div>
 						</li>
+					<!--     결제 완료 시 결제 금액 출력 -->
+					<c:if test="${dto.svc_state eq '결제완료'}">
+					<li class="list-group-item d-flex justify-content-between bg-body-tertiary row">
+							<div class="col">
+								<strong><span>결제 정보</span></strong>
+							</div>
+						</li>
+						<!-- ---------------------------------------------------------- -->
+						<li class="list-group-item d-flex justify-content-between lh-sm row">
+							<div class="col">
+								<span>견적금액</span>
+							</div>
+							<div class="col">
+							<input type="text" id="total" value="${ingdto.total}" readonly>
+							</div>
+						</li>
+						<!-- ---------------------------------------------------------- -->
+						<li class="list-group-item d-flex justify-content-between lh-sm row">
+							<div class="col">
+								<span>사용 포인트</span>
+							</div>
+							<div class="col">
+							<input type="text" id="total" value="포인트" readonly>
+							</div>
+						</li>
+						<!-- ---------------------------------------------------------- -->
+						<li class="list-group-item d-flex justify-content-between lh-sm row">
+							<div class="col">
+								<span>총 결제 금액</span>
+							</div>
+							<div class="col">
+							<input type="text" id="total" value="${paydto.amount}" readonly>
+							</div>
+						</li>
+					</c:if>
 					</ul>
 					<c:if test="${dto.svc_state eq '결제취소'}">
 						<hr class="my-4">

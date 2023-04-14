@@ -15,7 +15,7 @@
         .create( document.querySelector( '#editor' ) )
         .catch( error => {
             console.error( error );
-        } );
+        } );W
 </script>
 
 </head>
@@ -30,20 +30,27 @@
 					<a href="/meomum/ntcList_a.do" class="text-decoration-none">목록으로
 						돌아가기 &gt;</a>
 				</div>
-
+	<div class="container">
 				<form name="ntcWrite"
 					action="${pageContext.request.contextPath}/ntcWrite.do"
 					method="post" enctype="multipart/form-data">
-					<ul>
-						<li>제목:<input type="text" name="ntc_title"></li>
-						<li>카테고리:<select name="ntc_ctg">
-								<option value="공지사항">공지사항</option>
-								<option value="FAQ">FAQ</option>
-								<option value="이벤트">이벤트</option>
-						</select> <!-- ckeditor -->
-							<div class="mb-3" id="editor">
-								<textarea name="ntc_content" id="content"></textarea>
-								<script>
+					<div class="form-group my-3">
+						<label for="ntc_title">제목</label> <input type="text"
+							class="form-control" id="ntc_title" name="ntc_title" required>
+					</div>
+					<div class="form-group my-3">
+						<label for="ntc_ctg">카테고리</label> <select class="form-control"
+							id="ntc_ctg" name="ntc_ctg" required>
+							<option value="공지사항" selected>공지사항</option>
+							<option value="FAQ">FAQ</option>
+							<option value="이벤트">이벤트</option>
+						</select>
+					</div>
+					<div class="form-group my-3">
+						<label for="ntc_content">내용</label>
+						<div class="mb-3" id="editor">
+							<textarea name="ntc_content" id="content" required="required" maxlength="2000"></textarea>
+							<script>
 				            var ckeditor_config = {
 				                resize_enabled: false,
 				                enterMode: CKEDITOR.ENTER_BR,
@@ -53,14 +60,14 @@
 				            CKEDITOR.replace("content", ckeditor_config);
 				            var ntcContent=CKEDITOR.instances.content.getData();
 				        </script>
-							</div>
-					</ul>
-					<div>
-						<input type="submit" value="등록하기"> <input type="reset"
-							value="초기화">
-					</div>
+						</div>
+						</div>
+						<div>
+							<input type="submit" value="등록하기"> <input type="reset"
+								value="초기화">
+						</div>
 				</form>
-
+</div>
 			</div>
 		</div>
 		<%@include file="/WEB-INF/views/footer_a.jsp"%>

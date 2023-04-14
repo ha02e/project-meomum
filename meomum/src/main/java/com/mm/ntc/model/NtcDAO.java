@@ -6,6 +6,7 @@ import java.util.Map;
 public interface NtcDAO {
 	public int ntcInsert(NtcDTO dto);
 	public List<NtcDTO> ntcList(int cp, int ls,String fvalue);
+	public List<NtcDTO> ntcList_a(int cp, int ls,String fvalue);
 	public int ntcTotalCnt(String fvalue);
 	public NtcDTO ntcContent(Integer idx);
 	public int ntcDelete(int idx);

@@ -196,13 +196,11 @@ color : red;
 				</div>
 				<div class="carousel-item" data-bs-interval="2000">
 					<img
-						src="https://images.unsplash.com/photo-1562438668-bcf0ca6578f0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2360&q=80"
-						class="d-block  " alt="인테리어 이미지" >
+                        src="https://images.unsplash.com/photo-1562438668-bcf0ca6578f0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2360&q=80"						class="d-block  " alt="인테리어 이미지" >
 				</div>
 				<div class="carousel-item" data-bs-interval="2000">
 					<img
-						src="https://images.unsplash.com/photo-1649185885009-e2fb1a9a57b5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"
-						class="d-block " alt="인테리어 이미지">
+                        src="https://images.unsplash.com/photo-1649185885009-e2fb1a9a57b5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"						class="d-block " alt="인테리어 이미지">
 				</div>
 			</div>
 			<button class="carousel-control-prev" type="button"
