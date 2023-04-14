@@ -62,7 +62,7 @@
 	<select id="myOrderReport" parameterType="Map" resultType="com.mm.order.model.OrderReportDTO">
 		select * from
 			(select rownum as rnum, e.*from(
-				select a.order_idx, d.pro_name, b.pro_amount, c.user_name, c.user_tel, a.amount, a.order_status, a.order_date,
+				select a.order_idx,d.pro_idx, d.pro_name, b.pro_amount, c.user_name, c.user_tel, a.amount, a.order_status, a.order_date,
             			a.receiver, a.receiver_tel, a.order_msg,
             			(a.order_pcode||' '||a.order_addr||' '||a.order_detail) ship_addr
 				from orders a,
