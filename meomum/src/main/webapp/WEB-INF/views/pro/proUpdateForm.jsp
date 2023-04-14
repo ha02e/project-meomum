@@ -11,6 +11,12 @@
 <link id="theme-style" rel="stylesheet" href="assets/css/portal_a.css">
 <link rel="stylesheet" type="text/css" href="css/mainLayout_a.css">
 
+<style>
+img {
+  width: 50px;
+  height: 50px;
+}
+</style>
 <script>
 function calPrice(){
 	const proprice = Number(document.getElementById("pro_price").value);
@@ -25,79 +31,52 @@ function calPrice(){
 </head>
 <body class="app">
 	<%@include file="/WEB-INF/views/header_a.jsp"%>
-	
-	
-	<div class="container"  style="margin-bottom: 30px;">
- 	 <div class="row">
-   		 <div class="col-8 mx-auto">
-		 	<div class="input-group mb-3">
 
-		</div>
-        <div class="input-group mb-3">
-          <label for="title" class="input-group-text col-2 text-center">상품명</label>
-          <input type="text" class="form-control input-group-text-fixed" name="pro_name" required="required" placeholder="제목을 입력해주세요"  maxlength="50">
-        </div>
-        <div class="input-group mb-3">
-          <label for="author" class="input-group-text col-2 text-center">정가</label>
-          <input type="text" class="form-control input-group-text-fixed" id="author" name="ask_writer" value="${sessionScope.ssInfo.user_name}" required="required" placeholder="작성자를 입력해주세요"  minlength="2" maxlength="30">
-        </div>
-        
-        
-        
-        <div class="input-group mb-3">
-          <label for="contact" class="input-group-text col-2 text-center">연락처</label>
-          <input type="text" class="form-control input-group-text-fixed" id="contact" name="ask_tel" value="${sessionScope.ssInfo.user_tel}"pattern="[0-9]{3}-[0-9]{3,4}-[0-9]{4}"
-							placeholder="휴대폰 번호 (ex. 010-1234-5678)" required="required">
-        </div>
-
-        <div class="input-group mb-3">
-          <label class="input-group-text col-2 text-center" for="inputGroupFile01">첨부 파일</label>
-          <input type="file" class="form-control" id="inputGroupFile01" name="file"  accept="image/*">
-        </div>
-		<div class="input-group mb-3" style="max-height: 600px; overflow-y: auto;">
-		  <label for="question" class="input-group-text col-2 text-center">문의사항<br>(1000자이내)*</label>
- 			 <textarea class="form-control input-group-text-fixed" id="question" aria-label="With textarea" style="height: 300px; resize: none;" name="ask_content" required="required" placeholder="내용을 입력해주세요" maxlength="1000"></textarea>
-		</div>
-
-		<!-- 버튼 구역 -->
-		<div class="d-flex justify-content-center">
-		   
-		    <input type="reset" value="다시 작성" class="btn btn-outline-secondary">
-		    <span style="margin-left: 10px"></span>
-		   
-		    <a href="proAdmin.do"><button type="button" class="btn btn-outline-secondary">목록으로</button></a>
-		    <span style="margin-left: 10px"></span>
-		   
-		    <button type="submit" class="btn btn-primary">수정하기</button>
-		</div>
-        
-    </div>
-  </div>
-</div>
-	
-	
-	<form name="proUpdate" action="proUpdate.do" method="post">
-	
 	<div class="app-wrapper">
 		<div class="app-content pt-3 p-md-3 p-lg-4">
 			<div class="container pt-5">
+				
 				<h1 class="text-center mb-4">상품 수정</h1>
+			
+	<div class="container"  style="margin-bottom: 50px;">
 	
-		<input type="hidden" name="pro_idx" value="${lists[0].pro_idx}">
-		<ul>
-			<li>대표 사진
-			<img alt="thumbnail" src="/meomum/images/items/${lists[0].pro_thumb}" style="width:40px; height:40px;">
-			</li>
-			
-			<li>이미지 1
-			<img alt="img1" src="/meomum/images/items/${lists[0].pro_img1}" style="width:40px; height:40px;">
-			</li>
-			
-			<li>이미지 2
-			<img alt="img2" src="/meomum/images/items/${lists[0].pro_img2}" style="width:40px; height:40px;">
-			</li>
-			
-			<li>카테고리
+	<form name="proUpdate" action="proUpdate.do" method="post">
+	  <input type="hidden" name="pro_idx" value="${lists[0].pro_idx}">
+	 	 <div class="row">
+	   		 <div class="col-8 mx-auto">
+		
+		<div class="input-group mb-3">
+          <label class="input-group-text col-2 text-center" for="pro_thumb">대표 사진</label>
+          <img alt="thumbnail" src="/meomum/images/items/${lists[0].pro_thumb}">
+        </div>
+        
+        <div class="input-group mb-3">
+          <label class="input-group-text col-2 text-center" for="pro_img1">이미지1</label>
+          <img alt="img1" src="/meomum/images/items/${lists[0].pro_img1}">
+        </div>
+        
+        <div class="input-group mb-3">
+          <label class="input-group-text col-2 text-center" for="pro_img2">이미지2</label>
+          <img alt="img2" src="/meomum/images/items/${lists[0].pro_img2}">
+        </div>
+        
+         <div class="input-group mb-3">
+          <label class="input-group-text col-2 text-center" for="pro_content">상세 이미지</label>
+          <img alt="content" src="/meomum/images/items/${lists[0].pro_content}">
+        </div>
+        
+        <div class="input-group mb-3">
+		  <label class="input-group-text col-2 text-center" for="pro_cate">카테고리</label>
+		  <select class="form-select" id="pro_cate" name="pro_cate" required="required" >
+		    <option value="1" selected disabled <c:if test="${lists[0].pro_cate == 1}">selected</c:if>>침대</option>
+		    <option value="2" selected disabled <c:if test="${lists[0].pro_cate == 2}">selected</c:if>>테이블</option>
+		    <option value="3" selected disabled <c:if test="${lists[0].pro_cate == 3}">selected</c:if>>의자</option>
+		    <option value="4" selected disabled <c:if test="${lists[0].pro_cate == 4}">selected</c:if>>소파</option>
+		    <option value="5" selected disabled <c:if test="${lists[0].pro_cate == 5}">selected</c:if>>조명</option>
+		  </select>
+		</div>
+		
+		카테고리
 			<c:choose> 
 				<c:when test="${lists[0].pro_cate == 1}">
 					침대
@@ -115,7 +94,108 @@ function calPrice(){
 					조명
 				</c:when>
 			</c:choose>
-			</li>
+		
+        <div class="input-group mb-3">
+          <label for="pro_name" class="input-group-text col-2 text-center">상품명</label>
+	          <input type="text" class="form-control input-group-text-fixed" name="pro_name" 
+	          required="required" placeholder="상품명을 입력해주세요"  maxlength="30">
+        </div>
+        
+        <div class="input-group mb-3">
+          <label for="pro_price" class="input-group-text col-2 text-center">정가</label>
+	          <input type="text" class="form-control input-group-text-fixed" id="pro_price"
+	          name="pro_price" required="required" placeholder="정가를 입력해주세요" 
+   	          pattern="[0-9]+" minlength="2" maxlength="12">
+        </div>
+        
+        <div class="input-group mb-3">
+          <label for="pro_amount" class="input-group-text col-2 text-center">재고 수량</label>
+	          <input type="text" class="form-control input-group-text-fixed" id="pro_amount" 
+	          name="pro_amount" required="required" placeholder="재고 수량을 입력해주세요"  
+	          minlength="1" maxlength="3" pattern="[0-9]+">
+        </div>
+        
+        
+        <div class="input-group mb-3">
+		  <label for="pro_state" class="input-group-text col-2 text-center">재고 상태</label>
+		  &nbsp;&nbsp;&nbsp;
+		  
+		  <div class="form-check form-check-inline">
+		    <input class="form-check-input" type="radio" name="pro_state" id="pro_state" value="0" checked> 
+		    <label class="form-check-label" for="pro_state">판매 중</label>
+		  </div>
+		  
+		  <div class="form-check form-check-inline">
+		    <input class="form-check-input" type="radio" name="pro_state" id="pro_state" value="1"> 
+		    <label class="form-check-label" for="pro_state">품절</label>
+		  </div>
+		</div>
+        
+      
+      
+        <div class="input-group mb-3">
+          <label for="pro_month" class="input-group-text col-2 text-center">구독 개월 수</label>
+          &nbsp;&nbsp;&nbsp;
+          
+		<div class="form-check form-check-inline">
+		    <input class="form-check-input" type="radio" name="pro_month" id="month1" value="1" onclick="calPrice()"> 
+		    <label class="form-check-label" for="month1">1</label>
+		  </div>
+		  
+		  <div class="form-check form-check-inline">
+		    <input class="form-check-input" type="radio" name="pro_month" id="month2" value="6" onclick="calPrice()"> 
+		    <label class="form-check-label" for="month2" >6</label>
+		  </div>
+		  
+		  	<div class="form-check form-check-inline">
+		    <input class="form-check-input" type="radio" name="pro_month" id="month3" value="12" onclick="calPrice()"> 
+		    <label class="form-check-label" for="month3" >12</label>
+		  </div>
+		</div>
+          
+        
+        <div class="input-group mb-3">
+          <label for="pro_subprice" class="input-group-text col-2 text-center">월 구독 가격</label>
+          
+          <input type="text" class="form-control input-group-text-fixed" id="pro_subprice" name="pro_subprice" 
+         placeholder="정가와 구독 개월 수를 입력하면 자동으로 월 구독 가격이 입력됩니다" required="required">
+         
+        </div>
+        
+        <div class="input-group mb-3">
+          <label for="pro_allprice" class="input-group-text col-2 text-center">총 구독 가격</label>
+          
+          <input type="text" class="form-control input-group-text-fixed" id="pro_allprice" name="pro_allprice" 
+          placeholder="정가와 구독 개월 수를 입력하면 자동으로 총 구독 가격이 입력됩니다" required="required">
+          
+        </div>
+		</div>
+		
+
+		<!-- 버튼 구역 -->
+		<div style="margin-top: 10px" class="d-flex justify-content-center">
+		   
+		    <input type="reset" value="다시 작성" class="btn btn-outline-secondary">
+		    <span style="margin-left: 10px"></span>
+		   
+		    <a href="proAdmin.do"><button type="button" class="btn btn-outline-secondary">목록으로</button></a>
+		    <span style="margin-left: 10px"></span>
+		   
+		    <button type="submit" onclick="return checkFile()" class="btn btn-primary">수정하기</button>
+		</div>
+          
+   
+	          </div>
+		    </form>
+		  </div>
+		</div>
+	</div>
+</div>
+	
+	
+
+			
+			
 			
 			
 			<li>상품명
