@@ -208,18 +208,21 @@ function orderInfoOpen(url, name, options) {
 
 		<div class="container-xl text-center">
 		
+			<div class="page-utilities">
+				<div class="row g-2 mb-4 justify-content-center align-items-center">
+					<div class="col-auto">
+						<form class="table-search-form row gx-1 align-items-center">
+							<div class="col-auto">
+								<input type="text" id="search-orders" name="searchorders" class="form-control search-orders" placeholder="검색어를 입력해주세요.">
+							</div>
+							<div class="col-auto">
+								<button type="submit" class="btn btn btn-primary">검색</button>
+							</div>
+						</form>
+					</div><!--//col-->
+				</div><!--//row-->
+			</div><!--//table-utilities-->
 			
-			<ul class="nav nav-pills nav-justified flex-column flex-sm-row mb-3" id="pills-tab" role="tablist">
-				<li class="nav-item" role="presentation">
-					<button class="nav-link flex-sm-fill text-sm-center active" id="allList-tab" data-bs-toggle="pill" data-bs-target="#allList" type="button" role="tab" aria-controls="pills-all" aria-selected="true">전체보기</button>
-				</li>
-				<li class="nav-item" role="presentation">
-					<button class="nav-link" id="subsProList-tab" data-bs-toggle="pill" data-bs-target="#subsProList" type="button" role="tab" aria-controls="pills-home" aria-selected="false">구독 중인 상품</button>
-				</li>
-				<li class="nav-item" role="presentation">
-					<button class="nav-link" id="returnProList-tab" data-bs-toggle="pill" data-bs-target="#returnProList" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">반납 내역</button>
-				</li>
-			</ul>
 		
 		<div class="tab-content" id="pills-tabContent">
 		  <div class="tab-pane fade show active" id="allList" role="tabpanel" aria-labelledby="allList-tab" tabindex="0">
@@ -330,27 +333,8 @@ function orderInfoOpen(url, name, options) {
             </div>
 		  
 		  
-		  
-		  
-		  
 		  </div>
-		  <div class="tab-pane fade" id="subsProList" role="tabpanel" aria-labelledby="subsProList-tab" tabindex="0">...</div>
-		  <div class="tab-pane fade" id="returnProList" role="tabpanel" aria-labelledby="returnProList-tab" tabindex="0">...</div>
-		</div>
-		
-		
-		
-			
-			
-			
-			
-			
-			
-		</div>
-
-
-
-
+		 
 
 		<!-- ---------- 마이페이지 각 페이지 여기에 넣어주세요!! 끝 지점 ---------- -->
 	</div>

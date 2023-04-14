@@ -13,7 +13,7 @@
 
 <style>
 
-.badge-pending{
+.badge-pending, .badge-active{
 	display: inline-block;
 }
 .activity_idx{
@@ -89,8 +89,16 @@ function deleteReview(reviewIdx) {
 									<td>${dto.subject}</td>
 									<td>${dto.writer}</td>
 									<td>
-										<span class="badge-pending">${dto.category}</span>
-										<div class="activity_idx">${dto.activity_idx}</div>
+										<c:choose>
+											<c:when test="${dto.category=='정리일상'}">
+												<span class="badge-pending">${dto.category}</span>
+												<div class="activity_idx">${dto.activity_idx}</div>
+											</c:when>
+											<c:when test="${dto.category=='구독일상'}">
+												<span class="badge-active">${dto.category}</span>
+												<div class="activity_idx">${dto.activity_idx}</div>
+											</c:when>
+										</c:choose>
 									</td>
 									<td class="review-star">
 										<c:forEach var="i" begin="1" end="${dto.star}" step="1">
