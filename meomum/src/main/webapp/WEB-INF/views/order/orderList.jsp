@@ -352,7 +352,32 @@ input:invalid {
 	</script>
 
 	<!-- 동일 배송지 사용시 -->
-	<script src="js/order/copyUserInfo.js"></script>
+	<script>
+	function copyUserInfo() {
+		var checked = document
+				.querySelector('input[type="checkbox"][value="y"]').checked;
+		if (checked) {
+			document.querySelector('#buyer_name').value = document.querySelector('#order_name').value;
+			document.querySelector('#buyer_tel').value = document.querySelector('#order_tel').value;
+			document.querySelector('#buyer_pcode').value = document.querySelector('#order_pcode').value;
+			document.querySelector('#buyer_addr').value = document.querySelector('#order_addr').value;
+			document.querySelector('#buyer_detail').value = document.querySelector('#order_detail').value;
+		    document.getElementById('user_info').classList.remove('hidden');
+		    var userInfoDiv = document.getElementById("user_info");
+		    userInfoDiv.classList.add("hidden");
+
+		}else{
+			document.querySelector('#buyer_name').value = '';
+	        document.querySelector('#buyer_tel').value = '';
+	        document.querySelector('#buyer_pcode').value = '';
+	        document.querySelector('#buyer_addr').value = '';
+	        document.querySelector('#buyer_detail').value = '';
+	        var userInfoDiv = document.getElementById("user_info");
+	        userInfoDiv.classList.remove("hidden");
+
+		}
+	}</script>
+	
 
 
 	<script>
@@ -417,21 +442,9 @@ input:invalid {
 			var point_num = document.getElementById("point_num").value;
 			//계약자및 사용자 정보 끝//
 
-			var uidx = $
-			{
-				sessionScope.ssInfo.user_idx
-			}
-			;//유저번호
-			var pidx = $
-			{
-				dto.pro_idx
-			}
-			;//상품번호
-			var pAmount = $
-			{
-				param.cart_amount
-			}
-			;//상품수량
+			var uidx = ${sessionScope.ssInfo.user_idx};//유저번호
+			var pidx = ${dto.pro_idx};//상품번호
+			var pAmount = ${param.cart_amount};//상품수량
 
 			IMP.request_pay({
 				pg : "kakaopay", //"html5_inicis",
