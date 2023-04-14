@@ -13,6 +13,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.mm.order.model.OrderDAO;
 import com.mm.order.model.OrderReportDTO;
+import com.mm.pro.model.ProDAO;
+import com.mm.shipping.model.ShippingDAO;
+import com.mm.shipping.model.ShippingDTO;
 import com.mm.turnback.model.ReturnDAO;
 import com.mm.turnback.model.ReturnDTO;
 import com.mm.turnback.model.ReturnListDTO;
@@ -26,6 +29,12 @@ public class ReturnController {
 	
 	@Autowired
 	private OrderDAO orderDao;
+	
+	@Autowired
+	private ShippingDAO shipDao;
+	
+	@Autowired
+	private ProDAO proDao;
 	
 	
 	@RequestMapping("/returnForm.do")
@@ -113,7 +122,8 @@ public class ReturnController {
 	//관리자 - 반납승인
 	@RequestMapping("/returnSubmit.do")
 	public ModelAndView returnSubmit(@RequestParam("order_idx") String order_idx,
-										@RequestParam("pro_idx") int pro_idx) {
+										@RequestParam("pro_idx") int pro_idx,
+										ShippingDTO sdto) {
 		
 		Map map = new HashMap();
 		map.put("order_idx", order_idx);
@@ -125,10 +135,10 @@ public class ReturnController {
 		ModelAndView mav=new ModelAndView();
 		
 		if(result>0 && returnUpdate>0) {
-			//배송처리도 해야됨!!!
 			
+			int returnShipping=shipDao.returnShipInsert(sdto); //반납 회수배송처리
+			int returnProUpdate=proDao.returnProUpdate(map);  //반납 완료 시 재고 수정
 			
-			/////////////////////
 			mav.addObject("msg", "반납승인 처리가 완료되었습니다.");
 			mav.addObject("gopage", "opener.document.location.reload(); self.close()");
 			mav.setViewName("mainMsg");
@@ -141,6 +151,9 @@ public class ReturnController {
 		return mav;
 		
 	}
+	
+	
+	
 	
 	//관리자 - 반납보류
 	@RequestMapping("/returnCancel.do")

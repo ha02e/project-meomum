@@ -17,4 +17,11 @@ public class ShippingDAOImple implements ShippingDAO {
 		int count=sqlMap.insert("shipInsert", dto);
 		return count;
 	}
+	
+	@Override
+	public int returnShipInsert(ShippingDTO dto) {
+		int count=sqlMap.insert("returnShipInsert", dto);
+		return count;
+	}
+	
 }

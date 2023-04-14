@@ -277,6 +277,7 @@ function showTracker(t_key, t_code,t_invoice){
 														</c:when>
 														<c:when test="${dto.order_status eq 6}"><div class="text-primary"><strong>반납진행</strong></div></c:when>
 														<c:when test="${dto.order_status eq 7}"><div class="text-success"><strong>반납완료</strong></div></c:when>
+														<c:when test="${dto.order_status eq 8}"><div class="text-danger"><strong>반납보류</strong></div></c:when>
 													</c:choose>
 												</td>
 											</tr>

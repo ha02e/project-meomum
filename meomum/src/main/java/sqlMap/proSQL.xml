@@ -119,17 +119,19 @@
 		where pro_idx=#{pro_idx}
 	</select>
 	
-	<update id="proAmountShipUpdate" parameterType="String">
+	<update id="proAmountShipUpdate" parameterType="Map">
 		update product p
 		set p.pro_amount = (select (p.pro_amount-op.pro_amount) as remaining_amount
 							from product p,
 							    order_pro op
 							where p.pro_idx=op.pro_idx
 								and op.order_idx = #{order_idx}
+								and p.pro_idx=#{pro_idx}
 							)
 		where p.pro_idx in (select op.pro_idx
                     		from order_pro op
                     		where op.order_idx = #{order_idx}
+								and op.pro_idx=#{pro_idx}
                     		)
 	</update>
 	
@@ -153,4 +155,14 @@
 		delete from cart 
  	 where pro_idx=#{pro_idx} and user_idx = #{user_idx}
 	</delete>
+	
+	<update id="returnProUpdate" parameterType="Map">
+		update product p
+		set p.pro_amount=p.pro_amount + op.pro_amount
+		where p.pro_idx in (select op.pro_idx
+                    		from order_pro op
+                    		where op.order_idx=#{order_idx}
+                                and op.pro_idx=#{pro_idx}
+                    		)
+	</update>
 </mapper> 

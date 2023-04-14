@@ -104,30 +104,6 @@ function showTracker(t_key, t_code,t_invoice){
      
 }
 
-//        $(document).ready(function() {
-//            $("#btnSubmit").click(function(event) {
-//                event.preventDefault(); // 페이지 새로고침 방지
-//
-//               var trackingNumber = $("#trackingNumber").val(); // 입력값 가져오기
-//                var apiUrl = "/deliveryTracker/" + trackingNumber; // API URL 생성
-
-//                $.ajax({
-//                    url: apiUrl,
-//                    type: "GET",
-//                    success: function(response) {
-//                        // API 호출 성공 시 처리
-//                        console.log(response);
-//                        $("#result").text(response); // 결과 출력
-//                    },
-//                    error: function(xhr) {
-//                        // API 호출 실패 시 처리
-//                        console.log(xhr);
-//                        alert("API 호출에 실패했습니다.");
-//                    }
-//               });
-//           });
-//       });
-
 </script>
 </head>
 
@@ -211,7 +187,7 @@ function showTracker(t_key, t_code,t_invoice){
 									<c:when test="${dto.order_status eq 1}">
 										<div class="text-warning">상품준비중</div>
 										<a href="#" class="btn-sm app-btn-secondary" 
-											onclick="shipFormOpen('shipForm.do?order_idx=${dto.order_idx}', 'shipForm', 'width=540,height=600'); return false;">배송처리</a>
+											onclick="shipFormOpen('shipForm.do?order_idx=${dto.order_idx}&pro_idx=${dto.pro_idx}', 'shipForm', 'width=540,height=600'); return false;">배송처리</a>
 									</c:when>
 									<c:when test="${dto.order_status eq 2}">
 										<div class="text-success">배송중</div>
@@ -239,6 +215,7 @@ function showTracker(t_key, t_code,t_invoice){
 									</c:when>
 									<c:when test="${dto.order_status eq 6}"><div class="text-success">반납진행</div></c:when>
 									<c:when test="${dto.order_status eq 7}"><div class="text-primary">반납완료</div></c:when>
+									<c:when test="${dto.order_status eq 8}"><div class="text-danger"><strong>반납보류</strong></div></c:when>
 								</c:choose>
 							</td>
 						</tr>									

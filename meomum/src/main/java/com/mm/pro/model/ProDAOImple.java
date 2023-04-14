@@ -125,10 +125,18 @@ private SqlSessionTemplate sqlMap;
 	
 	//배송처리 시 상품 재고 수정
 	@Override
-		public int proAmountShipUpdate(String order_idx) {
-			int count=sqlMap.update("proAmountShipUpdate", order_idx);
+		public int proAmountShipUpdate(Map map) {
+			int count=sqlMap.update("proAmountShipUpdate", map);
 			return count;
 		}
+	
+	//반납 회수 완료 시 상품 재고 수정
+	@Override
+		public int returnProUpdate(Map map) {
+			int count=sqlMap.update("returnProUpdate", map);
+			return count;
+		}
+	
 	
 	//파일 이름 찾기
 	@Override

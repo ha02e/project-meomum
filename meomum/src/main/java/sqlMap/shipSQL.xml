@@ -18,7 +18,24 @@
 			#{man_name},
 			#{man_tel},
 			sysdate,
-			sysdate+2
+			sysdate+3
+		)
+	</insert>
+	<insert id="returnShipInsert" parameterType="com.mm.shipping.model.ShippingDTO">
+		insert into
+			shipping
+		values(
+			ship_idx.nextval,
+			#{user_idx},
+			'반납배송',
+			#{order_idx},
+			#{pro_idx},
+			#{ship_info},
+			#{ship_num},
+			#{man_name},
+			#{man_tel},
+			sysdate+1,
+			sysdate+3
 		)
 	</insert>
 </mapper>
