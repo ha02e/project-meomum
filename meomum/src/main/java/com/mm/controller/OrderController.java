@@ -325,7 +325,20 @@ public class OrderController {
 	}
 
 	@RequestMapping("/orderReport_a.do")
-	public ModelAndView orderReport_a(@RequestParam(value = "cp", defaultValue = "1") int cp) {
+	public ModelAndView orderReport_a(@RequestParam(value = "cp", defaultValue = "1") int cp, HttpSession session) {
+		
+		ModelAndView mav = new ModelAndView();
+
+		MemberDTO ssInfo = (MemberDTO) session.getAttribute("ssInfo");
+		
+		if(ssInfo==null||!ssInfo.getUser_info().equals("관리자")) {
+			mav.addObject("msg", "잘못된 접근입니다.");
+			mav.addObject("gopage","location.href='index.do';");
+			mav.setViewName("mainMsg");
+			return mav;
+		}
+		
+		
 		int totalCnt = orderDao.reportTotalCnt();
 		int listSize = 5;
 		int pageSize = 5;
@@ -334,7 +347,6 @@ public class OrderController {
 
 		List<OrderReportDTO> lists = reportPage(cp, pageSize);
 
-		ModelAndView mav = new ModelAndView();
 		mav.addObject("lists", lists);
 		mav.setViewName("order/orderReport_a");
 		mav.addObject("pageStr", pageStr);
