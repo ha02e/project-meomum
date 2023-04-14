@@ -127,17 +127,18 @@
 		 <form name="itemFind" action="itemFind.do">
 			 
 			  <div class="panel-search w-full p-t-10 p-b-15">
-			    <div class="search-cancel">
+			    <div class="search-cancel" >
 			      <c:if test="${!empty proF }">
-			        <a href="proList.do" class="stext-104"style="color:#FF6A89; border: 1px solid #FF6A89;">취소</a>
+			        <a href="proList.do" class="stext-104" style="color:#FF6A89; border: 1px solid #FF6A89;">검색 취소</a>
 			      </c:if>
 			    </div>
 			    
 		    <div class="search-input">
-		      <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="proF" required placeholder="Search" 
-		        <c:if test="${!empty proF}">value="${proF}"</c:if>>
+		     <input class="form-control me-sm-2" type="text" name="proF" placeholder="Search" required
+		     <c:if test="${!empty proF}">value="${proF}"</c:if>>
+		     
 		      <button type="submit" class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
-		        <i class="zmdi zmdi-search"></i>
+		       <i class="bi bi-search"></i>
 		      </button>
 		    </div>
 		  </div>
@@ -176,7 +177,7 @@
 	                        <input type="hidden" id="user_idx" name="user_idx" value="${sessionScope.ssInfo.user_idx}">
 	                   
 	                    <div class="block2-txt-child2 flex-r p-t-3">
-	                        <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" onclick="loveInsert(${list.pro_idx },${sessionScope.ssInfo.user_idx})">
+	                        <a href="javascript:void(0)" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" onclick="loveInsert(${list.pro_idx },${sessionScope.ssInfo.user_idx})">
 	                            <img class="icon-heart1 dis-block trans-04" src="images/icon/icon-heart-01.png" alt="ICON">
 	                            <img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icon/icon-heart-02.png" alt="ICON">
 	                        </a>
@@ -201,7 +202,7 @@
 	</div>
 
 <!--=============================================-->
-	<script src="vendor/animsition/js/animsition.min.js"></script>
+
 <!--=============================================-->
 	<script src="vendor/bootstrap/js/popper.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
@@ -210,10 +211,10 @@
 	<script src="js/slick-custom.js"></script>
 <!--=========페이지 모양 유지해줌===========-->
 	<script src="vendor/isotope/isotope.pkgd.min.js"></script>
-
-
+	<script src="vendor/animsition/js/animsition.min.js"></script>
 <!--=========아마 찜하기 팝업이었을 거임==========-->
 	<script src="vendor/sweetalert/sweetalert.min.js"></script>
+
 <script>
 function loveInsert(pro_idx,user_idx) {
 //찜 추가
@@ -225,15 +226,15 @@ function loveInsert(pro_idx,user_idx) {
 	      user_idx: user_idx
 	    },
 	    success: function(data) {
-	      swal("찜 완료", response.message, "success");
+	      alert("찜 완료");
 	    },
 	    error: function(jqXHR, textStatus, errorThrown) {
-	      swal("찜 실패", "찜을 저장하는 동안 문제가 발생했습니다.", "error");
+	      alert("찜 실패");
 	    }
 	  });
 	}
 </script>
-
+ 
 <script>
 //전체 외 페이징 숨기기
 const allBtn = document.querySelector('[data-filter="*"]');
