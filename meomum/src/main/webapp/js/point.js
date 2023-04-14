@@ -10,45 +10,46 @@ var real_total = document.getElementById('amount');//총 결제 금액
 
 real_total.value = total.value;
 	
-	function formatNumber(num) {
-  return new Intl.NumberFormat().format(num);
-	}
    function checkPt() {
+    //전액 사용 체크시
        if (document.getElementById('check').checked) {
-           point_num.value = point_total.value;
-           point_num.disabled = true;
+            if (point_total.value >= total.value) { // point_total이 total 값보다 큰 경우
+                point_num.value = total.value; 
+                real_total.value = 0; 
+            } else {
+            	point_num.value = point_total.value;
+            	real_total.value = total.value - point_total.value;
+             }
+           
        } else {
            point_num.value = 0;
            point_num.disabled = false;
-           real_total.value = total.value;
-           
+           real_total.value = total.value;      
        }
        getTotal();
    }
-	//포인트가 결제금액보다 많을 경우, 총 결제 금액 0원으로 변하게
+	
    function getTotal() {
-       var remainingPoint = point_total.value; 
-       var usePoint = point_num.value;
-       
-       if (!document.getElementById('check').checked) {
-           remainingPoint -= usePoint;
-           if (remainingPoint < 0) {
-               window.alert("사용 가능한 포인트를 초과하였습니다.");
-               point_num.value = 0;
-               real_total.value = total.value;
-               console.log(total.value);
-               console.log(real_total.value);
-           }
-           else{
-           		real_total.value = total.value - usePoint;
-               console.log("amount"+real_total.value);
-
-           }
-       }else{
-       real_total.value = total.value - usePoint;
-       console.log("amount"+real_total.value);
+    var remainingPoint = point_total.value; 
+    var usePoint = point_num.value;
     
-       }
-      }
-       
-   
+    if (!document.getElementById('check').checked) {
+        remainingPoint -= usePoint;
+
+        //사용자 입력 포인트가 사용가능 포인트를 넘었을 경우
+        if (remainingPoint < 0) {
+            window.alert("사용 가능한 포인트를 초과하였습니다.");
+            point_num.value = point_total.value;
+            real_total.value = 0;
+        }
+        else{
+            real_total.value = total.value - usePoint;
+        }
+    }else{
+        remainingPoint -= total.value;
+        real_total.value = 0;
+    }
+}
+
+
+    
