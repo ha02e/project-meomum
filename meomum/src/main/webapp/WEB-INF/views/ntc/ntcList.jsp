@@ -133,11 +133,11 @@
 									        <td colspan="4" >
 									          <div class="accordion accordion-flush" id="accordion-${lists.ntc_idx}" style="width:100%;">
 									            <div class="accordion-item ">
-									              <h2 class="accordion-header text-center" style="width:100%;">
+									              <span class="accordion-header text-center" style="width:100%; ">
 									                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-${lists.ntc_idx}" aria-expanded="false" aria-controls="collapse-${lists.ntc_idx}">
 									                  <span class="text-center">${lists.ntc_title}</span>
 									                </button>
-									              </h2>
+									              </span>
 									              <div id="collapse-${lists.ntc_idx}" class="accordion-collapse collapse" data-bs-parent="#accordion-${lists.ntc_idx}">
 									                <div class="accordion-body">${lists.ntc_content}</div>
 									              </div>

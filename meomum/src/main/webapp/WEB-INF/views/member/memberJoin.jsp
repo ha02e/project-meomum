@@ -11,7 +11,10 @@
 
 <script type="text/javascript" src="/meomum/js/request.js"></script>
 <style>
-
+input:invalid {
+  border-color: red;
+  outline: none;
+}
 </style>
 </head>
 <body>
