@@ -17,4 +17,11 @@
    				#{pay_state}
    				)	
   	</insert>
+  	
+  	<!-- 결제여부 확인 -->
+  	<select id="paymentSelect" parameterType="String"  resultType="com.mm.payment.model.PaymentDTO">
+   	SELECT *
+   	FROM payment
+   	WHERE SUBSTR(cate_idx, 1, 12) =#{cate_idx}
+  	</select>
   </mapper>

@@ -1,42 +1,72 @@
 var IMP = window.IMP;
-IMP.init("imp51432774"); 
+IMP.init("imp51432774");
 
 function requestPay() {
   var today = new Date();
   var seconds = today.getSeconds().toString();
   var milliseconds = today.getMilliseconds().toString();
-  var makeMerchantUid =seconds + milliseconds;  
-  
-var svcIdx = document.getElementById('svc_idx').value;
-  console.log(svcIdx);
-  var amount = document.getElementById('amount').value;
-   console.log(amount);
- var user_name = document.getElementById('user_name').value;
-   console.log(user_name);
-  var user_tel = document.getElementById('user_tel').value;
-   console.log(user_tel);
- var user_email = document.getElementById('user_id').value;
-  console.log(user_email);
-   var user_idx= document.getElementById('user_idx').value;
-  console.log(user_idx);
-    var uid = svcIdx + makeMerchantUid;
-  console.log(uid);
-  
+  var makeMerchantUid =seconds + milliseconds;
 
-  /*var svcIdx = dto.svc_idx;
+  var svcIdx = document.getElementById('svc_idx').value;
   console.log(svcIdx);
   var amount = document.getElementById('amount').value;
   console.log(amount);
-  var user_name = dto.user_name;
+  var user_name = document.getElementById('user_name').value;
   console.log(user_name);
-  var user_tel = dto.user_tel;
+  var user_tel = document.getElementById('user_tel').value;
   console.log(user_tel);
-  var user_email = dto.user_email;
+  var user_email = document.getElementById('user_id').value;
   console.log(user_email);
+  var user_idx = document.getElementById('user_idx').value;
+  console.log(user_idx);
   var uid = svcIdx + makeMerchantUid;
-  console.log(uid);*/
+  console.log(uid);
 
+  /**if (amount == 0) {
+  	var amount = $("#amount").val();
+    var PaymentDTO = {
+      payment_idx: svcIdx, //payment_idx로 들어갈 값
+      cate_idx: uid, //인식번호(cate_idx)
+      payment_cate: 1, //payment_cate 카테고리
+      pay_method: '포인트사용', //pay_mehtod 지불수단
+      amount: 0, //amount 금액
+      pay_buydate: null, //pay_buydate 결제일
+      pay_cancleDate: null, //pay_cancleDate 취소일(임시'-'로 지정)
+      pay_state: 'point', //pay_state
+    };
 
+    var PointDTO = {
+      cate_idx: svcIdx,
+      user_idx: user_idx,
+      point_use: 1,
+      point_info: '정리일상 결제',
+      point_num: $("#point_num").val(),
+    };
+
+    var IdxDTO = {
+      svc_idx: svcIdx,
+    };
+
+    $.ajax({
+      type: 'GET',
+      url: "svcPay.do",
+      data: JSON.stringify({PaymentDTO: PaymentDTO,PointDTO: PointDTO,IdxDTO: IdxDTO,}),
+      contentType: "application/json",
+      dataType: "json",
+     success: function (data) {
+              console.log(data);
+              alert('결제 완료되었습니다:point 결제');
+                location.href = 'svcIngList.do';
+    },
+    error:function(xhr, status, error){
+                console.log(xhr, status, error);
+                alert('다시 시도해주세요:point 결제');
+                location.href = 'svcIngContent.do';
+    }
+    });
+    
+    
+  } else {*/
   IMP.request_pay({
     pg : "kakaopay", //html5_inicis
     pay_method : 'card',
@@ -83,17 +113,21 @@ var svcIdx = document.getElementById('svc_idx').value;
             dataType :"json",
             success: function (data) {
               console.log(data);
-              alert('완료:테이블 성공');
              },
              error:function(xhr, status, error){
-                  alert('실패');
+                 console.log(xhr);
+  				console.log(status);
+  				console.log(error);
              }
              });
              
-            alert('결제 성공');
+            alert('결제 완료되었습니다');
+            location.href = 'svcIngList.do';
         } else {
         	console.log(rsp);
           alert('다시 시도해주세요');
+          location.href = 'svcIngContent.do';
         }
       }); 
-}
+/**}*///else end
+}//requestpay end

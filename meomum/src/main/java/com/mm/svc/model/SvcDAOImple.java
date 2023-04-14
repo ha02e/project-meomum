@@ -108,7 +108,34 @@ public class SvcDAOImple implements SvcDAO {
 
 		return count;
 	}
-
+	
+	/**관리자: 방문 예약 삭제*/
+	//svc_member
+	@Override
+	public int svcMemDelete(String idx) {
+		int count = sqlMap.delete("svcMemDelete",idx);
+		return count;
+	}
+	
+	//svc_detail
+	@Override
+	public int svcDetailDelete(String idx) {
+		int count = sqlMap.delete("svcDetailDelete",idx);
+		return count;
+	}
+	
+	//svc_date
+	@Override
+	public int svcDateDelete(String idx) {
+		int count = sqlMap.delete("svcDateDelete",idx);
+		return count;
+	}
+	//svc_ing
+	@Override
+	public int svcIngDelete(String idx) {
+		int count = sqlMap.delete("svcIngDelete",idx);
+		return count;
+	}
 	
 	/**관리자&사용자: 방문 견적 예약 상세 보기*/
 	@Override

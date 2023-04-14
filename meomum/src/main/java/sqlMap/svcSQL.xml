@@ -150,6 +150,31 @@
     	)
 	</select>
 	
+	<!-- 관리자: 예약 삭제 -->
+	<delete id="svcMemDelete" parameterType="String">
+	DELETE 
+	FROM svc_member
+	WHERE svc_idx =#{svc_idx}
+	</delete>
+	
+	<delete id="svcDetailDelete" parameterType="String">
+	DELETE 
+	FROM svc_detail
+	WHERE svc_idx =#{svc_idx}
+	</delete>
+	
+	<delete id="svcDateDelete" parameterType="String">
+	DELETE 
+	FROM svc_date
+	WHERE svc_idx =#{svc_idx}
+	</delete>
+	
+	<delete id="svcIngDelete" parameterType="String">
+	DELETE 
+	FROM svc_ing
+	WHERE svc_idx =#{svc_idx}
+	</delete>
+
 	<!-- 관리자/사용자: 방문 예약 상세 정보(방문 견적) -->
 	<select id="svcContent" parameterType="String" resultType="com.mm.svc.model.SvcContentDTO">
 		SELECT a.*,b.user_name,
