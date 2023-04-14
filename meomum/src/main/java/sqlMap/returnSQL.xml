@@ -49,9 +49,11 @@
 	<select id="returnData" parameterType="String" resultType="com.mm.turnback.model.ReturnListDTO">
 			SELECT *FROM orders o
 			JOIN order_pro op ON o.order_idx = op.order_idx
+			JOIN member m ON o.user_idx=m.user_idx
 			JOIN product p ON op.pro_idx = p.pro_idx
 			JOIN turnback t ON o.order_idx = t.order_idx
 			WHERE o.order_idx=op.order_idx
+				and o.user_idx=m.user_idx
 			    and o.order_idx=t.order_idx
 			    and op.pro_idx=p.pro_idx
 				and order_idx=#{order_idx}

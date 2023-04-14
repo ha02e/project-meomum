@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.6.4.slim.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
@@ -80,19 +81,67 @@ hr{
 				</div>
 	          
 				<div class="form-row mb-3 form-btn d-flex justify-content-center">
+				
+					<!---------------------------------- 반납보류 ---------------------------------->
 					<form action="returnCancel.do" name="returnCancel" method="post">
 						<input type="hidden" name="order_idx" value="${param.order_idx}">
 						<input type="hidden" name="pro_idx" value="${dto.pro_idx}">
 						<button type="submit" class="btn btn-secondary">반납보류</button>
 					</form>
-					
-					<form action="returnSubmit.do" name="returnSubmit" method="post">
-						<input type="hidden" name="order_idx" value="${param.order_idx}">
-						<input type="hidden" name="pro_idx" value="${dto.pro_idx}">
-	          			<button type="submit" class="btn btn-primary">반납승인</button>
-	        		</form>
+	          			
+	          		<!---------------------------------- 반납승인 ---------------------------------->	
+	          		<button type="button" id="btn_toggle" class="btn btn-primary">반납승인</button>
 	          	</div>
-				
+	          		<div id="Toggle" style="display:none">
+	          			<form action="returnSubmit.do" name="returnSubmit" method="post">
+							<input type="hidden" name="order_idx" value="${param.order_idx}">
+							<input type="hidden" name="pro_idx" value="${dto.pro_idx}">
+							<input type="hidden" name="pro_idx" value="${dto.user_idx}">
+	          				<div class="form-row mb-3">
+	            				<label class="form-label" for="ship_info">택배사</label>
+	            					<select class="custom-select form-control" name="ship_info" id="shipInfo" readonly>
+										<option value="CJ대한통운" selected>CJ대한통운</option>
+									</select>
+	          				</div>
+	          				<div class="form-row mb-3">
+				            	<label class="form-label" for="ship_num">운송장번호</label>
+				            	<input type="text" class="form-control" name="ship_num" placeholder="운송장 번호 - 없이 입력(12자리)"
+				            			maxlength="12" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
+				          	</div>
+	          
+							<hr class="row mb-3">
+				          
+							<div class="form-row mb-3">
+								<label class="form-label" for="man_name">배송기사</label>
+								<input type="text" class="form-control" name="man_name">
+							</div>
+							
+							<div class="form-row mb-3">
+								<label class="form-label" for="man_tel">배송기사 연락처</label>
+								<input type="text" class="form-control" name="man_tel" pattern="[0-9]{3}-[0-9]{3,4}-[0-9]{4}"
+									oninput="autoHyphen(this)" maxlength="13" placeholder="연락처를 입력해주세요.">
+								 <script>
+									const autoHyphen = (target) => {
+										target.value = target.value
+											.replace(/[^0-9]/g, '')
+											.replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
+									}
+								 </script>
+							</div>
+				          	
+				          	<script>
+				        		$(function (){
+				        			$("#btn_toggle").click(function (){
+				        		  	$("#Toggle").toggle();
+				        		  });
+				        		});
+				        	</script>	
+	          			
+	          				<button type="submit" class="btn btn-primary">반납회수처리</button>
+	        			</form>
+	          			
+	          		</div>
+	          	
 	          	
 	      	</div>
 	        

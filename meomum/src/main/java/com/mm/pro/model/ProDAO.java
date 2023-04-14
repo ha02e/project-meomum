@@ -21,5 +21,6 @@ import java.util.*;
 	public int proStateUpdate(ProDTO dto);
 	
 	public int proAmountSelect(int pro_idx);
-	public int proAmountShipUpdate(String order_idx);
+	public int proAmountShipUpdate(Map map);
+	public int returnProUpdate(Map map);
 }

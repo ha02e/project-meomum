@@ -289,8 +289,14 @@ public class OrderController {
 
 	/** 관리자페이지 배송처리 폼 */
 	@RequestMapping("/shipForm.do")
-	public ModelAndView shippingForm(@RequestParam("order_idx") String order_idx) {
-		OrderReportDTO dto = orderDao.orderData(order_idx);
+	public ModelAndView shippingForm(@RequestParam("order_idx") String order_idx,
+									@RequestParam("pro_idx") int pro_idx) {
+		
+		Map map = new HashMap();
+		map.put("order_idx", order_idx);
+		map.put("pro_idx", pro_idx);
+		
+		OrderReportDTO dto = orderDao.orderData(map);
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("dto", dto);
@@ -300,8 +306,14 @@ public class OrderController {
 
 	/** 관리자페이지 주문상세내역 */
 	@RequestMapping("/orderInfoDetail.do")
-	public ModelAndView orderInfoDetail(@RequestParam("order_idx") String order_idx) {
-		OrderReportDTO dto = orderDao.orderData(order_idx);
+	public ModelAndView orderInfoDetail(@RequestParam("order_idx") String order_idx,
+											@RequestParam("pro_idx") int pro_idx) {
+
+		Map map = new HashMap();
+		map.put("order_idx", order_idx);
+		map.put("pro_idx", pro_idx);
+		
+		OrderReportDTO dto = orderDao.orderData(map);
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("dto", dto);

@@ -6,6 +6,8 @@ public class ReturnListDTO {
 	private String return_idx;
 	private String order_idx;
 	private int user_idx;
+	private String user_name;
+	private String receiver;
 	private int pro_idx;
 	private String pro_thumb;
 	private String pro_name;
@@ -22,13 +24,15 @@ public class ReturnListDTO {
 	}
 
 
-	public ReturnListDTO(String return_idx, String order_idx, int user_idx, int pro_idx, String pro_thumb,
-			String pro_name, int order_status, Date return_date, Date return_start_date, Date return_end_date,
-			String return_reason, String return_ok) {
+	public ReturnListDTO(String return_idx, String order_idx, int user_idx, String user_name, String receiver,
+			int pro_idx, String pro_thumb, String pro_name, int order_status, Date return_date, Date return_start_date,
+			Date return_end_date, String return_reason, String return_ok) {
 		super();
 		this.return_idx = return_idx;
 		this.order_idx = order_idx;
 		this.user_idx = user_idx;
+		this.user_name = user_name;
+		this.receiver = receiver;
 		this.pro_idx = pro_idx;
 		this.pro_thumb = pro_thumb;
 		this.pro_name = pro_name;
@@ -68,6 +72,26 @@ public class ReturnListDTO {
 
 	public void setUser_idx(int user_idx) {
 		this.user_idx = user_idx;
+	}
+
+
+	public String getUser_name() {
+		return user_name;
+	}
+
+
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
+
+
+	public String getReceiver() {
+		return receiver;
+	}
+
+
+	public void setReceiver(String receiver) {
+		this.receiver = receiver;
 	}
 
 

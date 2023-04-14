@@ -16,9 +16,9 @@ public interface OrderDAO {
 	public List<OrderReportDTO> orderReport(Map map);
 	public int reportTotalCnt();
 	
-	public OrderReportDTO orderData(String order_idx);
+	public OrderReportDTO orderData(Map map);
 	
-	public int shipStartUpdate(String order_idx);
+	public int shipStartUpdate(Map map);
 	public int returnApplyUpdate(String order_idx);
 	public int returnSubmitUpdate(Map map);
 	public int returnCancelUpdate(Map map);

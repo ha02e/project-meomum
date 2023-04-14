@@ -14,13 +14,6 @@ private SqlSessionTemplate sqlMap;
 		this.sqlMap = sqlMap;
 	}
 	
-
-	//관리자 상품 삭제
-	@Override
-		public int proDelete(int pro_idx) {
-			int count=sqlMap.delete("proDelete",pro_idx);
-			return count;
-		}		
 	
 	//상품 등록
 	@Override
@@ -29,24 +22,22 @@ private SqlSessionTemplate sqlMap;
 		return count;
 	}
 	
-	
-	//페이징1 (전체)
+	//페이징
 	@Override
 		public int getTotalCnt() {
 			int count=sqlMap.selectOne("proTotalCnt");
 			return count;
 		}
 	
-	
-	//페이징2 (품절상품 미포함)
+	//상품 삭제
 	@Override
-		public int itemTotalCnt() {
-			int count=sqlMap.selectOne("itemTotalCnt");
+		public int proDelete(int pro_idx) {
+			int count=sqlMap.delete("proDelete",pro_idx);
 			return count;
 		}
+
 	
-	
-	//관리자용 상품 리스트 출력 (품절 상품 포함)
+	//관리자용 상품 리스트 출력 (품절 보임)
 	@Override
 		public List<ProDTO> proList(Map map) {
 			List<ProDTO> lists=sqlMap.selectList("proList", map);
@@ -54,15 +45,16 @@ private SqlSessionTemplate sqlMap;
 		}
 	
 	
-	//사용자용 상품 리스트 출력 (품절 상품 미포함)
+	//사용자용 상품 리스트 출력 (품절 안 보임)
 	@Override
 		public List<ProDTO> proItemList(Map map) {
 		List<ProDTO> lists=sqlMap.selectList("proItemList", map);
 			return lists;
 		}
 			
-	
-	//베스트 상품인 척하는 pro_date asc순
+		
+		
+	//베스트인 척하는 pro_date asc순
 	@Override
 		public List<ProDTO> proBest() {
 			List<ProDTO> lists=sqlMap.selectList("proBest");
@@ -77,7 +69,6 @@ private SqlSessionTemplate sqlMap;
 			return lists;
 		}
 	
-	
 	//상품 검색2
 	@Override
 		public List<ProDTO> proFind2(String proF) {
@@ -85,7 +76,8 @@ private SqlSessionTemplate sqlMap;
 			return lists;
 		}
 	
-	//관리자 상품 수정할 정보 불러오기
+	
+	//상품 수정 리스트
 	@Override
 		public List<ProDTO> proUpdateList(int pro_idx) {
 			List<ProDTO> lists=sqlMap.selectList("proUpdateList", pro_idx);
@@ -93,7 +85,7 @@ private SqlSessionTemplate sqlMap;
 		}
 
 	
-	//관리자 상품 수정
+	//상품 수정
 	@Override
 		public int proUpdate(ProDTO dto) {
 		int count=sqlMap.update("proUpdate",dto);
@@ -101,7 +93,7 @@ private SqlSessionTemplate sqlMap;
 		}
 	
 	
-	//관리자 상품 재고/상태 수정 시 조회
+	//상품 재고/상태 수정 시 조회
 	@Override
 		public ProDTO proSelect(int pro_idx) {
 			ProDTO pdto=sqlMap.selectOne("proSelect", pro_idx);
@@ -109,7 +101,7 @@ private SqlSessionTemplate sqlMap;
 		}
 	
 	
-	//관리자 상품 재고 수정
+	//상품 재고 수정
 	@Override
 		public int proAmountUpdate(ProDTO dto) {
 			int count=sqlMap.update("proAmountUpdate", dto);
@@ -117,7 +109,7 @@ private SqlSessionTemplate sqlMap;
 		}
 	
 	
-	//관리자 상품 상태 수정
+	//상품 상태 수정
 	@Override
 		public int proStateUpdate(ProDTO dto) {
 			int count=sqlMap.update("proStateUpdate", dto);
@@ -133,12 +125,20 @@ private SqlSessionTemplate sqlMap;
 	
 	//배송처리 시 상품 재고 수정
 	@Override
-		public int proAmountShipUpdate(String order_idx) {
-			int count=sqlMap.update("proAmountShipUpdate", order_idx);
+		public int proAmountShipUpdate(Map map) {
+			int count=sqlMap.update("proAmountShipUpdate", map);
 			return count;
 		}
 	
-	//관리자 상품 등록시 파일 이름 찾기
+	//반납 회수 완료 시 상품 재고 수정
+	@Override
+		public int returnProUpdate(Map map) {
+			int count=sqlMap.update("returnProUpdate", map);
+			return count;
+		}
+	
+	
+	//파일 이름 찾기
 	@Override
 		public boolean proFindFile(String name) {
 		int result =  sqlMap.selectOne("proFindFile", name);
