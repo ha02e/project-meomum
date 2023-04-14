@@ -5,12 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mm.member.model.MemberDTO;
 import com.mm.order.model.OrderDAO;
 import com.mm.order.model.OrderReportDTO;
 import com.mm.pro.model.ProDAO;
@@ -86,7 +89,7 @@ public class ReturnController {
 		return mav;
 	}
 	
-	
+	/**
 	public List<ReturnListDTO> returnListPage(int cp, int ls) {
 		int start = (cp - 1) * ls + 1;
 		int end = cp * ls;
@@ -118,7 +121,59 @@ public class ReturnController {
 		return mav;
 			
 	}
+	*/
+	
+	@RequestMapping("/returnProList_a.do")
+	public ModelAndView returnProList(@RequestParam(value="cp",defaultValue = "1")int cp,
+			@RequestParam(value="fvalue",defaultValue = "")String fvalue,
+			@RequestParam(value="state",defaultValue = "0")String state, HttpSession session) {
 
+		ModelAndView mav=new ModelAndView();
+
+		MemberDTO ssInfo = (MemberDTO) session.getAttribute("ssInfo");
+		
+		if(ssInfo==null||!ssInfo.getUser_info().equals("관리자")) {
+			mav.addObject("msg", "잘못된 접근입니다.");
+			mav.addObject("gopage","location.href='index.do';");
+			mav.setViewName("mainMsg");
+			return mav;
+		}
+		
+		int listSize=5;
+		int pageSize=5;
+		int start=(cp-1)*listSize+1;
+		int end=cp*listSize;
+		
+		Map fmap=new HashMap();
+		
+		fmap.put("start", start);
+		fmap.put("end", end);
+		fmap.put("fvalue","%"+fvalue+"%");
+		fmap.put("state",state);
+		
+		
+		Map tmap=new HashMap();
+		tmap.put("fvalue","%"+fvalue+"%");
+		tmap.put("state",state);
+		
+		int totalCnt=returnDao.returnProListCnt(tmap);
+			
+		List<ReturnListDTO> lists=returnDao.returnProList(fmap);
+		
+		String param = "&fvalue="+fvalue+"&state="+state;
+		String pageStr=com.mm.module.PageModule.makePageParam("returnProList_a.do", totalCnt, listSize, 
+																	pageSize, cp,param);
+			
+		mav.setViewName("turnback/returnProList_a");
+		mav.addObject("lists", lists);
+		mav.addObject("pageStr",pageStr);
+		mav.addObject("state",state);
+		mav.addObject("fvalue", fvalue);
+			
+		return mav;
+			
+	}
+	
 	
 	/** 관리자페이지 반납처리 폼 */
 	@RequestMapping("/returnSubmitForm.do")
