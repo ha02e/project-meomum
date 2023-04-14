@@ -1557,7 +1557,7 @@ button.mfp-close {
 }
 
 .tab01 .nav-tabs .nav-item {
-  margin: 0px 15px;
+  margin: 0px 50px;
 }
 
 .tab01 .nav-link {
@@ -2052,7 +2052,7 @@ div.row.isotope-grid {
 
 /*---------------------------------------------*/
 .block2-txt-child1 {
-  width: calc(100% - 30px);
+  width: calc(100% - 45px);
 }
 
 .block2-txt-child2 {
@@ -2156,7 +2156,7 @@ div.row.isotope-grid {
 
 .stext-105 {
   font-family: GmarketSansMedium;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.466667;
   letter-spacing: 1px;
 }
@@ -3053,7 +3053,8 @@ div.row.isotope-grid {
 
 .hov-img0 img{
   width: 90%;
-  height: 180px;
+  height: 190px;
+  object-fit: cover;
   -webkit-transition: transform 0.9s ease;
   -o-transition: transform 0.9s ease;
   -moz-transition: transform 0.9s ease;
@@ -3066,8 +3067,9 @@ div.row.isotope-grid {
 }
 
 .hov-img1 img{
-  width: 80%;
-  height: 280px;
+  width: 90%;
+  height: 300px;
+  object-fit: cover;
   -webkit-transition: transform 0.9s ease;
   -o-transition: transform 0.9s ease;
   -moz-transition: transform 0.9s ease;

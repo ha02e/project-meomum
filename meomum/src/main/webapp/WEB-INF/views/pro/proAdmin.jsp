@@ -55,20 +55,28 @@ function sortUsers(cate) {
             </form>
             
     </div>
-	    <div class="col-md-6">
-	        <div class="d-flex justify-content-end align-items-center">
-	       <span class="me-2">카테고리:</span> 
-		<select class="form-select w-auto" name="cate" onchange="sortUsers(this.value)">
-	  <option value="all" ${cate == '0' ? 'selected' : ''}>전체</option>
-		<option value="1" ${cate == '1' ? 'selected' : ''}>침대</option>
-		<option value="2" ${cate == '2' ? 'selected' : ''}>테이블</option>
-		<option value="3" ${cate == '3' ? 'selected' : ''}>의자</option>
-		<option value="4" ${cate == '4' ? 'selected' : ''}>소파</option>
-		<option value="5" ${cate == '5' ? 'selected' : ''}>조명</option>
-		</select>
-	    </div>
-	</div>
-</div>			        
+			 <div class="col-md-6">
+			     <div class="d-flex justify-content-end align-items-center">
+			       <span class="me-2">카테고리:</span> 
+					<select class="form-select w-auto" name="cate" onchange="sortUsers(this.value)">
+					  	<option value="all" ${cate == '0' ? 'selected' : ''}>전체</option>
+						<option value="1" ${cate == '1' ? 'selected' : ''}>침대</option>
+						<option value="2" ${cate == '2' ? 'selected' : ''}>테이블</option>
+						<option value="3" ${cate == '3' ? 'selected' : ''}>의자</option>
+						<option value="4" ${cate == '4' ? 'selected' : ''}>소파</option>
+						<option value="5" ${cate == '5' ? 'selected' : ''}>조명</option>
+					</select>
+			    </div>
+			</div>
+		</div>		
+		
+				<div class="text-center mb-4">
+					<p class="text-start">
+						전체 상품수 <span id="total-users">${totalCnt}</span>개
+					</p>
+				</div>
+		
+			        
 				<div class="table-responsive">
 				<table class="table table-hover" style="text-align:center;">
 					<thead>

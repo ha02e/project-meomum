@@ -40,8 +40,6 @@
 }
 </style>
 
-<!--===================돋보기용====================-->
-	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
 <!--=============================================-->
 	<link rel="stylesheet" type="text/css" href="css/proUtil.css">
 	<link rel="stylesheet" type="text/css" href="css/proMain.css">
@@ -71,21 +69,23 @@
 					</div>
 				</div>
 
-	<div class="container text-center" style="max-width: 960px;">
+	<div class="container text-center" style="max-width: 970px;">
 		 <div class="row justify-content-center">
 		  <c:forEach var="list2" items="${lists2}">
-		    <div class="col-sm-6 col-md-3 col-lg-3">
+		    <div class="col-sm-6 col-md-3 col-lg-3 mx-auto" >
 		      <div class="block2-pic hov-img0">
 		        <a href="proContent.do?pro_idx=${list2.pro_idx}"><img src="/meomum/images/items/${list2.pro_thumb}" alt="best-img"></a>
 		     	 </div>
-			      <div class="block2-txt flex-w flex-t p-t-14">
-			        <div class="block2-txt-child1 flex-col-l text-center">
+			      <div class="block2-txt flex-w flex-t p-t-14 mx-auto">
+			      
+			        <div class="col-sm-6 mx-auto text-center">
 			          <a href="proContent.do?pro_idx=${list2.pro_idx}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6 d-block mx-auto">
 			            ${list2.pro_name}
 			          </a>
 			          <span class="stext-105 cl3 d-block mx-auto">
 			            <fmt:formatNumber type="number" maxFractionDigits="3" value="${list2.pro_subprice }" />원
 			          </span>
+			          
 			        </div>
 			      </div>
 			   	</div>
@@ -149,8 +149,7 @@
 	<!-- products -->
 		<div class="row isotope-grid">
 		    <c:forEach var="list" items="${lists}">
-	<div style="margin-bottom: 40px;" class="col-sm-6 col-md-4 col-lg-4 p-b-35 isotope-item ${list.pro_cate}">
-
+				<div style="margin-bottom: 40px;" class="col-sm-6 col-md-4 col-lg-4 p-b-35 isotope-item ${list.pro_cate}">
 		            <!-- Block2 -->
 		            <div class="block2">
 		                <div class="block2-pic hov-img1">
@@ -163,7 +162,7 @@
 		
 	                <div class="block2-txt flex-w flex-t p-t-14">
 	                    <div class="block2-txt-child1 flex-col-l ">
-	                        <a href="proContent.do?pro_idx=${list.pro_idx}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+	                        <a href="proContent.do?pro_idx=${list.pro_idx}" class="stext-106 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 	                            ${list.pro_name}
 	                        </a>
 				
@@ -201,7 +200,6 @@
 		</div>
 	</div>
 
-<!--=============================================-->
 
 <!--=============================================-->
 	<script src="vendor/bootstrap/js/popper.js"></script>
@@ -214,7 +212,25 @@
 	<script src="vendor/animsition/js/animsition.min.js"></script>
 <!--=========아마 찜하기 팝업이었을 거임==========-->
 	<script src="vendor/sweetalert/sweetalert.min.js"></script>
+<script>
 
+		$('.js-addwish-b2').on('click', function(e){
+			e.preventDefault();
+		});
+
+		$('.js-addwish-b2').each(function(){
+			var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
+			$(this).on('click', function(){
+				swal(nameProduct, "찜 추가되었습니다");
+
+				$(this).addClass('js-addedwish-b2');
+				$(this).off('click');
+			});
+		});
+
+</script>
+
+<!-- 
 <script>
 function loveInsert(pro_idx,user_idx) {
 //찜 추가
@@ -234,7 +250,7 @@ function loveInsert(pro_idx,user_idx) {
 	  });
 	}
 </script>
- 
+ -->
 <script>
 //전체 외 페이징 숨기기
 const allBtn = document.querySelector('[data-filter="*"]');

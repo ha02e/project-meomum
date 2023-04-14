@@ -43,10 +43,9 @@
 	(select rownum as rnum,a.* from
 	(select * 
 	from product
-	where pro_state != 1 
+	where pro_state != 1 and pro_amount <![CDATA[>]]> 1
 	order by pro_idx desc
 	) a
-	
 	) b 
 	where rnum <![CDATA[>=]]>#{start}
 	and rnum<![CDATA[<=]]>#{end}
@@ -60,7 +59,7 @@
  	 <select id="itemTotalCnt" resultType="integer">
      select count(*) 
      from product
-     where pro_state != 1
+     where pro_state != 1 and pro_amount <![CDATA[>]]> 1
      </select>
      
  	
@@ -68,11 +67,6 @@
  	 delete from product  
  	 where pro_idx=#{pro_idx}
  	</delete>
- 	
- 	 <select id="proCateList" resultType="com.mm.pro.model.ProDTO">
-     select pro_cate from product
-     </select>
- 	
  	
  	<select id="proFind1" parameterType="int" resultType="com.mm.pro.model.ProDTO">
  	select * from product 

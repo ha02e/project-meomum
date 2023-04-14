@@ -43,14 +43,14 @@
 		<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
 		
 			<a href="index.do" class="stext-109 cl8 hov-cl1 trans-04">
-				Home >
-				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+				Home
+				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true">></i>
 			</a>
 			
 			<a href="proList.do" class="stext-109 cl8 hov-cl1 trans-04">
 				${lists[0].pro_cate == 1 ? '침대' : lists[0].pro_cate == 2 ? '테이블' : 
-				lists[0].pro_cate == 3? '의자' : lists[0].pro_cate == 4? '소파' : '조명'} >
-				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+				lists[0].pro_cate == 3? '의자' : lists[0].pro_cate == 4? '소파' : '조명'}
+				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true">></i>
 			</a>
 
 			<span class="stext-109 cl4">
@@ -61,7 +61,7 @@
 		
 
 
-	<!-- Product Detail -->
+	<!-- 이미지 -->
 	<section class="sec-product-detail bg0 p-t-65 p-b-60">
 		<div class="container">
 			<div class="row">
@@ -81,8 +81,7 @@
 										</a>
 									</div>
 								</div>
-				
-				
+
 								<div class="item-slick3" data-thumb="/meomum/images/items/${lists[0].pro_img1}">
 									<div class="wrap-pic-w pos-relative">
 										<img src="/meomum/images/items/${lists[0].pro_img1}" alt="IMG-PRODUCT">
@@ -92,8 +91,7 @@
 										</a>
 									</div>
 								</div>
-					
-					
+
 								<div class="item-slick3" data-thumb="/meomum/images/items/${lists[0].pro_img2}">
 									<div class="wrap-pic-w pos-relative">
 										<img src="/meomum/images/items/${lists[0].pro_img2}" alt="IMG-PRODUCT">
@@ -107,11 +105,11 @@
 						</div>
 					</div>
 				</div>
-				
+					
+					
 				<!-- 상품 정보 -->
 				<div class="col-md-6 col-lg-5 p-b-30">
 					<div class="p-r-50 p-t-5 p-lr-0-lg">
-						
 						<h4 class="mtext-105 cl2 js-name-detail p-b-14">
 							${lists[0].pro_name}
 						</h4>
@@ -119,21 +117,21 @@
 						<span class="mtext-106 cl2">
 							정가 <fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_price}" />원
 						</span>
-						
-						<div class="mtext-106 cl2">
-							월 <fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_subprice}" />원 | ${lists[0].pro_month}개월 구독 가격
-						</div>
 
+						<p class="mtext-106 cl2">
+							월 <fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_subprice}" />원 | ${lists[0].pro_month}개월 구독 가격
+						</p>
+						
 						<p class="stext-102 cl3 p-t-23">
 							개당 배송비 <fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_delprice}" />원
 						</p>
 						
 						<span class="mtext-106 cl2">
-							총 구독 가격 <fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_allprice}" />원
-													
+							총 구독 가격 <fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_allprice}" />원					
 						</span>
 						
-						<!-- 수량 부분 -->
+
+						<!-- 수량 조절 -->
 						<form name="contentForm" method="get" action="orderList.do">	
 						 <input type="hidden" name="pro_idx" value="${lists[0].pro_idx}">
 						 <input type="hidden" name="pro_name" value="${lists[0].pro_name}">
@@ -141,10 +139,15 @@
 						 <input type="hidden" name="pro_delprice" value="${lists[0].pro_delprice }">
 						 <input type="hidden" name="pro_month" value="${lists[0].pro_month }">
 						 
-						<div class="flex-w m-r-20 m-tb-10">
+						 
+						<div class="p-t-33">
+							<div class="flex-w flex-r-m p-b-10">
+								
+
+							<div class="flex-w m-r-20 m-tb-10">
 							<!-- 마이너스 -->
 							<div id="minus-button">
-								<i class="fs-16 zmdi zmdi-minus"></i>
+								<i class="bi bi-dash"></i>
 							</div>
 
 							<!-- 수량 조절 -->
@@ -157,15 +160,17 @@
 												
 							<!-- 플러스 -->
 							<div id="plus-button">
-								<i class="fs-16 zmdi zmdi-plus"></i>
+								<i class="bi bi-plus"></i>
 							</div>
-						</div>
-						<div><span id="subPrice">월 가격:<fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_subprice}" />원</span></div>
+							</div>
+								
+							<div><span id="subPrice">월 가격:<fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_subprice}" />원</span></div>
     					<div><span id="allPrice">총 가격:<fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_allprice}" />원</span></div>
     					<div><span id="delPrice">총 배송비:<fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_delprice}" />원</span></div>
-						<br>
-							
-							<div class="flex-w flex-r-m p-b-10">
+						<br>	
+								
+						<div class="flex-w flex-r-m p-b-10">
+						<!-- 구매 -->
 								<div class="size-204 flex-w flex-m respon6-next">
 									<button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail"
 									type="submit" formaction="cartInsert.do">장바구니</button>
@@ -173,38 +178,28 @@
 									 <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail"
 									 type="submit" formaction="orderList.do">구매하기</button>
 								</div>
+									</div>	
+									
 							</div>	
-						</form>
-					</div>
-						
-						
+						</div>
+			</form>
 
-						<!-- 뭐 기타 등등 -->
+
+						<!-- 아이콘류 -->
 						<div class="flex-w flex-m p-l-100 p-t-40 respon7">
 							<div class="flex-m bor9 p-r-10 m-r-11">
 								<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100" data-tooltip="Add to Wishlist">
 									<i class="zmdi zmdi-favorite"></i>
 								</a>
 							</div>
-
-							<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Facebook">
-								<i class="fa fa-facebook"></i>
-							</a>
-
-							<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Twitter">
-								<i class="fa fa-twitter"></i>
-							</a>
-
-							<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Google Plus">
-								<i class="fa fa-google-plus"></i>
-							</a>
 						</div>
 					</div>
 				</div>
 			</div>
 
 
-	<!-- 상품 설명, 이용 안내, 배송 안내 -->
+
+			<!-- 상품 설명, 이용 안내, 배송 안내 -->
 	<div class="bor10 m-t-50 p-t-43 p-b-40">
 		<!-- Tab01 -->
 		<div class="tab01">
@@ -249,18 +244,21 @@
 		</div>
 	</div>
 
-		<!-- 배송 안내 -->
-		<div class="tab-pane fade" id="reviews" role="tabpanel">
-			<div class="row">
-				<div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
-					<div class="p-b-30 m-lr-15-sm">
-						<img class="stext-102 cl6" src="/meomum/images/meomum_how_to_use02.png" alt="CONTENT-DEL">
+				<!-- 배송 안내 -->
+				<div class="tab-pane fade" id="reviews" role="tabpanel">
+					<div class="row">
+						<div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
+							<div class="p-b-30 m-lr-15-sm">
+								<img class="stext-102 cl6" src="/meomum/images/meomum_how_to_use02.png" alt="CONTENT-DEL">
+									</div>
+								</div>
 							</div>
 						</div>
-					</div>
-				</div>
+				
+				<!-- 내용 끝 -->
 			</div>
 		</div>
+	</div>
 	</div>
 	</section>
 
@@ -356,20 +354,11 @@
 <!--===============================================================================================-->
 	<script src="vendor/sweetalert/sweetalert.min.js"></script>
 	<script>
-		$('.js-addwish-b2, .js-addwish-detail').on('click', function(e){
+		$('.js-addwish-detail').on('click', function(e){
 			e.preventDefault();
 		});
 
-		$('.js-addwish-b2').each(function(){
-			var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
-			$(this).on('click', function(){
-				swal(nameProduct, "is added to wishlist !", "success");
-
-				$(this).addClass('js-addedwish-b2');
-				$(this).off('click');
-			});
-		});
-
+		
 		$('.js-addwish-detail').each(function(){
 			var nameProduct = $(this).parent().parent().parent().find('.js-name-detail').html();
 
@@ -379,17 +368,7 @@
 				$(this).addClass('js-addedwish-detail');
 				$(this).off('click');
 			});
-		});
-
-		/*---------------------------------------------*/
-
-		$('.js-addcart-detail').each(function(){
-			var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
-			$(this).on('click', function(){
-				swal(nameProduct, "is added to cart !", "success");
-			});
-		});
-	
+		});	
 	</script>
 <!--===============================================================================================-->
 	<script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
