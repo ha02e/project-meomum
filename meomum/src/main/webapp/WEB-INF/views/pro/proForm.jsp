@@ -148,17 +148,17 @@ input:invalid {
           &nbsp;&nbsp;&nbsp;
           
 		<div class="form-check form-check-inline">
-		    <input class="form-check-input" type="radio" name="pro_month" id="month1" value="1" onclick="calPrice()"> 
+		    <input class="form-check-input" type="radio" name="pro_month" id="month1" value="1"  disabled onclick="calPrice()"> 
 		    <label class="form-check-label" for="month1">1</label>
 		  </div>
 		  
 		  <div class="form-check form-check-inline">
-		    <input class="form-check-input" type="radio" name="pro_month" id="month2" value="6" onclick="calPrice()"> 
+		    <input class="form-check-input" type="radio" name="pro_month" id="month2" value="6"  disabled onclick="calPrice()"> 
 		    <label class="form-check-label" for="month2" >6</label>
 		  </div>
 		  
 		  	<div class="form-check form-check-inline">
-		    <input class="form-check-input" type="radio" name="pro_month" id="month3" value="12" onclick="calPrice()"> 
+		    <input class="form-check-input" type="radio" name="pro_month" id="month3" value="12" checked onclick="calPrice()"> 
 		    <label class="form-check-label" for="month3" >12</label>
 		  </div>
 		</div>

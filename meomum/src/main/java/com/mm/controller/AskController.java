@@ -143,9 +143,7 @@ public class AskController {
 		ModelAndView mav = new ModelAndView();
 		
 		if(result>0){
-			mav.addObject("msg","간단문의 작성이 등록되었습니다.빠른시일내로 답변드리겠습니다.");
-			mav.addObject("link","askList.do");
-			mav.setViewName("msg");
+			mav.setViewName("ask/ask_alert");
 		}else {
 			mav.addObject("msg","간단문의 작성에 실패하였습니다.");
 			mav.addObject("gopage","history.back();");

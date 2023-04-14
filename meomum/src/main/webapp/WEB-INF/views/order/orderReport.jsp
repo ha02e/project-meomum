@@ -173,22 +173,20 @@ function showTracker(t_key, t_code,t_invoice){
 	<div class="col-xl-9 col-md-9">	
 		<!-- ---------- 마이페이지 작업한 파일 페이지 여기에 넣어주세요!!(include) ---------- -->
 		
-	<div class="row g-3 mb-4 align-items-center justify-content-between">
-					     <div class="page-utilities">
-						    <div class="row g-2 justify-content-center align-items-center">
-							    <div class="col-auto">
-									<form class="table-search-form row gx-1 align-items-center">
-					          		<div class="col-auto">
-					                	<input type="text" id="search-orders" name="searchorders" class="form-control search-orders" placeholder="검색어를 입력해주세요.">
-					           		</div>
-					           		<div class="col-auto">
-					              		<button type="submit" class="btn btn btn-primary">검색</button>
-					               	</div>
-					                </form>
-							    </div><!--//col-->
-						    </div><!--//row-->
-					    </div><!--//table-utilities-->
-			    </div><!--//row-->
+		<div class="page-utilities">
+			<div class="row g-2 mb-4 justify-content-center align-items-center">
+				<div class="col-auto">
+					<form class="table-search-form row gx-1 align-items-center">
+						<div class="col-auto">
+							<input type="text" id="search-orders" name="searchorders" class="form-control search-orders" placeholder="검색어를 입력해주세요.">
+						</div>
+						<div class="col-auto">
+							<button type="submit" class="btn btn btn-primary">검색</button>
+						</div>
+					</form>
+				</div><!--//col-->
+			</div><!--//row-->
+		</div><!--//table-utilities-->
 			   
 			   
 			   	<div class="users-table table-wrapper">
