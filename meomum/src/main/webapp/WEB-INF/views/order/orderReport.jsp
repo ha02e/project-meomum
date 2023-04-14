@@ -250,7 +250,6 @@ tbody {
 														</c:url>
 														<c:url var="cancelFormUrl" value="orderCancel.do">
 															<c:param name="order_idx">${dto.order_idx}</c:param>
-															<c:param name="pro_idx">${dto.pro_idx}</c:param>
 														</c:url>
 														<a href="#" class="orderNum"
 															onclick="orderCancel('${cancelFormUrl}','orderCancelPop','width=540,height=600'); return false">

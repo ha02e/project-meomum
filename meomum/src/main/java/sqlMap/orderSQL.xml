@@ -2,162 +2,197 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  <mapper namespace="com.mm.order">
-  	<select id="orderList" resultType="com.mm.pro.model.ProDTO">
-  	select * from product where pro_idx= #{pro_idx}
-  	</select>
-  	<insert id="orderInsert" parameterType="com.mm.order.model.OrderDTO">
-  		insert into orders values(#{order_idx}, #{user_idx}, #{order_name}, sysdate, sysdate + INTERVAL '12' MONTH, #{order_pcode}, #{receiver}, #{receiver_tel}, #{order_addr}, #{order_detail}, #{order_msg}, #{using_point}, TO_DATE(TO_CHAR(SYSDATE + 7, 'DD'), 'DD'), 1, 1, sysdate, #{order_tos})
+<mapper namespace="com.mm.order">
+	<select id="orderList" resultType="com.mm.pro.model.ProDTO">
+		select * from product where pro_idx= #{pro_idx}
+	</select>
+	<insert id="orderInsert"
+		parameterType="com.mm.order.model.OrderDTO">
+		insert into orders values(#{order_idx}, #{user_idx}, #{order_name}, sysdate,
+		sysdate + INTERVAL '12' MONTH, #{order_pcode}, #{receiver},
+		#{receiver_tel}, #{order_addr}, #{order_detail}, #{order_msg},
+		#{using_point}, TO_DATE(TO_CHAR(SYSDATE + 7, 'DD'), 'DD'), 1, 1,
+		sysdate, #{order_tos})
 	</insert>
-	<insert id="order_proInsert" parameterType="com.mm.order.model.OrderProDTO">
-  		insert into order_pro values(#{order_idx},#{user_idx},#{pro_idx},#{pro_amount})
+	<insert id="order_proInsert"
+		parameterType="com.mm.order.model.OrderProDTO">
+		insert into order_pro
+		values(#{order_idx},#{user_idx},#{pro_idx},#{pro_amount})
 	</insert>
 
-	<select id="mySubsAllList" parameterType="Map" resultType="com.mm.order.model.MyOrderListDTO">
+	<select id="mySubsAllList" parameterType="Map"
+		resultType="com.mm.order.model.MyOrderListDTO">
 		select * from
-			(select rownum as rnum, e.*from(
-				SELECT *FROM orders o
-				JOIN order_pro op ON o.order_idx = op.order_idx
-				JOIN product p ON op.pro_idx = p.pro_idx
-				WHERE o.user_idx = #{user_idx}
-					and o.order_status=4
-				order by order_date desc
-			)e )f
-		where rnum<![CDATA[>=]]>#{start} and rnum<![CDATA[<=]]>#{end}
-	</select>
-	<select id="mySubsAllListCnt" parameterType="Integer" resultType="Integer">
-		select count(*) from
-			orders o
+		(select rownum as rnum, e.*from(
+		SELECT *FROM orders o
 		JOIN order_pro op ON o.order_idx = op.order_idx
 		JOIN product p ON op.pro_idx = p.pro_idx
 		WHERE o.user_idx = #{user_idx}
-			and o.order_status=4
+		and o.order_status=4
+		order by order_date desc
+		)e )f
+		where rnum<![CDATA[>=]]>#{start}
+		and rnum<![CDATA[<=]]>#{end}
 	</select>
-	
-	<select id="myReturnProList" parameterType="Map" resultType="com.mm.order.model.MyOrderListDTO">
-		select * from
-			(select rownum as rnum, e.*from(
-				SELECT *FROM orders o
-					JOIN order_pro op ON o.order_idx = op.order_idx
-					JOIN product p ON op.pro_idx = p.pro_idx
-					JOIN turnback t ON o.order_idx = t.order_idx
-				WHERE o.user_idx = #{user_idx}
-					and (o.order_status=5 OR o.order_status=6 OR o.order_status=7 OR o.order_status=8)
-				order by order_date desc
-			)e )f
-		where rnum<![CDATA[>=]]>#{start} and rnum<![CDATA[<=]]>#{end}
-	</select>
-	<select id="myReturnProListCnt" parameterType="Integer" resultType="Integer">
+	<select id="mySubsAllListCnt" parameterType="Integer"
+		resultType="Integer">
 		select count(*) from
-			orders o
-				JOIN order_pro op ON o.order_idx = op.order_idx
-				JOIN product p ON op.pro_idx = p.pro_idx
-				JOIN turnback t ON o.order_idx = t.order_idx
-			WHERE o.user_idx = #{user_idx}
-				and o.order_status=5 OR o.order_status=6 OR o.order_status=7 OR o.order_status=8
+		orders o
+		JOIN order_pro op ON o.order_idx = op.order_idx
+		JOIN product p ON
+		op.pro_idx = p.pro_idx
+		WHERE o.user_idx = #{user_idx}
+		and o.order_status=4
 	</select>
-	
-	
-	
-	<select id="myOrderReport" parameterType="Map" resultType="com.mm.order.model.OrderReportDTO">
+
+	<select id="myReturnProList" parameterType="Map"
+		resultType="com.mm.order.model.MyOrderListDTO">
 		select * from
-			(select rownum as rnum, e.*from(
-				select a.order_idx,d.pro_idx, d.pro_name, b.pro_amount, c.user_name, c.user_tel, a.amount, a.order_status, a.order_date,
-            			a.receiver, a.receiver_tel, a.order_msg,
-            			(a.order_pcode||' '||a.order_addr||' '||a.order_detail) ship_addr
-				from orders a,
-				     order_pro b,
-				     member c,
-				     product d
-				where a.order_idx=b.order_idx
-				    and b.pro_idx=d.pro_idx
-				    and b.user_idx=c.user_idx
-				    and b.user_idx=#{user_idx}
-				order by a.order_date desc
-			)e )f
-		where rnum<![CDATA[>=]]>#{start} and rnum<![CDATA[<=]]>#{end}
+		(select rownum as rnum, e.*from(
+		SELECT *FROM orders o
+		JOIN order_pro op ON o.order_idx = op.order_idx
+		JOIN product p ON op.pro_idx = p.pro_idx
+		JOIN turnback t ON o.order_idx = t.order_idx
+		WHERE o.user_idx = #{user_idx}
+		and (o.order_status=5 OR o.order_status=6 OR o.order_status=7 OR
+		o.order_status=8)
+		order by order_date desc
+		)e )f
+		where rnum<![CDATA[>=]]>#{start}
+		and rnum<![CDATA[<=]]>#{end}
 	</select>
-	<select id="myReportTotalCnt" parameterType="Integer" resultType="Integer">
+	<select id="myReturnProListCnt" parameterType="Integer"
+		resultType="Integer">
 		select count(*) from
-			orders a,
-			order_pro b,
-			member c,
-			product d
+		orders o
+		JOIN order_pro op ON o.order_idx = op.order_idx
+		JOIN product p ON op.pro_idx = p.pro_idx
+		JOIN turnback t ON o.order_idx = t.order_idx
+		WHERE o.user_idx = #{user_idx}
+		and o.order_status=5 OR o.order_status=6 OR o.order_status=7 OR
+		o.order_status=8
+	</select>
+
+
+
+	<select id="myOrderReport" parameterType="Map"
+		resultType="com.mm.order.model.OrderReportDTO">
+		select * from
+		(select rownum as rnum, e.*from(
+		select a.order_idx,d.pro_idx, d.pro_name, b.pro_amount, c.user_name,
+		c.user_tel, a.amount, a.order_status, a.order_date,
+		a.receiver, a.receiver_tel, a.order_msg,
+		(a.order_pcode||' '||a.order_addr||' '||a.order_detail) ship_addr
+		from orders a,
+		order_pro b,
+		member c,
+		product d
 		where a.order_idx=b.order_idx
-			and b.pro_idx=d.pro_idx
-			and b.user_idx=c.user_idx
-			and b.user_idx=#{user_idx}
+		and b.pro_idx=d.pro_idx
+		and b.user_idx=c.user_idx
+		and b.user_idx=#{user_idx}
+		order by a.order_date desc
+		)e )f
+		where rnum<![CDATA[>=]]>#{start}
+		and rnum<![CDATA[<=]]>#{end}
 	</select>
-	
-	
-	<select id="orderReport" parameterType="Map" resultType="com.mm.order.model.OrderReportDTO">
+	<select id="myReportTotalCnt" parameterType="Integer"
+		resultType="Integer">
+		select count(*) from
+		orders a,
+		order_pro b,
+		member c,
+		product d
+		where a.order_idx=b.order_idx
+		and b.pro_idx=d.pro_idx
+		and b.user_idx=c.user_idx
+		and b.user_idx=#{user_idx}
+	</select>
+
+
+	<select id="orderReport" parameterType="Map"
+		resultType="com.mm.order.model.OrderReportDTO">
 		select * from
-			(select rownum as rnum, e.*from(
-				select a.order_idx, d.pro_name, b.pro_amount, c.user_name, c.user_tel, a.amount, a.order_status, a.order_date,
-            			a.receiver, a.receiver_tel, a.order_msg,
-            			(a.order_pcode||' '||a.order_addr||' '||a.order_detail) ship_addr
-				from orders a,
-				     order_pro b,
-				     member c,
-				     product d
-				where a.order_idx=b.order_idx
-				    and b.pro_idx=d.pro_idx
-				    and b.user_idx=c.user_idx
-			)e )f
-		where rnum<![CDATA[>=]]>#{start} and rnum<![CDATA[<=]]>#{end}
+		(select rownum as rnum, e.*from(
+		select a.order_idx, d.pro_name, b.pro_amount, c.user_name, c.user_tel,
+		a.amount, a.order_status, a.order_date,
+		a.receiver, a.receiver_tel, a.order_msg,
+		(a.order_pcode||' '||a.order_addr||' '||a.order_detail) ship_addr
+		from orders a,
+		order_pro b,
+		member c,
+		product d
+		where a.order_idx=b.order_idx
+		and b.pro_idx=d.pro_idx
+		and b.user_idx=c.user_idx
+		)e )f
+		where rnum<![CDATA[>=]]>#{start}
+		and rnum<![CDATA[<=]]>#{end}
 	</select>
 	<select id="reportTotalCnt" resultType="Integer">
 		select count(*) from
-			orders a,
-			order_pro b,
-			member c,
-			product d
+		orders a,
+		order_pro b,
+		member c,
+		product d
 		where a.order_idx=b.order_idx
-			and b.pro_idx=d.pro_idx
-			and b.user_idx=c.user_idx
+		and b.pro_idx=d.pro_idx
+		and b.user_idx=c.user_idx
 	</select>
-	
-	<select id="orderData" parameterType="String" resultType="com.mm.order.model.OrderReportDTO">
-		select a.order_idx, b.pro_idx , d.pro_name, a.user_idx, c.user_name, c.user_tel, a.amount, a.order_status, a.order_date,
-            a.receiver, a.receiver_tel, a.order_msg,
-            ('['||a.order_pcode||'] '||a.order_addr||' '||a.order_detail) ship_addr
-				from orders a,
-				     order_pro b,
-				     member c,
-				     product d
-				where a.order_idx=b.order_idx
-				    and b.pro_idx=d.pro_idx
-				    and b.user_idx=c.user_idx
-				    and a.order_idx=#{order_idx}
+
+	<select id="orderData" parameterType="String"
+		resultType="com.mm.order.model.OrderReportDTO">
+		select a.order_idx, b.pro_idx , d.pro_name, a.user_idx,
+		c.user_name, c.user_tel, a.amount, a.order_status, a.order_date,
+		a.receiver, a.receiver_tel, a.order_msg,
+		('['||a.order_pcode||'] '||a.order_addr||' '||a.order_detail) ship_addr
+		from orders a,
+		order_pro b,
+		member c,
+		product d
+		where a.order_idx=b.order_idx
+		and b.pro_idx=d.pro_idx
+		and b.user_idx=c.user_idx
+		and a.order_idx=#{order_idx}
 	</select>
-	
+
 	<update id="shipStartUpdate" parameterType="String">
 		update orders
-		set order_status=2
+		set
+		order_status=2
 		where order_idx=#{order_idx}
 	</update>
-	
+
 	<update id="returnApplyUpdate" parameterType="String">
 		update orders
-		set order_status=5
+		set
+		order_status=5
 		where order_idx=#{order_idx}
 	</update>
-	
+
 	<update id="returnSubmitUpdate" parameterType="Map">
 		update orders o
 		set o.order_status = 6
 		where o.order_idx in (select op.order_idx
-                    		from order_pro op
-                    		where op.pro_idx=#{pro_idx}
-                    		)
+		from order_pro op
+		where op.pro_idx=#{pro_idx}
+		)
 	</update>
 	<update id="returnCancelUpdate" parameterType="Map">
 		update orders o
 		set o.order_status = 8
 		where o.order_idx in (select op.order_idx
-                    		from order_pro op
-                    		where op.order_idx=#{order_idx}
-                                and op.pro_idx=#{pro_idx}
-                    		)
+		from order_pro op
+		where op.order_idx=#{order_idx}
+		and op.pro_idx=#{pro_idx}
+		)
 	</update>
-  </mapper>
+	<select id="orderCancelList" parameterType="String"
+		resultType="com.mm.order.model.OrderCancelDTO">
+		SELECT o.order_idx, o.user_idx, p.pro_idx, p.pro_name, p.pro_price,
+		p.pro_subprice, p.pro_thumb, p.pro_month, p.pro_allprice
+		FROM order_pro o
+		JOIN product p ON o.pro_idx = p.pro_idx
+		WHERE o.order_idx = #{order_idx};
+	</select>
+</mapper>

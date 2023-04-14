@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +9,12 @@
 </head>
 <body>
 <h1>주문취소 페이지</h1>
-
+<c:if test="${empty list}">
+	취소가능한 상품이 없습니다.
+</c:if>
+<c:forEach var="dto" items="${list}">
+${dto.pro_name}
+</c:forEach>
 <hr>
 <h3>취소사유를 선택해주세요</h3>
 <div><select name="cancel_rs">

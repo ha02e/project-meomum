@@ -22,6 +22,7 @@ import com.mm.cart.model.CartDAO;
 import com.mm.cart.model.CartDTO;
 import com.mm.member.model.MemberDTO;
 import com.mm.order.model.MyOrderListDTO;
+import com.mm.order.model.OrderCancelDTO;
 import com.mm.order.model.OrderDAO;
 import com.mm.order.model.OrderDTO;
 import com.mm.order.model.OrderProDTO;
@@ -43,6 +44,7 @@ public class OrderController {
 	private CartDAO cdao;
 	@Autowired
 	private PointDAO pdao;
+	
 
 	@RequestMapping("/orderList.do")
 	public ModelAndView orderList(@RequestParam("pro_idx") int idx,HttpSession session) {
@@ -349,15 +351,7 @@ public class OrderController {
 			
 	    return mav;
 	}
-	
-	@RequestMapping(value = "/orderCancel.do")
-	public String cancel() {
-		return "order/orderCancel";
-	}
-
-	
-	
-	
+		
 	
 	//장바구니 상품 결제 (여러개 상품)
 	@RequestMapping(value="/totalOrderss.do",method = RequestMethod.POST)
