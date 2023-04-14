@@ -76,7 +76,8 @@ hr{
 	          	</div>
 	          	<div class="form-row mb-3">
 	            	<label class="form-label" for="ship_num">운송장번호</label>
-	            	<input type="text" class="form-control" name="ship_num" placeholder="운송장 번호 - 없이 입력(12자리)">
+	            	<input type="text" class="form-control" name="ship_num" placeholder="운송장 번호 - 없이 입력(12자리)"
+	            			maxlength="12" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
 	          	</div>
 	          
 				<hr class="row mb-3">
@@ -115,7 +116,15 @@ hr{
 				
 				<div class="form-row mb-3">
 					<label class="form-label" for="man_tel">배송기사 연락처</label>
-					<input type="text" class="form-control" name="man_tel">
+					<input type="text" class="form-control" name="man_tel" pattern="[0-9]{3}-[0-9]{3,4}-[0-9]{4}"
+						oninput="autoHyphen(this)" maxlength="13" placeholder="연락처를 입력해주세요.">
+					 <script>
+						const autoHyphen = (target) => {
+							target.value = target.value
+								.replace(/[^0-9]/g, '')
+								.replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
+						}
+					 </script>
 				</div>
 				
 				<div class="form-row mb-3 form-btn d-flex justify-content-center">

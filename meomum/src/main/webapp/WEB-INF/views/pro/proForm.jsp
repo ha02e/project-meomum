@@ -12,6 +12,8 @@
 <link id="theme-style" rel="stylesheet" href="assets/css/portal_a.css">
 <link rel="stylesheet" type="text/css" href="css/mainLayout_a.css">
 
+
+
 <script>
 function calPrice(){
 	 const proprice = Number(document.getElementById("pro_price").value);
@@ -22,11 +24,34 @@ function calPrice(){
 	    const allprice = subprice*subMonth;
 	    document.getElementById("pro_allprice").value = allprice;   
 }
+</script>
 
+<script>
 function addConfirm() {
     return confirm('정말 등록하시겠습니까?');
 }
+
+function checkFile() {
+  var thumb = document.getElementById('pro_thumb').value;
+  var img1 = document.getElementById('pro_img1').value;
+  var img2 = document.getElementById('pro_img2').value;
+  var content = document.getElementById('pro_content').value;
+  
+  if (thumb == '' || img1 == '' || img2 == '' || content == '') {
+    alert('사진을 첨부해주세요.');
+    return false;
+  }
+  
+  return true;
+}
 </script>
+<style>
+input:invalid {
+  border-color: red;
+  outline: none;
+}
+</style>
+
 </head>
 <body class="app">
 	<%@include file="/WEB-INF/views/header_a.jsp"%>
@@ -81,7 +106,7 @@ function addConfirm() {
         <div class="input-group mb-3">
           <label for="pro_name" class="input-group-text col-2 text-center">상품명</label>
 	          <input type="text" class="form-control input-group-text-fixed" name="pro_name" 
-	          required="required" placeholder="상품명을 입력해주세요"  maxlength="30">
+	          required="required" placeholder="상품명을 입력해주세요"  maxlength="25">
         </div>
         
         <div class="input-group mb-3">
@@ -89,6 +114,7 @@ function addConfirm() {
 	          <input type="text" class="form-control input-group-text-fixed" id="pro_price"
 	          name="pro_price" required="required" placeholder="정가를 입력해주세요" 
    	          pattern="[0-9]+" minlength="2" maxlength="12">
+   	          <span class="input-group-text">원</span>
         </div>
         
         <div class="input-group mb-3">
@@ -96,6 +122,7 @@ function addConfirm() {
 	          <input type="text" class="form-control input-group-text-fixed" id="pro_amount" 
 	          name="pro_amount" required="required" placeholder="재고 수량을 입력해주세요"  
 	          minlength="1" maxlength="3" pattern="[0-9]+">
+	          <span class="input-group-text">개</span>
         </div>
         
         
@@ -104,7 +131,7 @@ function addConfirm() {
 		  &nbsp;&nbsp;&nbsp;
 		  
 		  <div class="form-check form-check-inline">
-		    <input class="form-check-input" type="radio" name="pro_state" id="pro_state" value="0"> 
+		    <input class="form-check-input" type="radio" name="pro_state" id="pro_state" value="0" checked> 
 		    <label class="form-check-label" for="pro_state">판매 중</label>
 		  </div>
 		  
@@ -121,32 +148,38 @@ function addConfirm() {
           &nbsp;&nbsp;&nbsp;
           
 		<div class="form-check form-check-inline">
-		    <input class="form-check-input" type="radio" name="pro_month" id="pro_month" value="1"> 
-		    <label class="form-check-label" for="pro_month" onclick="calPrice()">1</label>
+		    <input class="form-check-input" type="radio" name="pro_month" id="month1" value="1" onclick="calPrice()"> 
+		    <label class="form-check-label" for="month1">1</label>
 		  </div>
 		  
 		  <div class="form-check form-check-inline">
-		    <input class="form-check-input" type="radio" name="pro_month" id="pro_month" value="6"> 
-		    <label class="form-check-label" for="pro_month" onclick="calPrice()">6</label>
+		    <input class="form-check-input" type="radio" name="pro_month" id="month2" value="6" onclick="calPrice()"> 
+		    <label class="form-check-label" for="month2" >6</label>
 		  </div>
 		  
-		  		  <div class="form-check form-check-inline">
-		    <input class="form-check-input" type="radio" name="pro_month" id="pro_month" value="12"> 
-		    <label class="form-check-label" for="pro_month" onclick="calPrice()">12</label>
+		  	<div class="form-check form-check-inline">
+		    <input class="form-check-input" type="radio" name="pro_month" id="month3" value="12" onclick="calPrice()"> 
+		    <label class="form-check-label" for="month3" >12</label>
 		  </div>
 		</div>
           
         
         <div class="input-group mb-3">
           <label for="pro_subprice" class="input-group-text col-2 text-center">월 구독 가격</label>
+          
           <input type="text" class="form-control input-group-text-fixed" id="pro_subprice" name="pro_subprice" 
-         placeholder="정가와 구독 개월 수를 입력하면 자동으로 월 구독 가격이 입력됩니다." required="required">
+         placeholder="정가와 구독 개월 수를 입력하면 자동으로 월 구독 가격이 입력됩니다" required="required">
+         <span class="input-group-text">원</span>
+         
         </div>
         
         <div class="input-group mb-3">
           <label for="pro_allprice" class="input-group-text col-2 text-center">총 구독 가격</label>
+          
           <input type="text" class="form-control input-group-text-fixed" id="pro_allprice" name="pro_allprice" 
-          placeholder="정가와 구독 개월 수를 입력하면 자동으로 총 구독 가격이 입력됩니다." required="required">
+          placeholder="정가와 구독 개월 수를 입력하면 자동으로 총 구독 가격이 입력됩니다" required="required">
+          <span class="input-group-text">원</span>
+          
         </div>
 		</div>
 		
@@ -160,20 +193,23 @@ function addConfirm() {
 		    <a href="proAdmin.do"><button type="button" class="btn btn-outline-secondary">목록으로</button></a>
 		    <span style="margin-left: 10px"></span>
 		   
-		    <button type="submit" class="btn btn-primary">등록하기</button>
+		    <button type="submit" onclick="return checkFile()" class="btn btn-primary">등록하기</button>
 		</div>
           
-          
-          </div>
-	    </form>
-	  </div>
+   
+	          </div>
+		    </form>
+		  </div>
+		</div>
 	</div>
-</div>
 		
 		<!-- 본문 끝 -->
 		<%@include file="/WEB-INF/views/footer_a.jsp"%>
 	<!-- app-wrapper 끝-->
-	</div>
+</div>
+	
+	
+	
 	
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"

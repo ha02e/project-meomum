@@ -7,6 +7,7 @@ import java.util.*;
 	public List<ProDTO> proList(Map map);
 	public List<ProDTO> proItemList(Map map);
 	public int getTotalCnt();
+	public int itemTotalCnt();
 	public int proDelete(int pro_idx);
 	public List<ProDTO> proFind1(int proF);
 	public List<ProDTO> proFind2(String proF);

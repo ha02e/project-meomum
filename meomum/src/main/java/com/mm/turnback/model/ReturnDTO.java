@@ -12,6 +12,7 @@ public class ReturnDTO {
 	private Date return_start_date;
 	private Date return_end_date;
 	private String return_reason;
+	private String return_ok;
 	
 	
 	public ReturnDTO() {

@@ -94,4 +94,18 @@ public class NtcDAOImple implements NtcDAO {
 		String dto=sqlMap.selectOne("getNtcImageName", idx);
 		return dto;
 	}
+	
+	@Override
+	public List<NtcDTO> ntcList_a(int cp, int ls,String fvalue) {
+		int start = (cp-1)*ls+1;
+		int end = cp*ls;
+		
+		Map map = new HashMap();
+		map.put("start", start);
+		map.put("end", end);
+		map.put("fvalue","%" + fvalue + "%");
+		List<NtcDTO> list = sqlMap.selectList("ntcList_a", map);
+
+		return list;
+	}
 }

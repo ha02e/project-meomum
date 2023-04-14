@@ -17,6 +17,27 @@
   margin: 10px auto;
   display: block;
 }
+
+.add-space {
+  padding-right: 30px; /* 적절한 크기로 값 조정 가능 */
+}
+
+.panel-search {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.panel-search a {
+  margin-right: 10px;
+}
+.search-cancel {
+  margin-right: auto;
+}
+
+.search-input {
+  display: flex;
+  align-items: center;
+}
 </style>
 
 <!--===================돋보기용====================-->
@@ -30,16 +51,25 @@
 <%@include file="/WEB-INF/views/header.jsp" %>
 <body class="animsition">
 
-	<div style="height: 60px;"></div>
+	<div style="height: 80px;"></div>
 
 <!-- BEST PRODUCTS -->
-		<div class="container">
-			<div class="p-b-45">
-				<h3 class="ltext-106 cl5 txt-center">
-					BEST ITEM
-				</h3>
-			</div>
-			</div>
+		<c:if test="${!empty proF }">
+		<div class="container text-center" style="max-width: 960px;">
+				 <div class="row justify-content-center mtext-112">
+					     '${proF }'에 대한 검색 결과입니다.
+				</div>
+			</div>   
+		</c:if>
+		
+		<c:if test="${empty proF}">
+				<div class="container">
+					<div class="p-b-45">
+						<h3 class="ltext-106 cl5 txt-center">
+							BEST ITEM
+						</h3>
+					</div>
+				</div>
 
 	<div class="container text-center" style="max-width: 960px;">
 		 <div class="row justify-content-center">
@@ -61,8 +91,8 @@
 			   	</div>
 			  </c:forEach>
 			</div>
-		</div>
-   
+		</div>   
+</c:if>
 
 	<div style="height: 30px;"></div>
 	
@@ -94,16 +124,24 @@
       
       
     <!-- Search product -->
-		  <form name="itemFind" action="itemFind.do">
-		    <div class="dis-flex panel-search w-full p-t-10 p-b-15">
-		      
-		      <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="proF" placeholder="Search">
-		      <button type="submit" 
-		      class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
+		 <form name="itemFind" action="itemFind.do">
+			 
+			  <div class="panel-search w-full p-t-10 p-b-15">
+			    <div class="search-cancel">
+			      <c:if test="${!empty proF }">
+			        <a href="proList.do" class="stext-104"style="color:#FF6A89; border: 1px solid #FF6A89;">취소</a>
+			      </c:if>
+			    </div>
+			    
+		    <div class="search-input">
+		      <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="proF" required placeholder="Search" 
+		        <c:if test="${!empty proF}">value="${proF}"</c:if>>
+		      <button type="submit" class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
 		        <i class="zmdi zmdi-search"></i>
 		      </button>
 		    </div>
-		  </form>
+		  </div>
+		</form>
 		</div>
 
 	

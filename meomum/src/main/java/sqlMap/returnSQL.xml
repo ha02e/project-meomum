@@ -15,7 +15,8 @@
 			sysdate,
 			NULL,
 			NULL,
-			#{return_reason}
+			#{return_reason},
+			NULL
 		)
 	</insert>
 
@@ -55,4 +56,20 @@
 			    and op.pro_idx=p.pro_idx
 				and order_idx=#{order_idx}
 	</select>
+	
+	<update id="returnStartUpdate" parameterType="Map">
+		update turnback t
+		set t.return_start_date = sysdate, 
+			t.return_end_date = sysdate+7, 
+			t.return_ok='Y'
+		where t.order_idx=#{order_idx}
+			and t.pro_idx=#{pro_idx}
+	</update>
+	
+	<update id="returnNoUpdate" parameterType="Map">
+		update turnback t
+		set t.return_ok='N'
+		where t.order_idx=#{order_idx}
+			and t.pro_idx=#{pro_idx}
+	</update>
 </mapper>

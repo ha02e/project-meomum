@@ -14,6 +14,7 @@ public class ReturnListDTO {
 	private Date return_start_date;
 	private Date return_end_date;
 	private String return_reason;
+	private String return_ok;
 	
 	
 	public ReturnListDTO() {
@@ -23,7 +24,7 @@ public class ReturnListDTO {
 
 	public ReturnListDTO(String return_idx, String order_idx, int user_idx, int pro_idx, String pro_thumb,
 			String pro_name, int order_status, Date return_date, Date return_start_date, Date return_end_date,
-			String return_reason) {
+			String return_reason, String return_ok) {
 		super();
 		this.return_idx = return_idx;
 		this.order_idx = order_idx;
@@ -36,6 +37,7 @@ public class ReturnListDTO {
 		this.return_start_date = return_start_date;
 		this.return_end_date = return_end_date;
 		this.return_reason = return_reason;
+		this.return_ok = return_ok;
 	}
 
 
@@ -147,6 +149,16 @@ public class ReturnListDTO {
 	public void setReturn_reason(String return_reason) {
 		this.return_reason = return_reason;
 	}
-	
+
+
+	public String getReturn_ok() {
+		return return_ok;
+	}
+
+
+	public void setReturn_ok(String return_ok) {
+		this.return_ok = return_ok;
+	}
+
 	
 }

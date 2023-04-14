@@ -85,7 +85,6 @@
 	border-bottom: 1px solid #dddddd;
 	padding-top: 15px;
 	padding-bottom: 15px;
-	text-align: center;
 	font-family: initial;
 }
 
@@ -117,14 +116,15 @@ tbody{
 }
 
 .buttons a{
-	color: #E6694C;
-	border: 1px solid #E6694C;
-	padding: 0.3rem 0.5rem;
+	color: #fff;
+	padding: 0.3rem 0.6rem;
+	margin-top:0.2rem;
 	display: inline-block;
+	background-color:#fe847d;
 }
 .buttons a:hover{
-	color: #82745d;
-	border: 1px solid #82745d;
+	color: #fff;
+	background-color:#c1564c;
 }
 
 .paging{
@@ -211,7 +211,7 @@ function showTracker(t_key, t_code,t_invoice){
 						</c:if>
 						<c:forEach var="dto" items="${lists}">
 											<tr>
-												<td class="cell">
+												<td class="cell text-center">
 													<c:url var="orderDetailUrl" value="orderInfoDetail.do">
 														<c:param name="order_idx">${dto.order_idx}</c:param>
 													</c:url>
@@ -224,22 +224,19 @@ function showTracker(t_key, t_code,t_invoice){
 													}
 													</script>
 												</td>
-												<td class="cell text-truncate" style="max-width: 170px;">${dto.pro_name}</td>
-												<td class="cell"><fmt:formatNumber type="number" maxFractionDigits="3" value="${dto.amount}" />원</td>
-												<td class="cell">${dto.order_date}</td>
-												<td class="cell">
+												<td class="cell text-truncate text-left" style="max-width: 170px;">${dto.pro_name}</td>
+												<td class="cell text-center"><fmt:formatNumber type="number" maxFractionDigits="3" value="${dto.amount}" />원</td>
+												<td class="cell text-center">${dto.order_date}</td>
+												<td class="cell text-center">
 													<c:choose>
 														<c:when test="${dto.order_status eq 1}">
-															<div class="text-warning">상품준비중</div>
+															<div class="text-warning "><strong>상품준비중</strong></div>
 															<div class="buttons">
 										                    	<c:url var="returnFormUrl" value="returnForm.do">
 																	<c:param name="order_idx">${dto.order_idx}</c:param>
 																</c:url>
 																<a href="#" class="orderNum" onclick="">
-																	<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-dash-circle" viewBox="0 0 16 16">
-																	  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-																	  <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
-																	</svg>&nbsp;주문취소
+																	<i class="bi bi-dash-circle"></i>&nbsp;주문취소
 																</a>
 																<script>
 																function returnFormOpen(url, name, options) {
@@ -249,32 +246,37 @@ function showTracker(t_key, t_code,t_invoice){
 															</div>
 														</c:when>
 														<c:when test="${dto.order_status eq 2}">
-															<div class="text-success">배송중</div>
-															<form name="frmData" id="frmData" method="post">
-																<input type="hidden" id="t_key" name="t_key" value="sjLmbhJEhPXnO5neAx7FNg">
-																<input type="hidden" id="t_code" name="t_code" value="04">
-																<input type="hidden" id="t_invoice" name="t_invoice" value="566250609912">
-																<input type="button" value="배송조회" onclick="showTracker('sjLmbhJEhPXnO5neAx7FNg', '04', '566250609912')" class="btn-sm app-btn-secondary">
-															</form>
+															<div class="text-primary"><strong>배송중</strong></div>
+															<div class="buttons trackerBtn">
+																<form name="frmData" id="frmData" method="post">
+																	<input type="hidden" id="t_key" name="t_key" value="sjLmbhJEhPXnO5neAx7FNg">
+																	<input type="hidden" id="t_code" name="t_code" value="04">
+																	<input type="hidden" id="t_invoice" name="t_invoice" value="566250609912">
+																	<a href="#" onclick="showTracker('sjLmbhJEhPXnO5neAx7FNg', '04', '566250609912'); return false;">
+																		<i class="bi bi-truck"></i>&nbsp;배송조회
+																	</a>
+																</form>
+															</div>
 														</c:when>
 														<c:when test="${dto.order_status eq 3}">
 															<div class="text-danger">주문취소</div>
 														</c:when>
 														<c:when test="${dto.order_status eq 4}">
-															<div>배송완료</div>
-															<form name="frmData" id="frmData" method="post">
-																<input type="hidden" id="t_key" name="t_key" value="sjLmbhJEhPXnO5neAx7FNg">
-																<input type="hidden" id="t_code" name="t_code" value="04">
-																<input type="hidden" id="t_invoice" name="t_invoice" value="566250609912">
-																<input type="button" value="배송조회" onclick="showTracker('sjLmbhJEhPXnO5neAx7FNg', '04', '566250609912')" class="btn-sm app-btn-secondary">
-															</form>
-															<button type="button" id="btnSubmit" class="btn-sm app-btn-secondary">후기 작성하기</button>
+															<div class="text-success"><strong>배송완료</strong></div>
+															<div class="buttons">
+																<c:url var="reviewWriteUrl" value="reviewWrite.do">
+																	<c:param name="activity_idx">${dto.order_idx}</c:param>
+																	<c:param name="writer">${dto.user_name}</c:param>
+																	<c:param name="category">구독일상</c:param>
+																</c:url>
+																<a href="${reviewWriteUrl}"><i class="bi bi-pencil"></i>&nbsp;후기쓰기</a>
+															</div>
 														</c:when>
 														<c:when test="${dto.order_status eq 5}">										
-															<div class="text-danger">반납신청</div>
+															<div class="text-danger"><strong>반납신청</strong></div>
 														</c:when>
-														<c:when test="${dto.order_status eq 6}">반납진행</c:when>
-														<c:when test="${dto.order_status eq 7}">반납완료</c:when>
+														<c:when test="${dto.order_status eq 6}"><div class="text-primary"><strong>반납진행</strong></div></c:when>
+														<c:when test="${dto.order_status eq 7}"><div class="text-success"><strong>반납완료</strong></div></c:when>
 													</c:choose>
 												</td>
 											</tr>

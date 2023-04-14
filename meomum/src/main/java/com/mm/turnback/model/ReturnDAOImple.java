@@ -39,4 +39,16 @@ public class ReturnDAOImple implements ReturnDAO {
 		ReturnListDTO dto=sqlMap.selectOne("returnData", order_idx);
 		return dto;
 	}
+	
+	@Override
+	public int returnStartUpdate(Map map) {
+		int count=sqlMap.update("returnStartUpdate", map);
+		return count;
+	}
+	
+	@Override
+	public int returnNoUpdate(Map map) {
+		int count=sqlMap.update("returnNoUpdate", map);
+		return count;
+	}
 }
