@@ -31,7 +31,6 @@
 	from product 
 	order by pro_idx desc
 	) a
-	
 	) b 
 	where rnum <![CDATA[>=]]>#{start}
 	and rnum<![CDATA[<=]]>#{end}
@@ -57,11 +56,21 @@
 	 select count(*) from product
  	</select>
  	
+ 	<select id="itemTotalCnt" resultType="integer">
+	 select count(*) 
+	 from product
+	 where pro_state != 1
+ 	</select>
+ 	
  	
  	<delete id="proDelete" parameterType="integer">
  	 delete from product  
  	 where pro_idx=#{pro_idx}
  	</delete>
+ 	
+ 	<select id="proCateList" resultType="com.mm.pro.model.ProDTO">
+ 	select pro_cate from product
+ 	</select>
  	
  	
  	<select id="proFind1" parameterType="int" resultType="com.mm.pro.model.ProDTO">
@@ -89,14 +98,13 @@
  	set
  	pro_name=#{pro_name},
  	pro_price=#{pro_price},
- 	pro_state=#{pro_state},
  	pro_month=#{pro_month},
  	pro_subprice=#{pro_subprice},
  	pro_allprice=#{pro_allprice}
  	where pro_idx=#{pro_idx}
  	</update>
  	
- 	 <select id="proSelect" parameterType="Integer" resultType="com.mm.pro.model.ProDTO">
+ 	<select id="proSelect" parameterType="Integer" resultType="com.mm.pro.model.ProDTO">
 	 select * from product
 	 where pro_idx=#{pro_idx}
  	</select>
@@ -153,4 +161,5 @@
 		delete from cart 
  	 where pro_idx=#{pro_idx} and user_idx = #{user_idx}
 	</delete>
+	
 </mapper> 

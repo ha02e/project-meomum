@@ -68,7 +68,7 @@ public class ProController {
 	@RequestMapping("/proList.do")
 	public ModelAndView itemList(@RequestParam(value="cp",defaultValue="1")int cp) {
 		
-		int totalCnt=proDao.getTotalCnt();
+		int totalCnt=proDao.itemTotalCnt();
 		int listSize=9;
 		int pageSize=5;
 		
@@ -244,20 +244,21 @@ public class ProController {
 		int listSize=10;
 		int pageSize=5;
 		
-		
 		String pageStr=com.mm.module.PageModule.makePage("proAdmin.do", totalCnt, listSize, pageSize, cp);
 		
-		List<ProDTO> lists=proPage(cp, pageSize);
 		
+		List<ProDTO> lists=proPage(cp,listSize);
 		
 		mav.setViewName("pro/proAdmin");
 		mav.addObject("lists", lists);
 		mav.addObject("pageStr", pageStr);
 		
 		return mav;
+		
+		
 	}
 	
-	//상품 삭제
+	//관리자 상품 삭제
 	@RequestMapping(value="/proDel.do", method = RequestMethod.POST)
 		public ModelAndView proDel(
 				ProDTO dto,
@@ -302,57 +303,6 @@ public class ProController {
 			mav.setViewName("pro/proMsg");
 			return mav;
 		}
-	
-	
-	/*상품 삭제
-	@RequestMapping("/proDel.do")
-	public ModelAndView proDel(@RequestParam("pro_idx") int pro_idx,
-			MultipartHttpServletRequest req,
-			@RequestBody ProDTO dto) {
-		int result = proDao.proDelete(pro_idx);
-		
-		
-		String rootPath = req.getSession().getServletContext().getRealPath("/");
-		 ProDTO dto=new ProDTO(); String thumb=dto.getPro_thumb();
-	
-		String filePath=rootPath+"/images/items/"+dto.getPro_thumb();
-		String filePath1=rootPath+"/images/items/"+dto.getPro_img1();
-		String filePath2=rootPath+"/images/items/"+dto.getPro_img2();
-		String filePath3=rootPath+"/images/items/"+dto.getPro_content();
-		
-		File f = new File(filePath);
-		File f1 = new File(filePath1);
-		File f2 = new File(filePath2);
-		File f3 = new File(filePath3);
-		
-		
-		if (f.exists()) {
-			f.delete();
-		}
-		
-		if (f1.exists()) {
-			f1.delete();
-		}
-		
-		if (f2.exists()) {
-			f2.delete();
-		}
-		
-		if (f3.exists()) {
-			f3.delete();
-		}
-		
-		
-		String msg=result>=0?"삭제 성공":"삭제 실패";
-		String link ="proAdmin.do";
-		ModelAndView mav=new ModelAndView();
-		mav.addObject("msg", msg);
-		mav.addObject("link", link);
-		mav.setViewName("pro/proMsg");
-		return mav;
-		}
-	
-	*/
 	
 	
 	//상품 검색
@@ -407,17 +357,9 @@ public class ProController {
 	@RequestMapping(value="proUpdate.do", method=RequestMethod.POST)
 	public ModelAndView proUpdate(ProDTO dto) {
 		ModelAndView mav=new ModelAndView();
-		
-		int result = proDao.proUpdate(dto); 
-		
-		ProDTO pdto=new ProDTO();
-		System.out.println("name:"+pdto.getPro_name());
-		System.out.println("price:"+pdto.getPro_price());
-		System.out.println("state"+pdto.getPro_state());
-		System.out.println("month"+pdto.getPro_month());
-		System.out.println("subprice:"+pdto.getPro_subprice());
-		System.out.println("allprice:"+pdto.getPro_allprice());
-		
+
+		int result = proDao.proUpdate(dto);
+
 		String msg=result>=0?"수정 완료했습니다.":"수정 실패했습니다.";
 		String link ="proAdmin.do";
 		mav.addObject("msg", msg);
@@ -563,6 +505,8 @@ public class ProController {
 			@RequestParam("proF")String proF) {
 		ModelAndView mav = new ModelAndView();
 		List<ProDTO> lists=proDao.proFind2(proF);
+		
+		mav.addObject("proF", proF);
 		mav.addObject("lists", lists);
 		mav.setViewName("pro/proList");
 		return mav;

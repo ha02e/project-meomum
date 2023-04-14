@@ -226,7 +226,7 @@ function showTracker(t_key, t_code,t_invoice){
 										<div class="text-danger">주문취소</div>
 									</c:when>
 									<c:when test="${dto.order_status eq 4}">
-										<div>배송완료</div>
+										<div class="text-primary">배송완료</div>
 										<form name="frmData" id="frmData" method="post">
 											<input type="hidden" id="t_key" name="t_key" value="sjLmbhJEhPXnO5neAx7FNg">
 											<input type="hidden" id="t_code" name="t_code" value="04">
@@ -236,10 +236,9 @@ function showTracker(t_key, t_code,t_invoice){
 									</c:when>
 									<c:when test="${dto.order_status eq 5}">										
 										<div class="text-danger">반납신청</div>
-										<a class="btn-sm app-btn-secondary" href="#">반납처리</a>
 									</c:when>
-									<c:when test="${dto.order_status eq 6}">반납진행</c:when>
-									<c:when test="${dto.order_status eq 7}">반납완료</c:when>
+									<c:when test="${dto.order_status eq 6}"><div class="text-success">반납진행</div></c:when>
+									<c:when test="${dto.order_status eq 7}"><div class="text-primary">반납완료</div></c:when>
 								</c:choose>
 							</td>
 						</tr>									

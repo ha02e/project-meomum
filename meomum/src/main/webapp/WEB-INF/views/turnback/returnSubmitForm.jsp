@@ -83,7 +83,7 @@ hr{
 					<form action="returnCancel.do" name="returnCancel" method="post">
 						<input type="hidden" name="order_idx" value="${param.order_idx}">
 						<input type="hidden" name="pro_idx" value="${dto.pro_idx}">
-						<button type="button" class="btn btn-secondary">반납보류</button>
+						<button type="submit" class="btn btn-secondary">반납보류</button>
 					</form>
 					
 					<form action="returnSubmit.do" name="returnSubmit" method="post">
