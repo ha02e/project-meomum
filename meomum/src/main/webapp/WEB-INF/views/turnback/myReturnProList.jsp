@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Insert title here</title>
 
-<script src="https://code.jquery.com/jquery-3.6.4.slim.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.slim.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -148,6 +148,9 @@ tbody{
 	margin:20px;
 }
 
+.tooltip-inner{white-space: pre-wrap;}
+
+
 </style>
 
 <script>
@@ -276,6 +279,22 @@ function orderInfoOpen(url, name, options) {
 									</c:when>
 									<c:when test="${dto.order_status eq 6}">반납진행</c:when>
 									<c:when test="${dto.order_status eq 7}">반납완료</c:when>
+									<c:when test="${dto.order_status eq 8}">
+									<button type="button" class="btn btn-outline-danger btn-sm"
+									        data-bs-toggle="tooltip" data-bs-placement="top"
+									        data-bs-custom-class="custom-tooltip"
+									        data-bs-title="반납신청이 승인되지 않았습니다.&#10;자세한 상담을 원하시면 고객센터(1234-1004)로 연락바랍니다.">
+									  반납보류
+									</button>
+									<script>
+									  $(document).ready(function(){
+									
+									    $('[data-bs-toggle="tooltip"]').tooltip();   
+									
+									  });
+									
+									</script>
+									</c:when>
 								</c:choose>
 			                    
 			                    
