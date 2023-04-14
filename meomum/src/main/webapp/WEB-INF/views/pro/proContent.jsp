@@ -12,8 +12,6 @@
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="fonts/linearicons-v1.0.0/icon-font.min.css">
@@ -34,6 +32,7 @@
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="css/proUtil.css">
 	<link rel="stylesheet" type="text/css" href="css/proMain.css">
+	<link rel="stylesheet" type="text/css" href="css/profont-awesome.min.css">
 <!--===============================================================================================-->
 </head>
 <%@include file="/WEB-INF/views/header.jsp" %>
@@ -42,16 +41,15 @@
 	<!-- breadcrumb -->
 	<div style="margin-top: 20px;" class="container">
 		<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+		
 			<a href="index.do" class="stext-109 cl8 hov-cl1 trans-04">
-				Home
+				Home >
 				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
 			</a>
-
+			
 			<a href="proList.do" class="stext-109 cl8 hov-cl1 trans-04">
 				${lists[0].pro_cate == 1 ? '침대' : lists[0].pro_cate == 2 ? '테이블' : 
-				lists[0].pro_cate == 3? '의자' : lists[0].pro_cate == 4? '소파' : '조명'}
-				
-				
+				lists[0].pro_cate == 3? '의자' : lists[0].pro_cate == 4? '소파' : '조명'} >
 				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
 			</a>
 
