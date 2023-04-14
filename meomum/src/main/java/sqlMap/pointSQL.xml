@@ -34,6 +34,13 @@ FROM dual
 		INTO point
 		VALUES (point_idx.nextval, #{cate_idx},#{user_idx},#{point_use},sysdate,#{point_info},#{point_num})
 	</insert>
+	
+	<!-- 정리일상 결제 포인트 내용 조회 -->
+	<select id="svcPointSelect" parameterType="String" resultType="com.mm.point.model.PointDTO">
+	SELECT * 
+	FROM point
+	WHERE cate_idx =#{cate_idx}
+	</select>
 
 	<select id="pointList" parameterType="Integer" resultType="com.mm.point.model.PointDTO">
 	SELECT *
@@ -68,7 +75,7 @@ ORDER BY rnum DESC
 
 	</select>
 	
-<select id="pointCnt" parameterType="Integer" resultType="Integer">
+	<select id="pointCnt" parameterType="Integer" resultType="Integer">
 	        select count(*) from point where user_idx =#{user_idx} and point_num !=0
 	
 	</select>

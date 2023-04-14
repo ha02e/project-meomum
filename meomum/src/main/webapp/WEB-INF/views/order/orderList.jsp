@@ -131,7 +131,7 @@ input:invalid {
 							<th scope="col">구독월수</th>
 							<th scope="col">배송비</th>
 							<th scope="col">수량</th>
-							<th scope="col">결제 금액</th>
+							<th scope="col">월 구독 가격</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -166,7 +166,9 @@ input:invalid {
 				</table>
 
 
-
+				<div class="text-center" style="font-size: 15px;">
+							첫달 구독 + 구매 + 배송비
+						</div>
 				<div>
 					<div class="text-center" style="font-size: 20px;">
 						월 구독 가격 + 총 배송비 : <span style="color: red;"> <fmt:formatNumber

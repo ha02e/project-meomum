@@ -251,6 +251,7 @@ public class ProController {
 		
 		mav.setViewName("pro/proAdmin");
 		mav.addObject("lists", lists);
+		mav.addObject("totalCnt",totalCnt);
 		mav.addObject("pageStr", pageStr);
 		
 		return mav;

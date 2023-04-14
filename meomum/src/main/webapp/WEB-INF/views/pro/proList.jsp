@@ -40,8 +40,6 @@
 }
 </style>
 
-<!--===================돋보기용====================-->
-	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
 <!--=============================================-->
 	<link rel="stylesheet" type="text/css" href="css/proUtil.css">
 	<link rel="stylesheet" type="text/css" href="css/proMain.css">
@@ -71,21 +69,23 @@
 					</div>
 				</div>
 
-	<div class="container text-center" style="max-width: 960px;">
+	<div class="container text-center" style="max-width: 970px;">
 		 <div class="row justify-content-center">
 		  <c:forEach var="list2" items="${lists2}">
-		    <div class="col-sm-6 col-md-3 col-lg-3">
+		    <div class="col-sm-6 col-md-3 col-lg-3 mx-auto" >
 		      <div class="block2-pic hov-img0">
 		        <a href="proContent.do?pro_idx=${list2.pro_idx}"><img src="/meomum/images/items/${list2.pro_thumb}" alt="best-img"></a>
 		     	 </div>
-			      <div class="block2-txt flex-w flex-t p-t-14">
-			        <div class="block2-txt-child1 flex-col-l text-center">
+			      <div class="block2-txt flex-w flex-t p-t-14 mx-auto">
+			      
+			        <div class="col-sm-6 mx-auto text-center">
 			          <a href="proContent.do?pro_idx=${list2.pro_idx}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6 d-block mx-auto">
 			            ${list2.pro_name}
 			          </a>
 			          <span class="stext-105 cl3 d-block mx-auto">
 			            <fmt:formatNumber type="number" maxFractionDigits="3" value="${list2.pro_subprice }" />원
 			          </span>
+			          
 			        </div>
 			      </div>
 			   	</div>
@@ -127,17 +127,18 @@
 		 <form name="itemFind" action="itemFind.do">
 			 
 			  <div class="panel-search w-full p-t-10 p-b-15">
-			    <div class="search-cancel">
+			    <div class="search-cancel" >
 			      <c:if test="${!empty proF }">
-			        <a href="proList.do" class="stext-104"style="color:#FF6A89; border: 1px solid #FF6A89;">취소</a>
+			        <a href="proList.do" class="stext-104" style="color:#FF6A89; border: 1px solid #FF6A89;">검색 취소</a>
 			      </c:if>
 			    </div>
 			    
 		    <div class="search-input">
-		      <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="proF" required placeholder="Search" 
-		        <c:if test="${!empty proF}">value="${proF}"</c:if>>
+		     <input class="form-control me-sm-2" type="text" name="proF" placeholder="Search" required
+		     <c:if test="${!empty proF}">value="${proF}"</c:if>>
+		     
 		      <button type="submit" class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
-		        <i class="zmdi zmdi-search"></i>
+		       <i class="bi bi-search"></i>
 		      </button>
 		    </div>
 		  </div>
@@ -148,8 +149,7 @@
 	<!-- products -->
 		<div class="row isotope-grid">
 		    <c:forEach var="list" items="${lists}">
-	<div style="margin-bottom: 40px;" class="col-sm-6 col-md-4 col-lg-4 p-b-35 isotope-item ${list.pro_cate}">
-
+				<div style="margin-bottom: 40px;" class="col-sm-6 col-md-4 col-lg-4 p-b-35 isotope-item ${list.pro_cate}">
 		            <!-- Block2 -->
 		            <div class="block2">
 		                <div class="block2-pic hov-img1">
@@ -162,7 +162,7 @@
 		
 	                <div class="block2-txt flex-w flex-t p-t-14">
 	                    <div class="block2-txt-child1 flex-col-l ">
-	                        <a href="proContent.do?pro_idx=${list.pro_idx}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+	                        <a href="proContent.do?pro_idx=${list.pro_idx}" class="stext-106 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 	                            ${list.pro_name}
 	                        </a>
 				
@@ -176,7 +176,7 @@
 	                        <input type="hidden" id="user_idx" name="user_idx" value="${sessionScope.ssInfo.user_idx}">
 	                   
 	                    <div class="block2-txt-child2 flex-r p-t-3">
-	                        <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" onclick="loveInsert(${list.pro_idx },${sessionScope.ssInfo.user_idx})">
+	                        <a href="javascript:void(0)" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" onclick="loveInsert(${list.pro_idx },${sessionScope.ssInfo.user_idx})">
 	                            <img class="icon-heart1 dis-block trans-04" src="images/icon/icon-heart-01.png" alt="ICON">
 	                            <img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icon/icon-heart-02.png" alt="ICON">
 	                        </a>
@@ -200,34 +200,37 @@
 		</div>
 	</div>
 
-<!--=============================================-->
-	<script src="vendor/animsition/js/animsition.min.js"></script>
+
 <!--=============================================-->
 	<script src="vendor/bootstrap/js/popper.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 <!--=============================================-->
 	<script src="vendor/slick/slick.min.js"></script>
 	<script src="js/slick-custom.js"></script>
-<!--=============================================-->
-	<script src="vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
-	<script>
-		$('.gallery-lb').each(function() { // the containers for all your galleries
-			$(this).magnificPopup({
-		        delegate: 'a', // the selector for gallery item
-		        type: 'image',
-		        gallery: {
-		        	enabled:true
-		        },
-		        mainClass: 'mfp-fade'
-		    });
-		});
-	</script>
 <!--=========페이지 모양 유지해줌===========-->
 	<script src="vendor/isotope/isotope.pkgd.min.js"></script>
-
-
+	<script src="vendor/animsition/js/animsition.min.js"></script>
 <!--=========아마 찜하기 팝업이었을 거임==========-->
 	<script src="vendor/sweetalert/sweetalert.min.js"></script>
+<script>
+
+		$('.js-addwish-b2').on('click', function(e){
+			e.preventDefault();
+		});
+
+		$('.js-addwish-b2').each(function(){
+			var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
+			$(this).on('click', function(){
+				swal(nameProduct, "찜 추가되었습니다");
+
+				$(this).addClass('js-addedwish-b2');
+				$(this).off('click');
+			});
+		});
+
+</script>
+
+<!-- 
 <script>
 function loveInsert(pro_idx,user_idx) {
 //찜 추가
@@ -239,15 +242,15 @@ function loveInsert(pro_idx,user_idx) {
 	      user_idx: user_idx
 	    },
 	    success: function(data) {
-	      swal("찜 완료", response.message, "success");
+	      alert("찜 완료");
 	    },
 	    error: function(jqXHR, textStatus, errorThrown) {
-	      swal("찜 실패", "찜을 저장하는 동안 문제가 발생했습니다.", "error");
+	      alert("찜 실패");
 	    }
 	  });
 	}
 </script>
-
+ -->
 <script>
 //전체 외 페이징 숨기기
 const allBtn = document.querySelector('[data-filter="*"]');
@@ -265,7 +268,6 @@ filterBtns.forEach(btn => {
     pagination.style.display = 'none'; // 페이징을 숨기도록 설정
   });
 });
-
 </script>
 
 <script src="js/main.js"></script>

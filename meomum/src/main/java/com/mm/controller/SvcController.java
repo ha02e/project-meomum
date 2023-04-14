@@ -367,7 +367,7 @@ public class SvcController {
 	public ModelAndView svcIngContent_a(@RequestParam("svc_idx")String idx,@RequestParam("user_idx")int user_idx) {
 		SvcContentDTO dto = svcDao.svcContent(idx);
 		SvcIngDTO ingdto = svcDao.svcIngContent(idx);
-		PaymentDTO paydto = payDao.paymentSelect(idx);
+		/* PaymentDTO paydto = payDao.paymentSelect(idx); */
 		
 		int result = pdao.pointTotal(user_idx);
 		ModelAndView mav = new ModelAndView();
@@ -376,8 +376,8 @@ public class SvcController {
 		mav.addObject("ingdto",ingdto);
 		
 		mav.addObject("result", result);
-		mav.addObject("paydto",paydto);
-		System.out.println("정리일상 예약 상세:"+paydto);
+		/* mav.addObject("paydto",paydto); */
+		/* System.out.println("정리일상 예약 상세:"+paydto); */
 	
 		mav.setViewName("svc/svcIngContent");
 	
