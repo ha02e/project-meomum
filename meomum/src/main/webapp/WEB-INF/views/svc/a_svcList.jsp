@@ -159,18 +159,17 @@ thead th a {
 				          <input type="checkbox" name="svc_state" value="예약확정">예약확정&nbsp;
 				          <input type="checkbox" name="svc_state" value="예약취소">예약취소&nbsp;
 				          <input type="checkbox" name="svc_state" value="견적완료">견적완료&nbsp;
-				          <input type="checkbox" name="svc_state" value="결제대기">결제대기&nbsp;
 				          <input type="checkbox" name="svc_state" value="결제완료">결제완료&nbsp;
 				          <input type="checkbox" name="svc_state" value="결제취소">결제취소&nbsp;
 				          <input type="checkbox" name="svc_state" value="작업완료">작업완료&nbsp;
 				        </div>
 				      </div>
-				      <div class="datatable-top d-flex justify-content-between align-items-center">
+				      <div class="datatable-top ">
 						    <div class="datatable-search text-center">
-						        <button class="btn app-btn-primary button" onclick="selectDetail()">검색
+						        <button class="btn app-btn-primary button text-center" onclick="selectDetail()">검색
 						    </div>
-						    <div class="datatable-search text-center">
-						        <button class="btn app-btn-secondary button" onclick="location.reload()">초기화
+						    <div class="datatable-search text-end ">
+						        <button class="btn app-btn-secondary button " onclick="location.reload()">초기화
 						    </div>
 					</div>
 				    </div>
@@ -188,13 +187,13 @@ thead th a {
 											href="#" class="datatable-sorter">예약번호</a></th>
 										<th data-sortable="true" style="width: 18%;"
 											aria-sort="descending" class="datatable-descending"><a
-											href="#" class="datatable-sorter">예약일</a></th>
+											href="#" class="datatable-sorter">고객성함</a></th>
 										<th data-sortable="true" style="width: 10%;"
 											aria-sort="descending" class="datatable-descending"><a
-											href="#" class="datatable-sorter">고객성함</a></th>
+											href="#" class="datatable-sorter">전화번호</a></th>
 										<th data-sortable="true" style="width: 18%;"
 											aria-sort="descending" class="datatable-descending"><a
-											href="#" class="datatable-sorter">전화번호</a></th>
+											href="#" class="datatable-sorter">예약일</a></th>
 										<th data-sortable="true" style="width: 10%;"
 											aria-sort="descending" class="datatable-descending"><a
 											href="#" class="datatable-sorter">상태</a></th>
@@ -214,9 +213,9 @@ thead th a {
 										</c:url>
 										<tr>
 											<td class="svc_idx text-center "><a href="${contentUrl}">${dto.svc_idx}</a></td>
-											<td class="text-center">${dto.svc_regdate}</td>
-											<td class="text-center">${dto.user_name}</td>
+											<td class="text-center"><a href="${contentUrl}">${dto.user_name}</a></td>
 											<td class="text-center">${dto.user_tel}</td>
+											<td class="text-center">${dto.svc_regdate}</td>
 											<td class="text-center"><c:choose>
 													<c:when test="${dto.svc_state eq '예약확정'}">
 														<span

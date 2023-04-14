@@ -25,10 +25,8 @@
 	justify-content: space-between;
 }
 ul.list-group-item{
-	margin-left: 20px;
-	
+	margin-left: 20px;	
 }
-
 
   li.list-group-item > div {
     text-align: left;
@@ -39,6 +37,10 @@ ul.list-group-item{
     text-align: left;
     margin-right: 20px;
   }
+  
+  li.list-group-item div.col:last-child input {
+    width: 100%;
+}
   
 .page-header {
 	background: linear-gradient(rgba(36, 39, 38, 0.5), rgba(36, 39, 38, 0.5)),
@@ -225,7 +227,8 @@ footer {
 							<div class="col">
 								<span>예약번호</span>
 							</div>
-							<div div class="col">${ingdto.svc_idx}</div>
+							<div class="col">
+							<input type="text" id="svc_idx" value="${ingdto.svc_idx}" readonly></div>
 						</li>
 						<!-- ---------------------------------------------------------- -->
 						<li class="list-group-item d-flex justify-content-between lh-sm row">
@@ -234,10 +237,11 @@ footer {
 							</div>
 							<div class="col">
 								<c:if test="${dto.svc_state ne '결제취소'}">
-	      						${dto.svc_days}&nbsp;|&nbsp;${dto.svc_time}
+	      						<input type="text" value="${dto.svc_days}&nbsp;|&nbsp;${dto.svc_time}" readonly>
 	      						</c:if>
 								<c:if test="${dto.svc_state eq '결제취소'}">
-	      						${dto.svc_days.substring(1)} | ${dto.svc_time.substring(1)}
+	      						<%-- ${dto.svc_days.substring(1)} | ${dto.svc_time.substring(1)} --%>
+	      						<input type="text" value="${dto.svc_days.substring(1)}&nbsp;|&nbsp;${dto.svc_time.substring(1)}" readonly>
 	      						</c:if>
 							</div>
 						</li>
@@ -249,39 +253,45 @@ footer {
 
 						</li>
 						<!-- ---------------------------------------------------------- -->
-						<li class="list-group-item d-flex justify-content-between lh-sm row">
+						<li class="list-group-item d-flex flex-wrap justify-content-between lh-sm row">
 							<div class="col">
 								<span>지역</span>
 							</div>
-							<div class="col">${dto.user_addr}${dto.user_detail}</div>
+							<div class="col">
+							<%-- ${dto.user_addr},${dto.user_detail} --%>
+							<input type="text" value="${dto.user_addr},${dto.user_detail}" readonly></div>
 						</li>
 						<!-- ---------------------------------------------------------- -->
 						<li class="list-group-item d-flex justify-content-between lh-sm row">
 							<div class="col">
 								<span>거주형태</span>
 							</div>
-							<div class="col">${dto.svc_type}</div>
+							<div class="col"><%-- ${dto.svc_type} --%>
+							<input type="text" value="${dto.svc_type}" readonly></div>
 						</li>
 						<!-- ---------------------------------------------------------- -->
 						<li class="list-group-item d-flex justify-content-between lh-sm row">
 							<div class="col">
 								<span>서비스 영역</span>
 							</div>
-							<div class="col">${dto.svc_area}</div>
+							<div class="col"><%-- ${dto.svc_area} --%>
+							<input type="text" value="${dto.svc_area}" readonly></div>
 						</li>
 						<!-- ---------------------------------------------------------- -->
 						<li class="list-group-item d-flex justify-content-between lh-sm row">
 							<div class="col">
 								<span>거주 평수(공급면적)</span>
 							</div>
-							<div class="col">${dto.svc_py}평</div>
+							<div class="col"><%-- ${dto.svc_py}평 --%>
+							<input type="text" value="${dto.svc_py}평" readonly></div>
 						</li>
 						<!-- ---------------------------------------------------------- -->
 						<li class="list-group-item d-flex justify-content-between lh-sm row">
 							<div class="col">
 								<span>요청사항</span>
 							</div>
-							<div class="col">${dto.svc_req}</div>
+							<div class="col"><!--  -->
+							<input type="text" value="${dto.svc_req}" readonly></div>
 						</li>
 						<!-- ---------------------------------------------------------- -->
 						<li class="list-group-item d-flex justify-content-between bg-body-tertiary row">
@@ -294,23 +304,28 @@ footer {
 							<div class="col">
 								<span>성함</span>
 							</div>
-							<div class="col">${dto.user_name}</div>
+							<div class="col">
+							<input type="text" id="user_name" value="${dto.user_name}" readonly>
+							<!-- ${dto.user_name}--></div>
 						</li>
 						<!-- ---------------------------------------------------------- -->
 						<li class="list-group-item d-flex justify-content-between lh-sm row">
 							<div class="col">
 								<span>휴대전화</span>
 							</div>
-							<div class="col">${dto.user_tel}
+							<div class="col">
+							<input type="text" id="user_tel" value="${dto.user_tel}" readonly>
+							<%-- ${dto.user_tel} --%>
 							</div>
 						</li>
 					</ul>
 					<c:if test="${dto.svc_state eq '결제취소'}">
 						<hr class="my-4">
-						<a href="svc.do" class="w-100 btn btn-primary"></a>
+						<a href="asvcIngContent.do?"+${dto.svc_idx} class="w-100 btn btn-primary" value="목록"></a>
 					</c:if>
 					<c:if test="${dto.svc_state eq '결제완료'}">
 						<hr class="my-4">
+						<!-- hidden: payment idx, 결제금액 -->
 						<input type="button" class="w-100 btn btn-primary" value="결제취소"
 							onclick="canclePay()">
 					</c:if>
@@ -347,28 +362,7 @@ footer {
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"
 	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 	crossorigin="anonymous"></script>
-<script>
-	function cancelPay() {
-		jQuery.ajax({
-			// 예: http://www.myservice.com/payments/cancel
-			//"url": "{환불정보를 수신할 가맹점 서비스 URL}", 
-			"type" : "POST",
-			"contentType" : "application/json",
-			"data" : JSON.stringify({
-				"merchant_uid" : "{imp_835474242464}", // 예: ORD20180131-0000011
-				"cancel_request_amount" : 196500, // 환불금액
-			//"reason": "테스트 결제 환불" // 환불사유
-			// [가상계좌 환불시 필수입력] 환불 수령계좌 예금주
-			//"refund_holder": "홍길동", 
-			// [가상계좌 환불시 필수입력] 환불 수령계좌 은행코드(예: KG이니시스의 경우 신한은행은 88번)
-			//"refund_bank": "88" 
-			// [가상계좌 환불시 필수입력] 환불 수령계좌 번호
-			//"refund_account": "56211105948400" 
-			}),
-			"dataType" : "json"
-		});
-	}
-</script>
+
 
 
 
