@@ -134,6 +134,7 @@ function returnSubmitForm(url, name, options) {
 															<span class="text-danger">반납신청</span>
 															<c:url var="returnSubmitUrl" value="returnSubmitForm.do">
 																<c:param name="order_idx">${dto.order_idx}</c:param>
+																<c:param name="pro_idx">${dto.pro_idx}</c:param>
 															</c:url>
 															<a href="#" class="btn-sm app-btn-secondary" 
 																		onclick="returnSubmitForm('${returnSubmitUrl}', 'returnSubmitForm', 'width=540,height=600'); return false;">
