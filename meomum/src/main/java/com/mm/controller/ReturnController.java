@@ -38,8 +38,14 @@ public class ReturnController {
 	
 	
 	@RequestMapping("/returnForm.do")
-	public ModelAndView returnForm(@RequestParam("order_idx") String order_idx) {
-		OrderReportDTO dto = orderDao.orderData(order_idx);
+	public ModelAndView returnForm(@RequestParam("order_idx") String order_idx,
+									@RequestParam("pro_idx")int pro_idx) {
+
+		Map map = new HashMap();
+		map.put("order_idx", order_idx);
+		map.put("pro_idx", pro_idx);
+		
+		OrderReportDTO dto = orderDao.orderData(map);
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("dto", dto);
