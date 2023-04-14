@@ -116,24 +116,26 @@ function showTracker(t_key, t_code,t_invoice){
 	<div class="app-content pt-3 p-md-3 p-lg-4">
 		<div class="container pt-5">
 			<h1 class="text-center mb-4">주문/배송 내역</h1>
+			
+		<div class="page-utilities">
+			<div class="row g-2 mb-4 justify-content-center align-items-center">
+				<div class="col-auto">
+					<form class="table-search-form row gx-1 align-items-center">
+						<div class="col-auto">
+							<input type="text" id="search-orders" name="searchorders" class="form-control search-orders" placeholder="검색어를 입력해주세요.">
+						</div>
+						<div class="col-auto">
+							<button type="submit" class="btn btn btn-primary">검색</button>
+						</div>
+					</form>
+				</div><!--//col-->
+			</div><!--//row-->
+		</div><!--//table-utilities-->
+			    
 			<div class="card">
-			<div class="card-body">
+			<div class="card-body"> 
 			
 				<div class="datatable-container">
-				<div class="datatable-top d-flex justify-content-center align-items-center">
-					<div class="datatable-dropdown">
-			        	<select class="datatable-selector">
-				        	<option value="a" selected>전체</option>
-				        	<option value="b">주문번호</option>
-				        	<option value="c">구독상품</option>
-				        	<option value="d">주문자</option>
-			      		</select>
-			        </div>
-					<div class="datatable-search">
-			            <input class="datatable-input" placeholder="검색어를 입력해주세요..." type="search">
-			            <button type="submit" class="btn app-btn-secondary button">검색</button>
-			        </div>
-			    </div>  
 			    
 				<table class="datatable-table" id="order-table">
 				<thead>
