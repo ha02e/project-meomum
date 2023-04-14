@@ -6,8 +6,7 @@
 <html>
 <head>
 <title>머뭄 주문/결제</title>
-<meta http-equiv="Content-Security-Policy"
-	content="upgrade-insecure-requests">
+<meta charset="UTF-8">
 
 <!-- 결제모듈 -->
 <!-- jQuery -->
@@ -314,8 +313,6 @@ input:invalid {
 	</div>
 
 
-
-	<%@include file="../footer.jsp"%>
 	<!-- -------------------------------------------------------------------------------------- -->
 	<!-- 이용약관 Modal -->
 	<div class="modal fade" id="usecheckModal" tabindex="-1"
@@ -545,6 +542,6 @@ input:invalid {
 
 
 
-
+<%@include file="../footer.jsp"%>
 </body>
 </html>
