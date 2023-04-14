@@ -101,8 +101,6 @@
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
-<!--===============================================================================================-->	
 	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/slick/slick.css">
@@ -113,7 +111,6 @@
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="css/proUtil.css">
 	<link rel="stylesheet" type="text/css" href="css/proMain.css">
-	<link rel="stylesheet" type="text/css" href="css/profont-awesome.min.css">
 <!--===============================================================================================-->
 </head>
 <%@include file="/WEB-INF/views/header.jsp" %>
@@ -158,7 +155,7 @@
 										<img src="/meomum/images/items/${lists[0].pro_thumb}" alt="IMG-PRODUCT">
 
 										<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="/meomum/images/items/${lists[0].pro_thumb}">
-											<i class="fa fa-expand"></i>
+											<i class="bi bi-arrows-angle-expand"></i>
 										</a>
 									</div>
 								</div>
@@ -169,7 +166,7 @@
 										<img src="/meomum/images/items/${lists[0].pro_img1}" alt="IMG-PRODUCT">
 
 										<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="/meomum/images/items/${lists[0].pro_img1}">
-											<i class="fa fa-expand"></i>
+											<i class="bi bi-arrows-angle-expand"></i>
 										</a>
 									</div>
 								</div>
@@ -180,7 +177,7 @@
 										<img src="/meomum/images/items/${lists[0].pro_img2}" alt="IMG-PRODUCT">
 
 										<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="/meomum/images/items/${lists[0].pro_img2}">
-											<i class="fa fa-expand"></i>
+											<i class="bi bi-arrows-angle-expand"></i>
 										</a>
 									</div>
 								</div>
