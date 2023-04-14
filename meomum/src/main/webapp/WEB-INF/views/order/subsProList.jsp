@@ -205,22 +205,6 @@ function orderInfoOpen(url, name, options) {
 
 		<div class="container-xl text-center">
 		
-			<div class="page-utilities">
-				<div class="row g-2 mb-4 justify-content-center align-items-center">
-					<div class="col-auto">
-						<form class="table-search-form row gx-1 align-items-center">
-							<div class="col-auto">
-								<input type="text" id="search-orders" name="searchorders" class="form-control search-orders" placeholder="검색어를 입력해주세요.">
-							</div>
-							<div class="col-auto">
-								<button type="submit" class="btn btn btn-primary">검색</button>
-							</div>
-						</form>
-					</div><!--//col-->
-				</div><!--//row-->
-			</div><!--//table-utilities-->
-		
-		
 		  <div class="users-table table-wrapper">
 		  
 		  <table class="posts-table" id="order-list">
