@@ -13,8 +13,19 @@
 	<select id="ntcList" parameterType="Map" resultType="com.mm.ntc.model.NtcDTO">
 		select * from
 		(select rownum as rnum,a.* from
-		(select * from notice order by ntc_idx desc) a) b
-		where rnum<![CDATA[>=]]>#{start} and rnum<![CDATA[<=]]>#{end}	
+		(select * from notice
+		<if test="fvalue != null">
+
+			WHERE
+			ntc_title LIKE #{fvalue}
+			
+
+		</if>
+		order by ntc_idx desc
+		)a
+		)b
+		where rnum <![CDATA[>=]]>
+		#{start} and rnum <![CDATA[<=]]>#{end}
 	</select>
 	
 	<!-- 게시글 본문보기 -->
@@ -59,8 +70,15 @@
 		select * from notice where ntc_title like '%${keyword}%'
 	</select>
 	
-	<select id="ntcTotalCnt" resultType="Integer">
+	
+	<!-- 총게시물 구하기 -->
+	<select id="ntcTotalCnt" resultType="Integer" parameterType="String">
+
 	 select count(*) from notice
+		<if test="fvalue != null">
+			where ntc_title LIKE #{fvalue}
+		</if>
+	 
  	</select>
 
 
