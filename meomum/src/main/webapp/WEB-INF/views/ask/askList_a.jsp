@@ -110,8 +110,8 @@
 			
 			</div>
 		</div>
-	<%@include file="/WEB-INF/views/footer_a.jsp"%>
 </div>
+	<%@include file="/WEB-INF/views/footer_a.jsp"%>
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
