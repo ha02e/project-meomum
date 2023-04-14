@@ -1562,7 +1562,7 @@ button.mfp-close {
 
 .tab01 .nav-link {
   font-family: GmarketSansMedium;
-  font-size: 15px;
+  font-size: 18px;
   color: #888;
   line-height: 1.2;
 
@@ -2273,7 +2273,8 @@ div.row.isotope-grid {
 
 .mtext-105 {
   font-family: GmarketSansMedium;
-  font-size: 24px;
+  font-size: 28px;
+  font-weight: bold;
   line-height: 1.5;
 }
 
@@ -2412,7 +2413,7 @@ div.row.isotope-grid {
 /*//////////////////////////////////////////////////////////////////
 [ Size ]*/
 .size-101 {
-  min-width: 161px;
+  min-width: 130px;
   height: 46px;
 }
 
@@ -2632,7 +2633,7 @@ div.row.isotope-grid {
 ==================================================================*/
 .bg-none {background-color: transparent;}
 .bg0 {background-color: #fff;}
-.bg1 {background-color: #717fe0;}
+.bg1 {background-color: #FE8A7D;}
 .bg2 {background-color: #e6e6e6;}
 .bg3 {background-color: #222;}
 .bg5 {background-color: rgba(0,0,0,0.5);}
