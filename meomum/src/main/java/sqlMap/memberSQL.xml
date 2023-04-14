@@ -24,22 +24,24 @@
 	</insert>
 
 	<select id="selectLastInsertId" resultType="Integer">
-	  	SELECT 
-        LAST_NUMBER-1 FROM 
-        USER_SEQUENCES WHERE 
-        SEQUENCE_NAME = 'MEMBER_USER_IDX'
+		SELECT
+		LAST_NUMBER-1
+		FROM
+		USER_SEQUENCES WHERE
+		SEQUENCE_NAME = 'MEMBER_USER_IDX'
 	</select>
-	
+
 	<insert id="insertJoinPoint" parameterType="Integer">
-	  INSERT INTO point VALUES (
-	    point_idx.nextval, 
-	    'join', 
-	    #{user_idx},
-	    0, 
-	    sysdate,
-	    '첫 가입 축하 적립',
-	    2000
-	  )
+		INSERT INTO point
+		VALUES (
+		point_idx.nextval,
+		'join',
+		#{user_idx},
+		0,
+		sysdate,
+		'첫 가입 축하 적립',
+		5000
+		)
 	</insert>
 
 
@@ -167,7 +169,7 @@
 		update member set
 		user_memo = #{user_memo} where user_idx =#{user_idx}
 	</update>
-	
+
 	<select id="managerList" parameterType="Map"
 		resultType="com.mm.member.model.MemberListDTO">
 		SELECT *
@@ -236,21 +238,26 @@
 		</if>
 
 	</select>
-	
-		<update id="managerDelete" parameterType="Integer">
+
+	<update id="managerDelete" parameterType="Integer">
 		update member set
 		user_info = '회원' where user_idx =#{user_idx}
 	</update>
-	
+
 	<select id="findID" parameterType="Map" resultType="String">
-		select user_id from member where user_name = #{user_name} and user_tel = #{user_tel}
+		select
+		user_id from member where user_name = #{user_name} and user_tel =
+		#{user_tel}
 	</select>
-	
+
 	<select id="findPWD" parameterType="Map" resultType="Integer">
-		select user_idx from member where user_name = #{user_name} and user_tel = #{user_tel} and user_id = #{user_id}
+		select
+		user_idx from member where user_name = #{user_name} and user_tel =
+		#{user_tel} and user_id = #{user_id}
 	</select>
-	
-	<select id="memberIdcheck" parameterType="String" resultType="String">
+
+	<select id="memberIdcheck" parameterType="String"
+		resultType="String">
 		SELECT user_id
 		FROM member
 		WHERE user_id = #{user_id}
@@ -258,29 +265,93 @@
 		SELECT user_id
 		FROM member_drop
 		WHERE user_id = #{user_id}
-	
+
 	</select>
-	
-	<select id="dropSelectInfo" parameterType="Integer" resultType="Integer" >
+
+	<select id="dropSelectInfo" parameterType="Integer"
+		resultType="Integer">
 		SELECT COUNT(*)
 		FROM member
-		WHERE user_idx = #{user_idx} 
-		AND user_idx IN (
-		    SELECT user_idx
-		    FROM svc_member
-		    WHERE svc_state NOT IN ('예약취소', '작업완료')
+		WHERE user_idx =
+		#{user_idx}
+		AND
+		(user_idx IN (
+		SELECT user_idx
+		FROM svc_member
+		WHERE svc_state NOT IN
+		('예약취소', '결제취소','작업완료')
 		)
-		AND user_idx IN (
-		    SELECT user_idx
-		    FROM orders
-		    WHERE order_status NOT IN (3, 4, 7)
+		OR user_idx IN (
+		SELECT user_idx
+		FROM orders
+		WHERE order_status NOT IN (3, 7)
+		)
 		)
 	</select>
 	<delete id="deleteMember" parameterType="Integer">
-		delete from member where user_idx = #{user_idx}
-		</delete>
-		
-	<insert id="insertMemberDrop" parameterType="Map" >
-		insert into member_drop values(member_drop_drop_idx.nextval,#{user_idx},#{user_id},sysdate,'Y')
-	</insert>
+		delete from member where
+		user_idx = #{user_idx}
+	</delete>
+
+	<!-- 탈퇴  시작-->
+	<delete id="dropCartUser_idx" parameterType="Integer">
+		delete from cart
+		where user_idx = #{user_idx}
+	</delete>
+
+	<delete id="dropOrder_proUser_idx" parameterType="Integer">
+		delete from
+		order_pro where user_idx = #{user_idx}
+	</delete>
+
+	<delete id="dropOrdersUser_idx" parameterType="Integer">
+		delete from
+		orders
+		where user_idx = #{user_idx}
+	</delete>
+	
+	<delete id="dropPointeUser_idx" parameterType="Integer">
+		delete from point where user_idx = #{user_idx}
+	</delete>
+	
+	<delete id="dropShippingUser_idx" parameterType="Integer">
+		delete from
+		shipping where user_idx = #{user_idx}
+	</delete>
+
+	<delete id="dropSvc_dateUser_idx" parameterType="Integer">
+		delete from
+		svc_date where user_idx = #{user_idx}
+	</delete>
+	
+	<delete id="dropSvc_detailUser_idx" parameterType="Integer">
+		delete from
+		svc_detail where user_idx = #{user_idx}
+	</delete>
+	
+	<delete id="dropSvc_ingUser_idx" parameterType="Integer">
+		delete from
+		svc_ing where user_idx = #{user_idx}
+	</delete>
+	
+	<delete id="dropSvc_memberUser_idx" parameterType="Integer">
+		delete from
+		svc_member where user_idx = #{user_idx}
+	</delete>
+	
+	<delete id="dropTurnbackUser_idx" parameterType="Integer">
+		delete from
+		turnback where user_idx = #{user_idx}
+	</delete>
+	<!-- 탈퇴  끝-->
+
+
+
+
+
+		<insert id="insertMemberDrop" parameterType="Map">
+			insert into
+			member_drop
+			values(member_drop_drop_idx.nextval,#{user_idx},#{user_id},sysdate,'Y')
+		</insert>
 </mapper> 

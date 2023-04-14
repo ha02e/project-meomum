@@ -347,17 +347,38 @@ public class MemberDAOImple implements MemberDAO {
 	}
 	
 	/**회원 탈퇴*/
+	@Transactional
 	@Override
 	public int deleteMember(int user_idx,String user_id) {
-		int result = sqlMap.delete("deleteMember",user_idx);
-		
-		if(result>0) {
-			Map map = new HashMap();
-			map.put("user_idx", user_idx);
-			map.put("user_id", user_id);
-			
-			sqlMap.insert("insertMemberDrop",map);
-		}
+		int result = 0;
+		  try {
+		        sqlMap.delete("deleteMember", user_idx);
+
+		        Map<String, Object> map = new HashMap<>();
+		        map.put("user_idx", user_idx);
+		        map.put("user_id", user_id);
+
+		        sqlMap.insert("insertMemberDrop", map);
+
+		        sqlMap.delete("dropCartUser_idx", user_idx);
+		        sqlMap.delete("dropOrder_proUser_idx", user_idx);
+		        sqlMap.delete("dropOrdersUser_idx", user_idx);
+		        sqlMap.delete("dropPointeUser_idx", user_idx);
+		        sqlMap.delete("dropShippingUser_idx", user_idx);
+		        sqlMap.delete("dropSvc_dateUser_idx", user_idx);
+		        sqlMap.delete("dropSvc_detailUser_idx", user_idx);
+		        sqlMap.delete("dropSvc_ingUser_idx", user_idx);
+		        sqlMap.delete("dropSvc_memberUser_idx", user_idx);
+		        sqlMap.delete("dropTurnbackUser_idx", user_idx);
+
+		        // 모든 쿼리가 성공적으로 수행되었을 때에만 result를 1 증가시킴
+		        result = 1;
+
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		        throw new RuntimeException(e);
+
+		    }
 		return result;
 	}
 
