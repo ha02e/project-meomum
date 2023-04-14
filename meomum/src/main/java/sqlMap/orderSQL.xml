@@ -54,7 +54,7 @@
 				JOIN product p ON op.pro_idx = p.pro_idx
 				JOIN turnback t ON o.order_idx = t.order_idx
 			WHERE o.user_idx = #{user_idx}
-				and o.order_status=5 OR o.order_status=6 OR o.order_status=7 OR o.order_status=8
+				and (o.order_status=5 OR o.order_status=6 OR o.order_status=7 OR o.order_status=8)
 	</select>
 	
 	
@@ -63,7 +63,7 @@
 		select * from
 			(select rownum as rnum, e.*from(
 				select a.order_idx, d.pro_name, b.pro_amount, c.user_name, c.user_tel, a.amount, a.order_status, a.order_date,
-            			a.receiver, a.receiver_tel, a.order_msg,
+            			a.receiver, a.receiver_tel, a.order_msg, b.pro_idx,
             			(a.order_pcode||' '||a.order_addr||' '||a.order_detail) ship_addr
 				from orders a,
 				     order_pro b,
@@ -120,7 +120,7 @@
 	
 	<select id="orderData" parameterType="Map" resultType="com.mm.order.model.OrderReportDTO">
 		select a.order_idx, b.pro_idx , d.pro_name, a.user_idx, c.user_name, c.user_tel, a.amount, a.order_status, a.order_date,
-            a.receiver, a.receiver_tel, a.order_msg,
+            a.receiver, a.receiver_tel, a.order_msg, b.pro_amount, a.sub_start, a.sub_end,
             ('['||a.order_pcode||'] '||a.order_addr||' '||a.order_detail) ship_addr
 				from orders a,
 				     order_pro b,

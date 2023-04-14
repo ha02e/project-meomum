@@ -304,7 +304,7 @@ public class OrderController {
 		return mav;
 	}
 
-	/** 관리자페이지 주문상세내역 */
+	/** 주문상세내역 팝업창 내용 */
 	@RequestMapping("/orderInfoDetail.do")
 	public ModelAndView orderInfoDetail(@RequestParam("order_idx") String order_idx,
 											@RequestParam("pro_idx") int pro_idx) {

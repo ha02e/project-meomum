@@ -212,6 +212,7 @@ function showTracker(t_key, t_code,t_invoice){
 												<td class="cell text-center">
 													<c:url var="orderDetailUrl" value="orderInfoDetail.do">
 														<c:param name="order_idx">${dto.order_idx}</c:param>
+														<c:param name="pro_idx">${dto.pro_idx}</c:param>
 													</c:url>
 													<a href="#" class="orderNum" onclick="orderDetailOpen('${orderDetailUrl}', 'orderInfoDetail', 'width=540,height=600'); return false;">
 													${dto.order_idx}

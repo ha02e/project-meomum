@@ -175,7 +175,11 @@ function showTracker(t_key, t_code,t_invoice){
 					<c:forEach var="dto" items="${lists}" varStatus="status">
 						<tr data-index="${status.count}">
 							<td class="sorting_${status.count} order-num text-center">
-								<a href="#" onclick="orderInfoOpen('orderInfoDetail.do?order_idx=${dto.order_idx}', 'orderInfoDetail', 'width=540,height=600'); return false;">
+								<c:url var="orderDetailUrl" value="orderInfoDetail.do">
+									<c:param name="order_idx">${dto.order_idx}</c:param>
+									<c:param name="pro_idx">${dto.pro_idx}</c:param>
+								</c:url>
+								<a href="#" onclick="orderInfoOpen('${orderDetailUrl}', 'orderInfoDetail', 'width=540,height=600'); return false;">
 								${dto.order_idx}
 								</a>
 							</td>

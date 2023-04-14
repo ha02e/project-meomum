@@ -45,6 +45,9 @@
 </style>
 
 <script>
+function orderInfoOpen(url, name, options) {
+	  window.open(url, name, options);
+	}
 function returnSubmitForm(url, name, options) {
   window.open(url, name, options);
 }
@@ -115,7 +118,15 @@ function returnSubmitForm(url, name, options) {
 									<c:forEach var="dto" items="${lists}">
 										<tr>
 											<td class="cell">${dto.return_idx}</td>
-											<td class="cell">${dto.order_idx}</td>
+											<td class="cell">
+											<c:url var="orderDetailUrl" value="orderInfoDetail.do">
+												<c:param name="order_idx">${dto.order_idx}</c:param>
+												<c:param name="pro_idx">${dto.pro_idx}</c:param>
+											</c:url>
+											<a href="#" onclick="orderInfoOpen('${orderDetailUrl}', 'orderInfoDetail', 'width=540,height=600'); return false;">
+											${dto.order_idx}
+											</a>
+											</td>
 											<td class="cell proname">
 												<div class="d-flex justify-content-start align-items-center">
 													<div class="thumb-box">

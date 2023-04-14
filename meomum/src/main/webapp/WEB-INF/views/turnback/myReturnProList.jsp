@@ -252,6 +252,7 @@ function orderInfoOpen(url, name, options) {
 								<td>
 									<c:url var="orderDetailUrl" value="orderInfoDetail.do">
 										<c:param name="order_idx">${dto.order_idx}</c:param>
+										<c:param name="pro_idx">${dto.pro_idx}</c:param>
 									</c:url>
 									<a href="#" class="orderNum" onclick="orderInfoOpen('${orderDetailUrl}', 'orderInfoDetail', 'width=540,height=600'); return false;">
 									${dto.order_idx}

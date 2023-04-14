@@ -9,6 +9,11 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
+.card-header h5{
+	font-weight: bold;
+	font-size: 18px;
+	color:#15a362;
+}
 .card{
 	width:500px;
 	margin:10px auto;
@@ -57,7 +62,7 @@ hr{
 	    <div class="card mb-4">
 	    
 			<div class="card-header d-flex justify-content-between align-items-center">
-	        	<h5 class="mb-0">주문번호&nbsp;${param.order_idx}</h5> <small class="text-muted float-end">${dto.order_date}</small>
+	        	<h5 class="mb-0">주문번호&nbsp;${param.order_idx}</h5> <small class="text-muted float-end">주문일 ${dto.order_date}</small>
 	      	</div>
 	      
 			
@@ -70,13 +75,13 @@ hr{
 				
 	          	<div class="form-row mb-3 mb-4">
 	            	<label class="form-label" for="ship_info">주문상품</label>
-					<input type="text" class="form-control form-row mb-2" id="inputCity" value="상품명~~">
+					<input type="text" class="form-control form-row mb-2" id="pro_name" value="${dto.pro_name}" readonly>
 	            	<div class="form-row d-flex jusify-content-between">
-					  <div class="col-md-8">
-							<input type="text" class="form-control" id="inputCity" value="가격~">
+					  <div class="col">
+							<input type="text" class="form-control" id="amount" value="${dto.amount}원" readonly>
 					  </div>
-					  <div class="col-md-4">
-					    <input type="text" class="form-control" id="inputZip" value="수량">
+					  <div class="col">
+					    <input type="text" class="form-control" id="pro_amount" value="${dto.pro_amount}개" readonly>
 					  </div>
 	            	</div>
 	          	</div>
@@ -86,14 +91,14 @@ hr{
 	          	<div class="form-row mb-3 mb-4">
 	            	<label class="form-label" for="ship_num">배송지 정보</label>
 	            	<div class="form-row mb-2 d-flex jusify-content-between">
-					  <div class="col-md-4">
-					    <input type="text" class="form-control" id="inputZip" value="수취인">
+					  <div class="col">
+					    <input type="text" class="form-control" id="inputZip" value="${dto.receiver}">
 					  </div>
-					  <div class="col-md-8">
-							<input type="text" class="form-control" id="inputCity" value="휴대폰번호">
+					  <div class="col">
+							<input type="text" class="form-control" id="inputCity" value="${dto.receiver_tel}">
 					  </div>
 	            	</div>
-	            	<input type="text" class="form-control" name="ship_num" value="배송지">
+	            	<input type="text" class="form-control" name="ship_num" value="${dto.ship_addr}">
 	          	</div>
 	          
 				<hr class="row mb-4">
@@ -102,7 +107,7 @@ hr{
 	           		<label class="form-label" for="receiver">결제 정보</label>
 	           		<div class="input-group mb-2">
 						  <span class="input-group-text" id="basic-addon1">총 주문금액</span>
-						  <input type="text" class="form-control" value="총 주문금액">
+						  <input type="text" class="form-control" value="${dto.amount}원">
 					</div>
 	           		<div class="input-group">
 						  <span class="input-group-text" id="basic-addon1">결제방법</span>
@@ -114,18 +119,14 @@ hr{
 				
 				<div class="form-row mb-3">
 	           		<label class="form-label" for="receiver">구독 정보</label>
-	           		<div class="input-group mb-2">
-						  <span class="input-group-text" id="basic-addon1">구독개월</span>
-						  <input type="text" class="form-control" value="총 주문금액">
-					</div>
 	           		<div class="form-row mb-2 d-flex jusify-content-between">
 					  <div class="input-group mb-2">
 						  <span class="input-group-text" id="basic-addon1">구독시작일</span>
-						  <input type="text" class="form-control" value="총 주문금액">
+						  <input type="text" class="form-control" value="${dto.sub_start}">
 					</div>
 					  <div class="input-group mb-2">
 						  <span class="input-group-text" id="basic-addon1">구독종료일</span>
-						  <input type="text" class="form-control" value="총 주문금액">
+						  <input type="text" class="form-control" value="${dto.sub_end}">
 						</div>
 	            	</div>
 				</div>
