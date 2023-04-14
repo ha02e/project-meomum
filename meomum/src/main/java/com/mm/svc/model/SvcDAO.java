@@ -16,9 +16,15 @@ public interface SvcDAO {
 	public List<SvcSelectAllDTO> svcAdminList(int cp,int ls);
 	public int getTotalCnt();
 	
-	/**세부 검색*/
+	/** 관리자:방문 견적 신청자 리스트 (세부 검색)*/
 	public List<SvcSelectAllDTO> svcSelectDetail(String minDate, String maxDate, int category, String keyword, List<String> state,int cp, int ls);
 	public int svcSelectDetailCnt(String minDate, String maxDate, int category, String keyword, List<String> state);
+	
+	/**관리자: 예약 삭제*/
+	public int svcMemDelete(String idx);
+	public int svcDetailDelete(String idx);
+  	public int svcDateDelete(String idx);
+  	public int svcIngDelete(String idx);
 	
 	/**정리일상 내역 상세 보기(방문 견적)*/
 	public SvcContentDTO svcContent(String idx);

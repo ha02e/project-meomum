@@ -146,15 +146,50 @@ public class SvcController {
 		return mav;
 	}
 	
+	/**관리자: 예약 삭제*/
+	//예약확정, 예약취소일 경우
+	@RequestMapping(value="/asvcDelete.do", method = RequestMethod.GET)
+	public ModelAndView asvcDelete(@RequestParam("svc_idx")String idx) {
+		System.out.println(idx);
+		int memDelete = svcDao.svcMemDelete(idx);
+		int detailDelete = svcDao.svcDetailDelete(idx);
+		int dateDelete = svcDao.svcDateDelete(idx);
+		
+		int result = memDelete + detailDelete + dateDelete;
+		String msg = result>0?"성공":"실패";
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("msg",msg);
+		mav.setViewName("mmJson");
+		return mav;
+	}
+	
+	@RequestMapping(value="/asvcIngDelete.do", method = RequestMethod.GET)
+	public ModelAndView asvcIngDelete(@RequestParam("svc_idx")String idx) {
+		System.out.println("ing"+idx);
+		int memDelete = svcDao.svcMemDelete(idx);
+		int detailDelete = svcDao.svcDetailDelete(idx);
+		int dateDelete = svcDao.svcDateDelete(idx);
+		int ingDelete = svcDao.svcIngDelete(idx);
+		
+		int result = memDelete + detailDelete + dateDelete+ ingDelete;
+		String msg = result>0?"성공":"실패";
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("msg",msg);
+		mav.setViewName("mmJson");
+		return mav;
+	}
+	
 	/**관리자- 방문 견적 상세 보기*/
 	@RequestMapping("/asvcContent.do")
 	public ModelAndView asvcInfo(@RequestParam("svc_idx")String idx) {
 		SvcContentDTO dto = svcDao.svcContent(idx);
 		SvcIngDTO ingDto = svcDao.svcIngContent(idx);
+		PaymentDTO payDTO = payDao.paymentSelect(idx);
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("dto",dto);
 		mav.addObject("ingdto", ingDto);
+		mav.addObject("payDTO", payDTO);
 		mav.setViewName("svc/a_svcContent");
 		return mav;
 	}
@@ -332,15 +367,17 @@ public class SvcController {
 	public ModelAndView svcIngContent_a(@RequestParam("svc_idx")String idx,@RequestParam("user_idx")int user_idx) {
 		SvcContentDTO dto = svcDao.svcContent(idx);
 		SvcIngDTO ingdto = svcDao.svcIngContent(idx);
-
-		/* PointDTO rdto = pdao.pointTotal(user_idx); */
+		PaymentDTO paydto = payDao.paymentSelect(idx);
+		
 		int result = pdao.pointTotal(user_idx);
 		ModelAndView mav = new ModelAndView();
 		
 		mav.addObject("dto",dto);
 		mav.addObject("ingdto",ingdto);
-		/* mav.addObject("rdto", rdto); */
+		
 		mav.addObject("result", result);
+		mav.addObject("paydto",paydto);
+		System.out.println("정리일상 예약 상세:"+paydto);
 	
 		mav.setViewName("svc/svcIngContent");
 	

@@ -238,11 +238,19 @@ thead th a {
 												</c:choose></td>
 
 											<td class="text-center">
-											<c:url var="contentUrl" value="asvcContent.do">
+											<%-- <c:url var="deleteUrl" value="asvcDelete.do">
 												<c:param name="svc_idx">${dto.svc_idx}</c:param>
-											</c:url>
-											<a href="${deleteUrl}" class="del">X</a></td>
+											</c:url> 
+											<a href="${deleteUrl}" class="del">X</a>--%>
+											
+											<%-- <input type="hidden" id="svc_state" value="${dto.svc_state}">
+											<input type="hidden" id="svc_idx" value="${dto.svc_idx}"> --%>
+											<div>
+											<a href="#" onclick="svcDelete('${dto.svc_idx}','${dto.svc_state}')">X</a>
+											</div>
+											</td>
 										</tr>
+										
 									</c:forEach>
 							</table>
 						</div>
@@ -268,5 +276,53 @@ thead th a {
 	<!-- Javascript -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+	<!-- 데이터 삭제 -->
+	<script>
+	function svcDelete(svc_idx,svc_state) {
+		var data = {
+				svc_idx : svc_idx
+			}; 
+		
+		var ingData = {
+				svc_state:svc_state,
+				svc_idx : svc_idx
+			};
+		
+		if (confirm("정말로 삭제하시겠습니까?")) {
+			if(ingData.svc_state == '예약확정'||ingData.svc_state=='예약취소'){
+			$.ajax({
+				url : "asvcDelete.do",
+				type : "Get",
+				contentType : "application/json",
+				dataType: 'json',
+				data : data,
+			}).done(function(data) {
+						alert("예약 삭제가 완료되었습니다");
+						$(this).closest('tr').remove();
+						location.href = 'asvcList.do';
+					
+				}).fail(function(){
+			        	alert('다시 시도해주세요');
+			      
+			});
+			}else{
+				$.ajax({
+					url : "asvcIngDelete.do",
+					type : "Get",
+					contentType : "application/json",
+					dataType: 'json',
+					data : ingData,
+				}).done(function(data) {
+							alert("예약 삭제가 완료되었습니다");
+							$(this).closest('tr').remove();
+							location.href = 'asvcList.do';
+						
+					}).fail(function(){
+						alert('다시 시도해주세요');
+				});
+			}
+		}
+	}
+	</script>
 </body>
 </html>
