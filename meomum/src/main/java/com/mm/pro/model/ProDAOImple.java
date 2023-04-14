@@ -22,11 +22,18 @@ private SqlSessionTemplate sqlMap;
 		return count;
 	}
 	
-	//페이징
+	//페이징1 (전체)
 	@Override
 		public int getTotalCnt() {
 			int count=sqlMap.selectOne("proTotalCnt");
 			return count;
+		}
+	
+	//페이징2 (품절상품 미포함)
+	@Override
+        public int itemTotalCnt() {
+            int count=sqlMap.selectOne("itemTotalCnt");
+            return count;
 		}
 	
 	//상품 삭제

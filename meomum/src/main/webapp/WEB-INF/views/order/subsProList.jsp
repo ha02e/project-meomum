@@ -276,6 +276,7 @@ function orderInfoOpen(url, name, options) {
 			                    	<div class="buttons">
 				                    	<c:url var="returnFormUrl" value="returnForm.do">
 											<c:param name="order_idx">${dto.order_idx}</c:param>
+											<c:param name="pro_idx">${dto.pro_idx}</c:param>
 										</c:url>
 										<a href="#" class="orderNum" onclick="orderInfoOpen('${returnFormUrl}', 'orderInfoDetail', 'width=540,height=510'); return false;">
 											<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-dash-circle" viewBox="0 0 16 16">
