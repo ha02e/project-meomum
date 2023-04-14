@@ -89,6 +89,52 @@
   grid-template-columns: repeat(2, 1fr);
   grid-column-gap: 10px;
 }
+
+
+.totalPrice {
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    padding: 0px 15px;
+}
+
+.rightPrice {
+    display: flex;
+    flex-direction: column;
+}
+
+.right {
+    display: flex;
+    -webkit-box-pack: end;
+    justify-content: end;
+    margin-bottom: 20px;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+.del {
+    font-size: 1.4rem;
+    color: rgb(112, 112, 112);
+    flex-shrink: 0;
+}
+
+.right2 {
+    display: flex;
+    -webkit-box-pack: end;
+    justify-content: end;
+    gap: 4px;
+}
+
+.sub {
+    font-size: 2.2rem;
+    color: rgb(0, 0, 0);
+}
+
+.all {
+    font-size: 1.4rem;
+    font-weight: 400;
+}
+
 </style>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -217,7 +263,7 @@
 							<div class="hlJovE mtext-106">
 							월 <fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_subprice}" />원
 							</div>
-							<div class="hlJovE cl6 p-tb-8">
+							<div class="hlJovE stext-107 cl6 p-tb-8">
 							총 <fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_allprice}" />원
 							</div>
 						</div>
@@ -274,15 +320,31 @@
 						 <input type="hidden" name="pro_delprice" value="${lists[0].pro_delprice }">
 						 <input type="hidden" name="pro_month" value="${lists[0].pro_month }">
 						 
-				<div style="display: flex; justify-content: space-between;">
-  <span class="mtext-106 cl2 ">총 구독 가격</span>
-  
-</div>
-<div style="display: flex; justify-content: space-between; margin-top: 10px;">
-<span id="delPrice">총 배송비: <fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_delprice}" />원</span>
-  <span id="subPrice">월 구독: <fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_subprice}" />원</span>
-  <span id="allPrice">총 구독: <fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_allprice}" />원</span>
-</div>
+				
+			<div class="totalPrice">
+	 			 <p class="total mtext-106 c12">총 주문 금액</p>
+				<!-- 오른쪽 파트 -->
+				<div class="rightPrice">
+				  
+				   <div class="right">
+				   	 <p class="del stext-102"><span id="delPrice">배송비 <fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_delprice}" />원</span></p>
+				   </div>
+				   
+				   <div class="right2">
+				     <span class="sub mtext-108"><span id="subPrice">월 <fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_subprice}" />원</span></span>
+				     
+				   </div>
+				   	 
+				   	 <p class="right2 all stext-107"><span id="allPrice">총 <fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_allprice}" />원</span></p>
+				</div>
+	 
+			</div>
+				
+		  
+		  
+		  
+		
+		
 						<div class="bor18 cl3 p-t-23"></div>
 						
 						<div class="button-container">
@@ -376,9 +438,9 @@
     const allPriceValue = parseFloat("${lists[0].pro_allprice}") * amount;
     const delPriceValue = parseFloat("${lists[0].pro_delprice}") * amount;
     cartAmount.value = amount;
-    subPrice.innerText = "월 구독: "+ new Intl.NumberFormat('ko-KR').format(subPriceValue) + "원";
-    allPrice.innerText = "총 구독: " + new Intl.NumberFormat('ko-KR').format(allPriceValue) + "원";
-    delPrice.innerText = "총 배송비: " + amount+"개 "+ new Intl.NumberFormat('ko-KR').format(delPriceValue) + "원";
+    subPrice.innerText = "월 "+ new Intl.NumberFormat('ko-KR').format(subPriceValue) + "원";
+    allPrice.innerText = "총 " + new Intl.NumberFormat('ko-KR').format(allPriceValue) + "원";
+    delPrice.innerText = "배송비 " + new Intl.NumberFormat('ko-KR').format(delPriceValue) + "원";
   }
 
   // 마이너스 버튼 클릭 시
