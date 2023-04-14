@@ -21,17 +21,27 @@ public class PointDAOImple implements PointDAO {
 //	return dto;
 //	}
 	
+	/**사용자 총 포인트 조회*/
 	@Override
 	public int pointTotal(int user_idx) {
 		int result = sqlMap.selectOne("pointTotal", user_idx);
 		return result;
 	}
 	
+	/**포인트 적립 및 사용*/
 	@Override
 	public int pointInsert(PointDTO dto) {
 		int count = sqlMap.insert("pointInsert",dto);
 		return count;
 	}
+	
+	/**정리일상 결제 포인트 조회*/
+	@Override
+	public PointDTO svcPointSelect(String cate_idx) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 
 	/**포인트 리스트*/
 	@Override

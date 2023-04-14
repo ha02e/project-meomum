@@ -106,24 +106,32 @@
 
 <section class="reviewList">
 <div class="container">
-
-<!-- 탭메뉴  -->
-	<ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
-		<li class="nav-item flex-fill" role="presentation">
-			<button class="nav-link w-100 active" id="home-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-home" type="button" role="tab" aria-controls="home" aria-selected="false" tabindex="-1">전체보기</button>
-		</li>
-		<li class="nav-item flex-fill" role="presentation">
-			<button class="nav-link w-100" id="profile-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-profile" type="button" role="tab" aria-controls="profile" aria-selected="true">정리일상</button>
-		</li>
-		<li class="nav-item flex-fill" role="presentation">
-			<button class="nav-link w-100" id="profile-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-profile" type="button" role="tab" aria-controls="profile" aria-selected="true">구독일상</button>
-		</li>
-	</ul>
-	
-	<div class="tab-content pt-2" id="borderedTabJustifiedContent">
-		<div class="tab-pane fade active show" id="bordered-justified-home" role="tabpanel" aria-labelledby="home-tab">
-			<!-- 전체보기 -->
-			
+			<div class="row g-3 mb-4 align-items-center justify-content-center">
+				    <div class="col-auto">
+					     <div class="page-utilities">
+						    <div class="row g-2 justify-content-end justify-content-md-end align-items-center">
+							    <div class="col-auto">
+								    <select class="form-select w-auto" >
+										  <option selected value="option-1">전체보기</option>
+										  <option value="option-2">정리일상</option>
+										  <option value="option-3">구독일상</option>
+									</select>
+							    </div>
+							    <div class="col-auto">
+								    <form class="table-search-form row gx-1 align-items-center">
+					                    <div class="col-auto">
+					                        <input type="text" id="search-orders" name="searchorders" class="form-control search-orders" placeholder="검색어를 입력해주세요." size="30">
+					                    </div>
+					                    <div class="col-auto">
+					                        <button type="submit" class="btn app-btn-secondary btn-primary">검색</button>
+					                    </div>
+					                </form>
+							    </div><!--//col-->
+						    </div><!--//row-->
+				</div><!--//table-utilities-->
+			</div><!--//col-auto-->
+		</div><!--//row-->
+</div>		
 			<div class="container">
 				<div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
 				<c:if test="${empty lists}">
@@ -191,20 +199,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="tab-pane fade" id="bordered-justified-profile" role="tabpanel" aria-labelledby="profile-tab">
-			<!-- 저장일상 후기 -->
-			<div class="container">
-			
-			</div>		
-		</div>
-		<div class="tab-pane fade" id="bordered-justified-profile" role="tabpanel" aria-labelledby="profile-tab">
-			<!-- 구독일상 후기 -->
-			<div class="container">
-			
-			</div>		
-		</div>
-	</div>
-</div>
+		
 
 </section>
 

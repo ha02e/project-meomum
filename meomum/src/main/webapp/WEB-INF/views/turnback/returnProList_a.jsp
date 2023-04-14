@@ -61,18 +61,17 @@ function returnSubmitForm(url, name, options) {
 		<div class="container pt-5">
 			<h1 class="text-center mb-4">구독 반납 내역</h1>
 			    
-			<div class="row g-3 mb-4 align-items-center justify-content-between">
+			<div class="row g-3 mb-4 align-items-center justify-content-center">
 				    <div class="col-auto">
 					     <div class="page-utilities">
 						    <div class="row g-2 justify-content-end justify-content-md-end align-items-center">
 							    <div class="col-auto">
 								    <select class="form-select w-auto" >
 										  <option selected value="option-1">전체보기</option>
-										  <option value="option-2">침대</option>
-										  <option value="option-3">테이블</option>
-										  <option value="option-4">의자</option>
-										  <option value="option-5">소파</option>
-										  <option value="option-6">조명</option>
+										  <option value="option-2">반납신청</option>
+										  <option value="option-3">반납진행</option>
+										  <option value="option-4">반납완료</option>
+										  <option value="option-5">반납보류</option>
 									</select>
 							    </div>
 							    <div class="col-auto">

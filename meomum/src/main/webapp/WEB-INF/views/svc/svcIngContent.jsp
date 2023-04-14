@@ -349,7 +349,7 @@ footer {
 								<span>총 결제 금액</span>
 							</div>
 							<div class="col">
-							<input type="text" id="total" value="${paydto.amount}" readonly>
+							<input type="text" id="total" value="결제금액" readonly>
 							</div>
 						</li>
 					</c:if>

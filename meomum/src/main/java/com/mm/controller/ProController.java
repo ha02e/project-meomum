@@ -309,7 +309,8 @@ public class ProController {
 	//상품 검색
 	@RequestMapping("/proFind.do")
 	public ModelAndView proFind(
-			@RequestParam(value="proF",required=false)String proF) {
+			@RequestParam(value="proF",required=false)String proF
+			,@RequestParam(value="cate",required=false)String cate) {
 		ModelAndView mav=new ModelAndView();
 		int usernum=0;
 		
@@ -338,6 +339,9 @@ public class ProController {
 		mav.addObject("lists", lists);
 		}
 		mav.setViewName("pro/proAdmin");
+		mav.addObject("proF",proF);
+		mav.addObject("cate",cate);
+	
 		return mav;
 	}
 	

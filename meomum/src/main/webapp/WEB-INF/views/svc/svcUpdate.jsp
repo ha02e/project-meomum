@@ -216,7 +216,7 @@ $(function() {
 				<!-- ----------------------------------서비스영역---------------------------------- -->
 						<div class="input-group mb-3">
 						
-							<label class="input-group-text col-3 text-center" for="input_svc_area" style="font-weight:bold;">서비스 영역</label>
+							<label class="input-group-text col-3 text-center" for="input_svc_area" style="font-weight:bold;">서비스 영역</label>&nbsp;&nbsp;
 							<div class="form-check form-check-inline">
 								<input class="form-check-input" type="checkbox" name="svc_area" id="svc_area"  value="전체" ${dto.svc_area.contains("전체")?"checked":""}> 
 								<label class="form-check-label" for="전체">전체</label>
@@ -297,9 +297,9 @@ $(function() {
 						<span id="timeSpan">방문 희망일 수정</span><input type="checkbox" id="timeDetail">
 						<div id="detaildiv">
 							<input id="svc_days" type="date" name="svc_days" value="${dto.svc_days}" onclick="setMinDate()"> 
-							<input id="timeA" type="radio" name="svc_time" value="10:00" ${dto.svc_time =="10:00"?"checked":""}>10:00<span></span> 
-							<input id="timeB" type="radio" name="svc_time" value="13:00" ${dto.svc_time =="13:00"?"checked":""}>13:00<span></span> 
-							<input id="timeC" type="radio" name="svc_time" value="16:00" ${dto.svc_time =="16:00"?"checked":""}>16:00<span></span>
+							<input id="timeA" type="radio" name="svc_time" value="10:00" ${dto.svc_time =="10:00"?"checked":""}>10:00<span></span> &nbsp;&nbsp;
+							<input id="timeB" type="radio" name="svc_time" value="13:00" ${dto.svc_time =="13:00"?"checked":""}>13:00<span></span> &nbsp;&nbsp;
+							<input id="timeC" type="radio" name="svc_time" value="16:00" ${dto.svc_time =="16:00"?"checked":""}>16:00<span></span>&nbsp;&nbsp;
 						</div>
 					</div>
 					</div>

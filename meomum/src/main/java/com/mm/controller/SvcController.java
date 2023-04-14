@@ -367,7 +367,7 @@ public class SvcController {
 	public ModelAndView svcIngContent_a(@RequestParam("svc_idx")String idx,@RequestParam("user_idx")int user_idx) {
 		SvcContentDTO dto = svcDao.svcContent(idx);
 		SvcIngDTO ingdto = svcDao.svcIngContent(idx);
-		PaymentDTO paydto = payDao.paymentSelect(idx);
+		/* PaymentDTO paydto = payDao.paymentSelect(idx); */
 		
 		int result = pdao.pointTotal(user_idx);
 		ModelAndView mav = new ModelAndView();
@@ -376,8 +376,8 @@ public class SvcController {
 		mav.addObject("ingdto",ingdto);
 		
 		mav.addObject("result", result);
-		mav.addObject("paydto",paydto);
-		System.out.println("정리일상 예약 상세:"+paydto);
+		/* mav.addObject("paydto",paydto); */
+		/* System.out.println("정리일상 예약 상세:"+paydto); */
 	
 		mav.setViewName("svc/svcIngContent");
 	
@@ -447,7 +447,18 @@ public class SvcController {
 	//svc_ing
 	/**예약시간 가져오기*/
 	@RequestMapping(value="/svcCalendar.do")
-	public ModelAndView SvcCalendarForm() {
+	public ModelAndView SvcCalendarForm(HttpSession session) {
+		
+		ModelAndView mav = new ModelAndView();
+
+		MemberDTO ssInfo = (MemberDTO) session.getAttribute("ssInfo");
+		if(ssInfo==null||!ssInfo.getUser_info().equals("관리자")) {
+			mav.addObject("msg", "관리자만 접근할 수 있습니다.");
+			mav.addObject("gopage","location.href='index.do';");
+			mav.setViewName("mainMsg");
+			return mav;
+		}
+		
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
 		SimpleDateFormat sdf2 = new SimpleDateFormat("M월");
@@ -526,7 +537,6 @@ public class SvcController {
 		String jsonStr = jsonArray.toString();
 
 		
-		ModelAndView mav = new ModelAndView();
 		mav.addObject("svcing_count",svcing_count);
 		mav.addObject("svc_cancel",svc_cancel);
 		mav.addObject("svc_count",svc_count);

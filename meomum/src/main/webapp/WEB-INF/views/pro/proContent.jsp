@@ -256,11 +256,11 @@
 						</div>
 				
 				<!-- 내용 끝 -->
+				</div>
 			</div>
 		</div>
 	</div>
-	</div>
-	</section>
+</section>
 
 
 

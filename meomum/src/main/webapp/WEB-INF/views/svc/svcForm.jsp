@@ -180,7 +180,7 @@ function timeValidate(){
 				<!-- ----------------------------------서비스영역---------------------------------- -->
 						<div class="input-group mb-3">
 						
-							<label class="input-group-text col-3 text-center" for="input_svc" id="areaLabel" style="font-weight:bold;">서비스 영역</label>
+							<label class="input-group-text col-3 text-center" for="input_svc" id="areaLabel" style="font-weight:bold;">서비스 영역</label>&nbsp;&nbsp;
 							<div class="form-check form-check-inline">
 								<input class="form-check-input" type="checkbox" name="svc_area" id="svc_area"  value="전체"> 
 								<label class="form-check-label" for="전체">전체</label>
@@ -260,7 +260,7 @@ function timeValidate(){
 						</div>
 						<!-- ----------------------------------시간--------------------------------- -->
 						<div class="input-group mb-3">
-							<label class="input-group-text col-3 text-center" for="input_svc" style="font-weight:bold;">시간</label>
+							<label class="input-group-text col-3 text-center" for="input_svc" style="font-weight:bold;">시간</label>&nbsp;&nbsp;
 							<div class="btn-group" role="group">
 								<input type="radio" class="btn-check" name="svc_time" id="timeA" value="10:00" autocomplete="off">
 								<label class="btn btn-outline-secondary" for="timeA">10:00</label>
@@ -286,7 +286,7 @@ function timeValidate(){
 						</div>
 						<!-- ----------------------------------서비스 인지 경로--------------------------------- -->
 						<div class="input-group mb-3">
-							<label class="input-group-text col-3 text-center" for="knowLabel" style="font-weight:bold;">서비스 인지경로</label>
+							<label class="input-group-text col-3 text-center" for="knowLabel" style="font-weight:bold;">서비스 인지경로</label>&nbsp;&nbsp;
 							<div class="form-check form-check-inline">
 								<input class="form-check-input" type="radio" name="svc_know" value="블로그"> 
 								<label class="form-check-label" for="블로그">블로그</label>
