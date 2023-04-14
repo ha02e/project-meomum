@@ -38,6 +38,15 @@ public class ReviewController {
 	@RequestMapping("/myReviewList.do")
 	public ModelAndView myreviewList(@RequestParam(value="cp",defaultValue = "1")int cp,
 									HttpSession session) {
+		
+		ModelAndView mav = new ModelAndView();
+		
+		if(session.getAttribute("ssInfo")==null) {
+			mav.addObject("msg", "로그인을 해주세요.");
+			mav.addObject("gopage","location.href='index.do';");
+			mav.setViewName("mainMsg");
+			return mav;
+		}
 		MemberDTO mdto=(MemberDTO)session.getAttribute("ssInfo");
 		int user_idx=mdto.getUser_idx();
 		
@@ -50,7 +59,6 @@ public class ReviewController {
 		
 		List<ReviewDTO> lists=reviewService.myreviewList(cp, listSize,user_idx);
 		
-		ModelAndView mav=new ModelAndView();
 		mav.setViewName("review/myReviewList");
 		mav.addObject("lists", lists);
 		mav.addObject("pageStr",pageStr);
@@ -206,18 +214,25 @@ public class ReviewController {
 	
 	
 	@RequestMapping("/reviewList.do")
-	public ModelAndView reviewList(@RequestParam(value="cp",defaultValue = "1")int cp) {
-		int totalCnt=reviewService.getTotalCnt();
+	public ModelAndView reviewList(@RequestParam(value="cp",defaultValue = "1")int cp,
+									@RequestParam(value="fvalue",defaultValue = "")String fvalue,
+									@RequestParam(value="category",defaultValue = "")String category) {
+		
+		int totalCnt=reviewService.getTotalCnt(fvalue,category);
 		int listSize=6;
 		int pageSize=5;
 		
+		String param = "&fvalue="+fvalue+"&category="+category;
+
 		String pageStr=com.mm.module.PageModule
-				.makePage("reviewList.do", totalCnt, listSize, pageSize, cp);
+				.makePageParam("reviewList.do", totalCnt, listSize, pageSize, cp,param);
 		
-		List<ReviewDTO> lists=reviewService.reviewList(cp, listSize);
+		List<ReviewDTO> lists=reviewService.reviewList(cp, listSize,fvalue,category);
 		
 		ModelAndView mav=new ModelAndView();
 		mav.setViewName("review/reviewList");
+		mav.addObject("category",category);
+		mav.addObject("fvalue", fvalue);
 		mav.addObject("lists", lists);
 		mav.addObject("pageStr",pageStr);
 		
@@ -328,17 +343,29 @@ public class ReviewController {
 	
 	/** 관리자 리뷰 관리 */
 	@RequestMapping("/reviewList_a.do")
-	public ModelAndView reviewList_a(@RequestParam(value="cp",defaultValue = "1")int cp) {
-		int totalCnt=reviewService.getTotalCnt();
+	public ModelAndView reviewList_a(@RequestParam(value="cp",defaultValue = "1")int cp,
+			@RequestParam(value="fvalue",defaultValue = "")String fvalue,
+			@RequestParam(value="category",defaultValue = "")String category,HttpSession session) {
+		ModelAndView mav=new ModelAndView();
+		
+		
+		MemberDTO ssInfo = (MemberDTO) session.getAttribute("ssInfo");
+		if(ssInfo==null||!ssInfo.getUser_info().equals("관리자")) {
+			mav.addObject("msg", "잘못된 접근입니다.");
+			mav.addObject("gopage","location.href='index.do';");
+			mav.setViewName("mainMsg");
+			return mav;
+		}
+		int totalCnt=reviewService.getTotalCnt(fvalue,category);
 		int listSize=4;
 		int pageSize=5;
 		
 		String pageStr=com.mm.module.PageModule
 				.makePage("reviewList_a.do", totalCnt, listSize, pageSize, cp);
 		
-		List<ReviewDTO> lists=reviewService.reviewList(cp, listSize);
+		List<ReviewDTO> lists=reviewService.reviewList(cp, listSize,fvalue,category);
 		
-		ModelAndView mav=new ModelAndView();
+	
 		mav.setViewName("review/reviewList_a");
 		mav.addObject("lists", lists);
 		mav.addObject("pageStr",pageStr);

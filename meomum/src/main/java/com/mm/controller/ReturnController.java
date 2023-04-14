@@ -57,13 +57,20 @@ public class ReturnController {
 	
 	@RequestMapping("/returnApply.do")
 	public ModelAndView returnApply(ReturnDTO dto,
-									@RequestParam("order_idx") String order_idx) {
+									@RequestParam("order_idx") String order_idx,
+									@RequestParam("pro_idx") int pro_idx) {
+
+		Map map = new HashMap();
+		map.put("order_idx", order_idx);
+		map.put("pro_idx", pro_idx);
+		
+		
 		int result=returnDao.returnApplyInsert(dto);
 
 		ModelAndView mav = new ModelAndView();
 		
 		if(result>0) {
-			int statusUpdate=orderDao.returnApplyUpdate(order_idx);
+			int statusUpdate=orderDao.returnApplyUpdate(map);
 			String msg=statusUpdate>0?"반납 신청이 완료되었습니다.":"반납 신청에 실패하였습니다.";
 			String gopage = statusUpdate>0?"opener.document.location.reload(); self.close()":"location.href='returnForm.do';";
 			mav.addObject("dto", dto);
