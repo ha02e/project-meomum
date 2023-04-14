@@ -149,16 +149,24 @@ public class ReturnController {
 		map.put("order_idx", order_idx);
 		map.put("pro_idx", pro_idx);
 		
-		int returnUpdate=returnDao.returnCancelUpdate(map); //반납 승인여부 N 수정
+		int returnUpdate=returnDao.returnNoUpdate(map); //반납 승인여부 N 수정
+		int orderStatusUpdate=orderDao.returnCancelUpdate(map); //주문상태 8.반납보류로 수정
 		
 		ModelAndView mav=new ModelAndView();
-		String msg=returnUpdate>0?"반납보류 처리가 완료되었습니다.":"반납보류 처리에 실패하였습니다.";
-		String gopage=returnUpdate>0?"opener.document.location.reload(); self.close()":"location.href='returnSubmitForm.do';";
-		mav.addObject("msg", msg);
-		mav.addObject("gopage", gopage);
-		mav.setViewName("mainMsg");
 		
+		if(returnUpdate>0 && orderStatusUpdate>0) {
+			mav.addObject("msg", "반납보류 처리가 완료되었습니다.");
+			mav.addObject("gopage", "opener.document.location.reload(); self.close()");
+			mav.setViewName("mainMsg");
+			
+		}else {
+			mav.addObject("msg", "반납보류 처리에 실패하였습니다.");
+			mav.addObject("gopage", "location.href='returnSubmitForm.do';");
+			mav.setViewName("mainMsg");
+		}
+
 		return mav;
+		
 	}
 	
 }

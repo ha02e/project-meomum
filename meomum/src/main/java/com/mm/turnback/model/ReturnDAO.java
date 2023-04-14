@@ -13,5 +13,5 @@ public interface ReturnDAO {
 	public ReturnListDTO returnData(String order_idx);
 	
 	public int returnStartUpdate(Map map);
-	public int returnCancelUpdate(Map map);
+	public int returnNoUpdate(Map map);
 }

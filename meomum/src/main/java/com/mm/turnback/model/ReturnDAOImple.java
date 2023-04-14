@@ -47,8 +47,8 @@ public class ReturnDAOImple implements ReturnDAO {
 	}
 	
 	@Override
-	public int returnCancelUpdate(Map map) {
-		int count=sqlMap.update("returnCancelUpdate", map);
+	public int returnNoUpdate(Map map) {
+		int count=sqlMap.update("returnNoUpdate", map);
 		return count;
 	}
 }

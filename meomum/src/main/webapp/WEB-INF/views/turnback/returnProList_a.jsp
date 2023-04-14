@@ -143,6 +143,7 @@ function returnSubmitForm(url, name, options) {
 													</c:when>
 													<c:when test="${dto.order_status eq 6}">반납진행</c:when>
 													<c:when test="${dto.order_status eq 7}">반납완료</c:when>
+													<c:when test="${dto.return_ok eq 'N'}">반납보류</c:when>
 												</c:choose>
 											</td>
 										</tr>
