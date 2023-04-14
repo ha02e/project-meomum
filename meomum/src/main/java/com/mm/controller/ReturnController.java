@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mm.member.model.MemberDTO;
+import com.mm.order.model.MyOrderListDTO;
 import com.mm.order.model.OrderDAO;
 import com.mm.order.model.OrderReportDTO;
 import com.mm.pro.model.ProDAO;
@@ -89,40 +90,9 @@ public class ReturnController {
 		return mav;
 	}
 	
-	/**
-	public List<ReturnListDTO> returnListPage(int cp, int ls) {
-		int start = (cp - 1) * ls + 1;
-		int end = cp * ls;
-		Map map = new HashMap();
-		map.put("start", start);
-		map.put("end", end);
-
-		List<ReturnListDTO> lists = returnDao.returnProList(map);
-		return lists;
-	}
 	
-	@RequestMapping("/returnProList_a.do")
-	public ModelAndView returnProList(@RequestParam(value="cp",defaultValue = "1")int cp) {
-		
-		int totalCnt=returnDao.returnProListCnt();
-		int listSize=5;
-		int pageSize=5;
-			
-		String pageStr=com.mm.module.PageModule
-				.makePage("returnProList_a.do", totalCnt, listSize, pageSize, cp);
-			
-		List<ReturnListDTO> lists=returnListPage(cp, pageSize);
-			
-		ModelAndView mav=new ModelAndView();
-		mav.setViewName("turnback/returnProList_a");
-		mav.addObject("lists", lists);
-		mav.addObject("pageStr",pageStr);
-			
-		return mav;
-			
-	}
-	*/
 	
+	/** 관리자페이지 반납내역 */
 	@RequestMapping("/returnProList_a.do")
 	public ModelAndView returnProList(@RequestParam(value="cp",defaultValue = "1")int cp,
 			@RequestParam(value="fvalue",defaultValue = "")String fvalue,

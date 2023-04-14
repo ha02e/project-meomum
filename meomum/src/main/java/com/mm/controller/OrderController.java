@@ -32,6 +32,7 @@ import com.mm.payment.model.PaymentDTO;
 import com.mm.point.model.PointDAO;
 import com.mm.point.model.PointDTO;
 import com.mm.pro.model.ProDTO;
+import com.mm.turnback.model.ReturnListDTO;
 
 @Controller
 public class OrderController {
@@ -188,8 +189,7 @@ public class OrderController {
 		mav.setViewName("order/subsProList");
 		return mav;
 	}
-	
-	/** 마이페이지 반납내역 */
+	/**
 	public List<MyOrderListDTO> myreturnProPage(int cp, int ls, int user_idx) {
 		int start = (cp - 1) * ls + 1;
 		int end = cp * ls;
@@ -222,6 +222,63 @@ public class OrderController {
 		mav.setViewName("turnback/myReturnProList");
 		return mav;
 	}
+	*/
+	
+	/** 마이페이지 반납내역 */
+	@RequestMapping("/myReturnProList.do")
+	public ModelAndView returnProList(@RequestParam(value="cp",defaultValue = "1")int cp,
+			@RequestParam(value="fvalue",defaultValue = "")String fvalue,
+			@RequestParam(value="state",defaultValue = "0")String state, HttpSession session) {
+
+		ModelAndView mav=new ModelAndView();
+		
+		MemberDTO mdto = (MemberDTO) session.getAttribute("ssInfo");
+		int user_idx = mdto.getUser_idx();
+		
+		if(session.getAttribute("ssInfo")==null) {
+			mav.addObject("msg", "로그인을 해주세요.");
+			mav.addObject("gopage","location.href='index.do';");
+			mav.setViewName("mainMsg");
+			return mav;
+		}
+		
+		int listSize=5;
+		int pageSize=5;
+		int start=(cp-1)*listSize+1;
+		int end=cp*listSize;
+		
+		Map fmap=new HashMap();
+		
+		fmap.put("start", start);
+		fmap.put("end", end);
+		fmap.put("fvalue","%"+fvalue+"%");
+		fmap.put("state",state);
+		fmap.put("user_idx", user_idx);
+		
+		
+		Map tmap=new HashMap();
+		tmap.put("fvalue","%"+fvalue+"%");
+		tmap.put("state",state);
+		tmap.put("user_idx", user_idx);
+		
+		int totalCnt=orderDao.myReturnProListCnt(tmap);
+			
+		List<MyOrderListDTO> lists=orderDao.myReturnProList(fmap);
+		
+		String param = "&fvalue="+fvalue+"&state="+state;
+		String pageStr=com.mm.module.PageModule.makePageParam("myReturnProList.do", totalCnt, listSize, 
+																	pageSize, cp,param);
+			
+		mav.setViewName("turnback/myReturnProList");
+		mav.addObject("lists", lists);
+		mav.addObject("pageStr", pageStr);
+		mav.addObject("state", state);
+		mav.addObject("fvalue", fvalue);
+			
+		return mav;
+			
+	}
+	
 	
 
 	/** 마이페이지 주문배송내역 */

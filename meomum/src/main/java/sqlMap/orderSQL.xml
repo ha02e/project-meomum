@@ -34,29 +34,58 @@
 			and o.order_status=4
 	</select>
 	
-	<select id="myReturnProList" parameterType="Map" resultType="com.mm.order.model.MyOrderListDTO">
-		select * from
-			(select rownum as rnum, e.*from(
-				SELECT *FROM orders o
-					JOIN order_pro op ON o.order_idx = op.order_idx
+ 	
+ 	<select id="myReturnProList" resultType="com.mm.order.model.MyOrderListDTO" parameterType="Map">
+	select * from
+	(select rownum as rnum, e.*from(
+			SELECT * FROM orders o 
+			JOIN order_pro op ON o.order_idx = op.order_idx
 					JOIN product p ON op.pro_idx = p.pro_idx
 					JOIN turnback t ON o.order_idx = t.order_idx
 				WHERE o.user_idx = #{user_idx}
 					and (o.order_status=5 OR o.order_status=6 OR o.order_status=7 OR o.order_status=8)
-				order by order_date desc
+			    and pro_name like #{fvalue}
+			<choose>
+				<when test="state==5">
+					and (order_status = 5)
+				</when>
+				<when test="state==6">
+					and (order_status = 6)
+				</when>
+				<when test="state==7">
+					and (order_status = 7)
+				</when>
+				<when test="state==8">
+					and (order_status = 8)
+				</when>
+			</choose>	
+			order by order_date desc
 			)e )f
 		where rnum<![CDATA[>=]]>#{start} and rnum<![CDATA[<=]]>#{end}
-	</select>
+ 	</select>
 	<select id="myReturnProListCnt" parameterType="Integer" resultType="Integer">
-		select count(*) from
-			orders o
-				JOIN order_pro op ON o.order_idx = op.order_idx
+		select count(*) from orders o
+			JOIN order_pro op ON o.order_idx = op.order_idx
 				JOIN product p ON op.pro_idx = p.pro_idx
 				JOIN turnback t ON o.order_idx = t.order_idx
 			WHERE o.user_idx = #{user_idx}
 				and (o.order_status=5 OR o.order_status=6 OR o.order_status=7 OR o.order_status=8)
+				and pro_name like #{fvalue}
+			 <choose>
+				<when test="state==5">
+					and (order_status = 5)
+				</when>
+				<when test="state==6">
+					and (order_status = 6)
+				</when>
+				<when test="state==7">
+					and (order_status = 7)
+				</when>
+				<when test="state==8">
+					and (order_status = 8)
+				</when>
+			</choose>	
 	</select>
-	
 	
 	
 	<select id="myOrderReport" parameterType="Map" resultType="com.mm.order.model.OrderReportDTO">
