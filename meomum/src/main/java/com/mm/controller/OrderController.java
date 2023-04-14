@@ -304,7 +304,7 @@ public class OrderController {
 		return mav;
 	}
 
-	/** 관리자페이지 주문상세내역 */
+	/** 주문상세내역 팝업창 내용 */
 	@RequestMapping("/orderInfoDetail.do")
 	public ModelAndView orderInfoDetail(@RequestParam("order_idx") String order_idx,
 											@RequestParam("pro_idx") int pro_idx) {
@@ -403,5 +403,17 @@ public class OrderController {
 	    mav.setViewName("mmJson");
 
 	    return mav;
+	}
+	
+	//////////////////////////////////////////이초은 시작
+	/**주문 완료 페이지 */
+	@RequestMapping("orderSucces.do")
+	public ModelAndView orderSucces(@RequestParam("order_idx")String order_idx) {
+	
+	ModelAndView mav = new ModelAndView();
+	mav.addObject("order_idx",order_idx);
+	mav.setViewName("order/orderSucces");
+	return mav;
+	
 	}
 }

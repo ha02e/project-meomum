@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -155,7 +155,7 @@ function showTracker(t_key, t_code,t_invoice){
 							<a href="#" class="datatable-sorter">주문날짜</a>
 						</th>
 						<th data-sortable="true" style="width:12%">
-							<a href="#" class="datatable-sorter">총주문액</a>
+							<a href="#" class="datatable-sorter">주문수량</a>
 						</th>
 						<th data-filterable="true" style="width: 16%;">
 							<a href="#" class="datatable-filter">상태</a>
@@ -175,7 +175,11 @@ function showTracker(t_key, t_code,t_invoice){
 					<c:forEach var="dto" items="${lists}" varStatus="status">
 						<tr data-index="${status.count}">
 							<td class="sorting_${status.count} order-num text-center">
-								<a href="#" onclick="orderInfoOpen('orderInfoDetail.do?order_idx=${dto.order_idx}', 'orderInfoDetail', 'width=540,height=600'); return false;">
+								<c:url var="orderDetailUrl" value="orderInfoDetail.do">
+									<c:param name="order_idx">${dto.order_idx}</c:param>
+									<c:param name="pro_idx">${dto.pro_idx}</c:param>
+								</c:url>
+								<a href="#" onclick="orderInfoOpen('${orderDetailUrl}', 'orderInfoDetail', 'width=540,height=600'); return false;">
 								${dto.order_idx}
 								</a>
 							</td>
@@ -183,7 +187,7 @@ function showTracker(t_key, t_code,t_invoice){
 							<td class="text-center">${dto.user_name}</td>
 							<td class="text-center">${dto.user_tel}</td>
 							<td class="text-center">${dto.order_date}</td>
-							<td class="text-center"><fmt:formatNumber type="number" maxFractionDigits="3" value="${dto.amount}" />원</td>
+							<td class="text-center">${dto.pro_amount}개</td>
 							<td class="state d-flex justify-content-around">
 								<c:choose>
 									<c:when test="${dto.order_status eq 1}">

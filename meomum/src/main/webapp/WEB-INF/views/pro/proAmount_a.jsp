@@ -66,37 +66,37 @@
 	<div class="app-content pt-3 p-md-3 p-lg-4">
 		<div class="container pt-5">
 			<h1 class="text-center mb-4">상품 재고 관리</h1>
-			    
+			    <form name="proAmount" action="proAmount_a.do">
 			<div class="row g-3 mb-4 align-items-center justify-content-center">
 				    <div class="col-auto">
 					     <div class="page-utilities">
 						    <div class="row g-2 justify-content-end justify-content-md-end align-items-center">
 							    <div class="col-auto">
-								    <select class="form-select w-auto" >
-										  <option selected value="option-1">전체보기</option>
-										  <option value="option-2">침대</option>
-										  <option value="option-3">테이블</option>
-										  <option value="option-4">의자</option>
-										  <option value="option-5">소파</option>
-										  <option value="option-6">조명</option>
+								    <select class="form-select w-auto" name="cate" id="cate">
+										  <option selected value="0" onclick="location.href='proAmount_a.do';">전체보기</option>
+										  <option value="1" ${cate == '1' ? 'selected' : ''}>침대</option>
+										  <option value="2" ${cate == '2' ? 'selected' : ''}>테이블</option>
+										  <option value="3" ${cate == '3' ? 'selected' : ''}>의자</option>
+										  <option value="4" ${cate == '4' ? 'selected' : ''}>소파</option>
+										  <option value="5" ${cate == '5' ? 'selected' : ''}>조명</option>
 									</select>
 							    </div>
 							    <div class="col-auto">
-								    <form class="table-search-form row gx-1 align-items-center">
+								    <div class="table-search-form row gx-1 align-items-center">
 					                    <div class="col-auto">
-					                        <input type="text" id="search-orders" name="searchorders" class="form-control search-orders" placeholder="검색어를 입력해주세요.">
+					                        <input type="text" id="fvalue" name="fvalue" class="form-control search-orders" placeholder="검색어를 입력해주세요." value="${fvalue }">
 					                    </div>
 					                    <div class="col-auto">
 					                        <button type="submit" class="btn app-btn-secondary btn-primary">검색</button>
 					                    </div>
-					                </form>
+					                </div>
 					                
 							    </div><!--//col-->
 						    </div><!--//row-->
 					    </div><!--//table-utilities-->
 				    </div><!--//col-auto-->
 			    </div><!--//row-->
-			  
+			  </form>
 					    <div class="app-card app-card-orders-table shadow-sm mb-5">
 						    <div class="app-card-body">
 							    <div class="table-responsive">

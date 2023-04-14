@@ -26,15 +26,40 @@
 	<!-- main reviewList -->
 	<select id="reviewList" parameterType="Map" resultType="com.mm.review.model.ReviewDTO">
 		select * from
-		(select rownum as rnum, a.*from(
-			select * from review order by review_idx desc
+		(select rownum as rnum, a.* from(
+		
+			select * from review
+			where (subject like #{fvalue} or content like #{fvalue})
+			
+			<choose>
+				<when test="category==2">
+				and (category = '정리일상')
+				</when>
+			<when test="category==3">
+				and (category = '구독일상')
+				</when>
+			</choose>
+			order by review_idx desc
+			
 		)a )b
 		where rnum<![CDATA[>=]]>#{start} and rnum<![CDATA[<=]]>#{end}
 	</select>
 	
-	<select id="reviewTotalCnt" resultType="Integer">
-		select count(*) from
-			review
+	
+	
+	
+	<select id="reviewTotalCnt" resultType="Integer" parameterType="Map">
+		select count(*) from review
+		where (subject like #{fvalue} or content like #{fvalue})
+			
+			<choose>
+				<when test="category==2">
+				and (category = '정리일상')
+				</when>
+			<when test="category==3">
+				and (category = '구독일상')
+				</when>
+			</choose>
 	</select>
 	
 	<!-- mypage reviewList -->	
