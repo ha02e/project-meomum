@@ -10,8 +10,8 @@
 .page-header {
 	background: linear-gradient(rgba(36, 39, 38, 0.5), rgba(36, 39, 38, 0.5)),
 		rgba(36, 39, 38, 0.5)
-		url(https://images.unsplash.com/photo-1462530260150-162092dbf011?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1086&q=80)
-		no-repeat center;
+	        url(https://images.unsplash.com/photo-1635321350281-e2a91ecffd00?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2623&q=80)
+        no-repeat center;
 	background-size: cover;
 	margin: 0;
 	border-bottom: none;
@@ -59,7 +59,7 @@
 /**헤더 이미지용 끝*/
 </style>
 </head>
-<body>
+<body class="app">
 	<%@include file="/WEB-INF/views/header.jsp"%>
 	
 	<div class="page-header" style="margin-bottom: 70px;">
@@ -106,7 +106,7 @@
 		</c:choose>
 		<div class="text-end">
 				<a href="ntcList.do" class="btn btn-primary btn-lg" style="width : 150px;">목록</a>
-		</div>SS
+		</div>
 	</div>
 
 	<%@include file="/WEB-INF/views/footer.jsp"%>

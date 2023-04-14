@@ -61,6 +61,8 @@ public class CartController {
 			            mav.addObject("pro_idx", pro_idx);
 			            mav.addObject("confirm", true);
 			            mav.setViewName("pro/proMsg");
+			            int cartnum = cartDao.userCartCount(dto.getUser_idx());
+		                session.setAttribute("cart", cartnum);
 			        } else {
 			        	
 			        	result=cartDao.cartInsert(dto);
@@ -83,6 +85,8 @@ public class CartController {
 			            	  mav.addObject("msg", msg);
 				              mav.addObject("link", link);
 				              mav.setViewName("pro/proMsg");
+				              int cartnum = cartDao.userCartCount(dto.getUser_idx());
+				                session.setAttribute("cart", cartnum);
 			            }
 			        }
 			          

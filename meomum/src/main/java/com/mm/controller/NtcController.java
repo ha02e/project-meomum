@@ -54,13 +54,13 @@ public class NtcController {
 
 		int resultCnt = ntcDao.ntcTotalCnt(fvalue);
 		int totalCnt = resultCnt==0?1:resultCnt;
-		int listSize = 5;
+		int listSize = 10;
 		int pageSize = 5;
 		String param = "&fvalue="+fvalue;
 
 		String pageStr = com.mm.module.PageModule.makePageParam("ntcList_a.do", totalCnt, listSize, pageSize, cp,param);
 
-		List<NtcDTO> lists = ntcDao.ntcList(cp, pageSize, fvalue);
+		List<NtcDTO> lists = ntcDao.ntcList_a(cp, listSize, fvalue);
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("totalCnt",resultCnt);
@@ -153,7 +153,7 @@ public class NtcController {
 //		dto.setNtc_img(fileName);
 
 		int result = ntcDao.ntcInsert(dto);
-		String msg = result > 0 ? "게시글 작성 성공!" : "게시글 작성 실패!";
+		String msg = result > 0 ? "작성된 글을 등록하였습니다." : "글 등록에 실패하였습니다.";
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("msg", msg);
 		mav.addObject("goUrl", "/meomum/ntcList_a.do");
@@ -166,13 +166,13 @@ public class NtcController {
 
 		int resultCnt = ntcDao.ntcTotalCnt(fvalue);
 		int totalCnt = resultCnt==0?1:resultCnt;
-		int listSize = 5;
+		int listSize = 10;
 		int pageSize = 5;
 		String param = "&fvalue="+fvalue;
 
 		String pageStr = com.mm.module.PageModule.makePageParam("ntcList.do", totalCnt, listSize, pageSize, cp,param);
 
-		List<NtcDTO> lists = ntcDao.ntcList(cp, pageSize, fvalue);
+		List<NtcDTO> lists = ntcDao.ntcList(cp, listSize, fvalue);
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("totalCnt",resultCnt);
@@ -204,17 +204,22 @@ public class NtcController {
 	@RequestMapping("/ntcContentDel.do")
 	public ModelAndView ntcDelete(@RequestParam("ntc_idx") int idx) {
 		 // 이미지 파일 삭제
+		
+		
+		
+		/*경로 잘못됨. 
 	    String imageName = ntcDao.getNtcImageName(idx); // 이미지 파일명 가져오기
 	    String imagePath = "/meomum/ntcImages/" + imageName; // 가져온 이미지 파일 경로와 파일명
 	    File imageFile = new File(imagePath);
 	    if (imageFile.exists()) {
 	        imageFile.delete();
 	    }
+	    */
 		
 	 // 게시글 삭제
 		int result = ntcDao.ntcDelete(idx);
 		ModelAndView mav = new ModelAndView();
-		String msg = result > 0 ? "글삭제 성공!" : "글삭제 실패!";
+		String msg = result > 0 ? "게시글이 삭제되었습니다." : "게시글 삭제에 실패하였습니다.";
 		mav.addObject("msg", msg);
 		mav.addObject("goUrl", "/meomum/ntcList_a.do");
 		mav.setViewName("ntc/ntcMsg");
@@ -268,7 +273,7 @@ public class NtcController {
 
 		int result = ntcDao.ntcUpdate(dto);
 		ModelAndView mav = new ModelAndView();
-		String msg = result > 0 ? "글수정 성공!" : "글수정 실패!";
+		String msg = result > 0 ? "수정된 게시글이 등록되었습니다." : "수정된 글 등록에 실패하였습니다.";
 		mav.addObject("msg", msg);
 		mav.addObject("goUrl", "/meomum/ntcList_a.do");
 		mav.setViewName("ntc/ntcMsg");
