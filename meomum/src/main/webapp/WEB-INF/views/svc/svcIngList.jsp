@@ -69,7 +69,7 @@ footer {
 			<div class="row">
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<div class="page-caption">
-						<h2 class="page-title">마이페이지</h2>
+						<h2 class="page-title">정리일상 진행 현황</h2>
 					</div>
 				</div>
 			</div>
@@ -102,7 +102,7 @@ footer {
 									서비스일: ${list.svc_datetime}
 								</p>
 								<p class="card-text">
-									결제금액: <fmt:formatNumber type="number" maxFractionDigits="3" value="${list.total}"/>원
+									견적금액: <fmt:formatNumber type="number" maxFractionDigits="3" value="${list.total}"/>원
 								</p>
 							</div>
 						</div>
