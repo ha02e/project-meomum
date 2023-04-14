@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
     
 <!DOCTYPE html>
 <html>
@@ -195,7 +194,7 @@ function showTracker(t_key, t_code,t_invoice){
 						<tr class="users-table-info">
 							<th style="width:22%;">주문번호</th>
 							<th style="width:28%;">구독상품</th>
-							<th style="width:20%;">총주문액</th>
+							<th style="width:20%;">주문수량</th>
 							<th style="width:10%;">주문날짜</th>
 							<th style="width:20%;">상태</th>
 						</tr>
@@ -224,7 +223,7 @@ function showTracker(t_key, t_code,t_invoice){
 													</script>
 												</td>
 												<td class="cell text-truncate text-left" style="max-width: 170px;">${dto.pro_name}</td>
-												<td class="cell text-center"><fmt:formatNumber type="number" maxFractionDigits="3" value="${dto.amount}" />원</td>
+												<td class="cell text-center">${dto.pro_amount}개</td>
 												<td class="cell text-center">${dto.order_date}</td>
 												<td class="cell text-center">
 													<c:choose>

@@ -19,7 +19,7 @@ public interface OrderDAO {
 	public OrderReportDTO orderData(Map map);
 	
 	public int shipStartUpdate(Map map);
-	public int returnApplyUpdate(String order_idx);
+	public int returnApplyUpdate(Map map);
 	public int returnSubmitUpdate(Map map);
 	public int returnCancelUpdate(Map map);
 

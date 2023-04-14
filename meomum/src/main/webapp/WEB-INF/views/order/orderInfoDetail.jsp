@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -107,7 +109,7 @@ hr{
 	           		<label class="form-label" for="receiver">결제 정보</label>
 	           		<div class="input-group mb-2">
 						  <span class="input-group-text" id="basic-addon1">총 주문금액</span>
-						  <input type="text" class="form-control" value="${dto.amount}원">
+						  <input type="text" class="form-control" value="<fmt:formatNumber type="number" maxFractionDigits="3" value="${dto.amount}" />원">
 					</div>
 	           		<div class="input-group">
 						  <span class="input-group-text" id="basic-addon1">결제방법</span>

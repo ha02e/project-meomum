@@ -168,11 +168,11 @@
 	
 	<update id="returnProUpdate" parameterType="Map">
 		update product p
-		set p.pro_amount=p.pro_amount + op.pro_amount
-		where p.pro_idx in (select op.pro_idx
+		set p.pro_amount=p.pro_amount + (select op.pro_amount
                     		from order_pro op
                     		where op.order_idx=#{order_idx}
                                 and op.pro_idx=#{pro_idx}
                     		)
+		where p.pro_idx = #{pro_idx} 
 	</update>
 </mapper> 

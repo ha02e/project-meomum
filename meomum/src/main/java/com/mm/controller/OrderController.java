@@ -404,4 +404,16 @@ public class OrderController {
 
 	    return mav;
 	}
+	
+	//////////////////////////////////////////이초은 시작
+	/**주문 완료 페이지 */
+	@RequestMapping("orderSucces.do")
+	public ModelAndView orderSucces(@RequestParam("order_idx")String order_idx) {
+	
+	ModelAndView mav = new ModelAndView();
+	mav.addObject("order_idx",order_idx);
+	mav.setViewName("order/orderSucces");
+	return mav;
+	
+	}
 }
