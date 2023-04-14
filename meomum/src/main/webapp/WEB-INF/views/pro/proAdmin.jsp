@@ -21,17 +21,17 @@ function confirmDel(pro_idx){
 function sortUsers(cate) {
 	
 	if(cate=='0') {
-	    window.location.href = 'proAdmin.do';
+	    window.location.href = 'proAdmin.do?';
 	  }else if(cate=='1'){
-	    window.location.href = 'proFind.do?proF=침대';
+	    window.location.href = 'proFind.do?proF=침대&cate=1';
 	}else if(cate=='2'){
-		window.location.href = 'proFind.do?proF=테이블';
+		window.location.href = 'proFind.do?proF=테이블&cate=2';
 	}else if(cate=='3'){
-		window.location.href = 'proFind.do?proF=의자';
+		window.location.href = 'proFind.do?proF=의자&cate=3';
 	}else if(cate=='4'){
-		window.location.href = 'proFind.do?proF=소파';
+		window.location.href = 'proFind.do?proF=소파&cate=4';
 	}else if(cate=='5'){
-		window.location.href = 'proFind.do?proF=조명';
+		window.location.href = 'proFind.do?proF=조명&cate=5';
 	}
 }
 </script>
@@ -59,7 +59,7 @@ function sortUsers(cate) {
 	        <div class="d-flex justify-content-end align-items-center">
 	       <span class="me-2">카테고리:</span> 
 		<select class="form-select w-auto" name="cate" onchange="sortUsers(this.value)">
-	  <option value="all" ${cate == '0' ? 'selected' : ''}>전체</option>
+	  <option value="0" ${cate == '0' ? 'selected' : ''}>전체</option>
 		<option value="1" ${cate == '1' ? 'selected' : ''}>침대</option>
 		<option value="2" ${cate == '2' ? 'selected' : ''}>테이블</option>
 		<option value="3" ${cate == '3' ? 'selected' : ''}>의자</option>
