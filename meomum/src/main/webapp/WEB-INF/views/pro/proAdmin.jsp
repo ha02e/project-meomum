@@ -53,7 +53,7 @@ function sortUsers(cate) {
                     <button class="btn btn-primary" type="submit">검색</button>
                 </div>
             </form>
-
+            
     </div>
 	    <div class="col-md-6">
 	        <div class="d-flex justify-content-end align-items-center">
@@ -68,8 +68,7 @@ function sortUsers(cate) {
 		</select>
 	    </div>
 	</div>
-</div>
-				        
+</div>			        
 				<div class="table-responsive">
 				<table class="table table-hover" style="text-align:center;">
 					<thead>
@@ -121,7 +120,7 @@ function sortUsers(cate) {
 									</span>
 								</td>
 								<td><a href="proContent.do?pro_idx=${list.pro_idx}" target="_blank">${list.pro_name }</a></td>
-								<td>${list.pro_amount}</td>
+								<td>${list.pro_amount}개</td>
 								<td>
 									<c:choose> 
 										<c:when test="${list.pro_state == 0}">
@@ -133,7 +132,7 @@ function sortUsers(cate) {
 									</c:choose>
 								</td>
 								<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.pro_price }" />원</td>
-								<td>${list.pro_month }</td>
+								<td>${list.pro_month }개월</td>
 								<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.pro_subprice }" />원</td>
 								<td>${list.pro_date }</td>
 								<td>
