@@ -357,17 +357,9 @@ public class ProController {
 	@RequestMapping(value="proUpdate.do", method=RequestMethod.POST)
 	public ModelAndView proUpdate(ProDTO dto) {
 		ModelAndView mav=new ModelAndView();
-		
-		int result = proDao.proUpdate(dto); 
-		
-		ProDTO pdto=new ProDTO();
-		System.out.println("name:"+pdto.getPro_name());
-		System.out.println("price:"+pdto.getPro_price());
-		System.out.println("state"+pdto.getPro_state());
-		System.out.println("month"+pdto.getPro_month());
-		System.out.println("subprice:"+pdto.getPro_subprice());
-		System.out.println("allprice:"+pdto.getPro_allprice());
-		
+
+		int result = proDao.proUpdate(dto);
+
 		String msg=result>=0?"수정 완료했습니다.":"수정 실패했습니다.";
 		String link ="proAdmin.do";
 		mav.addObject("msg", msg);
@@ -513,6 +505,8 @@ public class ProController {
 			@RequestParam("proF")String proF) {
 		ModelAndView mav = new ModelAndView();
 		List<ProDTO> lists=proDao.proFind2(proF);
+		
+		mav.addObject("proF", proF);
 		mav.addObject("lists", lists);
 		mav.setViewName("pro/proList");
 		return mav;

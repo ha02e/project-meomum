@@ -106,7 +106,7 @@ input:invalid {
         <div class="input-group mb-3">
           <label for="pro_name" class="input-group-text col-2 text-center">상품명</label>
 	          <input type="text" class="form-control input-group-text-fixed" name="pro_name" 
-	          required="required" placeholder="상품명을 입력해주세요"  maxlength="30">
+	          required="required" placeholder="상품명을 입력해주세요"  maxlength="25">
         </div>
         
         <div class="input-group mb-3">
@@ -114,6 +114,7 @@ input:invalid {
 	          <input type="text" class="form-control input-group-text-fixed" id="pro_price"
 	          name="pro_price" required="required" placeholder="정가를 입력해주세요" 
    	          pattern="[0-9]+" minlength="2" maxlength="12">
+   	          <span class="input-group-text">원</span>
         </div>
         
         <div class="input-group mb-3">
@@ -121,6 +122,7 @@ input:invalid {
 	          <input type="text" class="form-control input-group-text-fixed" id="pro_amount" 
 	          name="pro_amount" required="required" placeholder="재고 수량을 입력해주세요"  
 	          minlength="1" maxlength="3" pattern="[0-9]+">
+	          <span class="input-group-text">개</span>
         </div>
         
         
@@ -167,6 +169,7 @@ input:invalid {
           
           <input type="text" class="form-control input-group-text-fixed" id="pro_subprice" name="pro_subprice" 
          placeholder="정가와 구독 개월 수를 입력하면 자동으로 월 구독 가격이 입력됩니다" required="required">
+         <span class="input-group-text">원</span>
          
         </div>
         
@@ -175,6 +178,7 @@ input:invalid {
           
           <input type="text" class="form-control input-group-text-fixed" id="pro_allprice" name="pro_allprice" 
           placeholder="정가와 구독 개월 수를 입력하면 자동으로 총 구독 가격이 입력됩니다" required="required">
+          <span class="input-group-text">원</span>
           
         </div>
 		</div>

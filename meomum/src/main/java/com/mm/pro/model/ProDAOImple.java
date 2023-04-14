@@ -85,7 +85,6 @@ private SqlSessionTemplate sqlMap;
 			return lists;
 		}
 	
-	
 	//관리자 상품 수정할 정보 불러오기
 	@Override
 		public List<ProDTO> proUpdateList(int pro_idx) {

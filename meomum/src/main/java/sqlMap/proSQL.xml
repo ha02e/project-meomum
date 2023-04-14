@@ -98,14 +98,13 @@
  	set
  	pro_name=#{pro_name},
  	pro_price=#{pro_price},
- 	pro_state=#{pro_state},
  	pro_month=#{pro_month},
  	pro_subprice=#{pro_subprice},
  	pro_allprice=#{pro_allprice}
  	where pro_idx=#{pro_idx}
  	</update>
  	
- 	 <select id="proSelect" parameterType="Integer" resultType="com.mm.pro.model.ProDTO">
+ 	<select id="proSelect" parameterType="Integer" resultType="com.mm.pro.model.ProDTO">
 	 select * from product
 	 where pro_idx=#{pro_idx}
  	</select>
@@ -162,4 +161,5 @@
 		delete from cart 
  	 where pro_idx=#{pro_idx} and user_idx = #{user_idx}
 	</delete>
+	
 </mapper> 
