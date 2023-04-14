@@ -169,4 +169,60 @@
                                 and op.pro_idx=#{pro_idx}
                     		)
 	</update>
+	
+	
+	<!-- 관리자 재고용 -->
+<select id="proListAmount" parameterType="Map" resultType="com.mm.pro.model.ProDTO">
+	 select * from
+	(
+		select rownum as rnum,a.* from
+		(
+			select * from product 
+			where (pro_name like #{fvalue} or pro_cate like #{fvalue})
+			<choose>
+				<when test="cate==1">
+					and (pro_cate = 1)
+				</when>
+				<when test="cate==2">
+					and (pro_cate = 2)
+				</when>
+				<when test="cate==3">
+					and (pro_cate = 3)
+				</when>
+				<when test="cate==4">
+					and (pro_cate = 4)
+				</when>
+				<when test="cate==5">
+					and (pro_cate = 5)
+				</when>
+			</choose>	
+			order by pro_idx desc
+		) a	
+	) b 
+	where rnum <![CDATA[>=]]> #{start}
+	and rnum <![CDATA[<=]]> #{end}
+</select>
+ 	
+ 	<select id="getA_TotalCnt" resultType="integer" parameterType="Map">
+	 select count(*) from product
+		where (pro_name like #{fvalue} or pro_cate like #{fvalue})
+			 <choose>
+				<when test="cate==1">
+					and (pro_cate = 1)
+				</when>
+				<when test="cate==2">
+					and (pro_cate = 2)
+				</when>
+				<when test="cate==3">
+					and (pro_cate = 3)
+				</when>
+				<when test="cate==4">
+					and (pro_cate = 4)
+				</when>
+				<when test="cate==5">
+					and (pro_cate = 5)
+				</when>
+			</choose>
+ 	</select>
+ 	
 </mapper> 

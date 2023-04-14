@@ -23,4 +23,8 @@ import java.util.*;
 	public int proAmountSelect(int pro_idx);
 	public int proAmountShipUpdate(Map map);
 	public int returnProUpdate(Map map);
+	
+	public int getA_TotalCnt(Map map);
+	public List<ProDTO> proListAmount(Map map);
+	
 }

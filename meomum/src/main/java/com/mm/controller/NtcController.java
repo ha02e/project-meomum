@@ -12,6 +12,7 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.JsonObject;
+import com.mm.member.model.MemberDTO;
 import com.mm.ntc.model.NtcDAO;
 import com.mm.ntc.model.NtcDTO;
 import com.mm.pro.model.ProDTO;
@@ -50,8 +52,17 @@ public class NtcController {
 
 	@RequestMapping("/ntcList_a.do") // 관리자 공지사항
 	public ModelAndView ntcList_a(@RequestParam(value = "cp", defaultValue = "1") int cp,
-			@RequestParam(value="fvalue",defaultValue = "") String fvalue) {
+			@RequestParam(value="fvalue",defaultValue = "") String fvalue,HttpSession session) {
+		ModelAndView mav = new ModelAndView();
 
+		MemberDTO ssInfo = (MemberDTO) session.getAttribute("ssInfo");
+		if(ssInfo==null||!ssInfo.getUser_info().equals("관리자")) {
+			mav.addObject("msg", "잘못된 접근입니다.");
+			mav.addObject("gopage","location.href='index.do';");
+			mav.setViewName("mainMsg");
+			return mav;
+		}
+		
 		int resultCnt = ntcDao.ntcTotalCnt(fvalue);
 		int totalCnt = resultCnt==0?1:resultCnt;
 		int listSize = 10;
@@ -62,7 +73,6 @@ public class NtcController {
 
 		List<NtcDTO> lists = ntcDao.ntcList_a(cp, listSize, fvalue);
 
-		ModelAndView mav = new ModelAndView();
 		mav.addObject("totalCnt",resultCnt);
 		mav.addObject("lists", lists);
 		mav.addObject("pageStr", pageStr);

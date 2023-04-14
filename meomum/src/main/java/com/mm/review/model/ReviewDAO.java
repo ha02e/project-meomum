@@ -8,7 +8,7 @@ public interface ReviewDAO {
 	public int reviewInsert(ReviewDTO dto);
 	
 	public List<ReviewDTO> reviewList(Map map);
-	public int getTotalCnt();
+	public int getTotalCnt(Map map);
 	
 	public List<ReviewDTO> myreviewList(Map map);
 	public int myreviewTotalCnt(int user_idx);
