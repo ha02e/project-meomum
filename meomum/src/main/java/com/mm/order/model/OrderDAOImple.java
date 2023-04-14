@@ -67,8 +67,8 @@ public class OrderDAOImple implements OrderDAO {
 	}
 	
 	@Override
-	public int returnApplyUpdate(String order_idx) {
-		int count=sqlMap.update("returnApplyUpdate", order_idx);
+	public int returnApplyUpdate(Map map) {
+		int count=sqlMap.update("returnApplyUpdate", map);
 		return count;
 	}
 	

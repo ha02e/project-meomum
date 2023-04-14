@@ -6,7 +6,7 @@ public class ReturnListDTO {
 	private String return_idx;
 	private String order_idx;
 	private int user_idx;
-	private String user_name;
+	private String order_name;
 	private String receiver;
 	private int pro_idx;
 	private String pro_thumb;
@@ -24,14 +24,14 @@ public class ReturnListDTO {
 	}
 
 
-	public ReturnListDTO(String return_idx, String order_idx, int user_idx, String user_name, String receiver,
+	public ReturnListDTO(String return_idx, String order_idx, int user_idx, String order_name, String receiver,
 			int pro_idx, String pro_thumb, String pro_name, int order_status, Date return_date, Date return_start_date,
 			Date return_end_date, String return_reason, String return_ok) {
 		super();
 		this.return_idx = return_idx;
 		this.order_idx = order_idx;
 		this.user_idx = user_idx;
-		this.user_name = user_name;
+		this.order_name = order_name;
 		this.receiver = receiver;
 		this.pro_idx = pro_idx;
 		this.pro_thumb = pro_thumb;
@@ -75,13 +75,13 @@ public class ReturnListDTO {
 	}
 
 
-	public String getUser_name() {
-		return user_name;
+	public String getOrder_name() {
+		return order_name;
 	}
 
 
-	public void setUser_name(String user_name) {
-		this.user_name = user_name;
+	public void setOrder_name(String order_name) {
+		this.order_name = order_name;
 	}
 
 
@@ -184,5 +184,5 @@ public class ReturnListDTO {
 		this.return_ok = return_ok;
 	}
 
-	
+
 }
