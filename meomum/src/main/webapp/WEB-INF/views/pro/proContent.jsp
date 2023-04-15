@@ -187,12 +187,10 @@
 			<div class="row">
 				<div class="col-md-6 col-lg-7 p-b-30">
 					<div class="p-l-25 p-r-30 p-lr-0-lg">
-						<div class="wrap-slick3 flex-sb flex-w">
+						<div class="wrap-slick3 flex-sb flex-w">						
 							<div class="wrap-slick3-dots"></div>
 							<div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
-							  <div class="slick3-prev">
-							    <img src="/meomum/images/icon/icon-prev.png" alt="previous slide">
-							  </div>
+							  <div class="slick3-prev"></div>
 							 
 							<div class="slick3 gallery-lb">
 								<div class="item-slick3" data-thumb="/meomum/images/items/${lists[0].pro_thumb}">
@@ -345,8 +343,8 @@
 						
 						<!-- 버튼 구역 -->
 						<div class="button-container">
-						  <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail" type="submit" formaction="cartInsert.do">장바구니</button>
-						  <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail" type="submit" formaction="orderList.do">구매하기</button>
+						  <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04" type="submit" formaction="cartInsert.do">장바구니</button>
+						  <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04" type="submit" formaction="orderList.do">구매하기</button>
 						</div>
 							</form>
 						</div>	
@@ -471,10 +469,7 @@
 	<script src="vendor/slick/slick.min.js"></script>
 	<script src="js/slick-custom.js"></script>
 <!--===============================================================================================-->
-	<script src="vendor/parallax100/parallax100.js"></script>
-	<script>
-        $('.parallax100').parallax100();
-	</script>
+
 <!--========================이미지 갤러리================================-->
 	<script src="vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
 	<script>

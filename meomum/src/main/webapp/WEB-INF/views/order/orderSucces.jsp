@@ -6,9 +6,7 @@
 <html>
 <head>
 <title>머뭄 주문/결제 확인</title>
-<meta http-equiv="Content-Security-Policy"
-	content="upgrade-insecure-requests">
-
+<meta charset="UTF-8">
 
 <style>
 

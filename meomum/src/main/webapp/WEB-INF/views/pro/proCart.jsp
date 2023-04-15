@@ -9,28 +9,24 @@
 <title>[사용자] 장바구니 목록</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="images/icons/favicon.png"/>
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
 	<link rel="stylesheet" type="text/css" href="css/proUtil.css">
 	<link rel="stylesheet" type="text/css" href="css/proMain.css">
+	<link id="theme-style" rel="stylesheet" href="assets/css/portal_a.css">
 <!--===============================================================================================-->
 	
 </head>
 <style>
+.btn-group {
+  display: flex;
+  justify-content: space-between;
+}
 h3.ltext-106 {
   margin-top: 40px;
   margin-bottom: 40px;
-}
-
-#delete-icon{
-  width: 10px;
-  height: 10px;
 }
 
 #thumb {
@@ -41,8 +37,33 @@ h3.ltext-106 {
 .checkbox-parent {
   display: flex;
   justify-content: center;
+  vertical-align: middle;
+}
+
+.cartColor {
+    display: block;
+    width: 50px;
+    font-weight: 800;
+    text-align: center;
+    color: #198754;
+    border: none;
+    background: none;
+}
+
+.flex-w {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end; /* 오른쪽 정렬 */
+}
+
+#priceArea{
+  border: none;
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+  text-align: right;
 }
 </style>
+
 <body class="animsition">
 <%@include file="../header.jsp"%> 
 
@@ -52,25 +73,31 @@ h3.ltext-106 {
 				<div class="row">
 	
 				<h3 class="ltext-106 cl5 txt-center">장바구니</h3>
-					
-					<div class="col-lg-10 col-xl-10 m-lr-auto m-b-50">
 						<div class="m-l-25 m-r--38 m-lr-0-xl">
-							<div class="wrap-table-shopping-cart">
-			
-				<table class="table-shopping-cart" style="text-align:center;">
+				
+				<!-- 전체 선택 영역 -->
+				
+				<c:if test="${empty lists}">
+					<c:set var="hideCheck" value="true" />
+					<c:set var="hidePriceArea" value="true" />
+   					<c:set var="hideButtons" value="true" />
+				</c:if>
+				
+				<div class="wrap-table-shopping-check" <c:if test="${hideCheck eq true}">style="display:none;"</c:if>>
+					<div class="form-check"> 
+					<input type="checkbox" class="all_check_input form-check-input" id="allCheck" checked="checked">
+						<label for="allCheck" class="form-check-label" style="display: flex; align-items: center;">
+							<span class="all_chcek_span">전체 선택</span>
+						</label>
+					</div>	
+				</div>
+							
+							
+				<div class="wrap-table-shopping-cart">
 					
-					<tr>
-						<td colspan="3">
-							<label for="allCheck" style="display: flex; align-items: center;">
-							  <input type="checkbox" class="all_check_input input_size_20" id="allCheck" checked="checked">
-							  <span class="all_chcek_span">전체선택</span>
-							</label>
-
-						</td>
-					</tr>
-					
+					<table class="table-shopping-cart" style="text-align:center;">
 					<tr class="table_head">
-						<th class="column-0"></th>
+						<th class="column-c"></th>
 						<th class="column-1">이미지</th>
 						<th class="column-2">상품명</th>
 						<th class="column-1">월 가격</th>
@@ -82,17 +109,19 @@ h3.ltext-106 {
 					
 					<c:if test="${empty lists }">
 						<tr>
-							<td colspan="11" rowspan="2" align="center" class="stext-102 cl3 p-t-23">
+							<td colspan="8" align="center" class="stext-102 cl3 p-t-23 column-4">
 							담긴 상품이 없습니다
+							<a href="proList.do"><i class="bi bi-cart3 hov-cl1 trans-04 mtext-102 p-b-6 d-block mx-auto">상품 구경하러 가기</i></a>
 							</td>
 						</tr>
 					</c:if>
 					
 	
 			<c:forEach var="list" items="${lists}">		
-					<tr>
-						<td class="cart_info_td table_row">
-							<input type="checkbox" class="individual_cart_checkbox" checked="checked" name="cart_idx" value="${list.cart_idx}">		
+					<tr style="text-align:center;">
+						<td class="cart_info_td table_row" style="text-align: center;">
+							<input type="checkbox" class="individual_cart_checkbox form-check-input" 
+							checked="checked" id="cart_idx" name="cart_idx" value="${list.cart_idx}">	
 							<input type="hidden" class="individual_cartamount_input" value="${list.cart_amount }">
 							<input type="hidden" class="individual_prosubprice_input" value="${list.pro_subprice }">
 							<input type="hidden" class="individual_prodelprice_input" value="${list.pro_delprice }">
@@ -104,14 +133,14 @@ h3.ltext-106 {
 							</div>
 						</td>
 						
-						<td><a href="proContent.do?pro_idx=${list.pro_idx}">${list.pro_name}</a></td>
+						<td><a href="proContent.do?pro_idx=${list.pro_idx}" target="_blank" class="hov-cl1 trans-04 js-name-b2 p-b-6 d-block mx-auto">${list.pro_name}</a></td>
 						
 						<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.pro_subprice }" />원</td>
 						<td>${list.pro_month }개월
 						</td>
 						
 						<td>
-							<div class="flex-w m-l-auto m-r-0">
+							<div class="flex-w m-l-auto m-r-0" style="justify-content: center;">
 							
 							<!-- 마이너스 -->
 								<div id="minus-button" class="btn-num-product-down">
@@ -120,7 +149,7 @@ h3.ltext-106 {
 
 							<!-- 수량 조절 -->
 								
-								<input class="txt-center num-product update_amount_${list.cart_idx}" 
+								<input class="txt-center c13 mtext-104 num-product cartColor update_amount_${list.cart_idx}" 
 								type="number" min="1" max="${list.pro_amount-1}" name="cart_amount"
 								value="${list.cart_amount}" id="update_amount_${list.cart_idx}" 
 								onchange="updatePrice(this, ${list.pro_subprice}, ${list.pro_allprice})">
@@ -132,7 +161,11 @@ h3.ltext-106 {
 								</div>
 						</div>
 						
-							<input type="button" onclick="cartNumUpdate(${list.cart_idx}, document.querySelectorAll('.update_amount_${list.cart_idx}')[0].value)" value="수량 변경">
+							<!-- 수정 버튼 -->
+							<div>
+							<input type="button" style="margin: 0 auto;" class="btn-sm app-btn-secondary stext-102" 
+							onclick="cartNumUpdate(${list.cart_idx}, document.querySelectorAll('.update_amount_${list.cart_idx}')[0].value)" value="수량 변경">
+							</div>
 						</td>
 						
 						
@@ -144,76 +177,48 @@ h3.ltext-106 {
 						<!-- 장바구니 삭제 -->
 						<td class="column-0">
 							 <a href="#" onclick="deleteCartItem(${list.cart_idx})">
-								<img src="images/icon/icon-close2.png" alt="DELETE" id="delete-icon">
+							 <i class="bi bi-x-lg size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04"></i>
 							</a>
 						</td>
 					</tr>
-				</c:forEach>	
-					</table>		
+				</c:forEach>
+				
+				
+				<c:if test="${empty lists }">
 					
-						
-					<div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
-						<div class="flex-w flex-m m-r-20 m-tb-5">
-							<div class="flex-c-m column-3">월 구독 가격: <span class="totalSub"></span>원 | </div>
-							<div class="flex-c-m column-3"> 총 구매 개수: <span class="totalCount"></span>개 | </div>
-							<div class="flex-c-m column-3"> 총 배송비: <span class="totalDel"></span>원 | </div>
-							<div class="flex-c-m column-3"> 월 구독 가격+총 배송비: <span class="finalTotalPrice"></span>원</div>
-						</div>
+					
+					
+				</c:if>
+				
+				
+				<tr>
+					<td colspan="8" class="column-6" id="priceArea"  <c:if test="${hidePriceArea eq true}">style="display:none;"</c:if>>
+					<div class="stext-107">총 구매 개수 <span class="totalCount"></span>개</div>
+					<div>월 구독 가격: <span class="totalSub"></span>원 + 
+					배송비 <span class="totalDel"></span>원 = 
+					<span class="mtext-108" style="font-weight: bold;">합계 <span class="finalTotalPrice mtext-108" style="color: red;"></span>원</span></div>
+					
+					<input type="hidden" name="totalSub" id="totalSub" >
+					<input type="hidden" name="totalCount" id="totalCount" >
+					<input type="hidden" name="totalDel" id="totalDel" >
+					<input type="hidden" name="finalTotalPrice" id="finalTotalPrice" >		
+					</td>
+				</tr>
+				
+			</table>
+				
+			<c:if test="${empty hideButtons}">
+			<button class="stext-101 cl0 size-101 bg3 bor14 hov-btn3 trans-04 pointer" type="button" onclick='location.href = "proList.do";'>취소하기</button>
+			<button class="stext-101 cl0 size-101 bg1 bor1 hov-btn1 trans-04 pointer" type="submit">구매하기</button>
+			</c:if>
 					</div>
 				</div>
 			</div>
-		</div>
-					
-					
-						<div class="col-sm-9 col-lg-6 col-xl-4 m-lr-auto m-b-50">
-							  <div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 m-lr-0-xl p-lr-15-sm">
-							    <h4 class="mtext-109 cl2 p-b-30">
-							      Cart Totals
-							    </h4>
-							    
-							   <div class="flex-w flex-t bor12 p-b-13">
-							      <div class="size-208">
-							        <span class="stext-110 cl2">
-							          구독 금액
-							        </span>
-							      </div>
-							      
-							      <div class="size-209">
-							        <span class="mtext-110 cl2">
-							          월 ()원
-							        </span>
-							      </div>
-							    </div>
-							    
-							    <div class="flex-w flex-t p-t-27 p-b-33 justify-content-center">
-							      <div class="size-208">
-							        <span class="mtext-101 cl2">
-							          배송비
-							        </span>
-							      </div>
-							
-							      <div class="size-209 p-t-1">
-							        <span class="mtext-110 cl2">
-							          (배송비)
-							        </span>
-							      </div>
-							    </div>
-							    
-							    <input type="hidden" name="totalSub" id="totalSub" >
-									<input type="hidden" name="totalCount" id="totalCount" >
-									<input type="hidden" name="totalDel" id="totalDel" >
-									<input type="hidden" name="finalTotalPrice" id="finalTotalPrice" >	
-							    <button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer"
-							    type="submit">
-							      구매하기
-							    </button>
-							    
-							  </div>
-							</div>
-						</div>
-					</div>
-				</form>
+		</div> 
+	</form>
 			
+	
+
 				
 <script>
 const minusBtn = document.getElementById('minus-button');

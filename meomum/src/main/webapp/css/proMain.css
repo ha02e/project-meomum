@@ -1874,19 +1874,25 @@ input.num-product::-webkit-inner-spin-button {
 }
 
 
-.wrap-table-shopping-cart {
-  border-left: 1px solid #e6e6e6;
-  border-right: 1px solid #e6e6e6;
+.wrap-table-shopping-check {
   text-align:center;
   margin: 0 auto; /* 가운데 정렬 */
-  width: 900px; /* 부모 요소의 width 값을 지정 */
+  width: 1000px; /* 부모 요소의 width 값을 지정 */
+}
+
+.wrap-table-shopping-cart {
+  text-align:center;
+  margin: 0 auto; /* 가운데 정렬 */
+  width: 1000px; /* 부모 요소의 width 값을 지정 */
 }
 
 .table-shopping-cart {
+  border-left: 1px solid #e6e6e6;
+  border-right: 1px solid #e6e6e6;
   border-collapse: collapse;
   text-align:center;
   margin: 0 auto; /* 가운데 정렬 */
-  width: 900px;
+  width: 1000px;
 }
 
 .table-shopping-cart tr {
@@ -1902,7 +1908,7 @@ input.num-product::-webkit-inner-spin-button {
 .table-shopping-cart .column-1 {
   width: 133px;
   text-align: center;
-  height: 50px;
+  height: 30px;
 }
 
 .table-shopping-cart .column-2 {
@@ -1931,8 +1937,14 @@ input.num-product::-webkit-inner-spin-button {
   font-size: 15px;
 }
 
+.table-shopping-cart .column-6 {
+  padding: 15px 50px 25px 0;
+  text-align: right;
+  font-size: 15px;
+}
+
 .table-shopping-cart .table_row {
-  height: 185px;
+  height: 140px;
 }
 
 .table-shopping-cart .table_row td {
@@ -1940,7 +1952,11 @@ input.num-product::-webkit-inner-spin-button {
 }
 
 .table-shopping-cart .table_row td.column-1 {
-  padding-bottom: 30px;
+  padding-bottom: 10px;
+}
+
+.table-shopping-cart td a {
+  color: #555;
 }
 
 .table-shopping-cart .table_head th {
@@ -1958,8 +1974,6 @@ input.num-product::-webkit-inner-spin-button {
   color: #555;
   line-height: 1.6;
 }
-
-
 
 /*//////////////////////////////////////////////////////////////////
 [ Block1 ]*/
