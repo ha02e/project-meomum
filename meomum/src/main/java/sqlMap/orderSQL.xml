@@ -6,9 +6,30 @@
   	<select id="orderList" resultType="com.mm.pro.model.ProDTO">
   	select * from product where pro_idx= #{pro_idx}
   	</select>
+  	
+  	
   	<insert id="orderInsert" parameterType="com.mm.order.model.OrderDTO">
-  		insert into orders values(#{order_idx}, #{user_idx}, #{order_name}, sysdate, sysdate + INTERVAL '12' MONTH, #{order_pcode}, '#{receiver}', '#{receiver_tel}', #{order_addr}, #{order_detail}, #{order_msg}, #{using_point}, TO_DATE(TO_CHAR(SYSDATE + 7, 'DD'), 'DD'), #{amount}, 1, sysdate, #{order_tos})
+  		insert into orders values(
+  		#{order_idx},
+  		 #{user_idx},
+  		  #{order_name},
+  		   sysdate, 
+  		   sysdate + INTERVAL '12' MONTH,
+  		    #{order_pcode},
+  		     #{receiver}, 
+  		     #{receiver_tel},
+  		      #{order_addr},
+  		       #{order_detail},
+  		        #{order_msg},
+  		         #{using_point},
+  		          TO_DATE(TO_CHAR(SYSDATE + 7, 'DD'), 'DD'),
+  		           #{amount},
+  		            1, 
+  		            sysdate,
+  		             #{order_tos})
 	</insert>
+	
+	
 	<insert id="order_proInsert" parameterType="com.mm.order.model.OrderProDTO">
   		insert into order_pro values(#{order_idx},#{user_idx},#{pro_idx},#{pro_amount})
 	</insert>
@@ -240,7 +261,7 @@
 		set o.order_status = 6
 		where o.order_idx in (select op.order_idx
                     		from order_pro op
-                    		where op.pro_idx=#{pro_idx}
+                    		where op.order_idx=#{order_idx}
                     		)
 	</update>
 	<update id="returnCancelUpdate" parameterType="Map">

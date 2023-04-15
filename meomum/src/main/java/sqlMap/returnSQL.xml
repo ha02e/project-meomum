@@ -20,7 +20,7 @@
 		)
 	</insert>
 	
-	<select id="returnData" parameterType="String" resultType="com.mm.turnback.model.ReturnListDTO">
+	<select id="returnData" parameterType="Map" resultType="com.mm.turnback.model.ReturnListDTO">
 			SELECT *FROM orders o
 			JOIN order_pro op ON o.order_idx = op.order_idx
 			JOIN member m ON o.user_idx=m.user_idx
@@ -30,7 +30,8 @@
 				and o.user_idx=m.user_idx
 			    and o.order_idx=t.order_idx
 			    and op.pro_idx=p.pro_idx
-				and order_idx=#{order_idx}
+				and o.order_idx=#{order_idx}
+				and op.pro_idx=#{pro_idx}
 	</select>
 	
 	<update id="returnStartUpdate" parameterType="Map">
@@ -39,7 +40,6 @@
 			t.return_end_date = sysdate+7, 
 			t.return_ok='Y'
 		where t.order_idx=#{order_idx}
-			and t.pro_idx=#{pro_idx}
 	</update>
 	
 	<update id="returnNoUpdate" parameterType="Map">

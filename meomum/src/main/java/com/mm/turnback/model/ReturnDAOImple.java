@@ -35,8 +35,8 @@ public class ReturnDAOImple implements ReturnDAO {
 	}
 	
 	@Override
-	public ReturnListDTO returnData(String order_idx) {
-		ReturnListDTO dto=sqlMap.selectOne("returnData", order_idx);
+	public ReturnListDTO returnData(Map map) {
+		ReturnListDTO dto=sqlMap.selectOne("returnData", map);
 		return dto;
 	}
 	
