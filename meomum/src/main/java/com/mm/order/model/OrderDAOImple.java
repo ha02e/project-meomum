@@ -105,18 +105,6 @@ public class OrderDAOImple implements OrderDAO {
 		return count;
 	}
 	
-	@Override
-	public List<MyOrderListDTO> myReturnProList(Map map) {
-		List<MyOrderListDTO> lists = sqlMap.selectList("myReturnProList", map);
-		return lists;
-	}
-	
-	@Override
-	public int myReturnProListCnt(Map map) {
-		int count=sqlMap.selectOne("myReturnProListCnt", map);
-		count = count == 0 ? 1 : count;
-		return count;
-	}
 	
 	@Override
 	public int orderCancelUpdate(String oder_idx) {

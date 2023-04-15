@@ -143,7 +143,6 @@ public class PointDTO {
 	       return sb.toString();
 	   }
 
-
 	public void setPoint_changed(String point_changed) {
 		this.point_changed = point_changed;
 	}

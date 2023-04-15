@@ -193,7 +193,7 @@ h2{
 					<span style="margin-right: 30px;"></span>
 					<div class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle"
-							data-bs-toggle="dropdown">정리일상</a>
+							data-bs-toggle="dropdown">정리 일상</a>
 						<div
 							class="dropdown-menu rounded-0 rounded-bottom border-0 shadow-sm m-0">
 							<a href="askList.do" class="dropdown-item">간단 견적</a> <a

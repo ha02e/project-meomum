@@ -103,6 +103,7 @@ public class ReviewController {
 		MemberDTO mdto=(MemberDTO)session.getAttribute("ssInfo");
 		
 		dto.setUser_idx(mdto.getUser_idx());
+		dto.setCate_idx(req.getParameter("cate_idx"));
 		dto.setCategory(req.getParameter("category"));
 		dto.setWriter(req.getParameter("writer"));
 		dto.setActivity_idx(req.getParameter("activity_idx"));

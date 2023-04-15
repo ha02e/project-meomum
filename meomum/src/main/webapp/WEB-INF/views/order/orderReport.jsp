@@ -32,7 +32,6 @@
 	text-align: center;
 }
 
-
 .btn-primary {
     --bs-btn-color: #fff;
     --bs-btn-bg: #85745D;
@@ -71,7 +70,10 @@
   border-bottom: 1.2px solid #dadbe4;
   font-size: 14px;
 }
-
+thead tr{
+	background-color: #f8f9fa;
+	border-top: 1.2px solid #dadbe4;
+}
 .users-table-info th {
 	color:#333333;
 	text-align: center;
@@ -203,7 +205,7 @@ function showTracker(t_key, t_code,t_invoice){
 			   
 			   	<div class="users-table table-wrapper">
 				<table class="posts-table">
-					<thead>
+					<thead class="table-light">
 						<tr class="users-table-info">
 							<th style="width:22%;">주문번호</th>
 							<th style="width:28%;">구독상품</th>

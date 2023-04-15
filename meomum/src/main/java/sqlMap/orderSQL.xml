@@ -243,6 +243,7 @@
 		where order_idx in (select op.order_idx
                     		from order_pro op
                     		where op.pro_idx=#{pro_idx}
+                    			and op.order_idx=#{order_idx}
                     		)
 	</update>
 	

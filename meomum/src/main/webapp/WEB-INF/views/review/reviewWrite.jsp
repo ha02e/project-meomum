@@ -155,6 +155,7 @@
 				<div class="mb-3 text-center">
 					<input type="submit" class="btn btn-primary mb-2" value="작성하기">	
 				</div>
+				</div>
 			</form>
 			</div>
 		<!-- ---------- 마이페이지 각 페이지 여기에 넣어주세요!! 끝 지점 ---------- -->
