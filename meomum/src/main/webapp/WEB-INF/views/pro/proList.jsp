@@ -77,14 +77,13 @@
 		        <a href="proContent.do?pro_idx=${list2.pro_idx}"><img src="/meomum/images/items/${list2.pro_thumb}" alt="best-img"></a>
 		     	 </div>
 			      <div class="block2-txt flex-w flex-t p-t-14 mx-auto">
-			      
-			        <div class="col-sm-6 mx-auto text-center">
-			          <a href="proContent.do?pro_idx=${list2.pro_idx}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6 d-block mx-auto">
+			      <a href="proContent.do?pro_idx=${list2.pro_idx}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6 d-block mx-auto">
 			            ${list2.pro_name}
 			          </a>
-			          <span class="stext-105 cl3 d-block mx-auto">
+			        <div class="col-sm-7 mx-auto text-center">
+			          <div class="stext-105 cl3 d-block mx-auto">
 			            <fmt:formatNumber type="number" maxFractionDigits="3" value="${list2.pro_subprice }" />원
-			          </span>
+			          </div>
 			          
 			        </div>
 			      </div>

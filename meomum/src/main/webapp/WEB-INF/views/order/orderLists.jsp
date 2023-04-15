@@ -525,7 +525,7 @@ input:invalid {
 							sub_end : makeMerchantUid,//수정 필요
 							order_pcode : bPcode,
 							receiver : bName,
-							receiver_tel : bTel,
+							receiver_tel : bName,
 							order_addr : bAddr,
 							order_detail : bAddr_detail,
 							order_msg : order_msg,
