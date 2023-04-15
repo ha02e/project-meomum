@@ -238,13 +238,6 @@ thead th a {
 												</c:choose></td>
 
 											<td class="text-center">
-											<%-- <c:url var="deleteUrl" value="asvcDelete.do">
-												<c:param name="svc_idx">${dto.svc_idx}</c:param>
-											</c:url> 
-											<a href="${deleteUrl}" class="del">X</a>--%>
-											
-											<%-- <input type="hidden" id="svc_state" value="${dto.svc_state}">
-											<input type="hidden" id="svc_idx" value="${dto.svc_idx}"> --%>
 											<div>
 											<a href="#" onclick="svcDelete('${dto.svc_idx}','${dto.svc_state}')">X</a>
 											</div>

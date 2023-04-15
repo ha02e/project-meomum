@@ -67,6 +67,7 @@ function requestPay() {
     
     
   } else {*/
+  
   IMP.request_pay({
     pg : "kakaopay", //html5_inicis
     pay_method : 'card',
@@ -126,7 +127,8 @@ function requestPay() {
         } else {
         	console.log(rsp);
           alert('다시 시도해주세요');
-          location.href = 'svcIngContent.do';
+          location.href = 'svcIngContent.do?svc_idx=' + svcIx + '&&' + 'user_idx=' + user_idx;
+
         }
       }); 
 /**}*///else end

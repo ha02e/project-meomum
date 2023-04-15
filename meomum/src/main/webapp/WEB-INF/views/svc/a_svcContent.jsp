@@ -6,6 +6,39 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script>
+	function validate() {
+		
+	  var areaLabel = $('#areaLabel');
+	  var areaLabelTop = areaLabel.offset().top;
+	  var areaLabelHeight = areaLabel.height();
+	  
+	  var windowHeight = $(window).height();
+
+	  if ($("input[name='svc_area']:checked").length === 0) {
+	    $('html, body').animate({//해당 부분으로 스크롤 이동
+	      scrollTop: areaLabelTop - windowHeight / 2 + areaLabelHeight / 2
+	    }, 100, function() {
+	      $('#areaLabel')[0].focus();
+	      $('#areaError').text('서비스 영역을 선택해주세요').show();
+	    });
+	    return false;
+	  }
+	 
+	  
+	  // 유효성 검사가 모두 통과한 경우 true 반환
+	  return true;
+	}
+	$(document).ready(function() {
+		  $('#asvcUpdate').on('submit', function(event) {
+		    event.preventDefault(); // 폼의 자동 전송 막기
+		    if (validate()) {
+		      this.submit(); // 폼 제출
+		    }
+		  });
+		});
+
+</script>
 <style>
 .form-control:disabled, .form-control[readonly] {
     background-color: #ffff!important;
@@ -61,7 +94,17 @@ textarea {
   background-color: #f8f9fa !important;
   }
   
+label[for="input_svc"]::before{
+  content: "*";
+  color: #ff6666;
+  margin-right: 5px;
+}
 
+label[for="areaLabel"]::before{
+  content: "*";
+  color: #ff6666;
+  margin-right: 5px;
+}
 
 </style>
 
@@ -78,7 +121,7 @@ textarea {
 		<div class="app-content pt-3 p-md-3 p-lg-4">
 			<div class="container-xl">
 				<h2 class="title">방문 견적 예약 : ${dto.svc_idx}</h2>
-				<form name="asvcUpdate" action="asvcUpdate.do" method="post">
+				<form name="asvcUpdate" action="asvcUpdate.do" method="post" onsubmit="return validate()">
 					<input type="hidden" name="user_idx" value="${dto.user_idx}" id="user_idx" style="background-color: #fff; border: 1px solid #ced4da;">
 					<!-- -------------------------------------예약번호------------------------------- -->	
 						<div class="input-group mb-3">
@@ -88,7 +131,7 @@ textarea {
 					<!-- ----------------------------------서비스 상태--------------------------------- -->
 					
 					<div class="input-group mb-3">
-					<label class="input-group-text col-3 text-center" for="input_svc_type" style="font-weight:bold;">예약상태</label> 
+					<label class="input-group-text col-3 text-center" for="input_svc" style="font-weight:bold;">예약상태</label> 
 								<select class="form-select" name="svc_state" id="svc_state" required="required">
 								<option value="예약확정" ${dto.svc_state =="예약확정"?"selected":""}>예약확정</option>
 								<option value="예약취소" ${dto.svc_state =="예약취소"?"selected":""}>예약취소</option>
@@ -100,7 +143,7 @@ textarea {
 						</div>
 				<!-- -------------------------------------거주형태------------------------------- -->	
 						<div class="input-group mb-3">
-							<label class="input-group-text col-3 text-center" for="input_svc_type" style="font-weight:bold;">거주형태</label> 
+							<label class="input-group-text col-3 text-center" for="input_svc" style="font-weight:bold;">거주형태</label> 
 								<select class="form-select" id="svc_type" name="svc_type" required="required">
 									<option value="아파트" ${dto.svc_type =="아파트"?"selected":""}>아파트</option>
 									<option value="빌라" ${dto.svc_type =="빌라"?"selected":""}>빌라</option>
@@ -114,7 +157,7 @@ textarea {
 				<!-- ----------------------------------서비스영역---------------------------------- -->
 						<div class="input-group mb-3">
 						
-							<label class="input-group-text col-3 text-center" for="input_svc_area" style="font-weight:bold;">서비스 영역</label>&nbsp;&nbsp;
+							<label class="input-group-text col-3 text-center" for="areaLabel" id="areaLabel" style="font-weight:bold;">서비스 영역</label>&nbsp;&nbsp;
 							<div class="form-check form-check-inline">
 								<input class="form-check-input" type="checkbox" name="svc_area" id="svc_area"  value="전체" ${dto.svc_area.contains("전체")?"checked":""}> 
 								<label class="form-check-label" for="전체">전체</label>
@@ -144,31 +187,32 @@ textarea {
 								<input class="form-check-input" type="checkbox" name="svc_area" id="svc_area" value="기타" ${dto.svc_area.contains("기타")?"checked":""}> 
 								<label class="form-check-label" for="기타">기타</label>
 							</div>
+							<span id="areaError" style="color: red;"></span>
 						</div>
 
 
 						<!-- ----------------------------------거주 평수--------------------------------- -->
 						<div class="input-group mb-3">
-							<label class="input-group-text col-3 text-center" for="input_svc_py" style="font-weight:bold;">거주 평수(공급면적)</label> 
+							<label class="input-group-text col-3 text-center" for="input_svc" style="font-weight:bold;">거주 평수(공급면적)</label> 
 								<input type="text" class="form-control input-group-text-fixed" name="svc_py" id="svc_py" value="${dto.svc_py}" required="required" placeholder="평수를 입력해주세요">
 								<span class="input-group-text">평</span>
 						</div>
 						
 						<!-- ----------------------------------성함--------------------------------- -->
 						<div class="input-group mb-3">
-							<label class="input-group-text col-3 text-center" for="input_user_name" style="font-weight:bold;">성함</label> 
+							<label class="input-group-text col-3 text-center" for="input_svc" style="font-weight:bold;">성함</label> 
 							<input type="text" class="form-control input-group-text-fixed" name="user_name" value="${dto.user_name}" required="required" placeholder="성함을 입력해주세요">
 						</div>
 						
 						<!-- ----------------------------------휴대전화--------------------------------- -->
 						<div class="input-group mb-3">
-							<label class="input-group-text col-3 text-center" for="input_user_tel" style="font-weight:bold;">휴대전화</label>
+							<label class="input-group-text col-3 text-center" for="input_svc" style="font-weight:bold;">휴대전화</label>
 							<input type="text" class="form-control input-group-text-fixed" name="user_tel" required="required" value="${dto.user_tel}" placeholder="010-1234-5678 형태로 기재해주세요">
 						</div>
 						
 						<!-- ----------------------------------주소--------------------------------- -->
 						<div class="input-group mb-3">
-					    <label class="input-group-text col-3 text-center" for="input_user_addr" style="font-weight:bold;">주소</label> 
+					    <label class="input-group-text col-3 text-center" for="input_svc" style="font-weight:bold;">주소</label> 
 					    <div class="col-sm-9">
 					        <div class="input-group">
 					            <input id="user_pcode" type="text" class="form-control" name="user_pcode" placeholder="우편번호" value="${dto.user_pcode}" required="required" onclick="findAddr()" readonly>
@@ -186,7 +230,7 @@ textarea {
 					</div>
 						<!-- ----------------------------------방문 희망일--------------------------------- -->
 					<div class="input-group mb-3" >
-					<label class="input-group-text col-3 text-center" for="input_svc_date" style="font-weight:bold;">방문 희망일</label> 
+					<label class="input-group-text col-3 text-center" for="input_svc" style="font-weight:bold;">방문 희망일</label> 
 					<div class="col-sm-9">
 					<input type="text" class="form-control input-group-text-fixed" name="svc_date" value="${dto.svc_days} &nbsp;&nbsp; ${dto.svc_time}">
 					 

@@ -1,7 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
-    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 
 <!doctype html>
 <html>
@@ -20,28 +21,28 @@
 <link href="/docs/5.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
-
-#buy{
+#buy {
 	justify-content: space-between;
 }
-ul.list-group-item{
-	margin-left: 20px;	
+
+ul.list-group-item {
+	margin-left: 20px;
 }
 
-  li.list-group-item > div {
-    text-align: left;
-    margin-right: 40px;
-  }
-  
-    li.list-group-item input[type="text"] {
-    text-align: left;
-    margin-right: 20px;
-  }
-  
-  li.list-group-item div.col:last-child input {
-    width: 100%;
+li.list-group-item>div {
+	text-align: left;
+	margin-right: 10px;
 }
-  
+
+li.list-group-item input[type="text"] {
+	text-align: left;
+	margin-right: 20px;
+}
+
+li.list-group-item div.col:last-child input {
+	width: 100%;
+}
+
 .page-header {
 	background: linear-gradient(rgba(36, 39, 38, 0.5), rgba(36, 39, 38, 0.5)),
 		rgba(36, 39, 38, 0.5)
@@ -73,8 +74,8 @@ ul.list-group-item{
 	margin-right: 10px;
 }
 
-#total{
-	display:inline-block;
+#total {
+	display: inline-block;
 }
 
 footer {
@@ -130,10 +131,65 @@ footer {
 	box-shadow: none;
 }
 
-
-
 .form-control {
 	border: none;
+}
+
+.checkbox-container {
+	display: flex;
+	align-items: center;
+	position: relative;
+	padding-left: 25px;
+	cursor: pointer;
+	font-size: 14px;
+}
+
+.checkbox-container input {
+	position: absolute;
+	opacity: 0;
+	cursor: pointer;
+	height: 0;
+	width: 0;
+	vertical-align: middle;
+}
+
+.checkmark {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 16px;
+	width: 16px;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border-radius: 2px;
+}
+
+.checkbox-container:hover input ~ .checkmark {
+	background-color: #f2f2f2;
+}
+
+.checkbox-container input:checked ~ .checkmark {
+	background-color: #2196f3;
+}
+
+.checkmark:after {
+	content: "";
+	position: absolute;
+	display: none;
+}
+
+.checkbox-container input:checked ~ .checkmark:after {
+	display: block;
+}
+
+.checkbox-container .checkmark:after {
+	left: 6px;
+	top: 2px;
+	width: 3px;
+	height: 7px;
+	border: solid white;
+	border-width: 0 2px 2px 0;
+	transform: rotate(45deg);
 }
 </style>
 
@@ -156,213 +212,278 @@ footer {
 	</div>
 	<div class="container">
 		<main>
-			<div class="py-5 text-left">
-				<h2>${dto.svc_state}</h2>
+			<div class="col-md-10 col-lg-8 order-md-first mx-auto">
+			<h2 class="d-flex justify-content-between align-items-center mb-3" >
+				<span>${dto.svc_state}</span>
+			</h2>
 			</div>
 
 			<div class="row g-5">
-				<!-- 결제 div 시작 -->
-				<%-- <c:if test="${dto.svc_state eq '견적완료'}"> --%>
+			<!------------------- 결제금액 내용 ------------------------------------>
+			
+				<c:if test="${dto.svc_state eq '견적완료'}">
+
 				<div class="col-md-6 col-lg-4 order-md-last">
 					<h4 class="d-flex justify-content-between align-items-center mb-3">
-						<span class="text-primary" style="font-family: 'GmarketSansMedium';">결제금액(수정중)</span>
+						<span class="text-primary"
+							style="font-family: 'GmarketSansMedium';">결제금액</span>
 					</h4>
+
 					<ul class="list-group mb-3">
-						<li class="list-group-item d-flex justify-content-between lh-sm row">
-							<!-- <div class="col d-flex justify-content-between"  id="buy"> -->
-							<div class="col" id="buy">
+						<li
+							class="list-group-item d-flex justify-content-between lh-sm row">
+							<div class="col col-sm-4">
 								<span>견적금액</span>
 							</div>
 							<div class="col">
-								<input type="text" id="total" value="${ingdto.total}" readonly >
+								<input type="text" id="total" value="${ingdto.total}" readonly
+									style="width: 70%;"><strong><span>원</span></strong>
 							</div>
-							
 						</li>
-						<li class="list-group-item d-flex justify-content-between lh-sm">
-							<div style="white-space: nowrap;">
-								<span>나의 포인트
 
-								<input type="text" id="point_total" value="${result}" readonly><br>
-								<input type="checkbox" id="check" onclick="checkPt()">전액사용
-								</span>
+						<li class="list-group-item d-flex justify-content-between lh-sm row">
+							<div class="col col-sm-4">
+								<span>나의 포인트</span>
+							</div>
+							<div class="col">
+								<div class="d-flex justify-content-between align-items-center">
+									<input type="text" id="point_total" value="${result}" readonly>
+									<label class="checkbox-container" style="font-size: 12px;">전액사용
+										<input type="checkbox" id="check" onclick="checkPt()">
+										<span class="checkmark"></span>
+									</label>
+								</div>
 							</div>
 						</li>
-						<li
-							class="list-group-item d-flex justify-content-between bg-body-tertiary">
-							<div class="text-success" style="white-space: nowrap;">
+
+						<li class="list-group-item d-flex justify-content-between bg-body-tertiary row">
+							<div class="col col-sm-4 text-success">
 								<span>사용 포인트</span>
-								<input type="text" id="point_num" oninput="getTotal()">점
+							</div>
+							<div class="col">
+								<input type="text" id="point_num" oninput="getTotal()"
+									style="width: 70%;">
+							</div>
 						</li>
-						<li class="list-group-item d-flex justify-content-between">
-						<div style="white-space: nowrap;">
-						<span>총 결제금액</span> 
-						<strong> <input type="text" id="amount" style="width: 70%;" readonly>원</strong></li>
+
+						<li class="list-group-item d-flex justify-content-between row">
+							<div class="col col-sm-4" style="white-space: nowrap;">
+								<span>총 결제금액</span>
+							</div>
+							<div class="col">
+								<strong> <input type="text" id="amount"
+									style="width: 70%;" readonly>원
+								</strong>
+							</div>
+						</li>
 					</ul>
+
 					<div class="form-check">
 						<input class="form-check-input" type="checkbox" id="checkbox"
-							required="required"> 
-							<span style="font-size: 12px;">(필수)결제
+							required="required"> <span style="font-size: 12px;">(필수)결제
 							내용을 확인했으며, 정보 제공 등에 동의합니다</span><br> <a href="#"
 							data-bs-toggle="modal" data-bs-target="#exampleModal"> <span
-							style="font-size: 12px;">(내용보기)</span></a>
+							style="font-size: 12px;">(내용보기)</span>
+						</a>
 					</div>
 
 					<div class="input-group">
 						<button class="w-100 btn btn-primary" onclick="requestPay()">결제하기</button>
 					</div>
 				</div>
-				<%-- </c:if> --%>
+				</c:if>
 				<!-- 결제 div 끝 -->
 				
-				<!-- 예약 상세 내용 -->
+
+				<!------------------- 예약 상세 내용 시직 ------------------------------------>
 				<div class="col-md-7 col-lg-8 order-md-first mx-auto">
 					<h4 class="d-flex justify-content-between align-items-center mb-3">
-						<span class="text-primary" style="font-family: 'GmarketSansMedium';">예약 상세 내용</span>
+						<span class="text-primary"
+							style="font-family: 'GmarketSansMedium';">예약 상세 내용</span>
 					</h4>
-					
+
 					<ul class="list-group mb-3">
-						<input type="hidden" id="user_id" value="${sessionScope.ssInfo.user_id}">
-						<input type="hidden" id="user_idx" value="${sessionScope.ssInfo.user_idx}">
-						<li class="list-group-item d-flex justify-content-between lh-sm row">
+						<input type="hidden" id="user_id"
+							value="${sessionScope.ssInfo.user_id}">
+						<input type="hidden" id="user_idx"
+							value="${sessionScope.ssInfo.user_idx}">
+						<li
+							class="list-group-item d-flex justify-content-between lh-sm row">
 							<div class="col">
 								<span>예약번호</span>
 							</div>
 							<div class="col">
-							<input type="text" id="svc_idx" value="${ingdto.svc_idx}" readonly></div>
+								<input type="text" id="svc_idx" value="${ingdto.svc_idx}"
+									readonly>
+							</div>
 						</li>
-						<!-- ---------------------------------------------------------- -->
-						<li class="list-group-item d-flex justify-content-between lh-sm row">
+						
+						<li
+							class="list-group-item d-flex justify-content-between lh-sm row">
 							<div class="col">
 								<span>서비스 일시</span>
 							</div>
 							<div class="col">
 								<c:if test="${dto.svc_state ne '결제취소'}">
-	      						<input type="text" value="${dto.svc_days}&nbsp;|&nbsp;${dto.svc_time}" readonly>
-	      						</c:if>
+									<input type="text"
+										value="${dto.svc_days}&nbsp;|&nbsp;${dto.svc_time}" readonly>
+								</c:if>
 								<c:if test="${dto.svc_state eq '결제취소'}">
-	      						<%-- ${dto.svc_days.substring(1)} | ${dto.svc_time.substring(1)} --%>
-	      						<input type="text" value="${dto.svc_days.substring(1)}&nbsp;|&nbsp;${dto.svc_time.substring(1)}" readonly>
-	      						</c:if>
+									<%-- ${dto.svc_days.substring(1)} | ${dto.svc_time.substring(1)} --%>
+									<input type="text"
+										value="${dto.svc_days.substring(1)}&nbsp;|&nbsp;${dto.svc_time.substring(1)}"
+										readonly>
+								</c:if>
 							</div>
 						</li>
-						<!-- ---------------------------------------------------------- -->
-						<li class="list-group-item d-flex justify-content-between bg-body-tertiary row">
+						
+						<!-- -------------------------예약상세 내용--------------------------------- -->
+						<li
+							class="list-group-item d-flex justify-content-between bg-body-tertiary row">
 							<div class="col">
 								<strong><span>예약 상세 내용</span></strong>
 							</div>
 
 						</li>
-						<!-- ---------------------------------------------------------- -->
-						<li class="list-group-item d-flex flex-wrap justify-content-between lh-sm row">
+				
+						<li
+							class="list-group-item d-flex flex-wrap justify-content-between lh-sm row">
 							<div class="col">
 								<span>지역</span>
 							</div>
 							<div class="col">
-							<%-- ${dto.user_addr},${dto.user_detail} --%>
-							<input type="text" value="${dto.user_addr},${dto.user_detail}" readonly></div>
+								<%-- ${dto.user_addr},${dto.user_detail} --%>
+								<input type="text" value="${dto.user_addr},${dto.user_detail}"
+									readonly>
+							</div>
 						</li>
-						<!-- ---------------------------------------------------------- -->
-						<li class="list-group-item d-flex justify-content-between lh-sm row">
+						
+						<li
+							class="list-group-item d-flex justify-content-between lh-sm row">
 							<div class="col">
 								<span>거주형태</span>
 							</div>
-							<div class="col"><%-- ${dto.svc_type} --%>
-							<input type="text" value="${dto.svc_type}" readonly></div>
+							<div class="col">
+								<%-- ${dto.svc_type} --%>
+								<input type="text" value="${dto.svc_type}" readonly>
+							</div>
 						</li>
-						<!-- ---------------------------------------------------------- -->
-						<li class="list-group-item d-flex justify-content-between lh-sm row">
+						
+						<li
+							class="list-group-item d-flex justify-content-between lh-sm row">
 							<div class="col">
 								<span>서비스 영역</span>
 							</div>
-							<div class="col"><%-- ${dto.svc_area} --%>
-							<input type="text" value="${dto.svc_area}" readonly></div>
+							<div class="col">
+								<%-- ${dto.svc_area} --%>
+								<input type="text" value="${dto.svc_area}" readonly>
+							</div>
 						</li>
-						<!-- ---------------------------------------------------------- -->
-						<li class="list-group-item d-flex justify-content-between lh-sm row">
+						
+						<li
+							class="list-group-item d-flex justify-content-between lh-sm row">
 							<div class="col">
 								<span>거주 평수(공급면적)</span>
 							</div>
-							<div class="col"><%-- ${dto.svc_py}평 --%>
-							<input type="text" value="${dto.svc_py}평" readonly></div>
+							<div class="col">
+								<%-- ${dto.svc_py}평 --%>
+								<input type="text" value="${dto.svc_py}평" readonly>
+							</div>
 						</li>
-						<!-- ---------------------------------------------------------- -->
-						<li class="list-group-item d-flex justify-content-between lh-sm row">
+						
+						<li
+							class="list-group-item d-flex justify-content-between lh-sm row">
 							<div class="col">
 								<span>요청사항</span>
 							</div>
-							<div class="col"><!--  -->
-							<input type="text" value="${dto.svc_req}" readonly></div>
+							<div class="col">
+								<!--  -->
+								<input type="text" value="${dto.svc_req}" readonly>
+							</div>
 						</li>
-						<!-- ---------------------------------------------------------- -->
+						<!-- --------------------------예약자 정보-------------------------------- -->
 						<li class="list-group-item d-flex justify-content-between bg-body-tertiary row">
 							<div class="col">
 								<strong><span>예약자 정보</span></strong>
 							</div>
 						</li>
-						<!-- ---------------------------------------------------------- -->
+						
 						<li class="list-group-item d-flex justify-content-between lh-sm row">
 							<div class="col">
 								<span>성함</span>
 							</div>
 							<div class="col">
-							<input type="text" id="user_name" value="${dto.user_name}" readonly>
-							<!-- ${dto.user_name}--></div>
+								<input type="text" id="user_name" value="${dto.user_name}"
+									readonly>
+								<!-- ${dto.user_name}-->
+							</div>
 						</li>
-						<!-- ---------------------------------------------------------- -->
+						
 						<li class="list-group-item d-flex justify-content-between lh-sm row">
 							<div class="col">
 								<span>휴대전화</span>
 							</div>
 							<div class="col">
-							<input type="text" id="user_tel" value="${dto.user_tel}" readonly>
-							<%-- ${dto.user_tel} --%>
+								<input type="text" id="user_tel" value="${dto.user_tel}"
+									readonly>
+								<%-- ${dto.user_tel} --%>
 							</div>
 						</li>
-					<!--     결제 완료 시 결제 금액 출력 -->
-					<c:if test="${dto.svc_state eq '결제완료'}">
-					<li class="list-group-item d-flex justify-content-between bg-body-tertiary row">
-							<div class="col">
-								<strong><span>결제 정보</span></strong>
-							</div>
-						</li>
-						<!-- ---------------------------------------------------------- -->
-						<li class="list-group-item d-flex justify-content-between lh-sm row">
-							<div class="col">
-								<span>견적금액</span>
-							</div>
-							<div class="col">
-							<input type="text" id="total" value="${ingdto.total}" readonly>
-							</div>
-						</li>
-						<!-- ---------------------------------------------------------- -->
-						<li class="list-group-item d-flex justify-content-between lh-sm row">
-							<div class="col">
-								<span>사용 포인트</span>
-							</div>
-							<div class="col">
-							<input type="text" id="total" value="포인트" readonly>
-							</div>
-						</li>
-						<!-- ---------------------------------------------------------- -->
-						<li class="list-group-item d-flex justify-content-between lh-sm row">
-							<div class="col">
-								<span>총 결제 금액</span>
-							</div>
-							<div class="col">
-							<input type="text" id="total" value="결제금액" readonly>
-							</div>
-						</li>
-					</c:if>
+						
+						<!-- -----------------------결제 정보----------------------------------- -->
+						<!--   결제 완료 시 결제 금액 출력 
+						<c:if test="${dto.svc_state eq '결제완료'}">
+							<li class="list-group-item d-flex justify-content-between bg-body-tertiary row">
+								<div class="col">
+									<strong><span>결제 정보</span></strong>
+								</div>
+							</li>
+							
+							<li class="list-group-item d-flex justify-content-between lh-sm row">
+								<div class="col">
+									<span>견적금액</span>
+								</div>
+								<div class="col">
+									<input type="text" id="total" value="${ingdto.total}" readonly>
+								</div>
+							</li>
+							
+							<li class="list-group-item d-flex justify-content-between lh-sm row">
+								<div class="col">
+									<span>사용 포인트</span>
+								</div>
+								<div class="col">
+									<input type="text" id="total" value="포인트" readonly>
+								</div>
+							</li>
+							
+							<li class="list-group-item d-flex justify-content-between lh-sm row">
+								<div class="col">
+									<span>총 결제 금액</span>
+								</div>
+								<div class="col">
+									<input type="text" id="amount" value="${paydto.amount}" readonly>
+								</div>
+							</li>
+						</c:if>-->
 					</ul>
+					
+					<!-- --------------------버튼---------------------------------------- -->
 					<c:if test="${dto.svc_state eq '결제취소'}">
 						<hr class="my-4">
-						<a href="asvcIngContent.do?"+${dto.svc_idx} class="w-100 btn btn-primary" value="목록"></a>
+						<a href="svcIngList.do"
+							class="w-100 btn btn-primary">목록</a>
 					</c:if>
 					<c:if test="${dto.svc_state eq '결제완료'}">
 						<hr class="my-4">
+						<c:url var="ingCancleUrl" value="ingCancle.do">
+							<c:param name="svc_idx">${ingdto.svc_idx}</c:param>
+						</c:url>
+						<hr class="my-4">
+						<a href="${ingCancleUrl}" class="w-100 btn btn-primary">결제취소</a>
 						<!-- hidden: payment idx, 결제금액 -->
-						<input type="button" class="w-100 btn btn-primary" value="결제취소"
-							onclick="canclePay()">
+						<!-- <input type="button" class="w-100 btn btn-primary" value="결제취소"
+							onclick="canclePay()"> -->
 					</c:if>
 
 					<c:if test="${dto.svc_state eq '작업완료'}">
@@ -379,8 +500,8 @@ footer {
 			</div>
 
 		</main>
-		</div>
-		
+	</div>
+
 
 </body>
 </html>
@@ -392,13 +513,6 @@ footer {
 <script type="text/javascript"
 	src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 <script src="js/svc/payment.js"></script>
-
-<!-- iamport.cancle.js -->
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"
-	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-	crossorigin="anonymous"></script>
-
-
 
 
 

@@ -55,6 +55,12 @@ public interface SvcDAO {
 	//svc_ing
 	public int updatePayState(IdxDTO dto);
 	
+	/**정리일상 결제 취소 시 상태 변경*/
+	//svc_member 
+	public int svcMemBuyCancle(IdxDTO dto);
+	//svc_ing
+	public int svcIngBuyCancle(IdxDTO dto);
+	
 	/**예약 취소*/
 	public int svcStateCancle(SvcContentDTO dto);
 	public int svcDateCancle(SvcContentDTO dto);

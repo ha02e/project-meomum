@@ -13,14 +13,81 @@
 	rel="stylesheet"
 	integrity="sha384-9gVRbX+6ePRepvpODvJy27JQ+wh2StsQJz9TYs2X0Pm6Rc8IljaUksdQRVvoxv3"
 	crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<!-- 예약 완료된 시간 비활성화 -->
+<script src="js/svc/timeSelect.js"></script>
+
+<!-- 입력 제약 -->
+<script>
+	function validate() {
+		
+	  var areaLabel = $('#areaLabel');
+	  var areaLabelTop = areaLabel.offset().top;
+	  var areaLabelHeight = areaLabel.height();
+	  
+	  var knowLabel = $('#knowLabel');
+	  var knowLabelTop = knowLabel.offset().top;
+	  var knowLabelHeight = knowLabel.height(); 
+	  
+	  var timeLabel = $('#timeLabel');
+	  var timeLabelTop = timeLabel.offset().top;
+	  var timeLabelHeight = timeLabel.height(); 
+	  
+	  var windowHeight = $(window).height();
+
+	  if ($("input[name='svc_area']:checked").length === 0) {
+	    $('html, body').animate({//해당 부분으로 스크롤 이동
+	      scrollTop: areaLabelTop - windowHeight / 2 + areaLabelHeight / 2
+	    }, 100, function() {
+	      $('#areaLabel')[0].focus();
+	      $('#areaError').text('서비스 영역을 선택해주세요').show();
+	    });
+	    return false;
+	  }
+	  
+	  if ($("input[name='svc_know']:checked").length === 0) {
+	    $('html, body').animate({
+	      scrollTop: knowLabelTop - windowHeight / 2 + knowLabelHeight / 2
+	    }, 100, function() {
+	      $('#knowLabel')[0].focus();
+	      $('#knowError').text('서비스 인지 경로를 선택해주세요').show();
+	    });
+	    return false;
+	  }
+	  
+	  if ($("input[name='svc_time']:checked").length === 0) {
+		    $('html, body').animate({
+		      scrollTop: timeLabelTop - windowHeight / 2 + timeLabelHeight / 2
+		    }, 100, function() {
+		      $('#timeLabel')[0].focus();
+		      $('#timeError').text('방문 견적 희망 시간을 선택해주세요').show();
+		    });
+		    return false;
+		  }
+	  
+	  // 유효성 검사가 모두 통과한 경우 true 반환
+	  return true;
+	}
+	$(document).ready(function() {
+		  $('#svcForm').on('submit', function(event) {
+		    event.preventDefault(); // 폼의 자동 전송 막기
+		    if (validate()) {
+		      this.submit(); // 폼 제출
+		    }
+		  });
+		});
+
+</script>
+
+
+
 <style>
 /*헤더 이미지용 url에 이미지 추가하면 됩니다.*/
 .page-header {
 	background: linear-gradient(rgba(36, 39, 38, 0.5), rgba(36, 39, 38, 0.5)),
 		rgba(36, 39, 38, 0.5)
 		url(https://images.unsplash.com/photo-1615876234886-fd9a39fda97f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80)
-	
-		
 		 no-repeat center;
 	background-size: cover;
 	margin: 0;
@@ -43,19 +110,23 @@
 	font-weight: 400;
 	letter-spacing: -1px;
 }
+
 .btn-group .btn {
   margin-right: 10px;
 }
+
 label[for="input_svc"]::before{
   content: "*";
   color: #ff6666;
   margin-right: 5px;
 }
+
 label[for="areaLabel"]::before{
   content: "*";
   color: #ff6666;
   margin-right: 5px;
 }
+
 label[for="knowLabel"]::before{
   content: "*";
   color: #ff6666;
@@ -66,85 +137,13 @@ footer {
   margin-top: 20px;
 }
 
-</style>
-<style type="text/css">
 .input-group-append ml-2 {
 	margin-left: 8px;
 }
 </style>
-
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-
-<!-- 예약 완료된 시간 비활성화 -->
-<script src="js/svc/timeSelect.js"></script>
-
-<!-- 입력 제약 -->
-<script>
-/* var areaChk = document.querySelectorAll('input[type="checkbox"][name="svc_area"]');
-const errorMsg = "계속하시려면 해당 영역을 선택해주세요"; 
-
-function areaValidate() {
-  var checked = false;
-  areaChk.forEach((checkbox) => {
-    if (checkbox.checked) {
-      checked = true;
-    }
-  });
-
-  if (!checked) {
-    document.getElemetnById('error').value=erroMsg;
-  }
-  return checked;
-}
-
-const form = document.querySelector('form');
-form.addEventListener('submit', (event) => {
-  if (!validateCheckboxes()) {
-    event.preventDefault();
-  }
-}); 
-
-fucntion areaValidate(){
-	var areaChk = $("input[name=svc_area]:checkbox:checked").length;
-	console.log(areaChk);
-	if(areaChk<1){
-		alert('계속하시려면 해당 영역을 선택해주세요');
-	}
-}
-
-function timeValidate(){
-	  var timeChk = $("input[name=svc_time]:radio:checked").length;
-	  if(timeChk < 1){
-	    $("#error").html("시간을 선택해주세요.");
-	  } else {
-	    $("#error").html("");
-	  }
-	}*/
-	
-	
-	$(document).ready(function() {
-		  $('form').submit(function(e) {
-		    if ($("input[name='svc_area']:checked").length === 0) {
-		      $('#areaLabel')[0].scrollIntoView({ behavior: 'smooth' });
-		      $('#areaError').text('계속하시려면 해당 영역을 선택해주세요').show();
-		      e.preventDefault();
-		    } else if ($("input[name='svc_know']:checked").length === 0) {
-		      $('#knowLabel')[0].scrollIntoView({ behavior: 'smooth' });
-		      $('#knowError').text('계속하시려면 해당 영역을 선택해주세요').show();
-		      e.preventDefault();
-		    }
-		  });
-		});
-
-
-
-
-
-
-</script>
 </head>
 
-<body>
+<body  id="#top">
 	<%@include file="../header.jsp"%>
 	<div class="page-header">
 		<div class="container">
@@ -161,7 +160,8 @@ function timeValidate(){
 	<div class="container">
 		<div class="row">
 			<div class="col-10 mx-auto">
-				<form name="svcForm" action="svcFormSubmit.do" method="post">
+				<form name="svcForm" id="svcForm" action="svcFormSubmit.do" method="post" onsubmit="return validate()">
+				
 					<input type="hidden" name="user_idx" value="${sessionScope.ssInfo.user_idx}">
 				<!-- -------------------------------------거주형태------------------------------- -->	
 						<div class="input-group mb-3">
@@ -179,39 +179,38 @@ function timeValidate(){
 	
 				<!-- ----------------------------------서비스영역---------------------------------- -->
 						<div class="input-group mb-3">
-						
-							<label class="input-group-text col-3 text-center" for="input_svc" id="areaLabel" style="font-weight:bold;">서비스 영역</label>&nbsp;&nbsp;
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="checkbox" name="svc_area" id="svc_area"  value="전체"> 
-								<label class="form-check-label" for="전체">전체</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="checkbox" name="svc_area" id="svc_area" value="주방"> 
-								<label class="form-check-label" for="주방">주방</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="checkbox" name="svc_area" id="svc_area" value="침실"> 
-								<label
-									class="form-check-label" for="침실">침실</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="checkbox" name="svc_area" id="svc_area" value="화장실"> 
-								<label class="form-check-label" for="화장실">화장실</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="checkbox" name="svc_area" id="svc_area" value="자녀방"> 
-								<label class="form-check-label" for="자녀방">자녀방</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="checkbox" name="svc_area" id="svc_area" value="옷장"> 
-								<label class="form-check-label" for="옷장">옷장</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="checkbox" name="svc_area" id="svc_area" value="기타"> 
-								<label class="form-check-label" for="기타">기타</label>
-							</div>
-							<span id="areaError" style="color: red; "></span>
-						</div>
+					    <label class="input-group-text col-3 text-center" for="input_svc" id="areaLabel" style="font-weight:bold;">서비스 영역</label>&nbsp;&nbsp;
+					    <div class="form-check form-check-inline">
+					        <input class="form-check-input" type="checkbox" name="svc_area" id="svc_area_all" value="전체"> 
+					        <label class="form-check-label" for="svc_area_all">전체</label>
+					    </div>
+					    <div class="form-check form-check-inline">
+					        <input class="form-check-input" type="checkbox" name="svc_area" id="svc_area_kitchen" value="주방"> 
+					        <label class="form-check-label" for="svc_area_kitchen">주방</label>
+					    </div>
+					    <div class="form-check form-check-inline">
+					        <input class="form-check-input" type="checkbox" name="svc_area" id="svc_area_bedroom" value="침실"> 
+					        <label class="form-check-label" for="svc_area_bedroom">침실</label>
+					    </div>
+					    <div class="form-check form-check-inline">
+					        <input class="form-check-input" type="checkbox" name="svc_area" id="svc_area_bathroom" value="화장실"> 
+					        <label class="form-check-label" for="svc_area_bathroom">화장실</label>
+					    </div>
+					    <div class="form-check form-check-inline">
+					        <input class="form-check-input" type="checkbox" name="svc_area" id="svc_area_children" value="자녀방"> 
+					        <label class="form-check-label" for="svc_area_children">자녀방</label>
+					    </div>
+					    <div class="form-check form-check-inline">
+					        <input class="form-check-input" type="checkbox" name="svc_area" id="svc_area_closet" value="옷장"> 
+					        <label class="form-check-label" for="svc_area_closet">옷장</label>
+					    </div>
+					    <div class="form-check form-check-inline">
+					        <input class="form-check-input" type="checkbox" name="svc_area" id="svc_area_etc" value="기타"> 
+					        <label class="form-check-label" for="svc_area_etc">기타</label>
+					    </div>
+					    <span id="areaError" style="color: red;"></span>
+					</div>
+
 						
 
 
@@ -260,18 +259,20 @@ function timeValidate(){
 						</div>
 						<!-- ----------------------------------시간--------------------------------- -->
 						<div class="input-group mb-3">
-							<label class="input-group-text col-3 text-center" for="input_svc" style="font-weight:bold;">시간</label>&nbsp;&nbsp;
-							<div class="btn-group" role="group">
-								<input type="radio" class="btn-check" name="svc_time" id="timeA" value="10:00" autocomplete="off">
-								<label class="btn btn-outline-secondary" for="timeA">10:00</label>
-						
-								<input type="radio" class="btn-check" name="svc_time" id="timeB" value="13:00" autocomplete="off">
-								<label class="btn btn-outline-secondary" for="timeB">13:00</label>
-						
-								<input type="radio" class="btn-check" name="svc_time" id="timeC" value="16:00" autocomplete="off">
-								<label class="btn btn-outline-secondary" for="timeC">16:00</label>
-							</div>
+						  <label class="input-group-text col-3 text-center" for="input_svc" id="timeLabel" style="font-weight:bold;">시간</label>&nbsp;&nbsp;
+						  <div class="btn-group" role="group">
+						    <input type="radio" class="btn-check" name="svc_time" id="timeA" value="10:00" autocomplete="off">
+						    <label class="btn btn-outline-primary " for="timeA">10:00</label>
+												
+						    <input type="radio" class="btn-check" name="svc_time" id="timeB" value="13:00" autocomplete="off">
+						    <label class="btn btn-outline-primary  " for="timeB">13:00</label>
+												
+						    <input type="radio" class="btn-check" name="svc_time" id="timeC" value="16:00" autocomplete="off">
+						    <label class="btn btn-outline-primary  " for="timeC">16:00</label>
+						  </div>
+						  <span id="timeError" style="color: red;"></span>
 						</div>
+
 
 
 
@@ -286,7 +287,7 @@ function timeValidate(){
 						</div>
 						<!-- ----------------------------------서비스 인지 경로--------------------------------- -->
 						<div class="input-group mb-3">
-							<label class="input-group-text col-3 text-center" for="knowLabel" style="font-weight:bold;">서비스 인지경로</label>&nbsp;&nbsp;
+							<label class="input-group-text col-3 text-center" for="knowLabel" id="knowLabel" style="font-weight:bold;">서비스 인지경로</label>&nbsp;&nbsp;
 							<div class="form-check form-check-inline">
 								<input class="form-check-input" type="radio" name="svc_know" value="블로그"> 
 								<label class="form-check-label" for="블로그">블로그</label>

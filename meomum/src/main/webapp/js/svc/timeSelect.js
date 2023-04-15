@@ -1,6 +1,8 @@
-/*예약 완료된 시간 비활성화*/
 $(function() {
-	function timeSelect(){
+
+
+
+	function timeSelect() {
 	    
 		//시간 선택 버튼 모두 활성화
 	    $('#timeA, #timeB, #timeC').prop('disabled', false);
@@ -35,7 +37,12 @@ $(function() {
 
 	timeSelect();
 
-	$("#svc_days").change(function(){
-		timeSelect();
+	$("#svc_days").change(function() {
+	    // 라디오 버튼 그룹에서 선택된 값을 초기화
+	    $('input[name="svc_time"]').prop('checked', false);
+
+	    // 비활성화되지 않은 버튼만 선택 가능하도록 설정
+	    //$('input[name="svc_time"]:not(:disabled)').prop('checked', true);
+	    timeSelect();
 	});
 });
