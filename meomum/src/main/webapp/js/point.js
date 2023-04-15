@@ -27,8 +27,8 @@ function checkPt() {
 
 // 사용 포인트 입력 시
 function getTotal() {
-  var total_num = numberWithCommas(total.value.replace(/,/g, "")); //견적금액
-  var point_num_val = parseInt(point_num.value.replace(/,/g, "")); //사용 포인트
+  var total_num = total.value;//견적금액
+  var point_num_val = parseInt(point_num.value); //사용 포인트
   var real_total_num = total_num - point_num_val; //총 결제 금액
 
   if (isNaN(point_num_val) || point_num.value.match(/[^\d]+/)) { // point_num에 문자 입력 시
@@ -40,7 +40,7 @@ function getTotal() {
 
   if (point_num_val > point_total.value) {
     alert("사용 포인트가 보유 포인트를 초과합니다.");
-    point_num.value = "0"; // point_num을 0으로 초기화
+    point_num.value = ""; // point_num을 0으로 초기화
     point_num_val = 0; // point_num_val도 0으로 초기화
     real_total_num = total_num - point_num_val;
   }

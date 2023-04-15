@@ -186,11 +186,12 @@ public class SvcDAOImple implements SvcDAO {
 		return count;
 	}
 	
-//	@Override
-//	public int svcStateUpdate(SvcMemDTO dto) {
-//		int count = sqlMap.update("svcStateUpdate",dto);
-//		return count;
-//	}
+	/**관리자: 정리일상 상태 수정
+	@Override
+	public int svcStateUpdate(SvcMemDTO dto) {
+		int count = sqlMap.update("svcStateUpdate",dto);
+		return count;
+	}*/
 	
 	/**마이페이지 : 방문 견적 예약 내역*/
 	@Override
