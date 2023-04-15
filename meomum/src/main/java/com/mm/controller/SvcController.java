@@ -199,10 +199,7 @@ public class SvcController {
 	@RequestMapping("/svcIngInsert.do")
 	public ModelAndView svcIngInsert(SvcIngDTO dto) {
 		int result = svcDao.svcIngInsert(dto);
-		/*
-		 * String link = result > 0 ? "asvcContent.do?svc_idx=" + dto.getSvc_idx() :
-		 * "asvcIngPopup.do";
-		 */
+		
 		ModelAndView mav = new ModelAndView();
 
 		mav.addObject("msg", "서비스 희망일 및 견적이 추가되었습니다");
