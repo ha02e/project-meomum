@@ -443,7 +443,7 @@ input:invalid {
 
 			var uidx = ${sessionScope.ssInfo.user_idx};//유저번호
 			var pidx = ${dto.pro_idx};//상품번호
-			var pAmount = ${param.cart_amount};//상품수량
+			var pAmount = 1;//상품수량
 
 			IMP.request_pay({
 				pg : "kakaopay", //"html5_inicis",
