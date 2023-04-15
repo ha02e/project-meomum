@@ -80,25 +80,47 @@
 	<!-- mypage reviewable -->
 	<select id="reviewableList" parameterType="Map" resultType="com.mm.review.model.ReviewDTO">
 		select * from
-		(select rownum as rnum, c.*from(
-			select svc_idx activity_idx, user_idx , user_name writer
-  			from svc_member a
- 			where a.user_idx = #{user_idx}
-				and svc_state='작업완료'
-				and not exists (select * from review b
-								 where a.svc_idx = b.activity_idx)			
-			)c 
-		)d
+		(select rownum as rnum, d.*from(
+			SELECT svc_idx AS activity_idx, user_idx, user_name AS writer
+			FROM svc_member a
+			WHERE a.user_idx = 9
+			    AND svc_state = '작업완료'
+			    AND NOT EXISTS (SELECT *
+			                    FROM review b
+			                    WHERE a.svc_idx = b.activity_idx)
+			UNION ALL
+			SELECT order_idx AS activity_idx, user_idx, order_name AS writer
+			FROM orders c
+			WHERE c.user_idx = 9
+			    AND order_status = 4
+			    AND NOT EXISTS (SELECT *
+			                    FROM review b
+			                    WHERE c.order_idx = b.activity_idx)	
+			)d 
+		)e
 		where rnum<![CDATA[>=]]>#{start} and rnum<![CDATA[<=]]>#{end}
 	</select>
 	
 	<select id="reviewableTotalCnt" parameterType="Integer" resultType="Integer">
-		select count(*) from
-			svc_member a
- 			where a.user_idx = #{user_idx}
-				and svc_state='작업완료'
-				and not exists (select * from review b
-								 where a.svc_idx = b.activity_idx)
+		select count(*) 
+		from
+		(
+			SELECT svc_idx AS activity_idx, user_idx, user_name AS writer
+			FROM svc_member a
+			WHERE a.user_idx = 9
+			    AND svc_state = '작업완료'
+			    AND NOT EXISTS (SELECT *
+			                    FROM review b
+			                    WHERE a.svc_idx = b.activity_idx)
+			UNION ALL
+			SELECT order_idx AS activity_idx, user_idx, order_name AS writer
+			FROM orders c
+			WHERE c.user_idx = 9
+			    AND order_status = 4
+			    AND NOT EXISTS (SELECT *
+			                    FROM review b
+			                    WHERE c.order_idx = b.activity_idx)	
+		)
 	</select>
 
 

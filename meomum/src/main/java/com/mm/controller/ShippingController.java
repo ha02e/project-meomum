@@ -43,7 +43,6 @@ public class ShippingController {
 		//상품재고는 proSQL에서 상품 재고 조회하는 쿼리 만들고 가져오기
 		int origin_amount=proDao.proAmountSelect(pro_idx);
 		int order_amount=orderDao.orderData(map).getPro_amount();
-		System.out.println(order_amount);
 		
 		if(order_amount>=origin_amount) {
 			

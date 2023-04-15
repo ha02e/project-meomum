@@ -76,6 +76,11 @@
 	font-size: 0.95rem;
 }
 
+thead tr{
+	background-color: #f8f9fa;
+	border-top: 1.2px solid #dadbe4;
+}
+
 .users-table td {
 	background-color: #fff;
 	border-top: 1px solid #dddddd;

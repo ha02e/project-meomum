@@ -76,7 +76,7 @@
 					and (order_status = 8)
 				</when>
 			</choose>	
-			order by order_date desc
+			order by return_idx desc
 		) a	
 	) b 
 	where rnum <![CDATA[>=]]> #{start}
