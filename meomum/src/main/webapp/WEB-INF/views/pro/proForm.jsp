@@ -106,7 +106,7 @@ input:invalid {
         <div class="input-group mb-3">
           <label for="pro_name" class="input-group-text col-2 text-center">상품명</label>
 	          <input type="text" class="form-control input-group-text-fixed" name="pro_name" 
-	          required="required" placeholder="상품명을 입력해주세요"  maxlength="25">
+	          required="required" placeholder="상품명을 입력해주세요"  minlength="7" maxlength="25">
         </div>
         
         <div class="input-group mb-3">

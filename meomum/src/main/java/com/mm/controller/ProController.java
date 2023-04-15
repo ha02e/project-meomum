@@ -241,7 +241,7 @@ public class ProController {
 		}
 		
 		int totalCnt=proDao.getTotalCnt();
-		int listSize=10;
+		int listSize=5;
 		int pageSize=5;
 		
 		String pageStr=com.mm.module.PageModule.makePage("proAdmin.do", totalCnt, listSize, pageSize, cp);
