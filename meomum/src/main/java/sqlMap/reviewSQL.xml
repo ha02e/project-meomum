@@ -10,7 +10,14 @@
 		values(
 			review_idx.nextval,
 			#{user_idx},
-			'svc_idx',
+			<choose>
+	            <when test="category=='정리일상'">
+	                'svc_idx'
+	            </when>
+	            <when test="category=='구독일상'">
+	                'order_idx'
+	            </when>
+        	</choose>,
 			#{category},
 			#{activity_idx},
 			#{writer},
