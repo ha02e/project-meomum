@@ -28,8 +28,8 @@ public class ReturnDAOImple implements ReturnDAO {
 	}
 	
 	@Override
-	public int returnProListCnt() {
-		int count = sqlMap.selectOne("returnProListCnt");
+	public int returnProListCnt(Map map) {
+		int count = sqlMap.selectOne("returnProListCnt", map);
 		count = count == 0 ? 1 : count;
 		return count;
 	}

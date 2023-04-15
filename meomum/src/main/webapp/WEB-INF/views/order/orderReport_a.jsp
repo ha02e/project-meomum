@@ -116,21 +116,7 @@ function showTracker(t_key, t_code,t_invoice){
 	<div class="app-content pt-3 p-md-3 p-lg-4">
 		<div class="container pt-5">
 			<h1 class="text-center mb-4">주문/배송 내역</h1>
-			
-		<div class="page-utilities">
-			<div class="row g-2 mb-4 justify-content-center align-items-center">
-				<div class="col-auto">
-					<form class="table-search-form row gx-1 align-items-center">
-						<div class="col-auto">
-							<input type="text" id="search-orders" name="searchorders" class="form-control search-orders" placeholder="검색어를 입력해주세요.">
-						</div>
-						<div class="col-auto">
-							<button type="submit" class="btn btn btn-primary">검색</button>
-						</div>
-					</form>
-				</div><!--//col-->
-			</div><!--//row-->
-		</div><!--//table-utilities-->
+
 			    
 			<div class="card">
 			<div class="card-body"> 

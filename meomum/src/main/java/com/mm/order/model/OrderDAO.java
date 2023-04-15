@@ -12,7 +12,7 @@ public interface OrderDAO {
 	public int order_proInsert(OrderProDTO dto);
 	
 	public List<OrderReportDTO> myOrderReport(Map map);
-	public int myReportTotalCnt(int user_idx);
+	public int myReportTotalCnt(Map map);
 	public List<OrderReportDTO> orderReport(Map map);
 	public int reportTotalCnt();
 	
@@ -26,5 +26,5 @@ public interface OrderDAO {
 	public List<MyOrderListDTO> mySubsAllList(Map map);
 	public int mySubsAllListCnt(int user_idx);
 	public List<MyOrderListDTO> myReturnProList(Map map);
-	public int myReturnProListCnt(int user_idx);
+	public int myReturnProListCnt(Map map);	
 }

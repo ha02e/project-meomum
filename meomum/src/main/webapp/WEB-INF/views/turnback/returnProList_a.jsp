@@ -56,28 +56,27 @@ function returnSubmitForm(url, name, options) {
 			<div class="row g-3 mb-4 align-items-center justify-content-center">
 				    <div class="col-auto">
 					     <div class="page-utilities">
+					      <form name="retrunProList" action="returnProList_a.do">
 						    <div class="row g-2 justify-content-end justify-content-md-end align-items-center">
 							    <div class="col-auto">
-								    <select class="form-select w-auto" >
-										  <option selected value="option-1">전체보기</option>
-										  <option value="option-2">반납신청</option>
-										  <option value="option-3">반납진행</option>
-										  <option value="option-4">반납완료</option>
-										  <option value="option-5">반납보류</option>
+								    <select class="form-select w-auto" name="state" id="state">
+										  <option selected value="0" onclick="location.href='returnProList_a.do';">전체보기</option>
+										  <option value="5" ${state == '5' ? 'selected' : ''}>반납신청</option>
+										  <option value="6" ${state == '6' ? 'selected' : ''}>반납진행</option>
+										  <option value="7" ${state == '7' ? 'selected' : ''}>반납완료</option>
+										  <option value="8" ${state == '8' ? 'selected' : ''}>반납보류</option>
 									</select>
 							    </div>
-							    <div class="col-auto">
-								    <form class="table-search-form row gx-1 align-items-center">
+							    <div class="col-auto d-flex">
 					                    <div class="col-auto">
-					                        <input type="text" id="search-orders" name="searchorders" class="form-control search-orders" placeholder="검색어를 입력해주세요.">
+					                        <input type="text" id="fvalue" name="fvalue" class="form-control search-orders" placeholder="검색어를 입력해주세요." value="${fvalue}">
 					                    </div>
 					                    <div class="col-auto">
 					                        <button type="submit" class="btn app-btn-secondary">검색</button>
 					                    </div>
-					                </form>
-					                
 							    </div><!--//col-->
 						    </div><!--//row-->
+						</form>
 					    </div><!--//table-utilities-->
 				    </div><!--//col-auto-->
 			    </div><!--//row-->

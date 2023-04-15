@@ -32,6 +32,7 @@ import com.mm.payment.model.PaymentDTO;
 import com.mm.point.model.PointDAO;
 import com.mm.point.model.PointDTO;
 import com.mm.pro.model.ProDTO;
+import com.mm.turnback.model.ReturnListDTO;
 
 @Controller
 public class OrderController {
@@ -170,6 +171,16 @@ public class OrderController {
 	
 	@RequestMapping("/subsProList.do")
 	public ModelAndView mysubsProList(@RequestParam(value = "cp", defaultValue = "1") int cp, HttpSession session) {
+
+		ModelAndView mav = new ModelAndView();
+
+		if(session.getAttribute("ssInfo")==null) {
+			mav.addObject("msg", "로그인을 해주세요.");
+			mav.addObject("gopage","location.href='index.do';");
+			mav.setViewName("mainMsg");
+			return mav;
+		}
+		
 		
 		MemberDTO mdto = (MemberDTO) session.getAttribute("ssInfo");
 		int user_idx = mdto.getUser_idx();
@@ -182,81 +193,125 @@ public class OrderController {
 
 	    List<MyOrderListDTO> list = mySubsProPage(cp, pageSize, user_idx);
 
-		ModelAndView mav = new ModelAndView();
 		mav.addObject("list", list);
 		mav.addObject("pageStr", pageStr);
 		mav.setViewName("order/subsProList");
 		return mav;
 	}
 	
-	/** 마이페이지 반납내역 */
-	public List<MyOrderListDTO> myreturnProPage(int cp, int ls, int user_idx) {
-		int start = (cp - 1) * ls + 1;
-		int end = cp * ls;
-		Map map = new HashMap();
-		map.put("start", start);
-		map.put("end", end);
-		map.put("user_idx", user_idx);
-
-		List<MyOrderListDTO> lists = orderDao.myReturnProList(map);
-		return lists;
-	}
 	
+	/** 마이페이지 반납내역 */
 	@RequestMapping("/myReturnProList.do")
-	public ModelAndView myreturnProList(@RequestParam(value = "cp", defaultValue = "1") int cp, HttpSession session) {
+	public ModelAndView returnProList(@RequestParam(value="cp",defaultValue = "1")int cp,
+			@RequestParam(value="fvalue",defaultValue = "")String fvalue,
+			@RequestParam(value="state",defaultValue = "0")String state, HttpSession session) {
+
+		ModelAndView mav=new ModelAndView();
 		
+		if(session.getAttribute("ssInfo")==null) {
+			mav.addObject("msg", "로그인을 해주세요.");
+			mav.addObject("gopage","location.href='index.do';");
+			mav.setViewName("mainMsg");
+			return mav;
+		}
+
 		MemberDTO mdto = (MemberDTO) session.getAttribute("ssInfo");
 		int user_idx = mdto.getUser_idx();
-
-		int totalCnt = orderDao.myReturnProListCnt(user_idx);
-	    int listSize = 5;
-	    int pageSize = 5;
-
-	    String pageStr = com.mm.module.PageModule.makePage("myReturnProList.do", totalCnt, listSize, pageSize, cp);
-
-	    List<MyOrderListDTO> lists = myreturnProPage(cp, pageSize, user_idx);
-
-		ModelAndView mav = new ModelAndView();
+		
+		int listSize=5;
+		int pageSize=5;
+		int start=(cp-1)*listSize+1;
+		int end=cp*listSize;
+		
+		Map fmap=new HashMap();
+		
+		fmap.put("start", start);
+		fmap.put("end", end);
+		fmap.put("fvalue","%"+fvalue+"%");
+		fmap.put("state",state);
+		fmap.put("user_idx", user_idx);
+		
+		
+		Map tmap=new HashMap();
+		tmap.put("fvalue","%"+fvalue+"%");
+		tmap.put("state",state);
+		tmap.put("user_idx", user_idx);
+		
+		int totalCnt=orderDao.myReturnProListCnt(tmap);
+			
+		List<MyOrderListDTO> lists=orderDao.myReturnProList(fmap);
+		
+		String param = "&fvalue="+fvalue+"&state="+state;
+		String pageStr=com.mm.module.PageModule.makePageParam("myReturnProList.do", totalCnt, listSize, 
+																	pageSize, cp,param);
+			
+		mav.setViewName("turnback/myReturnProList");
 		mav.addObject("lists", lists);
 		mav.addObject("pageStr", pageStr);
-		mav.setViewName("turnback/myReturnProList");
+		mav.addObject("state", state);
+		mav.addObject("fvalue", fvalue);
+			
 		return mav;
+			
 	}
+	
 	
 
 	/** 마이페이지 주문배송내역 */
-	public List<OrderReportDTO> myReportPage(int cp, int ls, int user_idx) {
-		int start = (cp - 1) * ls + 1;
-		int end = cp * ls;
-		Map map = new HashMap();
-		map.put("start", start);
-		map.put("end", end);
-		map.put("user_idx", user_idx);
-		List<OrderReportDTO> lists = orderDao.myOrderReport(map);
-		return lists;
-	}
-
 	@RequestMapping("/orderReport.do")
-	public ModelAndView myOrderReport(@RequestParam(value = "cp", defaultValue = "1") int cp, HttpSession session) {
-
-		MemberDTO mdto = (MemberDTO) session.getAttribute("ssInfo");
-		int user_idx = mdto.getUser_idx();
-
-		int totalCnt = orderDao.myReportTotalCnt(user_idx);
-		int listSize = 5;
-		int pageSize = 5;
-
-		String pageStr = com.mm.module.PageModule.makePage("orderReport.do", totalCnt, listSize, pageSize, cp);
-
-		List<OrderReportDTO> lists = myReportPage(cp, pageSize, user_idx);
+	public ModelAndView myOrderReport(@RequestParam(value = "cp", defaultValue = "1") int cp, 
+									@RequestParam(value="fvalue",defaultValue = "")String fvalue,
+									@RequestParam(value="state",defaultValue = "0")String state, HttpSession session) {
 
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("lists", lists);
-		mav.setViewName("order/orderReport");
-		mav.addObject("pageStr", pageStr);
+		
+		if(session.getAttribute("ssInfo")==null) {
+			mav.addObject("msg", "로그인을 해주세요.");
+			mav.addObject("gopage","location.href='index.do';");
+			mav.setViewName("mainMsg");
+			return mav;
+		}
+		
+		MemberDTO mdto = (MemberDTO) session.getAttribute("ssInfo");
+		int user_idx = mdto.getUser_idx();
+		
+		int listSize=5;
+		int pageSize=5;
+		int start=(cp-1)*listSize+1;
+		int end=cp*listSize;
+		
+		Map fmap=new HashMap();
+		
+		fmap.put("start", start);
+		fmap.put("end", end);
+		fmap.put("fvalue","%"+fvalue+"%");
+		fmap.put("state",state);
+		fmap.put("user_idx",user_idx);
+		
+		
+		Map tmap=new HashMap();
+		tmap.put("fvalue","%"+fvalue+"%");
+		tmap.put("state",state);
+		tmap.put("user_idx",user_idx);
 
+		int totalCnt = orderDao.myReportTotalCnt(tmap);
+
+		List<OrderReportDTO> lists = orderDao.myOrderReport(fmap);
+		
+		String param = "&fvalue="+fvalue+"&state="+state;
+		String pageStr=com.mm.module.PageModule.makePageParam("orderReport.do", totalCnt, listSize, 
+																	pageSize, cp,param);
+
+		mav.setViewName("order/orderReport");
+		mav.addObject("lists", lists);
+		mav.addObject("pageStr", pageStr);
+		mav.addObject("state",state);
+		mav.addObject("fvalue", fvalue);
+		mav.addObject("user_idx", user_idx);
+			
 		return mav;
 	}
+	
 
 	/** 관리자페이지 주문배송내역 */
 	public List<OrderReportDTO> reportPage(int cp, int ls) {
@@ -270,7 +325,20 @@ public class OrderController {
 	}
 
 	@RequestMapping("/orderReport_a.do")
-	public ModelAndView orderReport_a(@RequestParam(value = "cp", defaultValue = "1") int cp) {
+	public ModelAndView orderReport_a(@RequestParam(value = "cp", defaultValue = "1") int cp, HttpSession session) {
+		
+		ModelAndView mav = new ModelAndView();
+
+		MemberDTO ssInfo = (MemberDTO) session.getAttribute("ssInfo");
+		
+		if(ssInfo==null||!ssInfo.getUser_info().equals("관리자")) {
+			mav.addObject("msg", "잘못된 접근입니다.");
+			mav.addObject("gopage","location.href='index.do';");
+			mav.setViewName("mainMsg");
+			return mav;
+		}
+		
+		
 		int totalCnt = orderDao.reportTotalCnt();
 		int listSize = 5;
 		int pageSize = 5;
@@ -279,7 +347,6 @@ public class OrderController {
 
 		List<OrderReportDTO> lists = reportPage(cp, pageSize);
 
-		ModelAndView mav = new ModelAndView();
 		mav.addObject("lists", lists);
 		mav.setViewName("order/orderReport_a");
 		mav.addObject("pageStr", pageStr);

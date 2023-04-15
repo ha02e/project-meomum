@@ -35,8 +35,8 @@ public class OrderDAOImple implements OrderDAO {
 	}
 
 	@Override
-	public int myReportTotalCnt(int user_idx) {
-		int count = sqlMap.selectOne("myReportTotalCnt",user_idx);
+	public int myReportTotalCnt(Map map) {
+		int count = sqlMap.selectOne("myReportTotalCnt",map);
 		count = count == 0 ? 1 : count;
 		return count;
 	}
@@ -112,8 +112,8 @@ public class OrderDAOImple implements OrderDAO {
 	}
 	
 	@Override
-	public int myReturnProListCnt(int user_idx) {
-		int count=sqlMap.selectOne("myReturnProListCnt", user_idx);
+	public int myReturnProListCnt(Map map) {
+		int count=sqlMap.selectOne("myReturnProListCnt", map);
 		count = count == 0 ? 1 : count;
 		return count;
 	}
