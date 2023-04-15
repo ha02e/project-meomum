@@ -345,8 +345,8 @@
 						
 						<!-- 버튼 구역 -->
 						<div class="button-container">
-						  <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail" type="submit" formaction="cartInsert.do">장바구니</button>
-						  <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail" type="submit" formaction="orderList.do">구매하기</button>
+						  <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04" type="submit" formaction="cartInsert.do">장바구니</button>
+						  <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04" type="submit" formaction="orderList.do">구매하기</button>
 						</div>
 							</form>
 						</div>	

@@ -97,7 +97,7 @@ function sortUsers(cate) {
 						<c:if test="${empty lists }">
 							<tr>
 								<td colspan="11" align="center">
-								등록된 게시글이 없습니다
+								등록된 상품이 없습니다
 								</td>
 							</tr>
 						</c:if>
