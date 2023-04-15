@@ -77,10 +77,10 @@ public class SvcController {
 		int detailAdd = svcDao.svcDetailInsert(detailDto);
 		int dateAdd = svcDao.svcDateInsert(dateDto);
 		
-		int result = memAdd+detailAdd + dateAdd;
+		boolean result = memAdd >0 && detailAdd>0&& dateAdd>0;
 		
-		String msg = result>0?"방문견적 예약이 신청되었습니다":"다시 시도해주세요";
-		String link = result>0?"index.do":"svcList.do";
+		String msg = result==true?"방문견적 예약이 신청되었습니다":"다시 시도해주세요";
+		String link = result==true?"index.do":"svcList.do";
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("msg",msg);
 		mav.addObject("link",link);
@@ -155,8 +155,9 @@ public class SvcController {
 		int detailDelete = svcDao.svcDetailDelete(idx);
 		int dateDelete = svcDao.svcDateDelete(idx);
 		
-		int result = memDelete + detailDelete + dateDelete;
-		String msg = result>0?"성공":"실패";
+		boolean result = memDelete >0 && detailDelete>0&& dateDelete>0;
+		
+		String msg = result==true?"성공":"실패";
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("msg",msg);
 		mav.setViewName("mmJson");
@@ -171,8 +172,8 @@ public class SvcController {
 		int dateDelete = svcDao.svcDateDelete(idx);
 		int ingDelete = svcDao.svcIngDelete(idx);
 		
-		int result = memDelete + detailDelete + dateDelete+ ingDelete;
-		String msg = result>0?"성공":"실패";
+		boolean result = memDelete >0 && detailDelete>0&& dateDelete>0&&ingDelete>0;
+		String msg = result==true?"성공":"실패";
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("msg",msg);
 		mav.setViewName("mmJson");
@@ -231,10 +232,10 @@ public class SvcController {
 		int detailUpdate = svcDao.svcDetailUpdate(detailDto);
 		int dateUpdate = svcDao.svcDateUpdate(dateDto);
 		
-		int result = memUpdate+detailUpdate+dateUpdate;
+		boolean result = memUpdate >0 && detailUpdate>0&& dateUpdate>0;
 		
-		String msg = result>0?"방문견적 예약이 수정되었습니다":"다시 시도해주세요";
-		String link = result>0?"asvcList.do":"asvcContent.do";
+		String msg = result==true?"방문견적 예약이 수정되었습니다":"다시 시도해주세요";
+		String link = result==true?"asvcList.do":"asvcContent.do";
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("msg",msg);
 		mav.addObject("link",link);
@@ -260,6 +261,8 @@ public class SvcController {
 	@RequestMapping("/svcList.do")
 	public ModelAndView svcUserList(HttpSession session,@RequestParam(value="cp",defaultValue="1")int cp) {
 		session.getAttribute("ssInfo");
+		
+		
 		MemberDTO sdto =(MemberDTO) session.getAttribute("ssInfo");
 		int user_idx = sdto.getUser_idx();
 		
@@ -308,10 +311,10 @@ public class SvcController {
 		int detailUpdate = svcDao.svcDetailUpdate(detailDto);
 		int dateUpdate = svcDao.svcDateUpdate(dateDto);
 		
-		int result = memUpdate+detailUpdate+dateUpdate;
+		boolean result = memUpdate >0 && detailUpdate>0&& dateUpdate>0;
 		
-		String msg = result>0?"방문견적 예약이 수정되었습니다":"다시 시도해주세요";
-		String link = result>0?"svcList.do":"svcUpdate.do";
+		String msg = result==true?"방문견적 예약이 수정되었습니다":"다시 시도해주세요";
+		String link = result==true?"svcList.do":"svcUpdate.do";
 	
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("msg",msg);
@@ -376,8 +379,8 @@ public class SvcController {
 		mav.addObject("ingdto",ingdto);
 		
 		mav.addObject("result", result);
-		/* mav.addObject("paydto",paydto); */
-		/* System.out.println("정리일상 예약 상세:"+paydto); */
+//		mav.addObject("paydto",paydto);
+//		System.out.println("정리일상 예약 상세:"+paydto);
 	
 		mav.setViewName("svc/svcIngContent");
 	
@@ -385,7 +388,7 @@ public class SvcController {
 	}
 
 	
-	/**사용자: 정리일상 결제(payment 테이블 insert)*/
+	/**사용자: 정리일상 결제*/
 	@RequestMapping(value="/svcPay.do")
 	public ModelAndView svcPay(@RequestBody Map<String,Object> data) {
 		
@@ -403,16 +406,37 @@ public class SvcController {
 		
 		ModelAndView mav = new ModelAndView();
 		
-		int result = payInsert + pointInsert + svcUpdate + payUpdate;
+		boolean result = payInsert >0 && pointInsert>0&& svcUpdate>0 && payUpdate>0;
 		
-		String msg = result>0?"결제가 완료되었습니다":"다시 시도해주세요";
-		String link = result>0?"svcIngList.do":"svcIngContent.do";
+		
+		String msg = result==true?"결제가 완료되었습니다":"다시 시도해주세요";
+		String link = result==true?"svcIngList.do":"svcIngContent.do";
 		
 		mav.addObject("msg", msg);
 		mav.addObject("link", link);
 		mav.setViewName("mmJson");
 		
 		return mav;
+	}
+	
+	/**결제 취소*/
+	@RequestMapping("/ingCancle.do")
+	public ModelAndView ingCancle(@ModelAttribute IdxDTO dto) {
+		int memUpdate = svcDao.svcMemBuyCancle(dto);
+		int ingUpdate = svcDao.svcIngBuyCancle(dto);
+		
+		ModelAndView mav = new ModelAndView();
+		
+		if(memUpdate > 0 && ingUpdate >0) {
+			mav.addObject("msg", "결제가 취소되었습니다");
+			mav.addObject("link", "svcIngList.do");
+		}else {
+			mav.addObject("msg", "다시 시도해주세요");
+			mav.addObject("link", "svcIngList.do");
+		}
+		
+		mav.setViewName("msg");
+		return mav;	
 	}
 	
 	/**사용자: 정리일상 결제(point 테이블 insert)

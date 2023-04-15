@@ -7,7 +7,7 @@
   	select * from product where pro_idx= #{pro_idx}
   	</select>
   	<insert id="orderInsert" parameterType="com.mm.order.model.OrderDTO">
-  		insert into orders values(#{order_idx}, #{user_idx}, #{order_name}, sysdate, sysdate + INTERVAL '1' MONTH, #{order_pcode}, '#{receiver}', '#{receiver_tel}', #{order_addr}, #{order_detail}, #{order_msg}, #{using_point}, TO_DATE(TO_CHAR(SYSDATE + 7, 'DD'), 'DD'), #{amount}, 1, sysdate, #{order_tos})
+  		insert into orders values(#{order_idx}, #{user_idx}, #{order_name}, sysdate, sysdate + INTERVAL '12' MONTH, #{order_pcode}, '#{receiver}', '#{receiver_tel}', #{order_addr}, #{order_detail}, #{order_msg}, #{using_point}, TO_DATE(TO_CHAR(SYSDATE + 7, 'DD'), 'DD'), sysdate, #{amount}, 1, sysdate, #{order_tos})
 	</insert>
 	<insert id="order_proInsert" parameterType="com.mm.order.model.OrderProDTO">
   		insert into order_pro values(#{order_idx},#{user_idx},#{pro_idx},#{pro_amount})
@@ -251,5 +251,8 @@
                     		where op.order_idx=#{order_idx}
                                 and op.pro_idx=#{pro_idx}
                     		)
+	</update>
+	<update id="orderCancelUpdate" parameterType="String">
+		update orders set order_status = 3 where order_idx= #{order_idx}
 	</update>
   </mapper>

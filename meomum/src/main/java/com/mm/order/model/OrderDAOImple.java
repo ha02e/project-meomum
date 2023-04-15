@@ -117,4 +117,10 @@ public class OrderDAOImple implements OrderDAO {
 		count = count == 0 ? 1 : count;
 		return count;
 	}
+	
+	@Override
+	public int orderCancelUpdate(String oder_idx) {
+		int count=sqlMap.update("orderCancelUpdate",oder_idx);
+		return count;
+	}
 }

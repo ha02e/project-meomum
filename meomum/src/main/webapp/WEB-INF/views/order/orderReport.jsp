@@ -246,7 +246,10 @@ function showTracker(t_key, t_code,t_invoice){
 										                    	<c:url var="returnFormUrl" value="returnForm.do">
 																	<c:param name="order_idx">${dto.order_idx}</c:param>
 																</c:url>
-																<a href="#" class="orderNum" onclick="">
+																<c:url var="cancelUrl" value="cancel.do">
+																	<c:param name="order_idx">${dto.order_idx}</c:param>
+																</c:url>
+																<a href="${cancelUrl}" class="orderNum" onclick="">
 																	<i class="bi bi-dash-circle"></i>&nbsp;주문취소
 																</a>
 																<script>

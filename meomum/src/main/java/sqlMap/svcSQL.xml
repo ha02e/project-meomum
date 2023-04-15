@@ -312,6 +312,19 @@
 		WHERE svc_idx =#{svc_idx}
 	</update>
 	
+	<!-- 마이페이지: 정리일상 결제 취소 -->
+	<update id="svcMemBuyCancle" parameterType="com.mm.svc.model.IdxDTO" >
+		UPDATE svc_member
+		SET svc_state = '결제취소'
+		WHERE svc_idx =#{svc_idx}
+	</update>
+	
+	<update id="svcIngBuyCancle" parameterType="com.mm.svc.model.IdxDTO" >
+		UPDATE svc_ing
+		SET pay_state = '결제취소'
+		WHERE svc_idx =#{svc_idx}
+	</update>
+	
 	<!-- 마이페이지: 방문 예약 취소 -->
 	<update id="svcStateCancle" parameterType="com.mm.svc.model.SvcContentDTO">
 	UPDATE svc_member

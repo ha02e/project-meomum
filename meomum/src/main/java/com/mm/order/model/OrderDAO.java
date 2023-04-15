@@ -26,5 +26,6 @@ public interface OrderDAO {
 	public List<MyOrderListDTO> mySubsAllList(Map map);
 	public int mySubsAllListCnt(int user_idx);
 	public List<MyOrderListDTO> myReturnProList(Map map);
-	public int myReturnProListCnt(Map map);	
+	public int myReturnProListCnt(Map map);
+	public int orderCancelUpdate(String oder_idx);
 }
