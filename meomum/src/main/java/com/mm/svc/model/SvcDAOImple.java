@@ -261,6 +261,20 @@ public class SvcDAOImple implements SvcDAO {
 		return count;
 	}
 	
+	/**정리일상 결제 취소 시 상태 변경*/
+	//svc_member
+	@Override
+	public int svcMemBuyCancle(IdxDTO dto) {
+		int count = sqlMap.update("svcMemBuyCancle",dto);
+		return count;
+	}
+	//svc_idx
+	@Override
+	public int svcIngBuyCancle(IdxDTO dto) {
+		int count = sqlMap.update("svcIngBuyCancle",dto);
+		return count;
+	}
+	
 	/**캘린더 서비스 진행 고객 가져오기*/
 	@Override
 	public List<SvcIngDTO> svcIngCalList() {
