@@ -271,12 +271,12 @@ footer {
 						</c:url>
 						<a href="${updateUrl}" class="w-40 btn btn-primary">예약수정</a>
 					
-						<c:url var="cancleUrl" value="svcCancle.do">
+						<c:url var="cancelUrl" value="svcCancel.do">
 						<c:param name="svc_idx">${dto.svc_idx}</c:param>
 						<c:param name="svc_days" value="${dto.svc_days}"/>
 						<c:param name="svc_time" value="${dto.svc_time}"/>
 					</c:url>
-					<a href="${cancleUrl}" class="w-40 btn btn-secondary">예약취소</a>
+					<a href="${cancelUrl}" class="w-40 btn btn-secondary">예약취소</a>
 					</div>
 				</c:if>
 				</div>

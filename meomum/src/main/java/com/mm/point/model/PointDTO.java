@@ -129,20 +129,20 @@ public class PointDTO {
 		this.point_type = point_type;
 	}
 
-	public String getPoint_changed() {
-		 String money = String.valueOf(point_changed);
-		    int len = money.length();
-		    StringBuilder sb = new StringBuilder();
-		    for (int i = len - 1; i >= 0; i--) {
-		        sb.append(money.charAt(i));
-		        if ((len - i - 1) % 3 == 2 && i != 0) {
-		            sb.append(",");
-		        }
-		    }
-		
-		
-		    return sb.reverse().toString();
-	}
+	   public String getPoint_changed() {
+	       String sign = getPoint_use() == 0 ? "+" : "-";
+	       String money = String.valueOf(point_changed);
+	       int len = money.length();
+	       StringBuilder sb = new StringBuilder(sign);
+	       for (int i = 0; i < len; i++) {
+	           sb.append(money.charAt(i));
+	           if ((i + 1) % 3 == len % 3 && i != len - 1) {
+	               sb.append(",");
+	           }
+	       }
+	       return sb.toString();
+	   }
+
 
 	public void setPoint_changed(String point_changed) {
 		this.point_changed = point_changed;

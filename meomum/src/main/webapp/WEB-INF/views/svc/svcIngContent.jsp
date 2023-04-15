@@ -477,14 +477,14 @@ footer {
 					</c:if>
 					<c:if test="${dto.svc_state eq '결제완료'}">
 						<hr class="my-4">
-						<c:url var="ingCancleUrl" value="ingCancle.do">
+						<c:url var="ingCancelUrl" value="ingCancel.do">
 							<c:param name="svc_idx">${ingdto.svc_idx}</c:param>
 						</c:url>
 						<hr class="my-4">
-						<a href="${ingCancleUrl}" class="w-100 btn btn-primary">결제취소</a>
+						<a href="${ingCancelUrl}" class="w-100 btn btn-primary">결제취소</a>
 						<!-- hidden: payment idx, 결제금액 -->
 						<!-- <input type="button" class="w-100 btn btn-primary" value="결제취소"
-							onclick="canclePay()"> -->
+							onclick="cancelPay()"> -->
 					</c:if>
 
 					<c:if test="${dto.svc_state eq '작업완료'}">

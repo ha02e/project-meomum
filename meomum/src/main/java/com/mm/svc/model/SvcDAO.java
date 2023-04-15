@@ -57,18 +57,21 @@ public interface SvcDAO {
 	
 	/**정리일상 결제 취소 시 상태 변경*/
 	//svc_member 
-	public int svcMemBuyCancle(IdxDTO dto);
+	public int svcMemBuyCancel(IdxDTO dto);
 	//svc_ing
-	public int svcIngBuyCancle(IdxDTO dto);
+	public int svcIngBuyCancel(IdxDTO dto);
 	
 	/**예약 취소*/
-	public int svcStateCancle(SvcContentDTO dto);
-	public int svcDateCancle(SvcContentDTO dto);
+	public int svcStateCancel(SvcContentDTO dto);
+	public int svcDateCancel(SvcContentDTO dto);
 	
 	
 	/**캘린더*/
 	public List<SvcSelectAllDTO> svcAdminLista();
 	public List<SvcIngDTO> svcIngCalList();
 	public String sveIngCalName(String svc_idx);
-
+	
+	/***/
+	public List<Map<String, Object>> svcKnowData(); 
+	public int svcTotalCnt();
 }

@@ -354,4 +354,12 @@
 			member_drop
 			values(member_drop_drop_idx.nextval,#{user_idx},#{user_id},sysdate,'Y')
 		</insert>
+		
+	<!-- 통계: 회원 수 -->
+	<select id="memberCnt" resultType="Integer">
+	SELECT count(*) 
+	FROM member
+	WHERE user_info='회원' 
+	
+	</select>
 </mapper> 

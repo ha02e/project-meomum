@@ -238,14 +238,14 @@ public class SvcDAOImple implements SvcDAO {
 	/**마이페이지: 예약 삭제(방문 견적 신청)*/
 	//예약 상태 변경(svc_member)
 	@Override
-	public int svcStateCancle(SvcContentDTO dto) {
-		int count = sqlMap.update("svcStateCancle", dto);
+	public int svcStateCancel(SvcContentDTO dto) {
+		int count = sqlMap.update("svcStateCancel", dto);
 		return count;
 	}
 	//예약 날짜 비활성화(svc_date)
 	@Override
-	public int svcDateCancle(SvcContentDTO dto) {
-		int count = sqlMap.update("svcDateCancle", dto);
+	public int svcDateCancel(SvcContentDTO dto) {
+		int count = sqlMap.update("svcDateCancel", dto);
 		return count;
 	}
 	/**정리일상 결제 시 상태 변경*/
@@ -265,14 +265,14 @@ public class SvcDAOImple implements SvcDAO {
 	/**정리일상 결제 취소 시 상태 변경*/
 	//svc_member
 	@Override
-	public int svcMemBuyCancle(IdxDTO dto) {
-		int count = sqlMap.update("svcMemBuyCancle",dto);
+	public int svcMemBuyCancel(IdxDTO dto) {
+		int count = sqlMap.update("svcMemBuyCancel",dto);
 		return count;
 	}
 	//svc_idx
 	@Override
-	public int svcIngBuyCancle(IdxDTO dto) {
-		int count = sqlMap.update("svcIngBuyCancle",dto);
+	public int svcIngBuyCancel(IdxDTO dto) {
+		int count = sqlMap.update("svcIngBuyCancel",dto);
 		return count;
 	}
 	
@@ -289,5 +289,18 @@ public class SvcDAOImple implements SvcDAO {
 	public String sveIngCalName(String svc_idx) {
 		String user_name = sqlMap.selectOne("sveIngCalName", svc_idx);
 		return user_name;
+	}
+	
+	/**통계*/
+	@Override
+	public List<Map<String, Object>> svcKnowData() {
+		List<Map<String, Object>> list = sqlMap.selectList("svcKnowData");
+		return list;
+	}
+	
+	@Override
+	public int svcTotalCnt() {
+		int count = sqlMap.selectOne("svcTotalCnt");
+		return count;
 	}
 }
