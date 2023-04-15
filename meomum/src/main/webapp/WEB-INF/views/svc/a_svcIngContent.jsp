@@ -75,7 +75,6 @@ font-family: 'GmarketSansMedium';
 	
 	<script>
 		function popupClose() {
-			window.opener.location.reload();
 			window.close();
 		}
 	</script>

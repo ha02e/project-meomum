@@ -168,7 +168,6 @@ h1, h2, h3{
 						</a><!--//nav-link-->
 					        <div id="submenu-2" class="collapse submenu submenu-2" data-bs-parent="#menu-accordion">
 						        <ul class="submenu-list list-unstyled">
-							        <li class="submenu-item"><a class="submenu-link" href="#">상품 구매 매출</a></li>
 							        <li class="submenu-item"><a class="submenu-link" href="proAdmin.do">상품 관리</a></li>
 							        <li class="submenu-item"><a class="submenu-link" href="proAmount_a.do">상품 재고 관리</a></li>
 							        <li class="submenu-item"><a class="submenu-link" href="orderReport_a.do">주문/배송 내역</a></li>

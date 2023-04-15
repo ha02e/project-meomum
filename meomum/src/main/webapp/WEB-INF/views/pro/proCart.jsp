@@ -14,29 +14,35 @@
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/linearicons-v1.0.0/icon-font.min.css">
-<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
-<!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
-<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="css/proUtil.css">
 	<link rel="stylesheet" type="text/css" href="css/proMain.css">
 <!--===============================================================================================-->
 	
 </head>
+<style>
+h3.ltext-106 {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
 
+#delete-icon{
+  width: 10px;
+  height: 10px;
+}
+
+#thumb {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+.checkbox-parent {
+  display: flex;
+  justify-content: center;
+}
+</style>
 <body class="animsition">
 <%@include file="../header.jsp"%> 
 
@@ -44,30 +50,34 @@
 		<form class="bg0 p-t-75 p-b-85" name="cartForm" method="get" action="orderListss.do">
 			<div class="container">
 				<div class="row">
-					<div class="col-lg-10 col-xl-8 m-lr-auto m-b-50">
+	
+				<h3 class="ltext-106 cl5 txt-center">장바구니</h3>
+					
+					<div class="col-lg-10 col-xl-10 m-lr-auto m-b-50">
 						<div class="m-l-25 m-r--38 m-lr-0-xl">
 							<div class="wrap-table-shopping-cart">
-								
-								
+			
 				<table class="table-shopping-cart" style="text-align:center;">
 					
 					<tr>
-						<td>
-							<div class="all_check_input_div table_head">
-								<input type="checkbox" class="all_check_input input_size_20" checked="checked">
-								<span class="all_chcek_span">전체선택</span>
-							</div>
+						<td colspan="3">
+							<label for="allCheck" style="display: flex; align-items: center;">
+							  <input type="checkbox" class="all_check_input input_size_20" id="allCheck" checked="checked">
+							  <span class="all_chcek_span">전체선택</span>
+							</label>
+
 						</td>
 					</tr>
 					
 					<tr class="table_head">
-						<th></th>
+						<th class="column-0"></th>
 						<th class="column-1">이미지</th>
-						<th class="column-1">상품명</th>
+						<th class="column-2">상품명</th>
 						<th class="column-1">월 가격</th>
 						<th class="column-1">개월 수</th>
 						<th class="column-1">수량</th>
 						<th class="column-1">총 가격</th>
+						<th class="column-0"></th>
 					</tr>
 					
 					<c:if test="${empty lists }">
@@ -82,15 +92,15 @@
 			<c:forEach var="list" items="${lists}">		
 					<tr>
 						<td class="cart_info_td table_row">
-							<input type="checkbox" class="individual_cart_checkbox input_size_20" checked="checked" name="cart_idx" value="${list.cart_idx}">		
+							<input type="checkbox" class="individual_cart_checkbox" checked="checked" name="cart_idx" value="${list.cart_idx}">		
 							<input type="hidden" class="individual_cartamount_input" value="${list.cart_amount }">
 							<input type="hidden" class="individual_prosubprice_input" value="${list.pro_subprice }">
 							<input type="hidden" class="individual_prodelprice_input" value="${list.pro_delprice }">
 						</td>
 						
-						<td>
+						<td class="column-4">
 							<div>
-								<img src="/meomum/images/items/${list.pro_thumb}" alt="IMG-PRODUCT">
+								<img src="/meomum/images/items/${list.pro_thumb}" alt="IMG-PRODUCT" id="thumb">
 							</div>
 						</td>
 						
@@ -105,7 +115,7 @@
 							
 							<!-- 마이너스 -->
 								<div id="minus-button" class="btn-num-product-down">
-									<i class="fs-16 zmdi zmdi-minus"></i>
+									<i class="bi bi-dash-lg"></i>
 								</div>
 
 							<!-- 수량 조절 -->
@@ -118,7 +128,7 @@
 								
 							<!-- 플러스 -->
 								<div id="plus-button" class="btn-num-product-up">
-								  <i class="fs-16 zmdi zmdi-plus"></i>
+								 	<i class="bi bi-plus-lg"></i>
 								</div>
 						</div>
 						
@@ -126,16 +136,15 @@
 						</td>
 						
 						
-						<td class="column-5">
-						<div>월 <span id="subPrice-${list.cart_idx}"><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.cart_amount * list.pro_subprice}" />원
-						</span></div>
+						<td class="column-4">
+						<div>월 <span id="subPrice-${list.cart_idx}"><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.cart_amount * list.pro_subprice}" />원</span></div>
     					<div>총 <span id="allPrice-${list.cart_idx}"><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.cart_amount * list.pro_allprice}" />원</span></div>
 						</td>
 						
 						<!-- 장바구니 삭제 -->
-						<td class="column-3">
+						<td class="column-0">
 							 <a href="#" onclick="deleteCartItem(${list.cart_idx})">
-								<img src="images/icon/icon-close2.png" alt="DELETE" class="delete-icon">
+								<img src="images/icon/icon-close2.png" alt="DELETE" id="delete-icon">
 							</a>
 						</td>
 					</tr>
@@ -146,14 +155,14 @@
 					<div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
 						<div class="flex-w flex-m m-r-20 m-tb-5">
 							<div class="flex-c-m column-3">월 구독 가격: <span class="totalSub"></span>원 | </div>
-							<div class="flex-c-m column-3">총 구매 개수: <span class="totalCount"></span>개 | </div>
-							<div class="flex-c-m column-3">총 배송비: <span class="totalDel"></span>원 | </div>
-							<div class="flex-c-m column-3">월 구독 가격+총 배송비: <span class="finalTotalPrice"></span>원</div>
+							<div class="flex-c-m column-3"> 총 구매 개수: <span class="totalCount"></span>개 | </div>
+							<div class="flex-c-m column-3"> 총 배송비: <span class="totalDel"></span>원 | </div>
+							<div class="flex-c-m column-3"> 월 구독 가격+총 배송비: <span class="finalTotalPrice"></span>원</div>
 						</div>
 					</div>
-					</div>
-					</div>
-					</div>
+				</div>
+			</div>
+		</div>
 					
 					
 						<div class="col-sm-9 col-lg-6 col-xl-4 m-lr-auto m-b-50">
@@ -189,6 +198,7 @@
 							        </span>
 							      </div>
 							    </div>
+							    
 							    <input type="hidden" name="totalSub" id="totalSub" >
 									<input type="hidden" name="totalCount" id="totalCount" >
 									<input type="hidden" name="totalDel" id="totalDel" >
@@ -197,6 +207,7 @@
 							    type="submit">
 							      구매하기
 							    </button>
+							    
 							  </div>
 							</div>
 						</div>

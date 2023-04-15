@@ -72,7 +72,6 @@
 									<li><a href="orderReport.do">주문/배송 내역</a></li>
 									
 									<li><a href="proCart.do?user_idx=${sessionScope.ssInfo.user_idx}">장바구니</a></li>
-									<li><a href="#">찜한 목록</a></li>
 									
 									<li><a href="subsProList.do">구독 중인 상품</a></li>
 									<li><a href="myReturnProList.do">구독 반납 내역</a></li>
