@@ -57,7 +57,7 @@ h3.ltext-106 {
 }
 
 #priceArea{
-border: none;
+  border: none;
   border-top: 1px solid #ccc;
   padding-top: 10px;
   text-align: right;
@@ -76,7 +76,14 @@ border: none;
 						<div class="m-l-25 m-r--38 m-lr-0-xl">
 				
 				<!-- 전체 선택 영역 -->
-				<div class="wrap-table-shopping-check">
+				
+				<c:if test="${empty lists}">
+					<c:set var="hideCheck" value="true" />
+					<c:set var="hidePriceArea" value="true" />
+   					<c:set var="hideButtons" value="true" />
+				</c:if>
+				
+				<div class="wrap-table-shopping-check" <c:if test="${hideCheck eq true}">style="display:none;"</c:if>>
 					<div class="form-check"> 
 					<input type="checkbox" class="all_check_input form-check-input" id="allCheck" checked="checked">
 						<label for="allCheck" class="form-check-label" style="display: flex; align-items: center;">
@@ -87,8 +94,8 @@ border: none;
 							
 							
 				<div class="wrap-table-shopping-cart">
-					<table class="table-shopping-cart" style="text-align:center;">
 					
+					<table class="table-shopping-cart" style="text-align:center;">
 					<tr class="table_head">
 						<th class="column-c"></th>
 						<th class="column-1">이미지</th>
@@ -102,8 +109,9 @@ border: none;
 					
 					<c:if test="${empty lists }">
 						<tr>
-							<td colspan="11" rowspan="2" align="center" class="stext-102 cl3 p-t-23">
+							<td colspan="8" align="center" class="stext-102 cl3 p-t-23 column-4">
 							담긴 상품이 없습니다
+							<a href="proList.do"><i class="bi bi-cart3 hov-cl1 trans-04 mtext-102 p-b-6 d-block mx-auto">상품 구경하러 가기</i></a>
 							</td>
 						</tr>
 					</c:if>
@@ -175,8 +183,16 @@ border: none;
 					</tr>
 				</c:forEach>
 				
+				
+				<c:if test="${empty lists }">
+					
+					
+					
+				</c:if>
+				
+				
 				<tr>
-					<td colspan="8" class="column-6" id="priceArea">
+					<td colspan="8" class="column-6" id="priceArea"  <c:if test="${hidePriceArea eq true}">style="display:none;"</c:if>>
 					<div class="stext-107">총 구매 개수 <span class="totalCount"></span>개</div>
 					<div>월 구독 가격: <span class="totalSub"></span>원 + 
 					배송비 <span class="totalDel"></span>원 = 
@@ -188,20 +204,19 @@ border: none;
 					<input type="hidden" name="finalTotalPrice" id="finalTotalPrice" >		
 					</td>
 				</tr>
-			</table>	
-				</div>
-					
-						<div class="col-sm-9 col-lg-6 col-xl-4 m-lr-auto m-b-50">
-						  <div class="p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 m-lr-0-xl p-lr-15-sm">
-						    <button class="stext-101 cl0 size-103 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer" onclick='location.href = "proList.do";'>취소하기</button>
-						    <button class="flex-c-m stext-103 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04" type="submit">구매하기</button>
-						  </div>
-						</div>
+				
+			</table>
+				
+			<c:if test="${empty hideButtons}">
+			<button class="stext-101 cl0 size-101 bg3 bor14 hov-btn3 trans-04 pointer" type="button" onclick='location.href = "proList.do";'>취소하기</button>
+			<button class="stext-101 cl0 size-101 bg1 bor1 hov-btn1 trans-04 pointer" type="submit">구매하기</button>
+			</c:if>
+					</div>
 				</div>
 			</div>
-		  </div>	
+		</div> 
 	</form>
-				
+			
 	
 
 				

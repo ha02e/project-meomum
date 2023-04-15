@@ -1881,14 +1881,14 @@ input.num-product::-webkit-inner-spin-button {
 }
 
 .wrap-table-shopping-cart {
-  border-left: 1px solid #e6e6e6;
-  border-right: 1px solid #e6e6e6;
   text-align:center;
   margin: 0 auto; /* 가운데 정렬 */
   width: 1000px; /* 부모 요소의 width 값을 지정 */
 }
 
 .table-shopping-cart {
+  border-left: 1px solid #e6e6e6;
+  border-right: 1px solid #e6e6e6;
   border-collapse: collapse;
   text-align:center;
   margin: 0 auto; /* 가운데 정렬 */
