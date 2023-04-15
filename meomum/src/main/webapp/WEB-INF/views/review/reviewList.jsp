@@ -136,7 +136,7 @@
 </div>		
 
 			<div class="container">
-				<div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
+				<div class="row g-4 mb-5 text-center">
 				<c:if test="${empty lists}">
 					<h5 class="text-center">등록된 후기가 없습니다.</h5>
 				</c:if>
