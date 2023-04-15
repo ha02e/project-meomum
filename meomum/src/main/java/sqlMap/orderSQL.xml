@@ -277,4 +277,12 @@
 	<update id="orderCancelUpdate" parameterType="String">
 		update orders set order_status = 3 where order_idx= #{order_idx}
 	</update>
+	
+	
+	<!-- 통계 -->
+	<select id="orderCnt" resultType="Integer">
+	SELECT count(*)
+	FROM orders 
+	WHERE order_status in(1,2,4) 
+	</select>
   </mapper>

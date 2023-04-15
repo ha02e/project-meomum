@@ -381,6 +381,13 @@ public class MemberDAOImple implements MemberDAO {
 		    }
 		return result;
 	}
+	
+	/**통계*/
+	@Override
+	public int memberCnt() {
+		int count = sqlMap.selectOne("memberCnt");
+		return count;
+	}
 
 	
 }

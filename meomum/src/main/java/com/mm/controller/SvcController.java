@@ -199,10 +199,7 @@ public class SvcController {
 	@RequestMapping("/svcIngInsert.do")
 	public ModelAndView svcIngInsert(SvcIngDTO dto) {
 		int result = svcDao.svcIngInsert(dto);
-		/*
-		 * String link = result > 0 ? "asvcContent.do?svc_idx=" + dto.getSvc_idx() :
-		 * "asvcIngPopup.do";
-		 */
+		
 		ModelAndView mav = new ModelAndView();
 
 		mav.addObject("msg", "서비스 희망일 및 견적이 추가되었습니다");
@@ -339,10 +336,10 @@ public class SvcController {
 	}
 
 	/** 사용자-방문견적 예약 취소 */
-	@RequestMapping("/svcCancle.do")
+	@RequestMapping("/svcCancel.do")
 	public ModelAndView svcDelete(@ModelAttribute SvcContentDTO dto) {
-		int stateResult = svcDao.svcStateCancle(dto);
-		int dateResult = svcDao.svcDateCancle(dto);
+		int stateResult = svcDao.svcStateCancel(dto);
+		int dateResult = svcDao.svcDateCancel(dto);
 
 		ModelAndView mav = new ModelAndView();
 
@@ -430,10 +427,10 @@ public class SvcController {
 	}
 
 	/** 결제 취소 */
-	@RequestMapping("/ingCancle.do")
-	public ModelAndView ingCancle(@ModelAttribute IdxDTO dto) {
-		int memUpdate = svcDao.svcMemBuyCancle(dto);
-		int ingUpdate = svcDao.svcIngBuyCancle(dto);
+	@RequestMapping("/ingCancel.do")
+	public ModelAndView ingCancel(@ModelAttribute IdxDTO dto) {
+		int memUpdate = svcDao.svcMemBuyCancel(dto);
+		int ingUpdate = svcDao.svcIngBuyCancel(dto);
 
 		ModelAndView mav = new ModelAndView();
 

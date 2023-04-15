@@ -53,3 +53,4 @@ function getTotal() {
   
   real_total.value = real_total_num; //콤마 추가해서 총 결제 금액 출력
 }
+

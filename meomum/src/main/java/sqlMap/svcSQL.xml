@@ -313,26 +313,26 @@
 	</update>
 	
 	<!-- 마이페이지: 정리일상 결제 취소 -->
-	<update id="svcMemBuyCancle" parameterType="com.mm.svc.model.IdxDTO" >
+	<update id="svcMemBuyCancel" parameterType="com.mm.svc.model.IdxDTO" >
 		UPDATE svc_member
 		SET svc_state = '결제취소'
 		WHERE svc_idx =#{svc_idx}
 	</update>
 	
-	<update id="svcIngBuyCancle" parameterType="com.mm.svc.model.IdxDTO" >
+	<update id="svcIngBuyCancel" parameterType="com.mm.svc.model.IdxDTO" >
 		UPDATE svc_ing
 		SET pay_state = '결제취소'
 		WHERE svc_idx =#{svc_idx}
 	</update>
 	
 	<!-- 마이페이지: 방문 예약 취소 -->
-	<update id="svcStateCancle" parameterType="com.mm.svc.model.SvcContentDTO">
+	<update id="svcStateCancel" parameterType="com.mm.svc.model.SvcContentDTO">
 	UPDATE svc_member
 	SET svc_state='예약취소'
 	WHERE svc_idx=#{svc_idx}
 	</update>
 	
-	<update id="svcDateCancle" parameterType="com.mm.svc.model.SvcContentDTO">
+	<update id="svcDateCancel" parameterType="com.mm.svc.model.SvcContentDTO">
 	UPDATE svc_date
 	SET svc_days='C'||#{svc_days},
 		svc_time='C'||#{svc_time}
@@ -347,5 +347,19 @@
 	<select id="sveIngCalName" resultType="String" parameterType="String">
 		select user_name from svc_member where svc_idx = #{svc_idx}
 	</select>
-
+	
+	
+	<!-- 통계 :서비스 인지경로-->
+	<select id="svcKnowData" resultType="map">
+	  SELECT svc_know, nvl(COUNT(*),0) AS cnt
+	  FROM svc_detail
+	  GROUP BY svc_know
+	</select>
+	
+	<!-- 통계:서비스 건수 -->
+	<select id="svcTotalCnt" resultType="Integer">
+	select count(*)
+	from svc_member
+	where svc_state not in('예약취소','결제취소') 
+	</select>
 </mapper>

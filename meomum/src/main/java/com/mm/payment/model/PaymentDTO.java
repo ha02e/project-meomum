@@ -9,7 +9,7 @@ public class PaymentDTO {
 	private String pay_method;
 	private int amount;
 	private Date pay_buydate;
-	private Date pay_cancleDate;
+	private Date pay_cancelDate;
 	private String pay_state;
 	
 	public PaymentDTO() {
@@ -17,7 +17,7 @@ public class PaymentDTO {
 	}
 
 	public PaymentDTO(String payment_idx, String cate_idx, String payment_cate, String pay_method, int amount,
-			Date pay_buydate, Date pay_cancleDate, String pay_state) {
+			Date pay_buydate, Date pay_cancelDate, String pay_state) {
 		super();
 		this.payment_idx = payment_idx;
 		this.cate_idx = cate_idx;
@@ -25,7 +25,7 @@ public class PaymentDTO {
 		this.pay_method = pay_method;
 		this.amount = amount;
 		this.pay_buydate = pay_buydate;
-		this.pay_cancleDate = pay_cancleDate;
+		this.pay_cancelDate = pay_cancelDate;
 		this.pay_state = pay_state;
 	}
 
@@ -77,12 +77,12 @@ public class PaymentDTO {
 		this.pay_buydate = pay_buydate;
 	}
 
-	public Date getPay_cancleDate() {
-		return pay_cancleDate;
+	public Date getPay_cancelDate() {
+		return pay_cancelDate;
 	}
 
-	public void setPay_cancleDate(Date pay_cancleDate) {
-		this.pay_cancleDate = pay_cancleDate;
+	public void setPay_cancelDate(Date pay_cancelDate) {
+		this.pay_cancelDate = pay_cancelDate;
 	}
 
 	public String getPay_state() {

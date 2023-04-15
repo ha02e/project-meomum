@@ -31,5 +31,8 @@ public interface MemberDAO {
 	public int dropSelectInfo(int user_idx);
 	public int deleteMember(int user_idx,String user_id);
 	
+	/**통계*/
+	public int memberCnt();
+	
 
 }

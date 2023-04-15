@@ -5,6 +5,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="com.mm.payment">
+  	<!-- 결제 -->
   	<insert id="paymentInsert" parameterType="com.mm.payment.model.PaymentDTO">
   		INSERT INTO payment
    		VALUES (#{payment_idx},
@@ -18,10 +19,39 @@
    				)	
   	</insert>
   	
+  
+  	
   	<!-- 결제여부 확인 -->
   	<select id="paymentSelect" parameterType="String"  resultType="com.mm.payment.model.PaymentDTO">
    	SELECT *
    	FROM payment
    	WHERE SUBSTR(cate_idx, 1, 12) =#{cate_idx}
   	</select>
+  	
+  	<!-- 통계: 결제 총액 -->
+  	<select id="payTotal" resultType="Integer">
+  	SELECT sum(amount)
+	FROM payment
+  	</select>
+  	
+  	<!-- 통계: 정리일상/구독일상 결제 총액 -->
+  	<select id="payOutline" resultType="map">
+  	SELECT payment_cate, sum(amount) as total
+	FROM payment
+	GROUP BY payment_cate
+  	</select>
+  	
+  	<!-- 통계: 정리일상/구독일상 결제 리스트 -->
+	<select id="payList" parameterType="Map"  resultType="com.mm.payment.model.PaymentDTO">
+  	SELECT *
+	FROM (SELECT rownum as rnum,a.* from 
+		(SELECT * FROM payment
+		ORDER BY pay_buydate desc)a)b
+	WHERE rnum <![CDATA[>=]]> #{start} and rnum <![CDATA[<=]]> #{end}
+  	</select>
+  
+	<select id="payCnt" resultType="Integer">
+	SELECT count(*)
+	FROM payment
+	</select>
   </mapper>
