@@ -32,6 +32,11 @@
 	text-align: center;
 }
 
+thead tr{
+	background-color: #f8f9fa;
+	border-top: 1.2px solid #dadbe4;
+}
+
 .noreview h5{
 	line-height:180px;
 }
@@ -45,7 +50,7 @@
 }
 
 .num{
-	width: 20%;
+	width: 25%;
 }
 .category{
 	width:15%;
@@ -92,7 +97,7 @@
 					<thead class="table-light">
 						<tr class="table-borderless">
 							<th scope="col" class="num">서비스/주문번호</th>
-							<th colspan="2" scope="col">이용내역</th>
+							<th scope="col">이용내역</th>
 							<th scope="col" class="button">버튼</th>
 						</tr>
 					</thead>
@@ -108,13 +113,14 @@
 						<c:forEach var="dto" items="${lists}">
 							<tr>
 								<td class="align-middle num">${dto.activity_idx}</td>
-								<td class="align-middle category">정리일상</td>
-								<td class="align-middle service"></td>
+								<td class="align-middle category">${dto.activity_idx.startsWith('S') ? '정리일상' : dto.activity_idx.startsWith('O') ? '구독일상' : ''}</td>
 								<td class="align-middle button">
 									<c:url var="contentUrl" value="reviewWrite.do">
 										<c:param name="activity_idx">${dto.activity_idx}</c:param>
 										<c:param name="writer">${dto.writer}</c:param>
-										<c:param name="category">정리일상</c:param>										
+										<c:param name="category">
+										${dto.activity_idx.startsWith('S') ? '정리일상' : dto.activity_idx.startsWith('O') ? '구독일상' : ''}
+										</c:param>										
 									</c:url>
 									<a href="${contentUrl}" class="btn btn-sm btn-primary">후기 작성하기</a>
 								</td>

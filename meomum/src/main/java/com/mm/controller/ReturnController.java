@@ -91,6 +91,63 @@ public class ReturnController {
 	}
 	
 	
+
+	/** 마이페이지 반납내역 */
+	@RequestMapping("/myReturnProList.do")
+	public ModelAndView myReturnProList(@RequestParam(value="cp",defaultValue = "1")int cp,
+										@RequestParam(value="fvalue",defaultValue = "")String fvalue,
+										@RequestParam(value="state",defaultValue = "0")String state, HttpSession session) {
+
+		ModelAndView mav=new ModelAndView();
+		
+		if(session.getAttribute("ssInfo")==null) {
+			mav.addObject("msg", "로그인을 해주세요.");
+			mav.addObject("gopage","location.href='index.do';");
+			mav.setViewName("mainMsg");
+			return mav;
+		}
+
+		MemberDTO mdto = (MemberDTO) session.getAttribute("ssInfo");
+		int user_idx = mdto.getUser_idx();
+		
+		int listSize=5;
+		int pageSize=5;
+		int start=(cp-1)*listSize+1;
+		int end=cp*listSize;
+		
+		Map fmap=new HashMap();
+		
+		fmap.put("start", start);
+		fmap.put("end", end);
+		fmap.put("fvalue","%"+fvalue+"%");
+		fmap.put("state",state);
+		fmap.put("user_idx", user_idx);
+		
+		
+		Map tmap=new HashMap();
+		tmap.put("fvalue","%"+fvalue+"%");
+		tmap.put("state",state);
+		tmap.put("user_idx", user_idx);
+		
+		int totalCnt=returnDao.myReturnProListCnt(tmap);
+			
+		List<MyOrderListDTO> lists=returnDao.myReturnProList(fmap);
+		
+		String param = "&fvalue="+fvalue+"&state="+state;
+		String pageStr=com.mm.module.PageModule.makePageParam("myReturnProList.do", totalCnt, listSize, 
+																	pageSize, cp,param);
+			
+		mav.setViewName("turnback/myReturnProList");
+		mav.addObject("lists", lists);
+		mav.addObject("pageStr", pageStr);
+		mav.addObject("state", state);
+		mav.addObject("fvalue", fvalue);
+			
+		return mav;
+			
+	}
+	
+	
 	
 	/** 관리자페이지 반납내역 */
 	@RequestMapping("/returnProList_a.do")
@@ -172,18 +229,19 @@ public class ReturnController {
 		Map map = new HashMap();
 		map.put("order_idx", order_idx);
 		map.put("pro_idx", pro_idx);
-		System.out.println(order_idx);
-		System.out.println(pro_idx);
 		
-		int result=orderDao.returnSubmitUpdate(map); //주문상태 반납진행으로 변경하기
 		int returnUpdate=returnDao.returnStartUpdate(map);//turnback 테이블 반납시작날짜, 반납승인여부 변경하기
 		
 		ModelAndView mav=new ModelAndView();
 		
-		if(result>0 && returnUpdate>0) {
+		if(returnUpdate>0) {
+
+			int result=orderDao.returnSubmitUpdate(map); //주문상태 반납진행으로 변경하기
 			
-			int returnShipping=shipDao.returnShipInsert(sdto); //반납 회수배송처리
-			int returnProUpdate=proDao.returnProUpdate(map);  //반납 완료 시 재고 수정
+			if(result>0) {
+				int returnShipping=shipDao.returnShipInsert(sdto); //반납 회수배송처리
+				int returnProUpdate=proDao.returnProUpdate(map);  //반납 완료 시 재고 수정
+			}
 			
 			mav.addObject("msg", "반납승인 처리가 완료되었습니다.");
 			mav.addObject("gopage", "opener.document.location.reload(); self.close()");

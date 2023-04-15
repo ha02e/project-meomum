@@ -70,6 +70,11 @@
   font-size: 14px;
 }
 
+thead tr{
+	background-color: #f8f9fa;
+	border-top: 1.2px solid #dadbe4;
+}
+
 .users-table-info th {
 	color:#333333;
 	text-align: center;
