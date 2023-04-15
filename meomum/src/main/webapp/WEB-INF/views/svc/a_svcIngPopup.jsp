@@ -80,48 +80,6 @@ font-family: 'GmarketSansMedium';
 		</form>
 	</div>
 
-
-
-
-
-
-
-	<!-- 원본 <h2>결제</h2>
-	<form name="svcIngInsert" action="svcIngInsert.do" method="post"  onsubmit="sendValue()">
-	<input type="hidden" name="svc_idx" id="svc_idx" >
-	<input type="hidden" name="user_idx" id="user_idx">
-		<ul>
-			<li>서비스 일자 <input type="datetime-local" name="svc_datetime" id="svc_datetime" onclick="setMinDate()"></li>
-
-			<li>견적금액 <input type="text" name="estimated" id="estimated" oninput="getTotal()"></li>
-
-			<li>할인금액 
-				<input type="text" name="discount" id="discount" value="0" oninput="getTotal()"> 
-			</li>
-
-			<li>결제방식 <select name="type" id="type">
-					<option value="카드결제">카드결제</option>
-					<option value="계좌이체">계좌이체</option>
-			</select>
-			</li>
-
-			<li>결제금액<input type="text" name="total" id="total"></li>
-
-			<li>결제상태 <select name="pay_state" id="pay_state">
-					<option value="견적완료">견적완료</option>
-					<option value="결제완료">결제완료</option>
-					<option value="결제취소">결제취소</option>
-					<option value="작업완료">작업완료</option>
-			</select>
-			</li>
-		</ul>
-
-		<div>
-			<input type="submit" value="저장">
-			<input type="button" value="닫기" onclick="popupClose()">
-		</div>
-	</form> -->
-
 	<script>
 		/**a_svcConted.jsp에 입력된 값 입력하기*/
 		function getValue() {
@@ -157,8 +115,6 @@ font-family: 'GmarketSansMedium';
 		}
 
 		function popupClose() {
-			window.opener.location.reload();
-			/* opener.document.getElementById('pay_state').value = pdocument.getElementById('pay_state').value; */
 			window.close();
 		}
 	</script>
