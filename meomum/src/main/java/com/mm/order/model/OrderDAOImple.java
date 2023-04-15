@@ -111,4 +111,11 @@ public class OrderDAOImple implements OrderDAO {
 		int count=sqlMap.update("orderCancelUpdate",oder_idx);
 		return count;
 	}
+	
+	/**통계*/
+	@Override
+	public int orderCnt() {
+		int count = sqlMap.selectOne("orderCnt");
+		return count;
+	}
 }

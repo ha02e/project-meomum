@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +11,7 @@
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     
-    <!-- 서비스 인지 경로 -->
+    <!-- 서비스 인지 경로 그래프-->
     <script type="text/javascript">
       google.charts.load("current", {packages:["corechart"]});
       google.charts.setOnLoadCallback(drawChart);
@@ -39,7 +40,7 @@
       }
     </script>
     
-    <!-- 매출 -->
+    <!-- 매출 요약 그래프-->
     <script type="text/javascript">
     google.charts.load("current", {packages:["corechart"]});
     google.charts.setOnLoadCallback(drawChart);
@@ -108,11 +109,6 @@
 							        <div>현재 알림이 없습니다</div>
 							    </div><!--//col-->
 							    <div class="col-12 col-lg-3">
-								   <!--  <a class="btn app-btn-primary"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-file-earmark-arrow-down me-2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-  <path d="M4 0h5.5v1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h1V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2z"/>
-  <path d="M9.5 3V0L14 4.5h-3A1.5 1.5 0 0 1 9.5 3z"/>
-  <path fill-rule="evenodd" d="M8 6a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L7.5 10.293V6.5A.5.5 0 0 1 8 6z"/>
-</svg>Free Download</a> -->
 							    </div><!--//col-->
 						    </div><!--//row-->
 						    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -164,7 +160,7 @@
 					    <div class="app-card app-card-stat shadow-sm h-100">
 						    <div class="app-card-body p-3 p-lg-4">
 							    <h4 class="stats-type mb-1">가구구독 주문 건수</h4>
-							    <div class="stats-figure">20</div>
+							    <div class="stats-figure">${orderCnt}</div>
 							    <div class="stats-meta">New</div>
 						    </div><!--//app-card-body-->
 						    <a class="app-card-link-mask" href="#"></a>
@@ -198,7 +194,7 @@
 					        <div class="app-card-header p-3">
 						        <div class="row justify-content-between align-items-center">
 							        <div class="col-auto">
-						                <h4 class="app-card-title">매출 </h4>
+						                <h4 class="app-card-title">매출요약 </h4>
 							        </div><!--//col-->
 							        <div class="col-auto">
 								        <div class="card-header-action">
@@ -223,7 +219,7 @@
 					        <div class="app-card-header p-3">
 						        <div class="row justify-content-between align-items-center">
 							        <div class="col-auto">
-						                <h4 class="app-card-title">매출 상세내용</h4>
+						                <h4 class="app-card-title">세부 매출</h4>
 							        </div><!--//col-->
 							        <div class="col-auto">
 								        <!-- <div class="card-header-action">
@@ -234,7 +230,7 @@
 					        </div><!--//app-card-header-->
 					        <div class="app-card-body">
 							    <div class="item p-3">
-							    <table class="table app-table-hover mb-0 text-center">
+							    <table class="table app-table-hover mb-0 text-center" id="paymentTable">
 							    <tr>
 							    	<thead>
 							    		<tr> 
@@ -261,15 +257,16 @@
 							    			<td class="cell"><span class="badge bg-secondary">가구일상</span></td>
 							    			</c:if>
 							    			<td class="cell">${payAllList.pay_method}</td>
-							    			<td class="cell">${payAllList.amount}</td>
+							    			<td class="cell"><fmt:formatNumber type="number" maxFractionDigits="3" value="${payAllList.amount}"/>원</td>
 							    			<td class="cell">${payAllList.pay_buydate}</td>
 							    		</tr>
 							    </c:forEach>
 							    	</tbody>
 							    </table>
 							    <nav aria-label="Page navigation example">
-									<ul class="pagination pagination-sm justify-content-center">
+									<ul class="pagination pagination-sm justify-content-center" style="margin-top:10px;">
 										${pageStr}
+										
 									</ul>
 								</nav>
 								   

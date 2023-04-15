@@ -71,7 +71,7 @@ public interface SvcDAO {
 	public List<SvcIngDTO> svcIngCalList();
 	public String sveIngCalName(String svc_idx);
 	
-	/***/
+	/**통계*/
 	public List<Map<String, Object>> svcKnowData(); 
 	public int svcTotalCnt();
 }

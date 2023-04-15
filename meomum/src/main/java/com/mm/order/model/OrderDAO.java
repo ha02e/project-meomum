@@ -26,4 +26,7 @@ public interface OrderDAO {
 	public List<MyOrderListDTO> mySubsAllList(Map map);
 	public int mySubsAllListCnt(int user_idx);
 	public int orderCancelUpdate(String oder_idx);
+	
+	/**통계*/
+	public int orderCnt();
 }
