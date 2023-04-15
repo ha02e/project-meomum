@@ -135,29 +135,25 @@
     font-weight: 400;
 }
 
-</style>
+#cart_amount {
+    display: block;
+    width: 50px;
+    font-weight: 800;
+    text-align: center;
+    color: #198754;
+    border: none;
+    background: none;
+}
 
+</style>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="images/icons/favicon.png"/>
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/slick/slick.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/MagnificPopup/magnific-popup.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="css/proUtil.css">
 	<link rel="stylesheet" type="text/css" href="css/proMain.css">
+	<link rel="stylesheet" type="text/css" href="vendor/slick/slick.css">
+	<link rel="stylesheet" type="text/css" href="vendor/MagnificPopup/magnific-popup.css">
 <!--===============================================================================================-->
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 </head>
 <%@include file="/WEB-INF/views/header.jsp" %>
 <body class="animsition">
@@ -194,7 +190,10 @@
 						<div class="wrap-slick3 flex-sb flex-w">
 							<div class="wrap-slick3-dots"></div>
 							<div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
-
+							  <div class="slick3-prev">
+							    <img src="/meomum/images/icon/icon-prev.png" alt="previous slide">
+							  </div>
+							 
 							<div class="slick3 gallery-lb">
 								<div class="item-slick3" data-thumb="/meomum/images/items/${lists[0].pro_thumb}">
 									<div class="wrap-pic-w pos-relative">
@@ -269,6 +268,7 @@
 						</div>
 						
 						<div class="bor18"></div>
+						
 						<div class="djsDA">
 							<div class="flHQIV cl6 p-tb-8">
 								
@@ -290,16 +290,18 @@
 						
 						<div class="bor18"></div>
 						
+						<!-- 가격 변경 구역 -->
+						
 						<div class="flex-w flex-r-m p-b-8">
-							
 							<div class="flex-w m-r-20 m-tb-10">
+							
 								<!-- 마이너스 -->
 								<div id="minus-button">
 									<i class="bi bi-dash-lg"></i>
 								</div>
 	
 								<!-- 수량 조절 -->
-								<input class="txt-center num-product" 
+								<input class="txt-center c13 mtext-104 num-product" 
 								id="cart_amount" 
 								type="number" 
 								name="cart_amount" 
@@ -316,6 +318,7 @@
 						<form name="contentForm" method="get" action="orderList.do">	
 						 <input type="hidden" name="pro_idx" value="${lists[0].pro_idx}">
 						 <input type="hidden" name="pro_name" value="${lists[0].pro_name}">
+						 <input type="hidden" name="pro_amount" value="${lists[0].pro_name}">
 						 <input type="hidden" name="pro_subprice" value="${lists[0].pro_subprice}">
 						 <input type="hidden" name="pro_delprice" value="${lists[0].pro_delprice }">
 						 <input type="hidden" name="pro_month" value="${lists[0].pro_month }">
@@ -323,7 +326,6 @@
 				
 			<div class="totalPrice">
 	 			 <p class="total mtext-106 c12">총 주문 금액</p>
-				<!-- 오른쪽 파트 -->
 				<div class="rightPrice">
 				  
 				   <div class="right">
@@ -337,26 +339,23 @@
 				   	 
 				   	 <p class="right2 all stext-107"><span id="allPrice">총 <fmt:formatNumber type="number" maxFractionDigits="3" value="${lists[0].pro_allprice}" />원</span></p>
 				</div>
-	 
 			</div>
 				
-		  
-		  
-		  
-		
-		
 						<div class="bor18 cl3 p-t-23"></div>
 						
+						<!-- 버튼 구역 -->
 						<div class="button-container">
 						  <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail" type="submit" formaction="cartInsert.do">장바구니</button>
 						  <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail" type="submit" formaction="orderList.do">구매하기</button>
 						</div>
-							
 							</form>
 						</div>	
 					</div>
 				</div>
 			</div>
+
+
+
 
 	<!-- 상품 설명, 이용 안내, 배송 안내 -->
 	<div class="bor10 m-t-50 p-t-43 p-b-40">
@@ -377,6 +376,8 @@
 				</li>
 			</ul>
 
+
+
 		<!-- Tab panes -->
 		<div class="tab-content p-t-43">
 			<!-- 상품 설명 -->
@@ -387,8 +388,6 @@
 					</p>
 				</div>
 			</div>
-
-
 
 	<!-- 이용 안내 -->
 	<div class="tab-pane fade" id="information" role="tabpanel">
@@ -462,27 +461,13 @@
   // 초기값 설정
   changeQuantity(1);
 </script>
-<!--===============================================================================================-->	
-	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
-<!--===============================================================================================-->
+
+<!--=========지우면 안됨===========-->
 	<script src="vendor/animsition/js/animsition.min.js"></script>
-<!--===============================================================================================-->
+<!--======================================================-->
 	<script src="vendor/bootstrap/js/popper.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/select2/select2.min.js"></script>
-	<script>
-		$(".js-select2").each(function(){
-			$(this).select2({
-				minimumResultsForSearch: 20,
-				dropdownParent: $(this).next('.dropDownSelect2')
-			});
-		})
-	</script>
-<!--===============================================================================================-->
-	<script src="vendor/daterangepicker/moment.min.js"></script>
-	<script src="vendor/daterangepicker/daterangepicker.js"></script>
-<!--===============================================================================================-->
+<!--===========이미지 슬라이드 효과==========================-->
 	<script src="vendor/slick/slick.min.js"></script>
 	<script src="js/slick-custom.js"></script>
 <!--===============================================================================================-->
@@ -490,7 +475,7 @@
 	<script>
         $('.parallax100').parallax100();
 	</script>
-<!--===============================================================================================-->
+<!--========================이미지 갤러리================================-->
 	<script src="vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
 	<script>
 		$('.gallery-lb').each(function() { // the containers for all your galleries
@@ -508,49 +493,23 @@
 	<script src="vendor/isotope/isotope.pkgd.min.js"></script>
 <!--===============================================================================================-->
 	<script src="vendor/sweetalert/sweetalert.min.js"></script>
-	<script>
-		$('.js-addwish-b2, .js-addwish-detail').on('click', function(e){
+<script>
+
+		$('.js-addwish-b2').on('click', function(e){
 			e.preventDefault();
 		});
 
 		$('.js-addwish-b2').each(function(){
 			var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
 			$(this).on('click', function(){
-				swal(nameProduct, "is added to wishlist !", "success");
+				swal(nameProduct, "찜 추가되었습니다");
 
 				$(this).addClass('js-addedwish-b2');
 				$(this).off('click');
 			});
 		});
 
-		$('.js-addwish-detail').each(function(){
-			var nameProduct = $(this).parent().parent().parent().find('.js-name-detail').html();
-
-			$(this).on('click', function(){
-				swal(nameProduct, "is added to wishlist !", "success");
-
-				$(this).addClass('js-addedwish-detail');
-				$(this).off('click');
-			});
-		});
-	</script>
-<!--===============================================================================================-->
-	<script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-	<script>
-		$('.js-pscroll').each(function(){
-			$(this).css('position','relative');
-			$(this).css('overflow','hidden');
-			var ps = new PerfectScrollbar(this, {
-				wheelSpeed: 1,
-				scrollingThreshold: 1000,
-				wheelPropagation: false,
-			});
-
-			$(window).on('resize', function(){
-				ps.update();
-			})
-		});
-	</script>
+</script>
 <!--===============================================================================================-->
 	<script src="js/main.js"></script>
 <%@include file="/WEB-INF/views/footer.jsp" %>
