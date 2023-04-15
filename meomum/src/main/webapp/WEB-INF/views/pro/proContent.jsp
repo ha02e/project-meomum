@@ -318,7 +318,7 @@
 						<form name="contentForm" method="get" action="orderList.do">	
 						 <input type="hidden" name="pro_idx" value="${lists[0].pro_idx}">
 						 <input type="hidden" name="pro_name" value="${lists[0].pro_name}">
-						 <input type="hidden" name="pro_amount" value="${lists[0].pro_name}">
+						 <input type="hidden" name="pro_amount" value="${lists[0].pro_amount}">
 						 <input type="hidden" name="pro_subprice" value="${lists[0].pro_subprice}">
 						 <input type="hidden" name="pro_delprice" value="${lists[0].pro_delprice }">
 						 <input type="hidden" name="pro_month" value="${lists[0].pro_month }">
