@@ -483,4 +483,19 @@ public class OrderController {
 	return mav;
 	
 	}
+	
+	@RequestMapping("/cancel.do")
+	public ModelAndView orderCancel(@RequestParam("order_idx")String order_idx) {
+		
+		int result =orderDao.orderCancelUpdate(order_idx);
+		String msg=result>0?"주문취소 되었습니다.":"주문취소 하실 수 없습니다";
+		ModelAndView mav=new ModelAndView();
+		mav.addObject("msg", msg);
+		mav.addObject("goUrl", "index.do");
+		mav.setViewName("ntc/ntcMsg");
+		
+		return mav;
+		
+		
+	}
 }

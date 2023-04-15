@@ -252,4 +252,7 @@
                                 and op.pro_idx=#{pro_idx}
                     		)
 	</update>
+	<update id="orderCancelUpdate" parameterType="String">
+		update orders set order_status = 3 where order_idx= #{order_idx}
+	</update>
   </mapper>
