@@ -156,7 +156,7 @@ input:invalid {
 										value="${(dto.pro_subprice*param.cart_amount)+dto.pro_delprice}" />원</td>
 							</tr>
 
-							<input type="hidden" name="cart_amount" value="${param.cart_amount}">
+							<input type="hidden" name="pro_idx" value="${dto.pro_idx}">
 							<input type="hidden" name="pro_amount"
 								value="${param.cart_amount}">
 							<input type="hidden" id="pro_month" value="${dto.pro_month}">
@@ -443,7 +443,7 @@ input:invalid {
 
 			var uidx = ${sessionScope.ssInfo.user_idx};//유저번호
 			var pidx = ${dto.pro_idx};//상품번호
-			var pAmount = ${param.cart_amount};//상품수량
+			var pAmount =${param.cart_amount} ;//상품수량
 
 			IMP.request_pay({
 				pg : "kakaopay", //"html5_inicis",
@@ -481,7 +481,7 @@ input:invalid {
 					var PointDTO = {
 						cate_idx : rsp.merchant_uid,
 						user_idx : uidx,
-						point_use : 1,
+						point_use : point_num,
 						point_info : '구독일상 결제',
 						point_num : $("#point_num").val()
 					};
@@ -490,8 +490,8 @@ input:invalid {
 						order_idx : rsp.merchant_uid,
 						user_idx : uidx,
 						order_name : bName,
-						sub_start : makeMerchantUid,
-						sub_end : makeMerchantUid,//수정 필요
+						//sub_start : null,
+						//sub_end : null,//수정 필요
 						order_pcode : bPcode,
 						receiver : bName,
 						receiver_tel : bTel,
