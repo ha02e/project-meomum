@@ -525,7 +525,7 @@ input:invalid {
 							sub_end : makeMerchantUid,//수정 필요
 							order_pcode : bPcode,
 							receiver : bName,
-							receiver_tel : bName,
+							receiver_tel : bTel,
 							order_addr : bAddr,
 							order_detail : bAddr_detail,
 							order_msg : order_msg,
@@ -550,7 +550,7 @@ input:invalid {
 							dataType : "json",
 							success : function(data) {
 								console.log(data);
-								location.href="index.do";
+								location.href = "orderSucces.do"+"?order_idx="+rsp.merchant_uid;
 							},
 							error : function(xhr, status, error) {
 								alert('결제는 되었으나 주문이 되지 않았습니다. 고객센터로 문의바랍니다.');

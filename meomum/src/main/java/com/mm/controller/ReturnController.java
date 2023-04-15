@@ -147,8 +147,14 @@ public class ReturnController {
 	
 	/** 관리자페이지 반납처리 폼 */
 	@RequestMapping("/returnSubmitForm.do")
-	public ModelAndView returnSubmitForm(@RequestParam("order_idx") String order_idx) {
-		ReturnListDTO dto = returnDao.returnData(order_idx);
+	public ModelAndView returnSubmitForm(@RequestParam("order_idx") String order_idx,
+											@RequestParam("pro_idx") int pro_idx) {
+		
+		Map map = new HashMap();
+		map.put("order_idx", order_idx);
+		map.put("pro_idx", pro_idx);
+		
+		ReturnListDTO dto = returnDao.returnData(map);
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("dto", dto);
@@ -166,6 +172,8 @@ public class ReturnController {
 		Map map = new HashMap();
 		map.put("order_idx", order_idx);
 		map.put("pro_idx", pro_idx);
+		System.out.println(order_idx);
+		System.out.println(pro_idx);
 		
 		int result=orderDao.returnSubmitUpdate(map); //주문상태 반납진행으로 변경하기
 		int returnUpdate=returnDao.returnStartUpdate(map);//turnback 테이블 반납시작날짜, 반납승인여부 변경하기
@@ -182,7 +190,7 @@ public class ReturnController {
 			mav.setViewName("mainMsg");
 		}else {
 			mav.addObject("msg", "반납승인 처리에 실패하였습니다.");
-			mav.addObject("gopage", "location.href='returnSubmitForm.do';");
+			mav.addObject("gopage", "opener.document.location.reload(); self.close()");
 			mav.setViewName("mainMsg");
 		}
 		

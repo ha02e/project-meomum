@@ -291,7 +291,7 @@
 						<div class="bor18"></div>
 						
 						<!-- 가격 변경 구역 -->
-						
+					<form name="contentForm" method="get" action="orderList.do">	
 						<div class="flex-w flex-r-m p-b-8">
 							<div class="flex-w m-r-20 m-tb-10">
 							
@@ -315,7 +315,7 @@
 							</div>
 						</div>
 	
-						<form name="contentForm" method="get" action="orderList.do">	
+			
 						 <input type="hidden" name="pro_idx" value="${lists[0].pro_idx}">
 						 <input type="hidden" name="pro_name" value="${lists[0].pro_name}">
 						 <input type="hidden" name="pro_amount" value="${lists[0].pro_amount}">

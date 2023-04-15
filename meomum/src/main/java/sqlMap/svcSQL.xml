@@ -239,11 +239,11 @@
 		WHERE svc_idx = #{svc_idx}
 	</update>
 	
-<!-- 	<update id="svcStateUpdate" parameterType="com.mm.svc.model.SvcMemDTO"> 
+	<update id="svcStateUpdate" parameterType="com.mm.svc.model.SvcMemDTO"> 
 		UPDATE svc_member
 		SET svc_state = #{svc_state}
 		WHERE svc_idx =#{svc_idx}
-	</update> -->
+	</update>
 	
 	<!--마이페이지 : 방문 견적 예약 내역 -->
 	<select id="svcUserList" parameterType="Map" resultType="com.mm.svc.model.SvcSelectAllDTO">
