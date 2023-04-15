@@ -31,7 +31,7 @@ function requestPay() {
       pay_method: '포인트사용', //pay_mehtod 지불수단
       amount: 0, //amount 금액
       pay_buydate: null, //pay_buydate 결제일
-      pay_cancleDate: null, //pay_cancleDate 취소일(임시'-'로 지정)
+      pay_cancelDate: null, //pay_cancelDate 취소일(임시'-'로 지정)
       pay_state: 'point', //pay_state
     };
 
@@ -87,7 +87,7 @@ function requestPay() {
                   pay_method: rsp.pay_method, //pay_mehtod 지불수단
                   amount: rsp.paid_amount, //amount 금액
                   pay_buydate: rsp.paid_at, //pay_buydate 결제일
-                  pay_cancleDate:null,//pay_cancleDate 취소일(임시'-'로 지정)
+                  pay_cancelDate:null,//pay_cancelDate 취소일(임시'-'로 지정)
                   pay_state: rsp.status,//pay_state
         };
 
