@@ -96,31 +96,31 @@
 
 	<div style="height: 30px;"></div>
 	
-	<!-- CATEGORY -->
-	<div class="bg0 m-t-23 p-b-140">
-	  <div class="container" style="max-width: 1100px">
-	    <div class="flex-w flex-sb-m p-b-52">
-	     
-	      <div class="flex-w flex-l-m filter-tope-group m-tb-10">
-	        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
-	          전체
-	        </button>
-	        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".1">
-	          침대
-	        </button>
-	        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".2">
-	          테이블
-	        </button>
-	        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".3">
-	          의자
-	        </button>
-	        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".4">
-	          소파
-	        </button>
-	        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".5">
-	          조명
-	        </button>
-	   	</div>
+			<!-- CATEGORY -->
+			<div class="bg0 m-t-23 p-b-140">
+			  <div class="container" style="max-width: 1100px">
+			    <div class="flex-w flex-sb-m p-b-52">
+			     
+			      <div class="flex-w flex-l-m filter-tope-group m-tb-10">
+			        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
+			          전체
+			        </button>
+			        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".1">
+			          침대
+			        </button>
+			        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".2">
+			          테이블
+			        </button>
+			        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".3">
+			          의자
+			        </button>
+			        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".4">
+			          소파
+			        </button>
+			        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".5">
+			          조명
+			        </button>
+			   	</div>
       
       
     <!-- Search product -->
@@ -134,8 +134,8 @@
 			    </div>
 			    
 		    <div class="search-input">
-		     <input class="form-control me-sm-2" type="text" name="proF" placeholder="Search" required
-		     <c:if test="${!empty proF}">value="${proF}"</c:if>>
+			     <input class="form-control me-sm-2" type="text" name="proF" placeholder="Search" required
+			     <c:if test="${!empty proF}">value="${proF}"</c:if>>
 		     
 		      <button type="submit" class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
 		       <i class="bi bi-search"></i>
@@ -204,9 +204,6 @@
 <!--=============================================-->
 	<script src="vendor/bootstrap/js/popper.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-<!--=============================================-->
-	<script src="vendor/slick/slick.min.js"></script>
-	<script src="js/slick-custom.js"></script>
 <!--=========페이지 모양 유지해줌===========-->
 	<script src="vendor/isotope/isotope.pkgd.min.js"></script>
 	<script src="vendor/animsition/js/animsition.min.js"></script>
