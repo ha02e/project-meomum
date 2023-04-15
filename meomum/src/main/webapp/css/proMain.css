@@ -1557,12 +1557,12 @@ button.mfp-close {
 }
 
 .tab01 .nav-tabs .nav-item {
-  margin: 0px 15px;
+  margin: 0px 50px;
 }
 
 .tab01 .nav-link {
   font-family: GmarketSansMedium;
-  font-size: 15px;
+  font-size: 18px;
   color: #888;
   line-height: 1.2;
 
@@ -2052,7 +2052,7 @@ div.row.isotope-grid {
 
 /*---------------------------------------------*/
 .block2-txt-child1 {
-  width: calc(100% - 30px);
+  width: calc(100% - 45px);
 }
 
 .block2-txt-child2 {
@@ -2156,14 +2156,14 @@ div.row.isotope-grid {
 
 .stext-105 {
   font-family: GmarketSansMedium;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.466667;
   letter-spacing: 1px;
 }
 
 .stext-106 {
   font-family: GmarketSansMedium;
-  font-size: 15px;
+  font-size: 17px;
   line-height: 1.2;
 }
 
@@ -2273,7 +2273,8 @@ div.row.isotope-grid {
 
 .mtext-105 {
   font-family: GmarketSansMedium;
-  font-size: 24px;
+  font-size: 28px;
+  font-weight: bold;
   line-height: 1.5;
 }
 
@@ -2412,7 +2413,7 @@ div.row.isotope-grid {
 /*//////////////////////////////////////////////////////////////////
 [ Size ]*/
 .size-101 {
-  min-width: 161px;
+  min-width: 130px;
   height: 46px;
 }
 
@@ -2632,7 +2633,7 @@ div.row.isotope-grid {
 ==================================================================*/
 .bg-none {background-color: transparent;}
 .bg0 {background-color: #fff;}
-.bg1 {background-color: #717fe0;}
+.bg1 {background-color: #FE8A7D;}
 .bg2 {background-color: #e6e6e6;}
 .bg3 {background-color: #222;}
 .bg5 {background-color: rgba(0,0,0,0.5);}
@@ -3053,7 +3054,8 @@ div.row.isotope-grid {
 
 .hov-img0 img{
   width: 90%;
-  height: 180px;
+  height: 190px;
+  object-fit: cover;
   -webkit-transition: transform 0.9s ease;
   -o-transition: transform 0.9s ease;
   -moz-transition: transform 0.9s ease;
@@ -3066,8 +3068,9 @@ div.row.isotope-grid {
 }
 
 .hov-img1 img{
-  width: 80%;
-  height: 280px;
+  width: 90%;
+  height: 300px;
+  object-fit: cover;
   -webkit-transition: transform 0.9s ease;
   -o-transition: transform 0.9s ease;
   -moz-transition: transform 0.9s ease;

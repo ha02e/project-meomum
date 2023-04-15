@@ -9,8 +9,8 @@ public interface ReviewService {
 	
 	public int reviewInsert(ReviewDTO dto);
 	
-	public List<ReviewDTO> reviewList(int cp, int ls);
-	public int getTotalCnt();
+	public List<ReviewDTO> reviewList(int cp, int ls,String fvalue,String category);
+	public int getTotalCnt(String fvalue, String category);
 	
 	public List<ReviewDTO> myreviewList(int cp, int ls, int user_idx);
 	public int myreviewTotalCnt(int user_idx);

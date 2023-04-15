@@ -6,8 +6,7 @@
 <html>
 <head>
 <title>머뭄 주문/결제</title>
-<meta http-equiv="Content-Security-Policy"
-	content="upgrade-insecure-requests">
+<meta charset="UTF-8">
 
 <!-- 결제모듈 -->
 <!-- jQuery -->
@@ -131,7 +130,7 @@ input:invalid {
 							<th scope="col">구독월수</th>
 							<th scope="col">배송비</th>
 							<th scope="col">수량</th>
-							<th scope="col">결제 금액</th>
+							<th scope="col">월 구독 가격</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -166,7 +165,9 @@ input:invalid {
 				</table>
 
 
-
+				<div class="text-center" style="font-size: 15px;">
+							첫달 구독 + 구매 + 배송비
+						</div>
 				<div>
 					<div class="text-center" style="font-size: 20px;">
 						월 구독 가격 + 총 배송비 : <span style="color: red;"> <fmt:formatNumber
@@ -312,8 +313,6 @@ input:invalid {
 	</div>
 
 
-
-	<%@include file="../footer.jsp"%>
 	<!-- -------------------------------------------------------------------------------------- -->
 	<!-- 이용약관 Modal -->
 	<div class="modal fade" id="usecheckModal" tabindex="-1"
@@ -543,6 +542,6 @@ input:invalid {
 
 
 
-
+<%@include file="../footer.jsp"%>
 </body>
 </html>

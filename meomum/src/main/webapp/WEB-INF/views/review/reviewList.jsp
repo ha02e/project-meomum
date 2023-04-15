@@ -108,40 +108,61 @@
 <div class="container">
 			<div class="row g-3 mb-4 align-items-center justify-content-center">
 				    <div class="col-auto">
+							    <form name="findContent" action="reviewList.do">
 					     <div class="page-utilities">
 						    <div class="row g-2 justify-content-end justify-content-md-end align-items-center">
 							    <div class="col-auto">
-								    <select class="form-select w-auto" >
-										  <option selected value="option-1">전체보기</option>
-										  <option value="option-2">정리일상</option>
-										  <option value="option-3">구독일상</option>
+								    <select class="form-select w-auto" name="category" >
+											<option selected value="1" onclick="location.href = 'reviewList.do';">전체보기</option>
+										  <option value="2" ${category == '2' ? 'selected' : ''}>정리일상</option>
+										  <option value="3"${category == '3' ? 'selected' : ''}>구독일상</option>
 									</select>
 							    </div>
 							    <div class="col-auto">
-								    <form class="table-search-form row gx-1 align-items-center">
+								    <div class="table-search-form row gx-1 align-items-center">
 					                    <div class="col-auto">
-					                        <input type="text" id="search-orders" name="searchorders" class="form-control search-orders" placeholder="검색어를 입력해주세요." size="30">
+					                        <input type="text" id="fvalue" name="fvalue" class="form-control search-orders" placeholder="검색어를 입력해주세요." size="30" value="${fvalue}">
 					                    </div>
 					                    <div class="col-auto">
 					                        <button type="submit" class="btn app-btn-secondary btn-primary">검색</button>
 					                    </div>
-					                </form>
+					                </div>
 							    </div><!--//col-->
 						    </div><!--//row-->
 				</div><!--//table-utilities-->
+					            </form>
 			</div><!--//col-auto-->
 		</div><!--//row-->
 </div>		
+
 			<div class="container">
 				<div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
 				<c:if test="${empty lists}">
 					<h5 class="text-center">등록된 후기가 없습니다.</h5>
 				</c:if>
+				
 				<c:forEach var="dto" items="${lists}">
+					
 					<c:url var="contentUrl" value="reviewContent.do">
 						<c:param name="review_idx">${dto.review_idx}</c:param>
 					</c:url>
-					<div class="col">
+					
+					<div class="col position-relative" >
+					<!-- 배지 시작 -->
+					        <c:choose>
+					
+					    <c:when test="${dto.category == '정리일상'}">
+				                <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill text-bg-warning" style="z-index: 999;">
+				                   정리일상
+				                </span>
+				            </c:when>
+				            <c:otherwise>
+				                <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill text-bg-primary " style="z-index: 999;">
+				                    구독일상
+				                </span>
+				            </c:otherwise>
+				        </c:choose>
+					<!-- 배지끝 -->
 						<div class="card h-100">
 						<div class="card-body img">
 							<c:if test="${not empty dto.thumb}">
@@ -198,7 +219,7 @@
 				</c:forEach>
 				</div>
 			</div>
-		</div>
+	
 		
 
 </section>
@@ -206,7 +227,7 @@
 <div class="container-xl">
 	<nav aria-label="Page navigation example">
 		<ul class="pagination pagination-sm justify-content-center">
-			${pageStr}
+			<li>${pageStr}</li>
 		</ul>
 	</nav>
 

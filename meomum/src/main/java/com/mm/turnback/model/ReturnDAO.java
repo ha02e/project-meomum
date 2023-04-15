@@ -8,7 +8,7 @@ public interface ReturnDAO {
 	public int returnApplyInsert(ReturnDTO dto);
 
 	public List<ReturnListDTO> returnProList(Map map);
-	public int returnProListCnt();
+	public int returnProListCnt(Map map);
 	
 	public ReturnListDTO returnData(String order_idx);
 	

@@ -251,6 +251,7 @@ public class ProController {
 		
 		mav.setViewName("pro/proAdmin");
 		mav.addObject("lists", lists);
+		mav.addObject("totalCnt",totalCnt);
 		mav.addObject("pageStr", pageStr);
 		
 		return mav;
@@ -375,21 +376,49 @@ public class ProController {
 	
 	//상품 재고 관리 리스트
 	@RequestMapping("/proAmount_a.do")
-	public ModelAndView proAmountList(@RequestParam(value="cp",defaultValue="1")int cp) {
-
-		int totalCnt=proDao.getTotalCnt();
+	public ModelAndView proAmountList(@RequestParam(value="cp",defaultValue="1")int cp,
+			@RequestParam(value="fvalue",defaultValue = "")String fvalue,
+			@RequestParam(value="cate",defaultValue = "0")String cate,HttpSession session) {
+		ModelAndView mav=new ModelAndView();
+		MemberDTO ssInfo = (MemberDTO) session.getAttribute("ssInfo");
+		if(ssInfo==null||!ssInfo.getUser_info().equals("관리자")) {
+			mav.addObject("msg", "잘못된 접근입니다.");
+			mav.addObject("gopage","location.href='index.do';");
+			mav.setViewName("mainMsg");
+			return mav;
+		}
 		int listSize=5;
 		int pageSize=5;
+		int start=(cp-1)*listSize+1;
+		int end=cp*listSize;
 		
-		String pageStr=com.mm.module.PageModule.makePage("proAmount_a.do", totalCnt, listSize, pageSize, cp);
+		Map fmap=new HashMap();
+		
+		fmap.put("start", start);
+		fmap.put("end", end);
+		fmap.put("fvalue","%"+fvalue+"%");
+		fmap.put("cate",cate);
 		
 		
-		List<ProDTO> lists=proPage(cp,listSize);
+		Map tmap=new HashMap();
+		tmap.put("fvalue","%"+fvalue+"%");
+		tmap.put("cate",cate);
 		
-		ModelAndView mav=new ModelAndView();
+		
+		int totalCnt=proDao.getA_TotalCnt(tmap);
+		
+		
+		List<ProDTO> lists=proDao.proListAmount(fmap);
+		String param = "&fvalue="+fvalue+"&cate="+cate;
+		String pageStr=com.mm.module.PageModule.makePageParam("proAmount_a.do", totalCnt, listSize, pageSize, cp,param);
+		
+		
+		
 		mav.setViewName("pro/proAmount_a");
 		mav.addObject("lists", lists);
 		mav.addObject("pageStr", pageStr);
+		mav.addObject("cate",cate);
+		mav.addObject("fvalue", fvalue);
 		
 		return mav;
 	}

@@ -19,32 +19,6 @@
 			NULL
 		)
 	</insert>
-
-	<select id="returnProList" parameterType="Map" resultType="com.mm.turnback.model.ReturnListDTO">
-		select * from
-		(select rownum as rnum, a.*from(
-			SELECT *FROM orders o
-			JOIN order_pro op ON o.order_idx = op.order_idx
-			JOIN product p ON op.pro_idx = p.pro_idx
-			JOIN turnback t ON o.order_idx = t.order_idx
-			WHERE o.order_idx=op.order_idx
-			    and o.order_idx=t.order_idx
-			    and op.pro_idx=p.pro_idx
-			order by order_date desc
-		)a )b
-		where rnum<![CDATA[>=]]>#{start} and rnum<![CDATA[<=]]>#{end}
-	</select>
-	
-	<select id="returnProListCnt" resultType="Integer">
-		select count(*) from
-			orders o
-			JOIN order_pro op ON o.order_idx = op.order_idx
-			JOIN product p ON op.pro_idx = p.pro_idx
-			JOIN turnback t ON o.order_idx = t.order_idx
-			WHERE o.order_idx=op.order_idx
-			    and o.order_idx=t.order_idx
-			    and op.pro_idx=p.pro_idx
-	</select>
 	
 	<select id="returnData" parameterType="String" resultType="com.mm.turnback.model.ReturnListDTO">
 			SELECT *FROM orders o
@@ -74,4 +48,91 @@
 		where t.order_idx=#{order_idx}
 			and t.pro_idx=#{pro_idx}
 	</update>
+	
+
+	<select id="returnProList" parameterType="Map" resultType="com.mm.turnback.model.ReturnListDTO">
+	 select * from
+	(select rownum as rnum,a.* from
+		(
+			SELECT * FROM orders o 
+			JOIN order_pro op ON o.order_idx = op.order_idx
+			JOIN product p ON op.pro_idx = p.pro_idx
+			JOIN turnback t ON o.order_idx = t.order_idx
+			WHERE o.order_idx=op.order_idx
+			    and o.order_idx=t.order_idx
+			    and op.pro_idx=p.pro_idx
+			    and pro_name like #{fvalue}
+			<choose>
+				<when test="state==5">
+					and (order_status = 5)
+				</when>
+				<when test="state==6">
+					and (order_status = 6)
+				</when>
+				<when test="state==7">
+					and (order_status = 7)
+				</when>
+				<when test="state==8">
+					and (order_status = 8)
+				</when>
+			</choose>	
+			order by order_date desc
+		) a	
+	) b 
+	where rnum <![CDATA[>=]]> #{start}
+	and rnum <![CDATA[<=]]> #{end}
+	</select>
+ 	
+ 	<select id="returnProListCnt" resultType="integer" parameterType="Map">
+	 select count(*) from orders o
+	 JOIN order_pro op ON o.order_idx = op.order_idx
+			JOIN product p ON op.pro_idx = p.pro_idx
+			JOIN turnback t ON o.order_idx = t.order_idx
+			WHERE o.order_idx=op.order_idx
+			    and o.order_idx=t.order_idx
+			    and op.pro_idx=p.pro_idx
+				and pro_name like #{fvalue}
+			 <choose>
+				<when test="state==5">
+					and (order_status = 5)
+				</when>
+				<when test="state==6">
+					and (order_status = 6)
+				</when>
+				<when test="state==7">
+					and (order_status = 7)
+				</when>
+				<when test="state==8">
+					and (order_status = 8)
+				</when>
+			</choose>	
+ 	</select>
+ 	
+ 	<!-- 
+	<select id="returnProList" parameterType="Map" resultType="com.mm.turnback.model.ReturnListDTO">
+		select * from
+		(select rownum as rnum, a.*from(
+			SELECT * FROM orders o
+			JOIN order_pro op ON o.order_idx = op.order_idx
+			JOIN product p ON op.pro_idx = p.pro_idx
+			JOIN turnback t ON o.order_idx = t.order_idx
+			WHERE o.order_idx=op.order_idx
+			    and o.order_idx=t.order_idx
+			    and op.pro_idx=p.pro_idx
+			order by order_date desc
+		)a )b
+		where rnum<![CDATA[>=]]>#{start} and rnum<![CDATA[<=]]>#{end}
+	</select>
+	
+	<select id="returnProListCnt" resultType="Integer">
+		select count(*) from
+			orders o
+			JOIN order_pro op ON o.order_idx = op.order_idx
+			JOIN product p ON op.pro_idx = p.pro_idx
+			JOIN turnback t ON o.order_idx = t.order_idx
+			WHERE o.order_idx=op.order_idx
+			    and o.order_idx=t.order_idx
+			    and op.pro_idx=p.pro_idx
+	</select>
+	 -->
 </mapper>

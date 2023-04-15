@@ -24,21 +24,27 @@ public class ReviewServiceImple implements ReviewService {
 	}
 	
 	@Override
-	public List<ReviewDTO> reviewList(int cp, int ls) {
+	public List<ReviewDTO> reviewList(int cp, int ls,String fvalue,String category) {
 		int start=(cp-1)*ls+1;
 		int end=cp*ls;
 		
 		Map map=new HashMap();
 		map.put("start", start);
 		map.put("end", end);
-		
+		map.put("category", category);
+		map.put("fvalue", "%"+fvalue+"%");
 		List<ReviewDTO> lists=reviewDao.reviewList(map);
 		return lists;
 	}
 	
 	@Override
-	public int getTotalCnt() {
-		int count=reviewDao.getTotalCnt();
+	public int getTotalCnt(String fvalue, String category) {
+		
+		Map map=new HashMap();
+		map.put("fvalue", fvalue);
+		map.put("category", category);
+		
+		int count=reviewDao.getTotalCnt(map);
 		count=count==0?1:count;
 		return count;
 	}

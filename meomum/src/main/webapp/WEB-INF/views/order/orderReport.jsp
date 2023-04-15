@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
     
 <!DOCTYPE html>
 <html>
@@ -174,18 +173,31 @@ function showTracker(t_key, t_code,t_invoice){
 		<!-- ---------- 마이페이지 작업한 파일 페이지 여기에 넣어주세요!!(include) ---------- -->
 		
 		<div class="page-utilities">
-			<div class="row g-2 mb-4 justify-content-center align-items-center">
-				<div class="col-auto">
-					<form class="table-search-form row gx-1 align-items-center">
+			<form name="orderReport" action="orderReport.do">
+				<div class="row g-2 mb-4 justify-content-center align-items-center">
+					<div class="col-auto">
+						<select class="form-select w-auto" name="state" id="state">
+							<option selected value="0" onclick="location.href='orderReport.do';">전체보기</option>
+							<option value="1" ${state == '1' ? 'selected' : ''}>상품준비중</option>
+							<option value="2" ${state == '2' ? 'selected' : ''}>배송중</option>
+							<option value="3" ${state == '3' ? 'selected' : ''}>주문취소</option>
+							<option value="4" ${state == '4' ? 'selected' : ''}>배송완료</option>
+							<option value="5" ${state == '5' ? 'selected' : ''}>반납신청</option>
+							<option value="6" ${state == '6' ? 'selected' : ''}>반납진행</option>
+							<option value="7" ${state == '7' ? 'selected' : ''}>반납완료</option>
+							<option value="8" ${state == '8' ? 'selected' : ''}>반납보류</option>
+						</select>
+					</div>
+					<div class="col-auto d-flex">
 						<div class="col-auto">
-							<input type="text" id="search-orders" name="searchorders" class="form-control search-orders" placeholder="검색어를 입력해주세요.">
-						</div>
+					    	<input type="text" id="fvalue" name="fvalue" class="form-control search-orders" placeholder="검색어를 입력해주세요." value="${fvalue}">
+					  	</div>
 						<div class="col-auto">
-							<button type="submit" class="btn btn btn-primary">검색</button>
+					   		<button type="submit" class="btn btn btn-primary">검색</button>
 						</div>
-					</form>
-				</div><!--//col-->
-			</div><!--//row-->
+					</div><!--//col-->
+				</div><!--//row-->
+			</form>
 		</div><!--//table-utilities-->
 			   
 			   
@@ -195,7 +207,7 @@ function showTracker(t_key, t_code,t_invoice){
 						<tr class="users-table-info">
 							<th style="width:22%;">주문번호</th>
 							<th style="width:28%;">구독상품</th>
-							<th style="width:20%;">총주문액</th>
+							<th style="width:20%;">주문수량</th>
 							<th style="width:10%;">주문날짜</th>
 							<th style="width:20%;">상태</th>
 						</tr>
@@ -212,6 +224,7 @@ function showTracker(t_key, t_code,t_invoice){
 												<td class="cell text-center">
 													<c:url var="orderDetailUrl" value="orderInfoDetail.do">
 														<c:param name="order_idx">${dto.order_idx}</c:param>
+														<c:param name="pro_idx">${dto.pro_idx}</c:param>
 													</c:url>
 													<a href="#" class="orderNum" onclick="orderDetailOpen('${orderDetailUrl}', 'orderInfoDetail', 'width=540,height=600'); return false;">
 													${dto.order_idx}
@@ -223,7 +236,7 @@ function showTracker(t_key, t_code,t_invoice){
 													</script>
 												</td>
 												<td class="cell text-truncate text-left" style="max-width: 170px;">${dto.pro_name}</td>
-												<td class="cell text-center"><fmt:formatNumber type="number" maxFractionDigits="3" value="${dto.amount}" />원</td>
+												<td class="cell text-center">${dto.pro_amount}개</td>
 												<td class="cell text-center">${dto.order_date}</td>
 												<td class="cell text-center">
 													<c:choose>
@@ -233,7 +246,10 @@ function showTracker(t_key, t_code,t_invoice){
 										                    	<c:url var="returnFormUrl" value="returnForm.do">
 																	<c:param name="order_idx">${dto.order_idx}</c:param>
 																</c:url>
-																<a href="#" class="orderNum" onclick="">
+																<c:url var="cancelUrl" value="cancel.do">
+																	<c:param name="order_idx">${dto.order_idx}</c:param>
+																</c:url>
+																<a href="${cancelUrl}" class="orderNum" onclick="">
 																	<i class="bi bi-dash-circle"></i>&nbsp;주문취소
 																</a>
 																<script>

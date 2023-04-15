@@ -431,7 +431,6 @@ public class MemberController {
 		mav.setViewName("mmJson");
 		
 		if(serviceIng!=0) {
-			System.out.println(serviceIng);
 			mav.addObject("msg", "현재 진행중인 서비스를 완료하고 탈퇴할 수 있습니다.");
 			return mav;
 		}else {

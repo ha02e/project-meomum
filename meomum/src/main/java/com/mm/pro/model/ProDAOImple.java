@@ -153,4 +153,18 @@ private SqlSessionTemplate sqlMap;
 		}
 	
 	
+	
+	/**상품재고관리 총 게시글수(페이징을 위한)*/
+	@Override
+	public int getA_TotalCnt(Map map) {
+		int result = sqlMap.selectOne("getA_TotalCnt", map);
+				result = result==0?1:result;
+		return result;
+	}
+	/**상품 재고관리용 상품 리스트*/
+	@Override
+		public List<ProDTO> proListAmount(Map map) {
+		List<ProDTO> lists=sqlMap.selectList("proListAmount",map);
+			return lists;
+		}
 }
