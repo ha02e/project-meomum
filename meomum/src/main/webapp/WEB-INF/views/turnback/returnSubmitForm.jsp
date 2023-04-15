@@ -93,10 +93,12 @@ hr{
 	          		<button type="button" id="btn_toggle" class="btn btn-primary">반납승인</button>
 	          	</div>
 	          		<div id="Toggle" style="display:none">
-	          			<form action="returnSubmit.do" name="returnSubmit" method="post">
-							<input type="hidden" name="order_idx" value="${param.order_idx}">
-							<input type="hidden" name="pro_idx" value="${dto.pro_idx}">
-							<input type="hidden" name="pro_idx" value="${dto.user_idx}">
+	          			<c:url var="returnSubmitUrl" value="returnSubmit.do">
+							<c:param name="order_idx">${param.order_idx}</c:param>
+							<c:param name="pro_idx">${dto.pro_idx}</c:param>
+						</c:url>
+	          			<form action="${returnSubmitUrl}" name="returnSubmit" method="post">
+							<input type="hidden" name="user_idx" value="${dto.user_idx}">
 	          				<div class="form-row mb-3">
 	            				<label class="form-label" for="ship_info">택배사</label>
 	            					<select class="custom-select form-control" name="ship_info" id="shipInfo" readonly>
