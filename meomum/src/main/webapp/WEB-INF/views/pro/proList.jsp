@@ -205,8 +205,9 @@
 	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 <!--=========페이지 모양 유지해줌===========-->
 	<script src="vendor/isotope/isotope.pkgd.min.js"></script>
-	<script src="vendor/animsition/js/animsition.min.js"></script>
+	<script src="vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
 <!--=========아마 찜하기 팝업이었을 거임==========-->
+	<script src="vendor/animsition/js/animsition.min.js"></script>
 	<script src="vendor/sweetalert/sweetalert.min.js"></script>
 <script>
 

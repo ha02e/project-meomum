@@ -84,6 +84,7 @@ public class ReviewController {
 		ModelAndView mav=new ModelAndView();
 		mav.setViewName("review/reviewable");
 		mav.addObject("lists", lists);
+		mav.addObject("mdto", mdto);
 		mav.addObject("pageStr",pageStr);
 		
 		

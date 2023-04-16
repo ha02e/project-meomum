@@ -117,7 +117,7 @@ thead tr{
 								<td class="align-middle button">
 									<c:url var="contentUrl" value="reviewWrite.do">
 										<c:param name="activity_idx">${dto.activity_idx}</c:param>
-										<c:param name="writer">${dto.writer}</c:param>
+										<c:param name="writer">${sessionScope.ssInfo.user_name}</c:param>
 										<c:param name="category">
 										${dto.activity_idx.startsWith('S') ? '정리일상' : dto.activity_idx.startsWith('O') ? '구독일상' : ''}
 										</c:param>										

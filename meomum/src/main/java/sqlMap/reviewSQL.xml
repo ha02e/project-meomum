@@ -90,7 +90,7 @@
 		(select rownum as rnum, d.*from(
 			SELECT svc_idx AS activity_idx, user_idx, user_name AS writer
 			FROM svc_member a
-			WHERE a.user_idx = 9
+			WHERE a.user_idx = #{user_idx}
 			    AND svc_state = '작업완료'
 			    AND NOT EXISTS (SELECT *
 			                    FROM review b
@@ -98,7 +98,7 @@
 			UNION ALL
 			SELECT order_idx AS activity_idx, user_idx, order_name AS writer
 			FROM orders c
-			WHERE c.user_idx = 9
+			WHERE c.user_idx = #{user_idx}
 			    AND order_status = 4
 			    AND NOT EXISTS (SELECT *
 			                    FROM review b

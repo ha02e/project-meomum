@@ -2284,6 +2284,7 @@ div.row.isotope-grid {
   font-family: GmarketSansMedium;
   font-size: 16px;
   line-height: 1.6;
+  color: #555;
 }
 
 .mtext-103 {
@@ -3073,6 +3074,7 @@ div.row.isotope-grid {
 .hov-bg0:hover {background-color: #fff;}
 .hov-cl1:hover {color: #FE8A7D;}
 .hov-bg1:hover {background-color: #717fe0;}
+.hov-clr:hover {color: red;}
 
 /*---------------------------------------------*/
 .hov-img0 {
