@@ -143,7 +143,7 @@ function sortUsers(cate) {
 								<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.pro_subprice }" />원</td>
 								<td>${list.pro_date }</td>
 								<td>
-								<form method="POST" action="proDel.do">
+								<form method="POST" action="proDelete.do">
 								<input type="hidden" name="pro_idx" value="${list.pro_idx }">
 								<input type="hidden" name="pro_thumb" value="${list.pro_thumb }">
 								<input type="hidden" name="pro_img1" value="${list.pro_img1 }">

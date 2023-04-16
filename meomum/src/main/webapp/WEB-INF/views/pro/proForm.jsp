@@ -66,7 +66,7 @@ input:invalid {
 			
 	<div class="container"  style="margin-bottom: 30px;">
 	
-	<form name="addPro" action="proAdd.do" enctype="multipart/form-data" method="post" onsubmit="return addConfirm();">
+	<form name="addPro" action="proInsert.do" enctype="multipart/form-data" method="post" onsubmit="return addConfirm();">
 	 
 	 	 <div class="row">
 	   		 <div class="col-8 mx-auto">

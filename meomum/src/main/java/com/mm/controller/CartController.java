@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.mm.cart.model.CartDAO;
 import com.mm.cart.model.CartDTO;
 import com.mm.member.model.MemberDTO;
+import com.mm.pro.model.ProDTO;
 
 
 @Controller
@@ -102,7 +103,7 @@ public class CartController {
 		
 		//장바구니로 이동
 		@RequestMapping("/proCart.do")
-		public ModelAndView CartList(
+		public ModelAndView cartList(
 				@RequestParam(value="cart_amount",defaultValue="1")int cart_amount,
 				HttpSession session) {
 			
@@ -154,12 +155,10 @@ public class CartController {
 		public ModelAndView cartNumUpdate(@RequestParam("cart_idx")int cart_idx,
 				@RequestParam("cart_amount") int cart_amount) {
 			
-			System.out.println(cart_amount+"수량/"+cart_idx+"카트 번호/");
-			
 			ModelAndView mav= new ModelAndView();
-			
+
 			cartDao.cartNumUpdate(cart_amount,cart_idx);
-			System.out.println(cart_amount+"수량2/"+cart_idx+"카트 번호/");
+		
 			mav.setViewName("mmJson");
 	        return mav;
 			}

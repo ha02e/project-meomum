@@ -39,7 +39,7 @@ public class ProController {
 	
 	//관리자 상품 등록으로 이동
 	@RequestMapping("/proForm.do")
-	public String addProduct() {
+	public String proForm() {
 		return "/pro/proForm";
 	}
 	
@@ -66,7 +66,7 @@ public class ProController {
 	
 	//사용자 상품 리스트 출력
 	@RequestMapping("/proList.do")
-	public ModelAndView itemList(@RequestParam(value="cp",defaultValue="1")int cp) {
+	public ModelAndView proItemList(@RequestParam(value="cp",defaultValue="1")int cp) {
 		
 		int totalCnt=proDao.itemTotalCnt();
 		int listSize=9;
@@ -90,7 +90,7 @@ public class ProController {
 	
 	
 	//상품 등록
-	@RequestMapping("/proAdd.do")
+	@RequestMapping("/proInsert.do")
 	public ModelAndView proInsert(
 	        @RequestParam("pro_thumb") MultipartFile pro_thumb,
 	        @RequestParam("pro_img1") MultipartFile pro_img1, 
@@ -260,7 +260,7 @@ public class ProController {
 	}
 	
 	//관리자 상품 삭제
-	@RequestMapping(value="/proDel.do", method = RequestMethod.POST)
+	@RequestMapping(value="/proDelete.do", method = RequestMethod.POST)
 		public ModelAndView proDelete(
 				ProDTO dto,
 				HttpServletRequest req,

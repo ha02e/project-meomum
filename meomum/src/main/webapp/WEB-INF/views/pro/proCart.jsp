@@ -72,7 +72,7 @@ h3.ltext-106 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 30vh;
+    height: 45vh;
 }  
 </style>
 
@@ -85,17 +85,16 @@ h3.ltext-106 {
 				<div class="row">
 	
 				<h3 class="ltext-106 cl5 txt-center">장바구니</h3>
-						<div class="m-l-25 m-r--38 m-lr-0-xl">
 				
-				<!-- 전체 선택 영역 -->
 				
-			<c:if test="${empty lists}">
-				<div class="center">
-					<div class="stext-102 cl3 p-t-23 column-4">담긴 상품이 없습니다</div>
-					<div>
-					<a href="proList.do"><i class="bi bi-cart3 hov-cl1 trans-04 mtext-102 p-b-6 d-block mx-auto">상품 구경하러 가기</i></a>
+				<!-- 장바구니 비었을 경우 -->
+				<c:if test="${empty lists}">
+					<div class="center">
+						<div class="stext-102 cl3 p-t-23 column-4">담긴 상품이 없습니다</div>
+						<div>
+						<a href="proList.do"><i class="bi bi-cart3 hov-cl1 trans-04 mtext-102 p-b-6 d-block mx-auto">상품 구경하러 가기</i></a>
+						</div>
 					</div>
-				</div>
 	
 						<c:set var="hideCheck" value="true" />
 						<c:set var="hidePriceArea" value="true" />
@@ -103,7 +102,10 @@ h3.ltext-106 {
 	   					<c:set var="hideTable" value="true" />
 				</c:if>
 				
+						<div class="m-l-25 m-r--38 m-lr-0-xl">
 				
+			
+				<!-- 전체 선택 영역 -->
 				<div class="wrap-table-shopping-check"
 				<c:if test="${hideCheck eq true}"> style="display:none;"</c:if>>
 				  <div style="display: flex; align-items: center; justify-content: space-between;">
@@ -171,8 +173,7 @@ h3.ltext-106 {
 								
 								<input class="txt-center c13 mtext-104 num-product cartColor update_amount_${list.cart_idx}" 
 								type="number" min="1" max="${list.pro_amount-1}" name="cart_amount"
-								value="${list.cart_amount}" id="update_amount_${list.cart_idx}" 
-								onchange="updatePrice(this, ${list.pro_subprice}, ${list.pro_allprice})">
+								value="${list.cart_amount}" id="update_amount_${list.cart_idx}">
 								
 								
 							<!-- 플러스 -->
@@ -184,7 +185,8 @@ h3.ltext-106 {
 							<!-- 수정 버튼 -->
 							<div>
 							<input type="button" style="margin: 0 auto;" class="btn-sm app-btn-secondary stext-102" 
-							onclick="cartNumUpdate(${list.cart_idx}, document.querySelectorAll('.update_amount_${list.cart_idx}')[0].value)" value="수량 변경">
+							onclick="cartNumUpdate(${list.cart_idx}, document.querySelectorAll('.update_amount_${list.cart_idx}')[0].value)" 
+							value="수량 변경">
 							</div>
 						</td>
 						
@@ -336,7 +338,9 @@ function setTotalInfo(){
 <script>
 //수량 변경
 function cartNumUpdate(update_idx,update_amount) {
-	  $.ajax({
+	 if (update_amount > 0) {
+
+		 $.ajax({
 	    url: "cartNumUpdate.do",
 	    type: "POST",
 	    data: {
@@ -351,6 +355,11 @@ function cartNumUpdate(update_idx,update_amount) {
 	      alert("실패하였습니다. 고객 센터로 연락해 주세요.");
 	    },
 	  });
+	  
+	 } else {
+		    alert("0은 입력 불가능합니다.");
+		    location.reload();
+		  }
 	}
 </script>
 
