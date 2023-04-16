@@ -227,7 +227,7 @@
 		WHERE svc_idx = #{svc_idx}
 	</update>
 	
-	<!-- 관리자/사용자: 방문 예약 정보 수정(정리일상 견적) -->
+	<!-- 관리자: 방문 예약 정보 수정(정리일상 견적) -->
 	<update id="svcIngUpdate" parameterType="com.mm.svc.model.SvcIngDTO">
 		UPDATE svc_ing
 		SET svc_datetime = #{svc_datetime},

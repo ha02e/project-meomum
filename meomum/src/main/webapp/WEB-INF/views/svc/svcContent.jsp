@@ -10,7 +10,7 @@
 
 <meta charset="UTF-8">
 
-<title>정리일상 진행 현황</title>
+<title>방문 견적 예약 내역</title>
 <!-- jQuery -->
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-1.12.4.min.js"></script>

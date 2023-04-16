@@ -90,7 +90,7 @@ public class SvcController {
 	/** 방문 견적 신청 시 예약된 시간 비활성화 */
 	@RequestMapping(value = "/svcTimeSelect.do", method = RequestMethod.GET)
 	@ResponseBody
-	public ModelAndView test(@RequestParam("svc_days") String days) {
+	public ModelAndView svcTimeSelect(@RequestParam("svc_days") String days) {
 		List<String> times = svcDao.svcTimeSelect(days);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("times", times);
@@ -446,42 +446,7 @@ public class SvcController {
 		return mav;
 	}
 
-	/**
-	 * 사용자: 정리일상 결제(point 테이블 insert)
-	 * 
-	 * @RequestMapping(value="/insertPoint.do") public ModelAndView
-	 *                                          svcPay(@RequestBody PointDTO pdto) {
-	 * 
-	 *                                          int result = pdao.pointInsert(pdto);
-	 *                                          ModelAndView mav = new
-	 *                                          ModelAndView();
-	 * 
-	 *                                          String msg = result>0?"결제가
-	 *                                          완료되었습니다":"다시 시도해주세요"; String link =
-	 *                                          result>0?"svcIngList.do":"svcIngContent.do";
-	 * 
-	 *                                          mav.addObject("msg", msg);
-	 *                                          mav.addObject("link", link);
-	 *                                          mav.setViewName("mmJson");
-	 * 
-	 *                                          return mav; }
-	 */
 
-	/**
-	 * 정리일상 결제 시 상태 변경 //svc_member
-	 * 
-	 * @RequestMapping(value="/updateState.do") public ModelAndView
-	 *                                          updateState(@RequestBody IdxDTO dto)
-	 *                                          { int svcUpdate =
-	 *                                          svcDao.updateSvcState(dto); int
-	 *                                          payUpdate =
-	 *                                          svcDao.updatePayState(dto);
-	 * 
-	 *                                          ModelAndView mav = new
-	 *                                          ModelAndView();
-	 *                                          mav.setViewName("mmJson"); return
-	 *                                          mav; }
-	 */
 
 	// svc_ing
 	/** 예약시간 가져오기 */
