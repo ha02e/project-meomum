@@ -233,10 +233,10 @@ function close_modal(){
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-bs-dismiss="modal" onclick="location.reload()">취소</button>
 					<button type="button" class="btn btn-primary" id="password-submit"
 						onclick="ask_ok()">확인</button>
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal" onclick="location.reload()">취소</button>
 				</div>
 			</div>
 		</div>
