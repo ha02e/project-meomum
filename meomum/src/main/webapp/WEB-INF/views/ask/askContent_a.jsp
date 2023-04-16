@@ -129,7 +129,7 @@
 					관리자 : ${mInfo.user_name} (${comm.comm_date})<button type="button" class="btn btn-outline-danger"  onclick="deleteComm()">X</button>
 				</div>
 				<div class="card-body">
-					<p class="card-text">${comm.comm_cont}</p>
+					<textarea class="card-text" style="overflow-x: scroll; overflow-y: scroll; resize: none; height:300px" cols="105">${comm.comm_cont}</textarea>
 				</div>
 			</div>
 		</c:if>
