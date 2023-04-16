@@ -238,9 +238,9 @@ color : black;
 					</form>
 				</div>
 				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" onclick="findID()">확인</button>
 					<button type="button" class="btn btn-secondary"
 						data-bs-dismiss="modal" onclick="location.reload();">닫기</button>
-					<button type="button" class="btn btn-primary" onclick="findID()">확인</button>
 				</div>
 			</div>
 		</div>
@@ -264,13 +264,13 @@ color : black;
 
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-bs-dismiss="modal" onclick="location.reload();">닫기</button>
-
 					<button type="button" class="btn btn-primary"
 						data-bs-toggle="modal" data-bs-target="#passwordFindModal"
 						onclick="$('#passwordFindModal').find('#inputp_id').val($('#userIdSpan').text())">비밀번호
 						찾기</button>
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal" onclick="location.reload();">닫기</button>
+
 				</div>
 			</div>
 		</div>
@@ -307,9 +307,9 @@ color : black;
 					</form>
 				</div>
 				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" onclick="findpwd()" id="mail-Check-Btn">비밀번호 초기화</button>
 					<button type="button" class="btn btn-secondary"
 						data-bs-dismiss="modal" onclick="location.reload();">닫기</button>
-					<button type="button" class="btn btn-primary" onclick="findpwd()" id="mail-Check-Btn">비밀번호 초기화</button>
 				</div>
 			</div>
 		</div>

@@ -134,7 +134,7 @@
 					<button type="button" class="btn btn-primary"
 						onclick="deleteData()"  style="width: 120px;">삭제</button>
 
-					<a href="#" class="btn btn-outline-warning text-center" onclick="history.back()">목록으로
+					<a href="#" class="btn btn-outline-warning text-center" onclick="location.href='askList.do'">목록으로
 						돌아가기</a>
 				</div>
 				<!-- 답글시작 -->
@@ -150,7 +150,8 @@
 					<div class="card mb-3">
 						<div class="card-header">머뭄 (${comm.comm_date})</div>
 						<div class="card-body">
-							<p class="card-text">${comm.comm_cont}</p>
+						<textarea class="card-text" style="overflow-x: scroll; overflow-y: scroll; resize: none; height:300px" cols="70">${comm.comm_cont}</textarea>
+							
 						</div>
 					</div>
 				</c:if>

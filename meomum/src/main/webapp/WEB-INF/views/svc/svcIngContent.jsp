@@ -250,7 +250,7 @@ footer {
 								<div class="d-flex justify-content-between align-items-center">
 									<input type="text" id="point_total" value="${result}" readonly>
 									<label class="checkbox-container" style="font-size: 12px;">전액사용
-										<input type="checkbox" id="check" onclick="checkPt()">
+										<input type="checkbox" id="check" onclick="checkPt()" >
 										<span class="checkmark"></span>
 									</label>
 								</div>
@@ -280,8 +280,7 @@ footer {
 					</ul>
 
 					<div class="form-check">
-						<input class="form-check-input" type="checkbox" id="checkbox"
-							required="required"> <span style="font-size: 12px;">(필수)결제
+						<input class="form-check-input" type="checkbox" id="checkbox" required="required"> <span style="font-size: 12px;">(필수)결제
 							내용을 확인했으며, 정보 제공 등에 동의합니다</span><br> <a href="#"
 							data-bs-toggle="modal" data-bs-target="#exampleModal"> <span
 							style="font-size: 12px;">(내용보기)</span>
@@ -296,7 +295,7 @@ footer {
 				<!-- 결제 div 끝 -->
 				
 
-				<!------------------- 예약 상세 내용 시직 ------------------------------------>
+				<!------------------- 예약 상세 내용 시작 ------------------------------------>
 				<div class="col-md-7 col-lg-8 order-md-first mx-auto">
 					<h4 class="d-flex justify-content-between align-items-center mb-3">
 						<span class="text-primary"
