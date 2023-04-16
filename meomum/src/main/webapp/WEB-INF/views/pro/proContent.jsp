@@ -489,19 +489,22 @@
 <!--===============================================================================================-->
 	<script src="vendor/sweetalert/sweetalert.min.js"></script>
 <script>
-	
-	$('.js-addwish-b2').on('click', function(e){
-		e.preventDefault();
-	});
-	
-	$('.js-addwish-b2').each(function(){
-		var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
-		$(this).on('click', function(){
-			swal(nameProduct, "찜 추가되었습니다");
-	
-			$(this).addClass('js-addedwish-b2');
-			$(this).off('click');
-		});
+$('.js-addwish-b2').each(function() {
+	  var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
+	  $(this).on('click', function(e) {
+	    e.preventDefault();
+	    if ($(this).hasClass('js-addedwish-b2')) {
+	      $(this).removeClass('js-addedwish-b2');
+	      $(this).find('.icon-heart2').removeClass('show');
+	      $(this).find('.icon-heart1').addClass('show');
+	      swal(nameProduct, "찜이 해제되었습니다");
+	    } else {
+	      $(this).addClass('js-addedwish-b2');
+	      $(this).find('.icon-heart1').removeClass('show');
+	      $(this).find('.icon-heart2').addClass('show');
+	      swal(nameProduct, "찜이 추가되었습니다");
+	    }
+	  });
 	});
 </script>
 <!--===============================================================================================-->

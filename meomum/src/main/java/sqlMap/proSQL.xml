@@ -148,11 +148,11 @@
 	
 	
 	<select id="proBest" resultType="com.mm.pro.model.ProDTO">
-	select * from (
-	  select * from product 
-	  where pro_state != 1
-	  order by pro_date ASC
-	) where rownum <![CDATA[<=]]> 4
+		select * from (
+		  select * from product 
+		  where pro_state != 1
+		  order by pro_date ASC
+		) where rownum <![CDATA[<=]]> 4
 	</select>
 	
 	<delete id="orderCartDelete" parameterType="Map">

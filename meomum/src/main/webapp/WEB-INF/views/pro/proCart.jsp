@@ -209,7 +209,7 @@ h3.ltext-106 {
 				<tr>
 					<td colspan="8" class="column-6" id="priceArea"  <c:if test="${hidePriceArea eq true}">style="display:none;"</c:if>>
 					<div class="stext-107">총 구매 개수 <span class="totalCount"></span>개</div>
-					<div>월 구독 가격: <span class="totalSub"></span>원 + 
+					<div>월 구독 가격 <span class="totalSub"></span>원 + 
 					배송비 <span class="totalDel"></span>원 = 
 					<span class="mtext-108" style="font-weight: bold;">합계 <span class="finalTotalPrice mtext-108" style="color: red;"></span>원</span></div>
 					
