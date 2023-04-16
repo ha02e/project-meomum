@@ -72,7 +72,7 @@
   padding: 5px;
   position: absolute;
   z-index: 1;
-  bottom: 150%;
+  bottom: 100%;
   left: 50%;
   transform: translateX(-50%);
   opacity: 0;
@@ -234,7 +234,7 @@
 					<div class="p-r-50 p-t-5 p-lr-0-lg">
 						<div class="flex-w flex-r-m p-b-10">
 							<div class="block2-txt-child2 flex-r p-t-3">
-		                        <a href="javascript:void(0)" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" onclick="loveInsert(${list.pro_idx },${sessionScope.ssInfo.user_idx})">
+		                        <a href="javascript:void(0)" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
 		                            <img class="icon-heart1 dis-block trans-04" src="images/icon/icon-heart-01.png" alt="ICON">
 		                            <img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icon/icon-heart-02.png" alt="ICON">
 		                        </a>
@@ -489,21 +489,20 @@
 <!--===============================================================================================-->
 	<script src="vendor/sweetalert/sweetalert.min.js"></script>
 <script>
-
-		$('.js-addwish-b2').on('click', function(e){
-			e.preventDefault();
+	
+	$('.js-addwish-b2').on('click', function(e){
+		e.preventDefault();
+	});
+	
+	$('.js-addwish-b2').each(function(){
+		var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
+		$(this).on('click', function(){
+			swal(nameProduct, "찜 추가되었습니다");
+	
+			$(this).addClass('js-addedwish-b2');
+			$(this).off('click');
 		});
-
-		$('.js-addwish-b2').each(function(){
-			var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
-			$(this).on('click', function(){
-				swal(nameProduct, "찜 추가되었습니다");
-
-				$(this).addClass('js-addedwish-b2');
-				$(this).off('click');
-			});
-		});
-
+	});
 </script>
 <!--===============================================================================================-->
 	<script src="js/main.js"></script>

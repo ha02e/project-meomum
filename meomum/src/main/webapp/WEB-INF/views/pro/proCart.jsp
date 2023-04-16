@@ -62,6 +62,18 @@ h3.ltext-106 {
   padding-top: 10px;
   text-align: right;
 }
+
+#delete-all-btn {
+  font-style: normal;
+}
+
+.center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 30vh;
+}  
 </style>
 
 <body class="animsition">
@@ -77,23 +89,39 @@ h3.ltext-106 {
 				
 				<!-- 전체 선택 영역 -->
 				
-				<c:if test="${empty lists}">
-					<c:set var="hideCheck" value="true" />
-					<c:set var="hidePriceArea" value="true" />
-   					<c:set var="hideButtons" value="true" />
+			<c:if test="${empty lists}">
+				<div class="center">
+					<div class="stext-102 cl3 p-t-23 column-4">담긴 상품이 없습니다</div>
+					<div>
+					<a href="proList.do"><i class="bi bi-cart3 hov-cl1 trans-04 mtext-102 p-b-6 d-block mx-auto">상품 구경하러 가기</i></a>
+					</div>
+				</div>
+	
+						<c:set var="hideCheck" value="true" />
+						<c:set var="hidePriceArea" value="true" />
+	   					<c:set var="hideButtons" value="true" />
+	   					<c:set var="hideTable" value="true" />
 				</c:if>
 				
-				<div class="wrap-table-shopping-check" <c:if test="${hideCheck eq true}">style="display:none;"</c:if>>
-					<div class="form-check"> 
-					<input type="checkbox" class="all_check_input form-check-input" id="allCheck" checked="checked">
-						<label for="allCheck" class="form-check-label" style="display: flex; align-items: center;">
-							<span class="all_chcek_span">전체 선택</span>
-						</label>
-					</div>	
-				</div>
-							
-							
-				<div class="wrap-table-shopping-cart">
+				
+				<div class="wrap-table-shopping-check"
+				<c:if test="${hideCheck eq true}"> style="display:none;"</c:if>>
+				  <div style="display: flex; align-items: center; justify-content: space-between;">
+				    
+				    <div class="form-check"> 
+				      <input type="checkbox" class="all_check_input form-check-input" id="allCheck" checked="checked">
+				      <label for="allCheck" class="form-check-label" style="display: flex; align-items: center;">
+				        <span class="all_chcek_span">전체 선택</span>
+				      </label>
+				    </div>				    
+				   
+				  </div>
+				
+			</div>
+	
+				<div class="wrap-table-shopping-cart"
+				<c:if test="${hideTable eq true}"> style="display:none;"</c:if>>
+				
 					
 					<table class="table-shopping-cart" style="text-align:center;">
 					<tr class="table_head">
@@ -106,15 +134,7 @@ h3.ltext-106 {
 						<th class="column-1">총 가격</th>
 						<th class="column-0"></th>
 					</tr>
-					
-					<c:if test="${empty lists }">
-						<tr>
-							<td colspan="8" align="center" class="stext-102 cl3 p-t-23 column-4">
-							담긴 상품이 없습니다
-							<a href="proList.do"><i class="bi bi-cart3 hov-cl1 trans-04 mtext-102 p-b-6 d-block mx-auto">상품 구경하러 가기</i></a>
-							</td>
-						</tr>
-					</c:if>
+			
 					
 	
 			<c:forEach var="list" items="${lists}">		
@@ -184,13 +204,6 @@ h3.ltext-106 {
 				</c:forEach>
 				
 				
-				<c:if test="${empty lists }">
-					
-					
-					
-				</c:if>
-				
-				
 				<tr>
 					<td colspan="8" class="column-6" id="priceArea"  <c:if test="${hidePriceArea eq true}">style="display:none;"</c:if>>
 					<div class="stext-107">총 구매 개수 <span class="totalCount"></span>개</div>
@@ -208,8 +221,10 @@ h3.ltext-106 {
 			</table>
 				
 			<c:if test="${empty hideButtons}">
+			<div style="margin-top: 25px;">
 			<button class="stext-101 cl0 size-101 bg3 bor14 hov-btn3 trans-04 pointer" type="button" onclick='location.href = "proList.do";'>취소하기</button>
 			<button class="stext-101 cl0 size-101 bg1 bor1 hov-btn1 trans-04 pointer" type="submit">구매하기</button>
+			</div>
 			</c:if>
 					</div>
 				</div>
@@ -224,7 +239,6 @@ h3.ltext-106 {
 const minusBtn = document.getElementById('minus-button');
 const plusBtn = document.getElementById('plus-button');
 const cartAmount = document.getElementById('update_amount_${list.cart_idx}');
-
 const proAmount = parseFloat("${list.pro_amount}");
 
 function changeQuantity(newAmount) {
@@ -236,13 +250,15 @@ minusBtn.addEventListener('click', () => {
   const currentAmount = parseInt(cartAmount.value);
   if (currentAmount > 1) {
     changeQuantity(currentAmount - 1);
+  } else {
+	  changeQuantity(1);
   }
 });
 
 // 플러스 버튼 클릭 시
 plusBtn.addEventListener('click', () => {
   const currentAmount = parseInt(cartAmount.value);
-  if (currentAmount < proAmount) {
+  if (currentAmount < proAmount-1) {
     changeQuantity(currentAmount + 1);
   }
 });
@@ -250,6 +266,7 @@ plusBtn.addEventListener('click', () => {
 </script>			
 				
 <script>
+//선택에 따라 출력 가격이 달라지는 함수
 $(document).ready(function() {
 	
 	setTotalInfo();
@@ -273,6 +290,17 @@ $(".all_check_input").on("click", function(){
 	
 	setTotalInfo($(".cart_info_td"));
 	
+});
+
+$("#delete-all-btn").on("click", function(){
+    if(confirm("정말 모든 상품을 삭제하시겠습니까?")) {
+        $(".individual_cart_checkbox:checked").each(function(index, element) {
+            const cartIdx = $(element).val();
+            deleteAllItem(cartIdx);
+        });
+        // 총 주문 정보 다시 세팅
+        setTotalInfo($(".cart_info_td"));
+    }
 });
 
 
@@ -339,21 +367,38 @@ function cartNumUpdate(update_idx,update_amount) {
 </script>
 
 <script>
-//장바구니 삭제
-  function deleteCartItem(cartIdx) {
+//장바구니 개별 삭제
+function deleteCartItem(cartIdx) {
+  if (confirm("정말 삭제하시겠습니까?")) {
     $.ajax({
       url: "cartDelete.do",
       type: "POST",
       data: {cart_idx: cartIdx},
       success: function (data) {
-        alert("상품이 삭제되었습니다.");
         location.reload();
       },
       error: function (xhr, status, error) {
-        alert("상품 삭제에 실패하였습니다.");
+        alert("상품 삭제에 실패하였습니다. 고객 센터에 연락 주세요.");
       },
     });
   }
+}
+
+
+//장바구니 전체 삭제
+function deleteAllItem(cartIdx) {
+    $.ajax({
+      url: "cartDelete.do",
+      type: "POST",
+      data: {cart_idx: cartIdx},
+      success: function (data) {
+        location.reload();
+      },
+      error: function (xhr, status, error) {
+        alert("상품 삭제에 실패하였습니다. 고객 센터에 연락 주세요.");
+      },
+    });
+}
 </script>
 
 <!--===============================================================================================-->	
@@ -365,24 +410,6 @@ function cartNumUpdate(update_idx,update_amount) {
 	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 <!--===============================================================================================-->
 	<script src="vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-	<script>
-		$('.js-pscroll').each(function(){
-			$(this).css('position','relative');
-			$(this).css('overflow','hidden');
-			var ps = new PerfectScrollbar(this, {
-				wheelSpeed: 1,
-				scrollingThreshold: 1000,
-				wheelPropagation: false,
-			});
-
-			$(window).on('resize', function(){
-				ps.update();
-			})
-		});
-	</script>
-<!--===============================================================================================-->
 
 
 	<script src="js/main.js"></script>

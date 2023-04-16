@@ -306,7 +306,7 @@ public class ProController {
 		}
 	
 	
-	//상품 검색
+	//관리자 상품 리스트 검색
 	@RequestMapping("/proFind.do")
 	public ModelAndView proFind(
 			@RequestParam(value="proF",required=false)String proF
