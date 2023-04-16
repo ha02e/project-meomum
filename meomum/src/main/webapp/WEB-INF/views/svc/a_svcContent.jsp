@@ -121,7 +121,7 @@ label[for="areaLabel"]::before{
 		<div class="app-content pt-3 p-md-3 p-lg-4">
 			<div class="container-xl">
 				<h2 class="title">방문 견적 예약 : ${dto.svc_idx}</h2>
-				<form name="asvcUpdate" action="asvcUpdate.do" method="post" onsubmit="return validate()">
+				<form name="asvcUpdate" id="asvcUpdate" action="asvcUpdate.do" method="post" onsubmit="return validate()">
 					<input type="hidden" name="user_idx" value="${dto.user_idx}" id="user_idx" style="background-color: #fff; border: 1px solid #ced4da;">
 					<!-- -------------------------------------예약번호------------------------------- -->	
 						<div class="input-group mb-3">
