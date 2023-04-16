@@ -292,18 +292,6 @@ $(".all_check_input").on("click", function(){
 	
 });
 
-$("#delete-all-btn").on("click", function(){
-    if(confirm("정말 모든 상품을 삭제하시겠습니까?")) {
-        $(".individual_cart_checkbox:checked").each(function(index, element) {
-            const cartIdx = $(element).val();
-            deleteAllItem(cartIdx);
-        });
-        // 총 주문 정보 다시 세팅
-        setTotalInfo($(".cart_info_td"));
-    }
-});
-
-
 function setTotalInfo(){
 	  let totalSub = 0; // 총 가격 (총 구독 가격)
 	  let totalCount = 0; // 총 갯수
@@ -385,20 +373,6 @@ function deleteCartItem(cartIdx) {
 }
 
 
-//장바구니 전체 삭제
-function deleteAllItem(cartIdx) {
-    $.ajax({
-      url: "cartDelete.do",
-      type: "POST",
-      data: {cart_idx: cartIdx},
-      success: function (data) {
-        location.reload();
-      },
-      error: function (xhr, status, error) {
-        alert("상품 삭제에 실패하였습니다. 고객 센터에 연락 주세요.");
-      },
-    });
-}
 </script>
 
 <!--===============================================================================================-->	

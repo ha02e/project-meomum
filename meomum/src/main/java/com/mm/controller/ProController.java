@@ -46,7 +46,7 @@ public class ProController {
 		
 	//사용자 상품 상세 페이지 (인덱스 필요)
 	@RequestMapping("/proContent.do")
-	public ModelAndView itemDetail(
+	public ModelAndView proContent(
 			@RequestParam("pro_idx") int pro_idx,
 			HttpSession session)
 	 {
@@ -89,9 +89,9 @@ public class ProController {
 	}
 	
 	
-	//파일 저장 실행
+	//상품 등록
 	@RequestMapping("/proAdd.do")
-	public ModelAndView fileUpload(
+	public ModelAndView proInsert(
 	        @RequestParam("pro_thumb") MultipartFile pro_thumb,
 	        @RequestParam("pro_img1") MultipartFile pro_img1, 
 	        @RequestParam("pro_img2") MultipartFile pro_img2,
@@ -172,7 +172,7 @@ public class ProController {
 	
 	
 	
-	//파일 복사?
+	//이미지 파일 저장
 	public void copyInto(MultipartFile upload, HttpServletRequest req,String fileName) {
 	    
 	    try {
@@ -225,7 +225,7 @@ public class ProController {
 	
 	//관리자 상품 관리 페이지
 	@RequestMapping("/proAdmin.do")
-	public ModelAndView proAdminList(
+	public ModelAndView proAdmin(
 			@RequestParam(value="cp",defaultValue="1")int cp,
 			HttpSession session) {
 		
@@ -261,7 +261,7 @@ public class ProController {
 	
 	//관리자 상품 삭제
 	@RequestMapping(value="/proDel.do", method = RequestMethod.POST)
-		public ModelAndView proDel(
+		public ModelAndView proDelete(
 				ProDTO dto,
 				HttpServletRequest req,
 				@RequestParam("pro_idx") int pro_idx) {
