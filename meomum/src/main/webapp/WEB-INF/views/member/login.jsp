@@ -196,10 +196,17 @@ color : black;
 								<label >- 간편 로그인 -</label>
 							</div>
 							<div>
+							<!-- 시현용 -->
+								<a class="p-2" title="카카오에 등록된 이메일로 로그인 할 수 있습니다."
+									href="https://kauth.kakao.com/oauth/authorize?client_id=f9f8f92fec61a14408e68cf856744293&redirect_uri=http://192.168.1.135:9090/meomum/kakao_login.do&response_type=code">
+									<img src="/meomum/images/icon/kakao_login_medium_narrow.png">
+								</a>
+								<!-- localhost시
 								<a class="p-2" title="카카오에 등록된 이메일로 로그인 할 수 있습니다."
 									href="https://kauth.kakao.com/oauth/authorize?client_id=f9f8f92fec61a14408e68cf856744293&redirect_uri=http://localhost:9090/meomum/kakao_login.do&response_type=code">
 									<img src="/meomum/images/icon/kakao_login_medium_narrow.png">
 								</a>
+								-->
 							</div>
 						</div>
 						
