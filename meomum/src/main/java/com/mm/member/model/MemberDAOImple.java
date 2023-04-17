@@ -99,7 +99,8 @@ public class MemberDAOImple implements MemberDAO {
 			sb.append("grant_type=authorization_code");
 
 			sb.append("&client_id=f9f8f92fec61a14408e68cf856744293"); // REST_API키 본인이 발급받은 key 넣어주기
-			sb.append("&redirect_uri=http://localhost:9090/meomum/kakao_login.do"); // REDIRECT_URI 본인이 설정한 주소 넣어주기
+			sb.append("&redirect_uri=http://192.168.1.135:9090/meomum/kakao_login.do"); // REDIRECT_URI 본인이 설정한 주소 넣어주기
+			//sb.append("&redirect_uri=http://localhost:9090/meomum/kakao_login.do"); // REDIRECT_URI 본인이 설정한 주소 넣어주기
 
 			sb.append("&code=" + authorize_code);
 			bw.write(sb.toString());
