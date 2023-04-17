@@ -41,7 +41,7 @@ font-size: 25px;
     bottom: 0;
     width: 100px;
     height: 100px;
-    z-index: 9999;
+    z-index: 99;
 }
 
 .back-to-top {
