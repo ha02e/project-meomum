@@ -1,5 +1,4 @@
 # meomum
+![meomum_logo](https://user-images.githubusercontent.com/121777501/232708238-92f85f6a-b9b8-4ef5-a560-8e462d4afb36.png)
 머뭄 /정리수납 컨설팅 및 가구구독 사이트
 
-<img src="https://img.shields.io/badge/JAVA-007396?style=for-the-badge&logo=java&logoColor=white">
-<img src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=Spring&logoColor=white">
