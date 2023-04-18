@@ -1,4 +1,4 @@
-# MEOMUM 프로젝트 개요
+# MEOMUM 프로젝트
 
 <img src="https://user-images.githubusercontent.com/121777501/232710693-72592f34-3d98-425d-adf8-12236ebe688a.png" width="200" height="200"/>
 
