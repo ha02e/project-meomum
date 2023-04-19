@@ -106,7 +106,7 @@
 						    <div class="row gx-5 gy-3">
 						        <div class="col-12 col-lg-9">
 							        
-							        <div>현재 알림이 없습니다</div>
+							        <div>당신이 있어 머뭄이 존재합니다</div>
 							    </div><!--//col-->
 							    <div class="col-12 col-lg-3">
 							    </div><!--//col-->
