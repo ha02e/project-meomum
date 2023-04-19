@@ -18,8 +18,8 @@
 .page-header {
 	background: linear-gradient(rgba(36, 39, 38, 0.5), rgba(36, 39, 38, 0.5)),
 		rgba(36, 39, 38, 0.5)
-	        url(https://images.unsplash.com/photo-1635321350281-e2a91ecffd00?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2623&q=80)
-        no-repeat center;
+		url(https://images.unsplash.com/photo-1635321350281-e2a91ecffd00?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2623&q=80)
+		no-repeat center;
 	background-size: cover;
 	margin: 0;
 	border-bottom: none;
@@ -46,8 +46,9 @@
 .input-group-append ml-2 {
 	margin-left: 8px;
 }
+
 #accordionFlushExample {
-  width: 80%;
+	width: 80%;
 }
 </style>
 </head>
@@ -72,8 +73,8 @@
 			<div class="col-md-8">
 				<form action="ntcList.do" class="form-inline">
 					<div class="input-group">
-						<input type="text" name="fvalue" id="fvalue"
-							class="form-control" placeholder="검색어를 입력하세요">
+						<input type="text" name="fvalue" id="fvalue" class="form-control"
+							placeholder="검색어를 입력하세요">
 						<div class="input-group-append ml-2">
 							<button type="submit" class="btn btn-primary"
 								style="margin-left: 5px">검색</button>
@@ -124,43 +125,53 @@
 								</c:when>
 								<c:otherwise>
 									<c:forEach items="${lists}" var="lists">
-									  <c:choose>
-									  
-									    <c:when test="${lists.ntc_ctg == 'FAQ'}">
-									     <tr>
-									     <td>&nbsp;</td>
-									     	<td class="text-center">${lists.ntc_ctg}</td>
-									        <td colspan="4" >
-									          <div class="accordion accordion-flush" id="accordion-${lists.ntc_idx}" style="width:100%;">
-									            <div class="accordion-item ">
-									              <span class="accordion-header text-center" style="width:100%; ">
-									                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-${lists.ntc_idx}" aria-expanded="false" aria-controls="collapse-${lists.ntc_idx}">
-									                  <span class="text-center">${lists.ntc_title}</span>
-									                </button>
-									              </span>
-									              <div id="collapse-${lists.ntc_idx}" class="accordion-collapse collapse" data-bs-parent="#accordion-${lists.ntc_idx}">
-									                <div class="accordion-body">${lists.ntc_content}</div>
-									              </div>
-									            </div>
-									          </div>
-									        </td>
-									    
-									      </tr>
-									    </c:when>
-									    <c:otherwise>
-									      <tr>
-									        <td class="text-center">${lists.ntc_idx}</td>
-									        <c:url var="contentUrl" value="ntcContent.do">
-									          <c:param name="ntc_idx" value="${lists.ntc_idx}" />
-									        </c:url>
-									        <td class="text-center">${lists.ntc_ctg}</td>
-									        <td><a href="${contentUrl}">${lists.ntc_title}</a></td>
-									        <td class="text-center">관리자</td>
-									        <td class="text-center">${lists.ntc_date}</td>
-									        <td class="text-center">${lists.ntc_viewCnt}</td>
-									      </tr>
-									    </c:otherwise>
-									  </c:choose>
+										<c:choose>
+
+											<c:when test="${lists.ntc_ctg == 'FAQ'}">
+												<tr>
+													<td>&nbsp;</td>
+													<td class="text-center" style="vertical-align:middle;">${lists.ntc_ctg}</td>
+													<td colspan="4">
+														<div class="accordion accordion-flush"
+															id="accordion-${lists.ntc_idx}" style="width: 100%;">
+															<div class="accordion-item ">
+																<span class="accordion-header text-center"
+																	style="width: 100%;">
+																	<button class="accordion-button collapsed"
+																		type="button" data-bs-toggle="collapse"
+																		data-bs-target="#collapse-${lists.ntc_idx}"
+																		aria-expanded="false"
+																		aria-controls="collapse-${lists.ntc_idx}"
+																		style="padding-left: 0;">
+																		<span class="text-center">${lists.ntc_title}</span>
+																	</button>
+
+																</span>
+																<div id="collapse-${lists.ntc_idx}"
+																	class="accordion-collapse collapse"
+																	data-bs-parent="#accordion-${lists.ntc_idx}">
+																	<div class="accordion-body">${lists.ntc_content}</div>
+																</div>
+															</div>
+														</div>
+													</td>
+
+												</tr>
+											</c:when>
+											<c:otherwise>
+												<tr>
+													<td class="text-center">${lists.ntc_idx}</td>
+													<c:url var="contentUrl" value="ntcContent.do">
+														<c:param name="ntc_idx" value="${lists.ntc_idx}" />
+													</c:url>
+													<td class="text-center">${lists.ntc_ctg}</td>
+													<td><a href="${contentUrl}">${lists.ntc_title}</a></td>
+													<td class="text-center">관리자</td>
+													<td class="text-center">${lists.ntc_date}</td>
+													<td class="text-center">${lists.ntc_viewCnt}</td>
+												</tr>
+											</c:otherwise>
+										</c:choose>
 									</c:forEach>
 								</c:otherwise>
 							</c:choose>
@@ -177,7 +188,6 @@
 			</div>
 		</div>
 	</div>
-
 
 	<%@include file="/WEB-INF/views/footer.jsp"%>
 </body>
