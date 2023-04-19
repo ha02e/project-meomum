@@ -84,6 +84,14 @@
 	margin: 0 auto;
 	overflow: hidden;
 }
+@font-face {
+    font-family: 'SF_HambakSnow';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2106@1.1/SF_HambakSnow.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
 </style>
 
 </head>
@@ -102,11 +110,10 @@
 			    <div class="app-card alert alert-dismissible shadow-sm mb-4 border-left-decoration" role="alert">
 				    <div class="inner">
 					    <div class="app-card-body p-3 p-lg-4">
-						    <h3 class="mb-3">안녕하세요! 관리자님</h3>
+						    <h3 class="mb-3">안녕하세요! ${sessionScope.ssInfo.user_name}님</h3>
 						    <div class="row gx-5 gy-3">
 						        <div class="col-12 col-lg-9">
-							        
-							        <div>당신이 있어 머뭄이 존재합니다</div>
+							        <h4 style="color:#82745D; font-family: 'SF_HambakSnow'">당신이 있어 머뭄이 존재합니다&#9829;</h4>
 							    </div><!--//col-->
 							    <div class="col-12 col-lg-3">
 							    </div><!--//col-->
