@@ -69,7 +69,7 @@ function requestPay() {
   } else {*/
   
   IMP.request_pay({
-    pg : "kakaopay", //html5_inicis
+    pg : "html5_inicis",
     pay_method : 'card',
     merchant_uid: uid, 
     name : '정리일상',
