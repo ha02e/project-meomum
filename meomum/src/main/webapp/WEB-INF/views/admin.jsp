@@ -166,7 +166,7 @@
 				    <div class="col-6 col-lg-3">
 					    <div class="app-card app-card-stat shadow-sm h-100">
 						    <div class="app-card-body p-3 p-lg-4">
-							    <h4 class="stats-type mb-1">가구일상 주문 건수</h4>
+							    <h4 class="stats-type mb-1">구독일상 주문 건수</h4>
 							    <div class="stats-figure">${orderCnt}</div>
 							    <div class="stats-meta">New</div>
 						    </div><!--//app-card-body-->
@@ -261,7 +261,7 @@
 							    			<td class="cell"><span class="badge bg-success">정리일상</span></td>
 							    			</c:if>
 							    			<c:if test="${payAllList.payment_cate eq '2'}">
-							    			<td class="cell"><span class="badge bg-secondary">가구일상</span></td>
+							    			<td class="cell"><span class="badge bg-secondary">구독일상</span></td>
 							    			</c:if>
 							    			<td class="cell">${payAllList.pay_method}</td>
 							    			<td class="cell"><fmt:formatNumber type="number" maxFractionDigits="3" value="${payAllList.amount}"/>원</td>
