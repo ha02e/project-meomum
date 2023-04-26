@@ -344,6 +344,9 @@ label[for="areaLabel"]::before{
 						<div class="col text-first">
 						       <input type="reset" value="초기화" class="btn app-btn-secondary button" style="font-weight:bold;">
 						</div>
+						<div class="col text-center">
+						      <a href="asvcList.do"><input type="button" value="목록" class="btn app-btn-primary button" style="font-weight:bold;"></a>
+						 </div>
 						<div class="col text-end">
 						       <input type="submit" value="저장" class="btn app-btn-primary button" style="font-weight:bold;">
 						 </div>
