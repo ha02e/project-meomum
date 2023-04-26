@@ -20,11 +20,11 @@
     	
         var data = google.visualization.arrayToDataTable([
         	['Task', 'Hours per Day'],
-            ['블로그',     ${list[0].CNT}],
-            ['인터넷 카페',  ${list[1].CNT}],
-            ['지인 소개',  ${list[2].CNT}],
-            ['인터넷 검색', ${list[3].CNT}],
-            ['재이용 고객',  ${list[4].CNT}]//null 값일때 처리해야함
+            ['블로그',     ${list[0].CNT==null?0:list[0].CNT}],
+            ['인터넷 카페',  ${list[1].CNT==null?0:list[1].CNT}],
+            ['지인 소개',  ${list[2].CNT==null?0:list[2].CNT}],
+            ['인터넷 검색', ${list[3].CNT==null?0:list[3].CNT}],
+            ['재이용 고객',  ${list[4].CNT==null?0:list[4].CNT}]
         	 
         ]); 
 
