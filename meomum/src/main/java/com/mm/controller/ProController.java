@@ -425,6 +425,7 @@ public class ProController {
 	
 	
 	//상품 재고 관리 - 재고수정
+	@Async
 	@RequestMapping("/proAmountUpdate.do")
 	public ModelAndView proAmountUpdate(@RequestParam("pro_idx")int pro_idx,
 										@RequestParam(value="pro_amount", required = false)String pro_amount_str,
